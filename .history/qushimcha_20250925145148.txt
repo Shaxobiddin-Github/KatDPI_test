@@ -18,6 +18,3 @@ INFO 2025-09-25 14:50:49,550 basehttp "GET /api/controller-panel/group-subjects/
 INFO 2025-09-25 14:50:49,869 basehttp "GET /api/controller-panel/group-subjects/?delete_group=5 HTTP/1.1" 200 39915
 INFO 2025-09-25 14:50:58,508 basehttp "POST /api/controller-panel/group-subjects/?add_subject=1 HTTP/1.1" 200 40941
  bular esa log fileda chiqmoqda 
-
-
- Xatolik: {'subject': ['This field cannot be null.']}  manashu xatolik pageda chiqmoqda ammo fan qushilmoqda

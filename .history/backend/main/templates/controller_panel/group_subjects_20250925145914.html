@@ -1,0 +1,748 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boshqarish paneli - Fanlar bog'lash</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .entity-panel { height: 80vh; overflow-y: auto; }
+        .groupsubject-panel { height: 80vh; overflow-y: auto; }
+        .card-header-sm { padding: 0.5rem 1rem; }
+        .table-sm-custom { font-size: 0.85rem; }
+    </style>
+</head>
+<body class="bg-light">
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="/api/controller-panel/dashboard/">Controller Dashboard</a>
+        <div class="navbar-nav ms-auto">
+            <a class="btn btn-outline-light" href="/api/controller-panel/dashboard/">
+                <i class="bi bi-arrow-left"></i> Orqaga
+            </a>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid py-4">
+    {% if msg %}
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        {{ msg }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    {% endif %}
+
+    <div class="row">
+        <!-- Left Panel: Entity Lists -->
+        <div class="col-md-7">
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Asosiy ro'yxatlar</h5>
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-sm btn-light" data-bs-toggle="modal" data-bs-target="#addUniversityModal">+ Universitet</button>
+                        <button class="btn btn-sm btn-light" data-bs-toggle="modal" data-bs-target="#addFacultyModal">+ Fakultet</button>
+                        <button class="btn btn-sm btn-light" data-bs-toggle="modal" data-bs-target="#addKafedraModal">+ Kafedra</button>
+                        <button class="btn btn-sm btn-light" data-bs-toggle="modal" data-bs-target="#addBulimModal">+ Bo'lim</button>
+                        <button class="btn btn-sm btn-light" data-bs-toggle="modal" data-bs-target="#addGroupModal">+ Guruh</button>
+                        <button class="btn btn-sm btn-light" data-bs-toggle="modal" data-bs-target="#addSubjectModal">+ Fan</button>
+                    </div>
+                </div>
+                <div class="card-body entity-panel p-0">
+                    <!-- Universitetlar -->
+                    <div class="accordion accordion-flush" id="entityAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUniversities">
+                                    Universitetlar ({{ universities.paginator.count }})
+                                </button>
+                            </h2>
+                            <div id="collapseUniversities" class="accordion-collapse collapse" data-bs-parent="#entityAccordion">
+                                <div class="accordion-body p-0">
+                                    <table class="table table-sm table-striped mb-0 table-sm-custom">
+                                        <thead class="table-light">
+                                            <tr><th>#</th><th>Nomi</th><th width="120">Amal</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for u in universities %}
+                                            <tr>
+                                                <td>{{ forloop.counter0|add:universities.start_index }}</td>
+                                                <td>{{ u.name }}</td>
+                                                <td>
+                                                    <a href="?edit_university={{ u.id }}" class="btn btn-xs btn-warning btn-sm">Tahrir</a>
+                                                    <a href="?delete_university={{ u.id }}" class="btn btn-xs btn-danger btn-sm" onclick="return confirm('O\'chirish?')">O'chir</a>
+                                                </td>
+                                            </tr>
+                                            {% empty %}<tr><td colspan="3" class="text-center">Yo'q</td></tr>{% endfor %}
+                                        </tbody>
+                                    </table>
+                                    {% include 'controller_panel/partials/_pagination.html' with page_obj=universities param='uni_page' %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Fakultetlar -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFaculties">
+                                    Fakultetlar ({{ faculties.paginator.count }})
+                                </button>
+                            </h2>
+                            <div id="collapseFaculties" class="accordion-collapse collapse" data-bs-parent="#entityAccordion">
+                                <div class="accordion-body p-0">
+                                    <table class="table table-sm table-striped mb-0 table-sm-custom">
+                                        <thead class="table-light">
+                                            <tr><th>#</th><th>Fakultet</th><th>Universitet</th><th width="120">Amal</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for f in faculties %}
+                                            <tr>
+                                                <td>{{ forloop.counter0|add:faculties.start_index }}</td>
+                                                <td>{{ f.name }}</td>
+                                                <td>{{ f.university.name }}</td>
+                                                <td>
+                                                    <a href="?edit_faculty={{ f.id }}" class="btn btn-xs btn-warning btn-sm">Tahrir</a>
+                                                    <a href="?delete_faculty={{ f.id }}" class="btn btn-xs btn-danger btn-sm" onclick="return confirm('O\'chirish?')">O'chir</a>
+                                                </td>
+                                            </tr>
+                                            {% empty %}<tr><td colspan="4" class="text-center">Yo'q</td></tr>{% endfor %}
+                                        </tbody>
+                                    </table>
+                                    {% include 'controller_panel/partials/_pagination.html' with page_obj=faculties param='fac_page' %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Kafedralar -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseKafedras">
+                                    Kafedralar ({{ kafedralar.paginator.count }})
+                                </button>
+                            </h2>
+                            <div id="collapseKafedras" class="accordion-collapse collapse" data-bs-parent="#entityAccordion">
+                                <div class="accordion-body p-0">
+                                    <table class="table table-sm table-striped mb-0 table-sm-custom">
+                                        <thead class="table-light">
+                                            <tr><th>#</th><th>Kafedra</th><th>Fakultet</th><th width="120">Amal</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for k in kafedralar %}
+                                            <tr>
+                                                <td>{{ forloop.counter0|add:kafedralar.start_index }}</td>
+                                                <td>{{ k.name }}</td>
+                                                <td>{{ k.faculty.name }}</td>
+                                                <td>
+                                                    <a href="?edit_kafedra={{ k.id }}" class="btn btn-xs btn-warning btn-sm">Tahrir</a>
+                                                    <a href="?delete_kafedra={{ k.id }}" class="btn btn-xs btn-danger btn-sm" onclick="return confirm('O\'chirish?')">O'chir</a>
+                                                </td>
+                                            </tr>
+                                            {% empty %}<tr><td colspan="4" class="text-center">Yo'q</td></tr>{% endfor %}
+                                        </tbody>
+                                    </table>
+                                    {% include 'controller_panel/partials/_pagination.html' with page_obj=kafedralar param='kaf_page' %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bo'limlar -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBulimlar">
+                                    Bo'limlar ({{ bulimlar.paginator.count }})
+                                </button>
+                            </h2>
+                            <div id="collapseBulimlar" class="accordion-collapse collapse" data-bs-parent="#entityAccordion">
+                                <div class="accordion-body p-0">
+                                    <table class="table table-sm table-striped mb-0 table-sm-custom">
+                                        <thead class="table-light">
+                                            <tr><th>#</th><th>Bo'lim</th><th width="120">Amal</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for b in bulimlar %}
+                                            <tr>
+                                                <td>{{ forloop.counter0|add:bulimlar.start_index }}</td>
+                                                <td>{{ b.name }}</td>
+                                                <td>
+                                                    <a href="?edit_bulim={{ b.id }}" class="btn btn-xs btn-warning btn-sm">Tahrir</a>
+                                                    <a href="?delete_bulim={{ b.id }}" class="btn btn-xs btn-danger btn-sm" onclick="return confirm('O\'chirish?')">O'chir</a>
+                                                </td>
+                                            </tr>
+                                            {% empty %}<tr><td colspan="3" class="text-center">Yo'q</td></tr>{% endfor %}
+                                        </tbody>
+                                    </table>
+                                    {% include 'controller_panel/partials/_pagination.html' with page_obj=bulimlar param='bul_page' %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Guruhlar -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGroups">
+                                    Guruhlar ({{ groups.paginator.count }})
+                                </button>
+                            </h2>
+                            <div id="collapseGroups" class="accordion-collapse collapse" data-bs-parent="#entityAccordion">
+                                <div class="accordion-body p-0">
+                                    <table class="table table-sm table-striped mb-0 table-sm-custom">
+                                        <thead class="table-light">
+                                            <tr><th>#</th><th>Guruh</th><th>Fakultet</th><th width="120">Amal</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for g in groups %}
+                                            <tr>
+                                                <td>{{ forloop.counter0|add:groups.start_index }}</td>
+                                                <td>{{ g.name }}</td>
+                                                <td>{{ g.faculty.name }}</td>
+                                                <td>
+                                                    <a href="?edit_group={{ g.id }}" class="btn btn-xs btn-warning btn-sm">Tahrir</a>
+                                                    <a href="?delete_group={{ g.id }}" class="btn btn-xs btn-danger btn-sm" onclick="return confirm('O\'chirish?')">O'chir</a>
+                                                </td>
+                                            </tr>
+                                            {% empty %}<tr><td colspan="4" class="text-center">Yo'q</td></tr>{% endfor %}
+                                        </tbody>
+                                    </table>
+                                    {% include 'controller_panel/partials/_pagination.html' with page_obj=groups param='grp_page' %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Fanlar -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSubjects">
+                                    Fanlar ({{ subjects.paginator.count }})
+                                </button>
+                            </h2>
+                            <div id="collapseSubjects" class="accordion-collapse collapse" data-bs-parent="#entityAccordion">
+                                <div class="accordion-body p-0">
+                                    <table class="table table-sm table-striped mb-0 table-sm-custom">
+                                        <thead class="table-light">
+                                            <tr><th>#</th><th>Fan</th><th width="120">Amal</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for s in subjects %}
+                                            <tr>
+                                                <td>{{ forloop.counter0|add:subjects.start_index }}</td>
+                                                <td>{{ s.name }}</td>
+                                                <td>
+                                                    <a href="?edit_subject={{ s.id }}" class="btn btn-xs btn-warning btn-sm">Tahrir</a>
+                                                    <a href="?delete_subject={{ s.id }}" class="btn btn-xs btn-danger btn-sm" onclick="return confirm('O\'chirish?')">O'chir</a>
+                                                </td>
+                                            </tr>
+                                            {% empty %}<tr><td colspan="3" class="text-center">Yo'q</td></tr>{% endfor %}
+                                        </tbody>
+                                    </table>
+                                    {% include 'controller_panel/partials/_pagination.html' with page_obj=subjects param='sub_page' %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel: GroupSubject Management -->
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Fanlarni bog'lash ({{ group_subjects.paginator.count }})</h5>
+                    <button class="btn btn-sm btn-light" data-bs-toggle="modal" data-bs-target="#addGroupSubjectModal">
+                        + Yangi bog'lash
+                    </button>
+                </div>
+                <div class="card-body groupsubject-panel p-0">
+                    <table class="table table-sm table-striped mb-0 table-sm-custom">
+                        <thead class="table-light">
+                            <tr>
+                                <th>#</th>
+                                <th>Guruh</th>
+                                <th>Bo'lim</th>
+                                <th>Kafedra</th>
+                                <th>Fan</th>
+                                <th>Semestr</th>
+                                <th width="100">Amal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for gs in group_subjects %}
+                            <tr>
+                                <td>{{ forloop.counter0|add:group_subjects.start_index }}</td>
+                                <td>{{ gs.group.name|default:'-' }}</td>
+                                <td>{{ gs.bulim.name|default:'-' }}</td>
+                                <td>{{ gs.kafedra.name|default:'-' }}</td>
+                                <td>{{ gs.subject.name }}</td>
+                                <td>{{ gs.semester.number|default:'-' }}</td>
+                                <td>
+                                    <a href="?edit={{ gs.id }}" class="btn btn-xs btn-warning btn-sm">Tahrir</a>
+                                    <a href="?delete={{ gs.id }}" class="btn btn-xs btn-danger btn-sm" onclick="return confirm('O\'chirish?')">O'chir</a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr><td colspan="7" class="text-center">Bog'langan fanlar yo'q</td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="p-2">
+                        {% include 'controller_panel/partials/_pagination.html' with page_obj=group_subjects param='page' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Modals -->
+<!-- Add GroupSubject Modal -->
+<div class="modal fade" id="addGroupSubjectModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title">Yangi bog'lash qo'shish</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Guruh:</label>
+                        <select name="group" class="form-select">
+                            <option value="">Tanlanmagan</option>
+                            {% for group in all_groups %}
+                                <option value="{{ group.id }}">{{ group.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Bo'lim:</label>
+                        <select name="bulim" class="form-select">
+                            <option value="">Tanlanmagan</option>
+                            {% for bulim in all_bulimlar %}
+                                <option value="{{ bulim.id }}">{{ bulim.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Kafedra:</label>
+                        <select name="kafedra" class="form-select">
+                            <option value="">Tanlanmagan</option>
+                            {% for kafedra in all_kafedralar %}
+                                <option value="{{ kafedra.id }}">{{ kafedra.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Fan:</label>
+                        <select name="subject" class="form-select" required>
+                            {% for subject in all_subjects %}
+                                <option value="{{ subject.id }}">{{ subject.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Semestr:</label>
+                        <select name="semester" class="form-select">
+                            <option value="">Tanlanmagan</option>
+                            {% for semester in semesters %}
+                                <option value="{{ semester.id }}">{{ semester.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="add_group_subject" value="1" />
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor qilish</button>
+                    <button type="submit" class="btn btn-success">Saqlash</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Add University Modal -->
+<div class="modal fade" id="addUniversityModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="?add_university=1">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title">Universitet qo'shish</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" name="university_name" class="form-control" placeholder="Universitet nomi" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Saqlash</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Add Faculty Modal -->
+<div class="modal fade" id="addFacultyModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="?add_faculty=1">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title">Fakultet qo'shish</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <select name="university" class="form-select mb-2" required>
+                        <option value="">Universitetni tanlang</option>
+                        {% for u in all_universities %}
+                            <option value="{{ u.id }}">{{ u.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="text" name="faculty_name" class="form-control" placeholder="Fakultet nomi" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Saqlash</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Add Kafedra Modal -->
+<div class="modal fade" id="addKafedraModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="?add_kafedra=1">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title">Kafedra qo'shish</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <select name="faculty" class="form-select mb-2" required>
+                        <option value="">Fakultetni tanlang</option>
+                        {% for f in all_faculties %}
+                            <option value="{{ f.id }}">{{ f.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="text" name="kafedra_name" class="form-control" placeholder="Kafedra nomi" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Saqlash</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Add Bulim Modal -->
+<div class="modal fade" id="addBulimModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="?add_bulim=1">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title">Bo'lim qo'shish</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" name="bulim_name" class="form-control" placeholder="Bo'lim nomi" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Saqlash</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Add Group Modal -->
+<div class="modal fade" id="addGroupModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="?add_group=1">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title">Guruh qo'shish</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <select name="faculty" class="form-select mb-2" required>
+                        <option value="">Fakultetni tanlang</option>
+                        {% for f in all_faculties %}
+                            <option value="{{ f.id }}">{{ f.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="text" name="group_name" class="form-control" placeholder="Guruh nomi" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Saqlash</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Add Subject Modal -->
+<div class="modal fade" id="addSubjectModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="?add_subject=1">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title">Fan qo'shish</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" name="subject_name" class="form-control" placeholder="Fan nomi" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Saqlash</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modals (keep existing edit modals from original template) -->
+{% if edit_gs %}
+<div class="modal fade show" id="editGroupSubjectModal" tabindex="-1" aria-modal="true" style="display:block;background:rgba(0,0,0,0.3);">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="?edit={{ edit_gs.id }}">
+                {% csrf_token %}
+                <input type="hidden" name="edit_id" value="{{ edit_gs.id }}">
+                <div class="modal-header bg-warning-subtle">
+                    <h5 class="modal-title">Bog'lashni tahrirlash</h5>
+                    <a href="." class="btn-close" aria-label="Yopish"></a>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-2">
+                        <label>Guruh:</label>
+                        <select name="group" class="form-select">
+                            <option value="">Tanlanmagan</option>
+                            {% for group in all_groups %}
+                                <option value="{{ group.id }}" {% if edit_gs.group_id == group.id %}selected{% endif %}>{{ group.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <label>Bo'lim:</label>
+                        <select name="bulim" class="form-select">
+                            <option value="">Tanlanmagan</option>
+                            {% for bulim in all_bulimlar %}
+                                <option value="{{ bulim.id }}" {% if edit_gs.bulim_id == bulim.id %}selected{% endif %}>{{ bulim.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <label>Kafedra:</label>
+                        <select name="kafedra" class="form-select">
+                            <option value="">Tanlanmagan</option>
+                            {% for kafedra in all_kafedralar %}
+                                <option value="{{ kafedra.id }}" {% if edit_gs.kafedra_id == kafedra.id %}selected{% endif %}>{{ kafedra.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <label>Fan:</label>
+                        <select name="subject" class="form-select" required>
+                            {% for subject in all_subjects %}
+                                <option value="{{ subject.id }}" {% if edit_gs.subject_id == subject.id %}selected{% endif %}>{{ subject.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <label>Semestr:</label>
+                        <select name="semester" class="form-select">
+                            <option value="">Tanlanmagan</option>
+                            {% for semester in semesters %}
+                                <option value="{{ semester.id }}" {% if edit_gs.semester_id == semester.id %}selected{% endif %}>{{ semester.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="." class="btn btn-secondary">Bekor qilish</a>
+                    <button type="submit" class="btn btn-primary">Saqlash</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>document.body.classList.add('modal-open');</script>
+{% endif %}
+
+{% if edit_university %}
+<div class="modal fade show" id="editUniversityModal" tabindex="-1" aria-modal="true" style="display:block;background:rgba(0,0,0,0.3);">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="?edit_university={{ edit_university.id }}">
+                {% csrf_token %}
+                <input type="hidden" name="edit_university_id" value="{{ edit_university.id }}">
+                <div class="modal-header bg-warning-subtle">
+                    <h5 class="modal-title">Universitet tahrirlash</h5>
+                    <a href="." class="btn-close" aria-label="Yopish"></a>
+                </div>
+                <div class="modal-body">
+                    <input type="text" name="university_name" class="form-control" value="{{ edit_university.name }}" required>
+                </div>
+                <div class="modal-footer">
+                    <a href="." class="btn btn-secondary">Bekor qilish</a>
+                    <button type="submit" class="btn btn-primary">Saqlash</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>document.body.classList.add('modal-open');</script>
+{% endif %}
+
+{% if edit_faculty %}
+<div class="modal fade show" id="editFacultyModal" tabindex="-1" aria-modal="true" style="display:block;background:rgba(0,0,0,0.3);">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="?edit_faculty={{ edit_faculty.id }}">
+                {% csrf_token %}
+                <input type="hidden" name="edit_faculty_id" value="{{ edit_faculty.id }}">
+                <div class="modal-header bg-warning-subtle">
+                    <h5 class="modal-title">Fakultet tahrirlash</h5>
+                    <a href="." class="btn-close" aria-label="Yopish"></a>
+                </div>
+                <div class="modal-body">
+                    <select name="university" class="form-select mb-2" required>
+                        <option value="">Universitetni tanlang</option>
+                        {% for u in all_universities %}
+                            <option value="{{ u.id }}" {% if edit_faculty.university_id == u.id %}selected{% endif %}>{{ u.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="text" name="faculty_name" class="form-control" value="{{ edit_faculty.name }}" required>
+                </div>
+                <div class="modal-footer">
+                    <a href="." class="btn btn-secondary">Bekor qilish</a>
+                    <button type="submit" class="btn btn-primary">Saqlash</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>document.body.classList.add('modal-open');</script>
+{% endif %}
+
+{% if edit_bulim %}
+<div class="modal fade show" id="editBulimModal" tabindex="-1" aria-modal="true" style="display:block;background:rgba(0,0,0,0.3);">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="?edit_bulim={{ edit_bulim.id }}">
+                {% csrf_token %}
+                <input type="hidden" name="edit_bulim_id" value="{{ edit_bulim.id }}">
+                <div class="modal-header bg-warning-subtle">
+                    <h5 class="modal-title">Bo'lim tahrirlash</h5>
+                    <a href="." class="btn-close" aria-label="Yopish"></a>
+                </div>
+                <div class="modal-body">
+                    <input type="text" name="bulim_name" class="form-control" value="{{ edit_bulim.name }}" required>
+                </div>
+                <div class="modal-footer">
+                    <a href="." class="btn btn-secondary">Bekor qilish</a>
+                    <button type="submit" class="btn btn-primary">Saqlash</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>document.body.classList.add('modal-open');</script>
+{% endif %}
+
+{% if edit_group %}
+<div class="modal fade show" id="editGroupModal" tabindex="-1" aria-modal="true" style="display:block;background:rgba(0,0,0,0.3);">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="?edit_group={{ edit_group.id }}">
+                {% csrf_token %}
+                <input type="hidden" name="edit_group_id" value="{{ edit_group.id }}">
+                <div class="modal-header bg-warning-subtle">
+                    <h5 class="modal-title">Guruh tahrirlash</h5>
+                    <a href="." class="btn-close" aria-label="Yopish"></a>
+                </div>
+                <div class="modal-body">
+                    <select name="faculty" class="form-select mb-2" required>
+                        <option value="">Fakultetni tanlang</option>
+                        {% for f in all_faculties %}
+                            <option value="{{ f.id }}" {% if edit_group.faculty_id == f.id %}selected{% endif %}>{{ f.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="text" name="group_name" class="form-control" value="{{ edit_group.name }}" required>
+                </div>
+                <div class="modal-footer">
+                    <a href="." class="btn btn-secondary">Bekor qilish</a>
+                    <button type="submit" class="btn btn-primary">Saqlash</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>document.body.classList.add('modal-open');</script>
+{% endif %}
+
+{% if edit_kafedra %}
+<div class="modal fade show" id="editKafedraModal" tabindex="-1" aria-modal="true" style="display:block;background:rgba(0,0,0,0.3);">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="?edit_kafedra={{ edit_kafedra.id }}">
+                {% csrf_token %}
+                <input type="hidden" name="edit_kafedra_id" value="{{ edit_kafedra.id }}">
+                <div class="modal-header bg-warning-subtle">
+                    <h5 class="modal-title">Kafedra tahrirlash</h5>
+                    <a href="." class="btn-close" aria-label="Yopish"></a>
+                </div>
+                <div class="modal-body">
+                    <select name="faculty" class="form-select mb-2" required>
+                        <option value="">Fakultetni tanlang</option>
+                        {% for f in all_faculties %}
+                            <option value="{{ f.id }}" {% if edit_kafedra.faculty_id == f.id %}selected{% endif %}>{{ f.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="text" name="kafedra_name" class="form-control" value="{{ edit_kafedra.name }}" required>
+                </div>
+                <div class="modal-footer">
+                    <a href="." class="btn btn-secondary">Bekor qilish</a>
+                    <button type="submit" class="btn btn-primary">Saqlash</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>document.body.classList.add('modal-open');</script>
+{% endif %}
+
+{% if edit_subject %}
+<div class="modal fade show" id="editSubjectModal" tabindex="-1" aria-modal="true" style="display:block;background:rgba(0,0,0,0.3);">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="?edit_subject={{ edit_subject.id }}">
+                {% csrf_token %}
+                <input type="hidden" name="edit_subject_id" value="{{ edit_subject.id }}">
+                <div class="modal-header bg-warning-subtle">
+                    <h5 class="modal-title">Fan tahrirlash</h5>
+                    <a href="." class="btn-close" aria-label="Yopish"></a>
+                </div>
+                <div class="modal-body">
+                    <input type="text" name="subject_name" class="form-control" value="{{ edit_subject.name }}" required>
+                </div>
+                <div class="modal-footer">
+                    <a href="." class="btn btn-secondary">Bekor qilish</a>
+                    <button type="submit" class="btn btn-primary">Saqlash</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>document.body.classList.add('modal-open');</script>
+{% endif %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

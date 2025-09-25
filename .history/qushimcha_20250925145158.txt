@@ -20,4 +20,4 @@ INFO 2025-09-25 14:50:58,508 basehttp "POST /api/controller-panel/group-subjects
  bular esa log fileda chiqmoqda 
 
 
- Xatolik: {'subject': ['This field cannot be null.']}  manashu xatolik pageda chiqmoqda ammo fan qushilmoqda
+ Xatolik: {'subject': ['This field cannot be null.']}  manashu xatolik 

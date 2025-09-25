@@ -1,0 +1,57 @@
+GET
+http://127.0.0.1:8000/favicon.ico
+[HTTP/1.1 404 Not Found 0ms]
+
+	
+GET
+	http://127.0.0.1:8000/favicon.ico
+Status
+404
+Not Found
+VersionHTTP/1.1
+Transferred3.05 kB (3.05 kB size)
+Referrer Policysame-origin
+DNS ResolutionSystem
+
+	
+Content-Length
+	3046
+Content-Type
+	text/html; charset=utf-8
+Cross-Origin-Opener-Policy
+	same-origin
+Date
+	Thu, 18 Sep 2025 06:40:11 GMT
+Referrer-Policy
+	same-origin
+Server
+	WSGIServer/0.2 CPython/3.11.8
+Vary
+	origin
+X-Content-Type-Options
+	nosniff
+X-Frame-Options
+	DENY
+	
+Accept
+	image/avif,image/webp,image/png,image/svg+xml,image/*;q=0.8,*/*;q=0.5
+Accept-Encoding
+	gzip, deflate, br, zstd
+Accept-Language
+	en-US,en;q=0.5
+Connection
+	keep-alive
+Cookie
+	csrftoken=GcijLfRKY54A0p2O8kI4D9iP1iTtcCuq; sessionid=fumixc863vb0hdn9gj0diavvnexy5a5m
+Host
+	127.0.0.1:8000
+Referer
+	http://127.0.0.1:8000/api/controller-panel/group-subjects/?add_group=1
+Sec-Fetch-Dest
+	image
+Sec-Fetch-Mode
+	no-cors
+Sec-Fetch-Site
+	same-origin
+User-Agent
+	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:143.0) Gecko/20100101 Firefox/143.0 manashu xatolik bor consoleda va qandaydir malumot qushsam  Xatolik: Fan tanlash majburiy.  shu xabar chiqmoqda page da

@@ -1,0 +1,1586 @@
+INFO 2025-09-24 15:03:57,060 autoreload Watching for file changes with StatReloader
+INFO 2025-09-24 15:03:59,860 basehttp "GET / HTTP/1.1" 200 5079
+INFO 2025-09-24 15:03:59,886 basehttp "GET /static/login/login.css HTTP/1.1" 304 0
+INFO 2025-09-24 15:03:59,888 basehttp "GET /static/login/login.js HTTP/1.1" 304 0
+INFO 2025-09-24 15:03:59,916 basehttp "GET /static/main/1.png HTTP/1.1" 304 0
+INFO 2025-09-24 15:04:20,540 basehttp "GET / HTTP/1.1" 200 5079
+INFO 2025-09-24 15:04:20,558 basehttp "GET /static/login/login.js HTTP/1.1" 200 6311
+INFO 2025-09-24 15:04:20,559 basehttp "GET /static/login/login.css HTTP/1.1" 200 9974
+INFO 2025-09-24 15:04:21,345 basehttp "GET /static/main/1.png HTTP/1.1" 200 48202
+WARNING 2025-09-24 15:04:21,408 log Not Found: /favicon.ico
+WARNING 2025-09-24 15:04:21,408 basehttp "GET /favicon.ico HTTP/1.1" 404 3046
+INFO 2025-09-24 15:04:29,304 basehttp "GET / HTTP/1.1" 200 5079
+INFO 2025-09-24 15:04:29,326 basehttp "GET /static/login/login.js HTTP/1.1" 200 6311
+INFO 2025-09-24 15:04:29,326 basehttp "GET /static/login/login.css HTTP/1.1" 200 9974
+INFO 2025-09-24 15:04:30,279 basehttp "GET /static/main/1.png HTTP/1.1" 200 48202
+WARNING 2025-09-24 15:04:30,334 log Not Found: /favicon.ico
+WARNING 2025-09-24 15:04:30,335 basehttp "GET /favicon.ico HTTP/1.1" 404 3046
+INFO 2025-09-24 15:04:55,572 basehttp "POST / HTTP/1.1" 302 0
+INFO 2025-09-24 15:04:55,587 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 25224
+INFO 2025-09-24 15:05:00,791 basehttp "POST /api/controller-panel/delete-test/42/ HTTP/1.1" 302 0
+INFO 2025-09-24 15:05:00,799 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 22829
+INFO 2025-09-24 15:05:03,023 basehttp "POST /api/controller-panel/delete-test/43/ HTTP/1.1" 302 0
+INFO 2025-09-24 15:05:03,029 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 20482
+INFO 2025-09-24 15:05:43,181 basehttp "GET /api/controller-panel/add-user/ HTTP/1.1" 200 17765
+INFO 2025-09-24 15:07:36,465 basehttp "GET /api/controller-panel/add-user/?filter_role=teacher&filter_group=&filter_kafedra=&filter_bulim= HTTP/1.1" 200 13649
+INFO 2025-09-24 15:07:40,162 basehttp "GET /api/controller-panel/add-user/?filter_role=student&filter_group=&filter_kafedra=&filter_bulim= HTTP/1.1" 200 14333
+INFO 2025-09-24 15:07:51,203 basehttp "GET /api/controller-panel/add-user/?filter_role=&filter_group=&filter_kafedra=&filter_bulim= HTTP/1.1" 200 17765
+INFO 2025-09-24 15:09:04,593 basehttp "GET /api/controller-panel/add-user/?filter_role=student&filter_group=&filter_kafedra=&filter_bulim= HTTP/1.1" 200 14333
+INFO 2025-09-24 15:09:09,276 basehttp "GET /api/controller-panel/add-user/?filter_role=&filter_group=&filter_kafedra=&filter_bulim= HTTP/1.1" 200 17765
+INFO 2025-09-24 15:09:11,841 basehttp "GET /api/controller-panel/add-user/?filter_role=&filter_group=4&filter_kafedra=&filter_bulim= HTTP/1.1" 200 14315
+INFO 2025-09-24 15:09:13,516 basehttp "GET /api/controller-panel/add-user/?filter_role=&filter_group=&filter_kafedra=&filter_bulim= HTTP/1.1" 200 17765
+INFO 2025-09-24 15:09:14,755 basehttp "GET /api/controller-panel/add-user/?filter_role=&filter_group=&filter_kafedra=10&filter_bulim= HTTP/1.1" 200 14364
+INFO 2025-09-24 15:09:16,588 basehttp "GET /api/controller-panel/add-user/?filter_role=&filter_group=&filter_kafedra=&filter_bulim= HTTP/1.1" 200 17765
+INFO 2025-09-24 15:09:20,908 basehttp "GET /api/controller-panel/add-user/?filter_role=teacher&filter_group=&filter_kafedra=&filter_bulim= HTTP/1.1" 200 13649
+INFO 2025-09-24 15:09:32,096 basehttp "GET /api/controller-panel/add-user/?filter_role=teacher&filter_group=&filter_kafedra=10&filter_bulim= HTTP/1.1" 200 12981
+INFO 2025-09-24 15:09:34,008 basehttp "GET /api/controller-panel/add-user/?filter_role=teacher&filter_group=&filter_kafedra=&filter_bulim= HTTP/1.1" 200 13649
+INFO 2025-09-24 15:09:36,167 basehttp "GET /api/controller-panel/add-user/?filter_role=teacher&filter_group=&filter_kafedra=&filter_bulim=1 HTTP/1.1" 200 12978
+INFO 2025-09-24 15:09:37,681 basehttp "GET /api/controller-panel/add-user/?filter_role=teacher&filter_group=&filter_kafedra=&filter_bulim= HTTP/1.1" 200 13649
+INFO 2025-09-24 15:09:39,723 basehttp "GET /api/controller-panel/add-user/?filter_role=&filter_group=&filter_kafedra=&filter_bulim= HTTP/1.1" 200 17765
+INFO 2025-09-24 15:09:41,540 basehttp "GET /api/controller-panel/add-user/?filter_role=&filter_group=&filter_kafedra=10&filter_bulim= HTTP/1.1" 200 14364
+INFO 2025-09-24 15:09:44,563 basehttp "GET /api/controller-panel/add-user/?filter_role=&filter_group=&filter_kafedra=&filter_bulim= HTTP/1.1" 200 17765
+INFO 2025-09-24 15:10:35,358 basehttp "GET /api/controller-panel/add-user/?filter_role=&filter_group=&filter_kafedra=&filter_bulim= HTTP/1.1" 200 17765
+INFO 2025-09-24 15:11:33,217 basehttp "GET /api/controller-panel/add-user/?filter_role=&filter_group=4&filter_kafedra=&filter_bulim= HTTP/1.1" 200 14315
+INFO 2025-09-24 15:11:40,461 basehttp "GET /api/controller-panel/export-users-word/?filter_role=&filter_group=4&filter_kafedra=&filter_bulim= HTTP/1.1" 200 36910
+INFO 2025-09-24 15:11:55,444 basehttp "GET /api/controller-panel/add-user/?filter_role=&filter_group=&filter_kafedra=&filter_bulim= HTTP/1.1" 200 17765
+INFO 2025-09-24 15:12:15,765 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 20482
+INFO 2025-09-24 15:12:18,757 basehttp "GET /api/test-api/all-results/ HTTP/1.1" 200 35434
+INFO 2025-09-24 15:12:22,608 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 20482
+INFO 2025-09-24 15:12:25,362 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 200 10845
+INFO 2025-09-24 15:12:27,960 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 20482
+INFO 2025-09-24 15:12:31,923 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 35824
+INFO 2025-09-24 15:20:37,848 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 20482
+INFO 2025-09-24 15:20:42,527 basehttp "GET /api/controller-panel/add-test/?target=student HTTP/1.1" 200 21770
+INFO 2025-09-24 15:20:48,246 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=4 HTTP/1.1" 200 108
+INFO 2025-09-24 15:21:00,709 basehttp "GET /api/subject-max-question-count/?subject_id=1 HTTP/1.1" 200 25
+INFO 2025-09-24 15:21:31,590 basehttp "POST /api/controller-panel/add-test/?target=student HTTP/1.1" 302 0
+INFO 2025-09-24 15:21:31,606 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 22813
+INFO 2025-09-24 15:21:35,653 basehttp "GET /api/controller-panel/add-user/ HTTP/1.1" 200 17765
+INFO 2025-09-24 15:21:44,335 basehttp "GET /api/controller-panel/add-test/?target=student HTTP/1.1" 200 21770
+INFO 2025-09-24 15:21:45,853 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=1 HTTP/1.1" 200 105
+INFO 2025-09-24 15:23:30,904 basehttp "POST / HTTP/1.1" 302 0
+INFO 2025-09-24 15:23:30,911 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 22813
+INFO 2025-09-24 15:23:37,339 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 35824
+INFO 2025-09-24 15:24:04,966 basehttp "POST /api/controller-panel/group-subjects/ HTTP/1.1" 200 36638
+INFO 2025-09-24 15:24:10,786 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 22813
+INFO 2025-09-24 15:24:20,491 basehttp "GET /api/controller-panel/add-test/?target=student HTTP/1.1" 200 21770
+INFO 2025-09-24 15:24:21,853 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=1 HTTP/1.1" 200 153
+INFO 2025-09-24 15:24:23,647 basehttp "GET /api/subject-max-question-count/?subject_id=1 HTTP/1.1" 200 25
+INFO 2025-09-24 15:24:36,247 basehttp "POST /api/controller-panel/add-test/?target=student HTTP/1.1" 302 0
+INFO 2025-09-24 15:24:36,255 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 25192
+INFO 2025-09-24 15:24:57,884 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 36638
+INFO 2025-09-24 15:25:11,970 basehttp "POST /api/controller-panel/group-subjects/ HTTP/1.1" 200 37452
+INFO 2025-09-24 15:25:26,352 basehttp "GET /api/controller-panel/add-test/?target=student HTTP/1.1" 200 21770
+INFO 2025-09-24 15:25:28,013 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=4 HTTP/1.1" 200 156
+INFO 2025-09-24 15:25:33,854 basehttp "GET /api/subject-max-question-count/?subject_id=1 HTTP/1.1" 200 25
+INFO 2025-09-24 15:25:40,760 basehttp "POST /api/controller-panel/add-test/?target=student HTTP/1.1" 302 0
+INFO 2025-09-24 15:25:40,770 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 27571
+INFO 2025-09-24 15:26:07,173 basehttp "GET /api/controller-panel/add-user/ HTTP/1.1" 200 17765
+INFO 2025-09-24 15:26:17,896 basehttp "GET /api/controller-panel/add-user/?filter_role=&filter_group=1&filter_kafedra=&filter_bulim= HTTP/1.1" 200 12949
+INFO 2025-09-24 15:26:19,729 basehttp "GET /api/controller-panel/add-user/?filter_role=&filter_group=4&filter_kafedra=&filter_bulim= HTTP/1.1" 200 14315
+INFO 2025-09-24 15:26:27,354 basehttp "GET /api/controller-panel/export-users-pdf/?filter_role=&filter_group=4&filter_kafedra=&filter_bulim= HTTP/1.1" 200 1816
+INFO 2025-09-24 15:26:42,610 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 27571
+INFO 2025-09-24 15:26:51,861 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 27571
+INFO 2025-09-24 15:26:53,994 basehttp "GET /api/controller-panel/add-user/ HTTP/1.1" 200 17765
+INFO 2025-09-24 15:27:12,381 basehttp "POST / HTTP/1.1" 302 0
+INFO 2025-09-24 15:27:12,388 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 19647
+INFO 2025-09-24 15:28:47,683 basehttp "GET /api/test-api/test/46/ HTTP/1.1" 200 64732
+INFO 2025-09-24 15:28:47,721 basehttp "GET /media/matching_answers/4.png HTTP/1.1" 200 1146
+INFO 2025-09-24 15:28:47,723 basehttp "GET /media/questions/3.png HTTP/1.1" 304 0
+INFO 2025-09-24 15:28:47,724 basehttp "GET /media/matching_answers/6.png HTTP/1.1" 200 1997
+INFO 2025-09-24 15:28:47,726 basehttp "GET /media/matching_answers/5.png HTTP/1.1" 200 1461
+INFO 2025-09-24 15:28:47,726 basehttp "GET /media/questions/6.png HTTP/1.1" 304 0
+INFO 2025-09-24 15:28:47,726 basehttp "GET /media/questions/tyuring_ymIYCJm.jpg HTTP/1.1" 304 0
+INFO 2025-09-24 15:28:54,886 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 15:29:03,567 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 15:29:05,809 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 15:29:07,302 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 15:29:12,961 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 15:29:15,313 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 15:29:15,710 basehttp "POST /api/test-api/test/46/ HTTP/1.1" 302 0
+INFO 2025-09-24 15:29:15,841 basehttp "GET /api/test-api/result/81/ HTTP/1.1" 200 29766
+INFO 2025-09-24 15:29:15,938 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 15:29:16,013 basehttp - Broken pipe from ('127.0.0.1', 5298)
+INFO 2025-09-24 15:29:19,483 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 19653
+INFO 2025-09-24 15:29:29,170 basehttp "GET /api/test-api/all-results/ HTTP/1.1" 200 79138
+INFO 2025-09-24 15:29:40,506 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 27571
+INFO 2025-09-24 15:29:43,079 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 200 15797
+INFO 2025-09-24 15:29:57,707 basehttp "POST /api/controller-panel/allow-retake/ HTTP/1.1" 200 17
+INFO 2025-09-24 15:29:57,724 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 200 15310
+INFO 2025-09-24 15:30:03,108 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 19647
+INFO 2025-09-24 15:30:22,728 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 200 15310
+INFO 2025-09-24 15:31:54,232 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 27571
+INFO 2025-09-24 15:31:55,697 basehttp "GET /api/controller-panel/logout/ HTTP/1.1" 302 0
+INFO 2025-09-24 15:31:55,700 basehttp "GET /api/login/ HTTP/1.1" 200 5079
+INFO 2025-09-24 15:32:06,241 basehttp "POST /api/login/ HTTP/1.1" 302 0
+INFO 2025-09-24 15:32:06,255 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 20471
+INFO 2025-09-24 15:32:14,318 basehttp "GET /api/test-api/all-results/ HTTP/1.1" 200 86572
+INFO 2025-09-24 15:32:47,505 basehttp "POST /api/student-tests/81/override/ HTTP/1.1" 200 1275
+INFO 2025-09-24 15:32:47,539 basehttp "GET /api/test-api/all-results/ HTTP/1.1" 200 88565
+INFO 2025-09-24 15:34:10,258 basehttp "GET /api/test-api/export-subject/matematika/pdf/?group=407&semester=1&attempt_nth=1 HTTP/1.1" 200 9532
+INFO 2025-09-24 15:35:42,106 basehttp "POST /api/student-answers/341/adjust/ HTTP/1.1" 200 123
+INFO 2025-09-24 15:35:42,146 basehttp "GET /api/test-api/all-results/ HTTP/1.1" 200 88168
+INFO 2025-09-24 15:36:10,724 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 27571
+INFO 2025-09-24 15:36:12,159 basehttp "GET /api/controller-panel/logout/ HTTP/1.1" 302 0
+INFO 2025-09-24 15:36:12,163 basehttp "GET /api/login/ HTTP/1.1" 200 5079
+INFO 2025-09-24 15:36:29,604 basehttp "POST /api/login/ HTTP/1.1" 302 0
+INFO 2025-09-24 15:36:29,614 basehttp "GET /api/teacher-panel/dashboard/ HTTP/1.1" 200 41597
+INFO 2025-09-24 15:36:29,625 basehttp "GET /media/questions/3.png HTTP/1.1" 200 1817
+INFO 2025-09-24 15:36:29,626 basehttp "GET /media/questions/tyuring_ymIYCJm.jpg HTTP/1.1" 200 204070
+INFO 2025-09-24 15:36:29,633 basehttp "GET /media/questions/6.png HTTP/1.1" 200 1997
+INFO 2025-09-24 15:36:52,306 basehttp "GET /api/teacher-panel/add-question/?target=student HTTP/1.1" 200 31611
+INFO 2025-09-24 15:36:52,306 basehttp "GET /static/teacher_panel/css/formula_panel.css HTTP/1.1" 200 4700
+INFO 2025-09-24 15:36:52,306 basehttp "GET /static/teacher_panel/js/formula_panel.js HTTP/1.1" 200 14466
+INFO 2025-09-24 15:37:24,037 basehttp "GET /api/teacher-panel/get-subjects-by-group-semester/?group_id=4&semester_id=1 HTTP/1.1" 200 47
+INFO 2025-09-24 15:37:36,741 basehttp "GET /api/teacher-panel/get-subjects-by-group-semester/?group_id=4&semester_id=2 HTTP/1.1" 200 78
+INFO 2025-09-24 15:38:50,721 basehttp "GET /api/teacher-panel/dashboard/ HTTP/1.1" 200 41597
+INFO 2025-09-24 15:38:54,349 basehttp "GET /api/teacher-panel/edit-question/14/ HTTP/1.1" 200 28379
+INFO 2025-09-24 15:39:02,304 basehttp "GET /api/teacher-panel/dashboard/ HTTP/1.1" 200 41597
+INFO 2025-09-24 15:39:09,582 basehttp "GET /api/teacher-panel/add-question/?target=student HTTP/1.1" 200 31611
+INFO 2025-09-24 16:05:40,081 autoreload Watching for file changes with StatReloader
+INFO 2025-09-24 16:05:59,978 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 20471
+INFO 2025-09-24 16:06:06,198 basehttp "GET /api/controller-panel/add-test/?target=student HTTP/1.1" 200 21770
+INFO 2025-09-24 16:10:16,437 autoreload Watching for file changes with StatReloader
+INFO 2025-09-24 16:10:20,482 basehttp "GET / HTTP/1.1" 200 5079
+INFO 2025-09-24 16:10:27,628 basehttp "POST / HTTP/1.1" 302 0
+INFO 2025-09-24 16:10:27,642 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 27619
+INFO 2025-09-24 16:11:35,227 basehttp "GET /api/controller-panel/add-test/?target=student HTTP/1.1" 200 21770
+INFO 2025-09-24 16:16:25,283 autoreload C:\project\TEST\backend\main\views_controller_panel.py changed, reloading.
+INFO 2025-09-24 16:16:25,763 autoreload Watching for file changes with StatReloader
+INFO 2025-09-24 16:17:04,651 autoreload C:\project\TEST\backend\main\views_controller_panel.py changed, reloading.
+INFO 2025-09-24 16:17:05,137 autoreload Watching for file changes with StatReloader
+INFO 2025-09-24 16:19:28,349 basehttp "GET /api/controller-panel/add-test/?target=student HTTP/1.1" 200 22010
+INFO 2025-09-24 16:19:31,246 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=1 HTTP/1.1" 200 153
+INFO 2025-09-24 16:19:31,662 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=4 HTTP/1.1" 200 108
+INFO 2025-09-24 16:19:32,390 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=1 HTTP/1.1" 200 153
+INFO 2025-09-24 16:19:32,726 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=4 HTTP/1.1" 200 108
+INFO 2025-09-24 16:19:33,244 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=1 HTTP/1.1" 200 153
+INFO 2025-09-24 16:19:34,330 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=1,4 HTTP/1.1" 200 199
+INFO 2025-09-24 16:19:51,874 basehttp "GET /api/subject-max-question-count/?subject_id=3 HTTP/1.1" 200 24
+INFO 2025-09-24 16:20:48,689 basehttp "GET /api/controller-panel/add-test/?target=student HTTP/1.1" 200 22010
+INFO 2025-09-24 16:20:50,989 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=1 HTTP/1.1" 200 153
+INFO 2025-09-24 16:20:51,836 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=1,4 HTTP/1.1" 200 199
+INFO 2025-09-24 16:20:54,039 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=4 HTTP/1.1" 200 108
+INFO 2025-09-24 16:20:59,284 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=1 HTTP/1.1" 200 153
+INFO 2025-09-24 16:20:59,684 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=1,4 HTTP/1.1" 200 199
+INFO 2025-09-24 16:21:08,313 basehttp "GET /api/subject-max-question-count/?subject_id=2 HTTP/1.1" 200 24
+INFO 2025-09-24 16:21:13,055 basehttp "GET /api/subject-max-question-count/?subject_id=1 HTTP/1.1" 200 25
+INFO 2025-09-24 16:21:21,197 basehttp "POST /api/controller-panel/add-test/?target=student HTTP/1.1" 302 0
+INFO 2025-09-24 16:21:21,208 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 25178
+INFO 2025-09-24 16:24:15,483 basehttp "GET /api/controller-panel/add-test/?target=student HTTP/1.1" 200 29604
+INFO 2025-09-24 16:24:19,854 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=1,4 HTTP/1.1" 200 199
+INFO 2025-09-24 16:24:20,718 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=1,4 HTTP/1.1" 200 199
+INFO 2025-09-24 16:24:22,431 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=1,4 HTTP/1.1" 200 199
+INFO 2025-09-24 16:24:29,151 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=1 HTTP/1.1" 200 153
+INFO 2025-09-24 16:24:37,966 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=1,4 HTTP/1.1" 200 199
+INFO 2025-09-24 16:24:48,554 autoreload C:\project\TEST\backend\main\views_controller_panel.py changed, reloading.
+INFO 2025-09-24 16:24:49,066 autoreload Watching for file changes with StatReloader
+INFO 2025-09-24 16:25:05,896 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 25178
+INFO 2025-09-24 16:25:12,014 basehttp "GET /api/controller-panel/logout/ HTTP/1.1" 302 0
+INFO 2025-09-24 16:25:12,018 basehttp "GET /api/login/ HTTP/1.1" 200 5079
+INFO 2025-09-24 16:25:25,810 basehttp "POST /api/login/ HTTP/1.1" 302 0
+INFO 2025-09-24 16:25:25,819 basehttp "GET /api/teacher-panel/dashboard/ HTTP/1.1" 200 41597
+INFO 2025-09-24 16:25:25,835 basehttp "GET /media/questions/3.png HTTP/1.1" 200 1817
+INFO 2025-09-24 16:25:25,836 basehttp "GET /media/questions/tyuring_ymIYCJm.jpg HTTP/1.1" 200 204070
+INFO 2025-09-24 16:25:25,839 basehttp "GET /media/questions/6.png HTTP/1.1" 200 1997
+INFO 2025-09-24 16:25:31,953 basehttp "GET /api/teacher-panel/add-question/?target=student HTTP/1.1" 200 31611
+INFO 2025-09-24 16:25:31,966 basehttp "GET /static/teacher_panel/css/formula_panel.css HTTP/1.1" 200 4700
+INFO 2025-09-24 16:25:31,967 basehttp "GET /static/teacher_panel/js/formula_panel.js HTTP/1.1" 200 14466
+INFO 2025-09-24 16:27:35,465 basehttp "GET /api/teacher-panel/add-question/?target=student HTTP/1.1" 200 31611
+INFO 2025-09-24 16:27:58,065 basehttp "GET /api/teacher-panel/add-question/?target=student HTTP/1.1" 200 31611
+INFO 2025-09-24 16:28:45,476 basehttp "GET /api/teacher-panel/add-question/?target=student HTTP/1.1" 200 39558
+INFO 2025-09-24 16:28:46,796 autoreload C:\project\TEST\backend\main\views_teacher_panel.py changed, reloading.
+INFO 2025-09-24 16:28:47,324 autoreload Watching for file changes with StatReloader
+INFO 2025-09-24 16:28:48,851 basehttp "GET /api/teacher-panel/get-subjects-by-group-semester/?group_id=1,4&semester_id=1 HTTP/1.1" 200 79
+INFO 2025-09-24 16:28:49,767 basehttp "GET /api/teacher-panel/get-subjects-by-group-semester/?group_id=1,4&semester_id=1 HTTP/1.1" 200 79
+INFO 2025-09-24 16:29:28,988 basehttp "GET /api/teacher-panel/get-subjects-by-group-semester/?group_id=1&semester_id=1 HTTP/1.1" 200 79
+INFO 2025-09-24 16:29:29,390 basehttp "GET /api/teacher-panel/get-subjects-by-group-semester/?group_id=1&semester_id=1 HTTP/1.1" 200 79
+INFO 2025-09-24 16:29:43,265 autoreload C:\project\TEST\backend\main\views_teacher_panel.py changed, reloading.
+INFO 2025-09-24 16:29:43,783 autoreload Watching for file changes with StatReloader
+INFO 2025-09-24 16:30:49,362 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 27619
+INFO 2025-09-24 16:30:51,756 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 200 15311
+INFO 2025-09-24 16:33:46,059 autoreload C:\project\TEST\backend\main\views_participated.py changed, reloading.
+INFO 2025-09-24 16:33:46,647 autoreload Watching for file changes with StatReloader
+INFO 2025-09-24 16:33:57,314 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 200 10845
+INFO 2025-09-24 16:33:59,347 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 200 10845
+INFO 2025-09-24 16:34:18,531 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 200 10845
+ERROR 2025-09-24 16:34:45,003 log Internal Server Error: /api/controller-panel/participated-students/
+Traceback (most recent call last):
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\backend\main\views_participated.py", line 81, in participated_students_list
+    return render(request, 'controller_panel/participated_students_list.html', {
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+           ^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+               ^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\defaulttags.py", line 862, in do_for
+    nodelist_loop = parser.parse(
+                    ^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\defaulttags.py", line 862, in do_for
+    nodelist_loop = parser.parse(
+                    ^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 489, in parse
+    raise self.error(token, e)
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 487, in parse
+    filter_expression = self.compile_filter(token.contents)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 609, in compile_filter
+    return FilterExpression(token, self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 710, in __init__
+    raise TemplateSyntaxError(
+django.template.exceptions.TemplateSyntaxError: Could not parse the remainder: ' if group' from 'group.name if group'
+ERROR 2025-09-24 16:34:45,007 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 500 261781
+ERROR 2025-09-24 16:34:46,058 log Internal Server Error: /api/controller-panel/participated-students/
+Traceback (most recent call last):
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\backend\main\views_participated.py", line 81, in participated_students_list
+    return render(request, 'controller_panel/participated_students_list.html', {
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+           ^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+               ^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\defaulttags.py", line 862, in do_for
+    nodelist_loop = parser.parse(
+                    ^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\defaulttags.py", line 862, in do_for
+    nodelist_loop = parser.parse(
+                    ^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 489, in parse
+    raise self.error(token, e)
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 487, in parse
+    filter_expression = self.compile_filter(token.contents)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 609, in compile_filter
+    return FilterExpression(token, self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 710, in __init__
+    raise TemplateSyntaxError(
+django.template.exceptions.TemplateSyntaxError: Could not parse the remainder: ' if group' from 'group.name if group'
+ERROR 2025-09-24 16:34:46,060 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 500 261781
+ERROR 2025-09-24 16:34:58,905 log Internal Server Error: /api/controller-panel/participated-students/
+Traceback (most recent call last):
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\backend\main\views_participated.py", line 81, in participated_students_list
+    return render(request, 'controller_panel/participated_students_list.html', {
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+           ^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+               ^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\defaulttags.py", line 862, in do_for
+    nodelist_loop = parser.parse(
+                    ^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\defaulttags.py", line 862, in do_for
+    nodelist_loop = parser.parse(
+                    ^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 489, in parse
+    raise self.error(token, e)
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 487, in parse
+    filter_expression = self.compile_filter(token.contents)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 609, in compile_filter
+    return FilterExpression(token, self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 710, in __init__
+    raise TemplateSyntaxError(
+django.template.exceptions.TemplateSyntaxError: Could not parse the remainder: ' if group' from 'group.name if group'
+ERROR 2025-09-24 16:34:58,907 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 500 261781
+INFO 2025-09-24 16:35:03,325 autoreload C:\project\TEST\backend\main\views_participated.py changed, reloading.
+INFO 2025-09-24 16:35:03,828 autoreload Watching for file changes with StatReloader
+INFO 2025-09-24 16:35:05,996 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 200 15311
+INFO 2025-09-24 16:39:26,005 autoreload C:\project\TEST\backend\main\views_participated.py changed, reloading.
+INFO 2025-09-24 16:39:26,506 autoreload Watching for file changes with StatReloader
+INFO 2025-09-24 16:39:35,847 autoreload C:\project\TEST\backend\main\urls_controller_panel.py changed, reloading.
+INFO 2025-09-24 16:39:36,300 autoreload Watching for file changes with StatReloader
+INFO 2025-09-24 16:41:09,782 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 200 19042
+INFO 2025-09-24 16:41:40,035 basehttp "GET /api/teacher-panel/add-question/?target=student HTTP/1.1" 302 0
+INFO 2025-09-24 16:41:40,051 basehttp "GET /api/login/?next=/api/teacher-panel/add-question/%3Ftarget%3Dstudent HTTP/1.1" 200 5079
+WARNING 2025-09-24 16:41:40,202 log Not Found: /favicon.ico
+WARNING 2025-09-24 16:41:40,202 basehttp "GET /favicon.ico HTTP/1.1" 404 3046
+INFO 2025-09-24 16:41:47,729 basehttp "GET /api/teacher-panel/dashboard/ HTTP/1.1" 200 41597
+INFO 2025-09-24 16:41:48,856 basehttp "GET /api/teacher-panel/logout/ HTTP/1.1" 302 0
+INFO 2025-09-24 16:41:48,861 basehttp "GET /api/login/ HTTP/1.1" 200 5079
+INFO 2025-09-24 16:41:53,869 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 27619
+INFO 2025-09-24 16:41:57,429 basehttp "GET /api/controller-panel/add-user/ HTTP/1.1" 200 17765
+INFO 2025-09-24 16:42:14,674 basehttp "POST /api/login/ HTTP/1.1" 302 0
+INFO 2025-09-24 16:42:14,684 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 19646
+INFO 2025-09-24 16:42:16,802 basehttp "GET /api/test-api/test/48/ HTTP/1.1" 200 61497
+INFO 2025-09-24 16:42:16,816 basehttp "GET /media/matching_answers/6.png HTTP/1.1" 200 1997
+INFO 2025-09-24 16:42:16,818 basehttp "GET /media/matching_answers/5.png HTTP/1.1" 200 1461
+INFO 2025-09-24 16:42:16,819 basehttp "GET /media/matching_answers/4.png HTTP/1.1" 200 1146
+INFO 2025-09-24 16:42:17,982 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 16:42:31,202 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 16:42:32,480 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 16:42:39,774 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 16:42:42,961 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 16:42:43,834 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 16:42:44,955 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 16:42:47,361 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 16:42:50,007 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 16:42:50,843 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 16:42:54,895 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 16:42:56,465 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 16:42:57,522 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 16:42:59,386 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 16:43:00,590 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 16:43:01,617 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 16:43:02,471 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 16:43:02,724 basehttp "POST /api/test-api/test/48/ HTTP/1.1" 302 0
+INFO 2025-09-24 16:43:02,749 basehttp "GET /api/test-api/result/82/ HTTP/1.1" 200 21966
+INFO 2025-09-24 16:43:02,770 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 16:43:05,544 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 19652
+INFO 2025-09-24 16:43:21,365 basehttp "POST /api/login/?next=/api/teacher-panel/add-question/%3Ftarget%3Dstudent HTTP/1.1" 302 0
+INFO 2025-09-24 16:43:21,375 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 27619
+INFO 2025-09-24 16:43:23,325 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 200 20599
+INFO 2025-09-24 16:43:33,152 basehttp "POST /api/controller-panel/allow-retake-bulk/ HTTP/1.1" 200 31
+INFO 2025-09-24 16:43:33,168 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 200 20120
+INFO 2025-09-24 16:43:36,230 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 19646
+INFO 2025-09-24 16:43:37,835 basehttp "GET /api/test-api/test/48/ HTTP/1.1" 200 61497
+INFO 2025-09-24 16:43:39,044 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 16:43:39,419 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 16:43:40,973 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 16:43:40,976 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 16:43:41,339 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 16:43:42,330 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 16:43:42,510 basehttp "POST /api/test-api/test/48/ HTTP/1.1" 302 0
+INFO 2025-09-24 16:43:42,538 basehttp "GET /api/test-api/result/83/ HTTP/1.1" 200 25013
+INFO 2025-09-24 16:43:42,558 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 16:43:42,931 basehttp - Broken pipe from ('127.0.0.1', 6328)
+INFO 2025-09-24 16:43:45,074 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 200 21675
+INFO 2025-09-24 16:44:00,339 basehttp "POST /api/controller-panel/allow-retake/ HTTP/1.1" 200 17
+INFO 2025-09-24 16:44:00,361 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 200 21196
+INFO 2025-09-24 16:44:03,598 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 19646
+INFO 2025-09-24 16:44:05,359 basehttp "GET /api/test-api/test/48/ HTTP/1.1" 200 61497
+INFO 2025-09-24 16:44:06,388 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 16:44:07,676 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 16:44:10,142 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 16:44:10,405 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 16:44:11,101 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 16:44:12,657 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 16:44:12,845 basehttp "POST /api/test-api/test/48/ HTTP/1.1" 302 0
+INFO 2025-09-24 16:44:12,882 basehttp "GET /api/test-api/result/84/ HTTP/1.1" 200 25013
+INFO 2025-09-24 16:44:12,901 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 16:44:13,702 basehttp - Broken pipe from ('127.0.0.1', 6335)
+INFO 2025-09-24 16:44:16,444 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 200 22751
+INFO 2025-09-24 16:44:38,578 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 19652
+INFO 2025-09-24 16:44:55,374 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 27619
+INFO 2025-09-24 16:45:06,608 basehttp "GET /api/controller-panel/edit-test/46/ HTTP/1.1" 200 7033
+INFO 2025-09-24 16:45:08,667 basehttp "POST /api/controller-panel/edit-test/46/ HTTP/1.1" 302 0
+INFO 2025-09-24 16:45:08,677 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 27603
+INFO 2025-09-24 16:45:11,934 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 19652
+INFO 2025-09-24 16:45:25,448 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 27603
+INFO 2025-09-24 16:45:36,424 basehttp "GET /api/controller-panel/edit-test/46/ HTTP/1.1" 200 7033
+INFO 2025-09-24 16:45:37,598 basehttp "POST /api/controller-panel/edit-test/46/ HTTP/1.1" 302 0
+INFO 2025-09-24 16:45:37,607 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 27603
+INFO 2025-09-24 16:45:40,262 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 19652
+INFO 2025-09-24 16:45:47,039 basehttp "GET /api/controller-panel/edit-test/44/ HTTP/1.1" 200 7034
+INFO 2025-09-24 16:45:48,637 basehttp "POST /api/controller-panel/edit-test/44/ HTTP/1.1" 302 0
+INFO 2025-09-24 16:45:48,646 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 27587
+INFO 2025-09-24 16:45:50,952 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 19652
+INFO 2025-09-24 16:46:03,714 basehttp "GET /api/controller-panel/edit-test/46/ HTTP/1.1" 200 7033
+INFO 2025-09-24 16:46:06,207 basehttp "GET /api/controller-panel/edit-test/46/ HTTP/1.1" 200 7033
+INFO 2025-09-24 16:46:16,921 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 27587
+INFO 2025-09-24 16:46:18,266 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 27587
+INFO 2025-09-24 16:46:42,551 autoreload C:\project\TEST\backend\main\views_participated.py changed, reloading.
+INFO 2025-09-24 16:46:43,047 autoreload Watching for file changes with StatReloader
+INFO 2025-09-24 16:47:09,697 basehttp "GET /api/controller-panel/add-test/?target=student HTTP/1.1" 200 29604
+INFO 2025-09-24 16:47:12,927 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=1 HTTP/1.1" 200 153
+INFO 2025-09-24 16:47:20,852 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=4 HTTP/1.1" 200 108
+INFO 2025-09-24 16:47:33,221 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=1,4 HTTP/1.1" 200 199
+INFO 2025-09-24 16:47:34,764 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=1 HTTP/1.1" 200 153
+INFO 2025-09-24 16:47:51,945 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 37452
+INFO 2025-09-24 16:48:11,853 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=1,4 HTTP/1.1" 200 199
+INFO 2025-09-24 16:48:12,445 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=4 HTTP/1.1" 200 108
+INFO 2025-09-24 16:48:14,746 basehttp "GET /api/controller-panel/add-test/?target=student HTTP/1.1" 200 29604
+INFO 2025-09-24 16:48:16,316 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=4 HTTP/1.1" 200 108
+INFO 2025-09-24 16:48:28,294 basehttp "GET /api/controller-panel/group-subjects/?delete=14 HTTP/1.1" 200 36638
+INFO 2025-09-24 16:48:29,601 basehttp "GET /api/controller-panel/add-test/?target=student HTTP/1.1" 200 29604
+INFO 2025-09-24 16:48:31,477 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=4 HTTP/1.1" 200 108
+INFO 2025-09-24 16:48:48,393 basehttp "POST /api/controller-panel/group-subjects/?delete=14 HTTP/1.1" 200 37452
+INFO 2025-09-24 16:48:50,737 basehttp "GET /api/controller-panel/add-test/?target=student HTTP/1.1" 200 29604
+INFO 2025-09-24 16:48:53,990 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=4 HTTP/1.1" 200 108
+INFO 2025-09-24 16:55:20,829 autoreload C:\project\TEST\backend\main\models.py changed, reloading.
+INFO 2025-09-24 16:55:21,341 autoreload Watching for file changes with StatReloader
+INFO 2025-09-24 17:26:35,504 autoreload C:\project\TEST\backend\main\views_controller_panel.py changed, reloading.
+INFO 2025-09-24 17:26:36,015 autoreload Watching for file changes with StatReloader
+INFO 2025-09-24 17:27:17,536 autoreload C:\project\TEST\backend\main\views_controller_panel.py changed, reloading.
+INFO 2025-09-24 17:27:17,999 autoreload Watching for file changes with StatReloader
+INFO 2025-09-24 17:27:37,967 autoreload C:\project\TEST\backend\main\views_controller_panel.py changed, reloading.
+INFO 2025-09-24 17:27:38,431 autoreload Watching for file changes with StatReloader
+INFO 2025-09-24 17:29:26,517 autoreload C:\project\TEST\backend\main\views_controller_panel.py changed, reloading.
+INFO 2025-09-24 17:29:27,013 autoreload Watching for file changes with StatReloader
+INFO 2025-09-24 17:30:20,151 autoreload C:\project\TEST\backend\main\views_controller_panel.py changed, reloading.
+INFO 2025-09-24 17:30:20,618 autoreload Watching for file changes with StatReloader
+INFO 2025-09-24 17:30:38,434 autoreload C:\project\TEST\backend\main\views_test_api.py changed, reloading.
+INFO 2025-09-24 17:30:38,940 autoreload Watching for file changes with StatReloader
+INFO 2025-09-24 17:31:16,983 autoreload C:\project\TEST\backend\main\views_controller_panel.py changed, reloading.
+INFO 2025-09-24 17:31:17,509 autoreload Watching for file changes with StatReloader
+INFO 2025-09-24 17:33:39,686 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 18457
+INFO 2025-09-24 17:33:39,930 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 18457
+INFO 2025-09-24 17:33:45,736 basehttp "POST /api/controller-panel/group-subjects/?delete=14 HTTP/1.1" 200 37452
+INFO 2025-09-24 17:33:48,867 basehttp "GET /api/controller-panel/add-test/?target=student HTTP/1.1" 200 30243
+WARNING 2025-09-24 17:35:50,198 log Forbidden: /api/student-tests/1/history/
+WARNING 2025-09-24 17:35:54,742 log Forbidden: /api/student-tests/1/override/
+INFO 2025-09-24 17:38:30,654 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 22828
+INFO 2025-09-24 17:38:33,355 basehttp "GET /api/controller-panel/edit-test/46/ HTTP/1.1" 200 7033
+ERROR 2025-09-24 17:38:34,615 log Internal Server Error: /api/controller-panel/edit-test/46/
+Traceback (most recent call last):
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\backend\main\views_controller_panel.py", line 660, in edit_test
+    if target == 'student' and raw_subject:
+       ^^^^^^
+NameError: name 'target' is not defined
+ERROR 2025-09-24 17:38:34,617 basehttp "POST /api/controller-panel/edit-test/46/ HTTP/1.1" 500 78687
+INFO 2025-09-24 17:39:31,145 autoreload C:\project\TEST\backend\main\views_controller_panel.py changed, reloading.
+INFO 2025-09-24 17:39:31,611 autoreload Watching for file changes with StatReloader
+INFO 2025-09-24 17:40:43,933 basehttp "GET /api/controller-panel/edit-test/46/ HTTP/1.1" 200 7033
+INFO 2025-09-24 17:40:45,195 basehttp "POST /api/controller-panel/edit-test/46/ HTTP/1.1" 302 0
+INFO 2025-09-24 17:40:45,205 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 22812
+INFO 2025-09-24 17:40:52,166 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 19647
+INFO 2025-09-24 17:40:54,874 basehttp "GET /api/test-api/test/46/ HTTP/1.1" 200 64732
+INFO 2025-09-24 17:40:55,853 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 17:40:56,813 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 17:40:57,680 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 17:40:58,033 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 17:40:59,516 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 17:41:00,137 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 17:41:00,873 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 17:41:01,079 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 17:41:01,234 basehttp "POST /api/test-api/test/46/ HTTP/1.1" 302 0
+INFO 2025-09-24 17:41:01,269 basehttp "GET /api/test-api/result/85/ HTTP/1.1" 200 29339
+INFO 2025-09-24 17:41:01,287 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 17:41:01,685 basehttp - Broken pipe from ('127.0.0.1', 7301)
+INFO 2025-09-24 17:41:02,912 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 19653
+INFO 2025-09-24 17:41:04,648 basehttp "GET /api/test-api/test/46/ HTTP/1.1" 200 4937
+INFO 2025-09-24 17:41:05,981 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 19653
+INFO 2025-09-24 17:41:17,399 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 22812
+INFO 2025-09-24 17:41:24,625 basehttp "GET /api/controller-panel/logout/ HTTP/1.1" 302 0
+INFO 2025-09-24 17:41:24,647 basehttp "GET /api/login/ HTTP/1.1" 200 5079
+INFO 2025-09-24 17:41:35,938 basehttp "POST /api/login/ HTTP/1.1" 302 0
+INFO 2025-09-24 17:41:35,947 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 22816
+INFO 2025-09-24 17:41:40,393 basehttp "GET /api/controller-panel/edit-test/48/ HTTP/1.1" 200 7032
+INFO 2025-09-24 17:41:41,780 basehttp "POST /api/controller-panel/edit-test/48/ HTTP/1.1" 302 0
+INFO 2025-09-24 17:41:41,787 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 22800
+INFO 2025-09-24 17:41:46,280 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 19652
+INFO 2025-09-24 17:42:04,769 basehttp "GET /api/controller-panel/edit-test/46/ HTTP/1.1" 200 7033
+INFO 2025-09-24 17:42:05,608 basehttp "POST /api/controller-panel/edit-test/46/ HTTP/1.1" 302 0
+INFO 2025-09-24 17:42:05,615 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 22812
+INFO 2025-09-24 17:42:08,001 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 19652
+INFO 2025-09-24 17:42:37,459 basehttp "POST /api/controller-panel/delete-test/46/ HTTP/1.1" 302 0
+INFO 2025-09-24 17:42:37,459 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 22828
+INFO 2025-09-24 17:42:42,002 basehttp "POST /api/controller-panel/delete-test/45/ HTTP/1.1" 302 0
+INFO 2025-09-24 17:42:42,011 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 22829
+INFO 2025-09-24 17:42:44,267 basehttp "POST /api/controller-panel/delete-test/44/ HTTP/1.1" 302 0
+ERROR 2025-09-24 17:42:44,291 log Internal Server Error: /api/controller-panel/dashboard/
+Traceback (most recent call last):
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\backend\main\views_controller_panel.py", line 771, in controller_dashboard
+    'test': test,
+            ^^^^
+UnboundLocalError: cannot access local variable 'test' where it is not associated with a value
+ERROR 2025-09-24 17:42:44,292 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 500 76190
+ERROR 2025-09-24 17:42:51,240 log Internal Server Error: /api/controller-panel/dashboard/
+Traceback (most recent call last):
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\backend\main\views_controller_panel.py", line 771, in controller_dashboard
+    'test': test,
+            ^^^^
+UnboundLocalError: cannot access local variable 'test' where it is not associated with a value
+ERROR 2025-09-24 17:42:51,240 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 500 76190
+INFO 2025-09-24 17:43:14,343 autoreload C:\project\TEST\backend\main\views_controller_panel.py changed, reloading.
+INFO 2025-09-24 17:43:15,011 autoreload Watching for file changes with StatReloader
+WARNING 2025-09-24 17:48:08,810 log Forbidden: /api/student-tests/1/history/
+WARNING 2025-09-24 17:48:13,295 log Forbidden: /api/student-tests/1/override/
+INFO 2025-09-24 17:48:28,498 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 20482
+INFO 2025-09-24 17:48:34,016 basehttp "GET /api/controller-panel/edit-test/48/ HTTP/1.1" 200 7032
+INFO 2025-09-24 17:48:37,997 basehttp "POST /api/controller-panel/delete-test/48/ HTTP/1.1" 302 0
+INFO 2025-09-24 17:48:38,015 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 22816
+INFO 2025-09-24 17:48:40,210 basehttp "POST /api/controller-panel/delete-test/47/ HTTP/1.1" 302 0
+INFO 2025-09-24 17:48:40,216 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 20471
+INFO 2025-09-24 17:48:49,662 basehttp "GET /api/controller-panel/add-test/?target=student HTTP/1.1" 200 30243
+INFO 2025-09-24 17:48:52,311 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=4 HTTP/1.1" 200 210
+INFO 2025-09-24 17:48:55,546 basehttp "GET /api/subject-max-question-count/?subject_id=1 HTTP/1.1" 200 25
+INFO 2025-09-24 17:49:04,320 basehttp "POST /api/controller-panel/add-test/?target=student HTTP/1.1" 302 0
+INFO 2025-09-24 17:49:04,320 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 22800
+INFO 2025-09-24 17:49:15,296 basehttp "GET /api/controller-panel/add-test/?target=student HTTP/1.1" 200 30243
+INFO 2025-09-24 17:49:17,391 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=4 HTTP/1.1" 200 210
+INFO 2025-09-24 17:49:20,002 basehttp "GET /api/subject-max-question-count/?subject_id=1 HTTP/1.1" 200 25
+INFO 2025-09-24 17:49:27,524 basehttp "POST /api/controller-panel/add-test/?target=student HTTP/1.1" 302 0
+INFO 2025-09-24 17:49:27,531 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 25178
+INFO 2025-09-24 17:49:38,501 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 21178
+INFO 2025-09-24 17:50:08,064 basehttp "GET /api/controller-panel/add-test/?target=student HTTP/1.1" 200 30243
+INFO 2025-09-24 17:50:10,087 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=4 HTTP/1.1" 200 210
+INFO 2025-09-24 17:50:12,704 basehttp "GET /api/subject-max-question-count/?subject_id=1 HTTP/1.1" 200 25
+INFO 2025-09-24 17:50:14,433 basehttp "GET /api/subject-max-question-count/?subject_id=1 HTTP/1.1" 200 25
+INFO 2025-09-24 17:50:20,542 basehttp "POST /api/controller-panel/add-test/?target=student HTTP/1.1" 302 0
+INFO 2025-09-24 17:50:20,551 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 27558
+INFO 2025-09-24 17:50:25,100 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 21180
+INFO 2025-09-24 17:50:37,241 basehttp "POST /api/controller-panel/delete-test/51/ HTTP/1.1" 302 0
+INFO 2025-09-24 17:50:37,257 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 25178
+INFO 2025-09-24 17:50:38,866 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 21178
+INFO 2025-09-24 17:53:23,658 basehttp "GET /api/test-api/test/50/ HTTP/1.1" 200 63520
+INFO 2025-09-24 17:53:26,743 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 17:53:41,988 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 17:53:43,480 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 17:53:43,907 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 17:53:44,018 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 17:53:44,934 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 17:53:45,151 basehttp "POST /api/test-api/test/50/ HTTP/1.1" 302 0
+INFO 2025-09-24 17:53:45,189 basehttp "GET /api/test-api/result/86/ HTTP/1.1" 200 28117
+INFO 2025-09-24 17:53:45,207 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 17:53:45,908 basehttp - Broken pipe from ('127.0.0.1', 7492)
+INFO 2025-09-24 17:53:46,433 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 21184
+INFO 2025-09-24 17:53:58,411 basehttp "GET /api/controller-panel/add-test/?target=student HTTP/1.1" 200 30243
+INFO 2025-09-24 17:54:00,695 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=4 HTTP/1.1" 200 210
+INFO 2025-09-24 17:54:04,346 basehttp "GET /api/subject-max-question-count/?subject_id=1 HTTP/1.1" 200 25
+INFO 2025-09-24 17:54:11,497 basehttp "POST /api/controller-panel/add-test/?target=student HTTP/1.1" 302 0
+INFO 2025-09-24 17:54:11,506 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 27558
+INFO 2025-09-24 17:54:14,521 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 21186
+INFO 2025-09-24 17:54:17,904 basehttp "GET /api/test-api/test/52/ HTTP/1.1" 200 4937
+INFO 2025-09-24 17:54:18,995 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 21186
+INFO 2025-09-24 17:54:25,595 basehttp "POST /api/controller-panel/delete-test/52/ HTTP/1.1" 302 0
+INFO 2025-09-24 17:54:25,595 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 25178
+INFO 2025-09-24 17:54:28,588 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 21184
+INFO 2025-09-24 17:54:41,099 basehttp "GET /api/controller-panel/add-user/ HTTP/1.1" 200 17765
+INFO 2025-09-24 17:54:44,433 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 25178
+INFO 2025-09-24 17:54:48,084 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 200 19519
+INFO 2025-09-24 17:54:58,226 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 25178
+INFO 2025-09-24 17:55:17,400 autoreload C:\project\TEST\backend\main\views_controller_panel.py changed, reloading.
+INFO 2025-09-24 17:55:17,957 autoreload Watching for file changes with StatReloader
+INFO 2025-09-24 17:55:42,549 basehttp "GET /api/controller-panel/subject-questions/1/ HTTP/1.1" 200 5951
+INFO 2025-09-24 17:55:45,058 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 25178
+INFO 2025-09-24 17:56:03,118 basehttp "GET /api/controller-panel/help/ HTTP/1.1" 200 2802
+WARNING 2025-09-24 17:56:03,163 basehttp "GET /static/main/help/controller_add_test.png HTTP/1.1" 404 1913
+WARNING 2025-09-24 17:56:03,170 basehttp "GET /static/main/help/controller_edit_delete_test.png HTTP/1.1" 404 1937
+WARNING 2025-09-24 17:56:03,171 basehttp "GET /static/main/help/controller_view_results.png HTTP/1.1" 404 1925
+WARNING 2025-09-24 17:56:03,175 basehttp "GET /static/main/help/controller_manage_users.png HTTP/1.1" 404 1925
+INFO 2025-09-24 17:56:05,025 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 25178
+WARNING 2025-09-24 17:58:21,550 log Forbidden: /api/student-tests/1/history/
+WARNING 2025-09-24 17:58:25,967 log Forbidden: /api/student-tests/1/override/
+INFO 2025-09-24 17:58:45,566 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 25178
+INFO 2025-09-24 17:58:54,194 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 22500
+INFO 2025-09-24 19:53:08,237 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 18457
+INFO 2025-09-24 19:53:12,430 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 25210
+INFO 2025-09-24 19:53:23,416 basehttp "GET /api/controller-panel/edit-test/49/ HTTP/1.1" 200 7032
+INFO 2025-09-24 19:53:26,015 basehttp "POST /api/controller-panel/edit-test/49/ HTTP/1.1" 302 0
+INFO 2025-09-24 19:53:26,023 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 25194
+INFO 2025-09-24 19:53:27,357 basehttp "GET /api/controller-panel/edit-test/50/ HTTP/1.1" 200 7032
+INFO 2025-09-24 19:53:28,803 basehttp "POST /api/controller-panel/edit-test/50/ HTTP/1.1" 302 0
+INFO 2025-09-24 19:53:28,810 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 25178
+INFO 2025-09-24 19:53:32,170 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 22500
+INFO 2025-09-24 19:53:36,270 basehttp "GET /api/test-api/test/49/ HTTP/1.1" 200 60896
+INFO 2025-09-24 19:53:37,806 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 19:53:44,968 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 19:53:46,376 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 19:53:50,549 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 19:53:51,453 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 19:53:52,813 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 19:53:54,324 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 19:53:55,795 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 19:53:58,195 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 19:54:02,253 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 19:54:02,393 basehttp "POST /api/test-api/test/49/ HTTP/1.1" 302 0
+INFO 2025-09-24 19:54:02,418 basehttp "GET /api/test-api/result/87/ HTTP/1.1" 200 23254
+INFO 2025-09-24 19:54:02,434 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-24 19:54:04,248 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 22506
+INFO 2025-09-24 19:54:13,480 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 302 0
+INFO 2025-09-24 19:54:13,501 basehttp "GET /api/login/?next=/api/controller-panel/participated-students/ HTTP/1.1" 200 5079
+INFO 2025-09-24 19:54:26,063 basehttp "POST /api/login/?next=/api/controller-panel/participated-students/ HTTP/1.1" 200 5281
+INFO 2025-09-24 19:54:37,656 basehttp "POST /api/login/?next=/api/controller-panel/participated-students/ HTTP/1.1" 302 0
+INFO 2025-09-24 19:54:37,666 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 20482
+INFO 2025-09-24 19:54:40,111 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 200 21076
+INFO 2025-09-25 09:08:25,257 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 302 0
+INFO 2025-09-25 09:08:25,270 basehttp "GET /api/login/?next=/api/controller-panel/dashboard/ HTTP/1.1" 200 5079
+INFO 2025-09-25 09:08:28,068 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 302 0
+INFO 2025-09-25 09:08:28,071 basehttp "GET /api/login/ HTTP/1.1" 200 5079
+INFO 2025-09-25 09:08:32,133 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 302 0
+INFO 2025-09-25 09:08:32,138 basehttp "GET /api/login/?next=/api/controller-panel/participated-students/ HTTP/1.1" 200 5079
+INFO 2025-09-25 09:08:57,266 basehttp "POST /api/login/?next=/api/controller-panel/dashboard/ HTTP/1.1" 302 0
+INFO 2025-09-25 09:08:57,282 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 25210
+INFO 2025-09-25 09:09:14,627 basehttp "POST /api/login/?next=/api/controller-panel/participated-students/ HTTP/1.1" 200 5281
+INFO 2025-09-25 09:09:28,509 basehttp "POST /api/login/?next=/api/controller-panel/participated-students/ HTTP/1.1" 302 0
+INFO 2025-09-25 09:09:28,515 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 20482
+INFO 2025-09-25 09:09:38,844 basehttp "GET /api/controller-panel/add-user/ HTTP/1.1" 200 17765
+INFO 2025-09-25 09:09:54,746 basehttp "POST /api/login/ HTTP/1.1" 302 0
+INFO 2025-09-25 09:09:54,751 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 18457
+INFO 2025-09-25 09:10:01,328 basehttp "GET /api/controller-panel/edit-test/49/ HTTP/1.1" 200 7032
+INFO 2025-09-25 09:10:03,039 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 25210
+INFO 2025-09-25 09:10:07,335 basehttp "GET /api/test-api/all-results/ HTTP/1.1" 200 114552
+INFO 2025-09-25 09:10:34,074 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 20482
+INFO 2025-09-25 09:10:38,328 basehttp "GET /api/controller-panel/logout/ HTTP/1.1" 302 0
+INFO 2025-09-25 09:10:38,332 basehttp "GET /api/login/ HTTP/1.1" 200 5079
+INFO 2025-09-25 09:10:51,492 basehttp "POST /api/login/ HTTP/1.1" 302 0
+INFO 2025-09-25 09:10:51,502 basehttp "GET /api/teacher-panel/dashboard/ HTTP/1.1" 200 41597
+INFO 2025-09-25 09:10:51,513 basehttp "GET /media/questions/tyuring_ymIYCJm.jpg HTTP/1.1" 304 0
+INFO 2025-09-25 09:10:51,513 basehttp "GET /media/questions/3.png HTTP/1.1" 304 0
+INFO 2025-09-25 09:10:51,518 basehttp "GET /media/questions/6.png HTTP/1.1" 304 0
+INFO 2025-09-25 09:11:05,252 basehttp "GET /api/teacher-panel/add-question/?target=student HTTP/1.1" 200 39558
+INFO 2025-09-25 09:11:09,546 basehttp "GET /api/teacher-panel/get-subjects-by-group-semester/?group_id=4&semester_id=1 HTTP/1.1" 200 47
+INFO 2025-09-25 09:12:17,621 basehttp "POST /api/teacher-panel/add-question/?target=student HTTP/1.1" 200 39582
+INFO 2025-09-25 09:12:19,698 basehttp "GET /api/teacher-panel/dashboard/ HTTP/1.1" 200 41597
+INFO 2025-09-25 09:12:38,613 basehttp "GET /api/teacher-panel/add-question/?target=student HTTP/1.1" 200 39558
+INFO 2025-09-25 09:12:42,577 basehttp "GET /api/teacher-panel/get-subjects-by-group-semester/?group_id=4&semester_id=1 HTTP/1.1" 200 47
+INFO 2025-09-25 09:12:57,971 basehttp "POST /api/teacher-panel/add-question/?target=student HTTP/1.1" 200 39582
+INFO 2025-09-25 09:13:00,746 basehttp "GET /api/teacher-panel/dashboard/ HTTP/1.1" 200 41597
+INFO 2025-09-25 09:13:11,175 basehttp "GET /api/teacher-panel/delete-question/24/ HTTP/1.1" 302 0
+INFO 2025-09-25 09:13:11,184 basehttp "GET /api/teacher-panel/dashboard/ HTTP/1.1" 200 39618
+INFO 2025-09-25 09:13:32,780 basehttp "GET /api/teacher-panel/dashboard/ HTTP/1.1" 302 0
+INFO 2025-09-25 09:13:32,783 basehttp "GET /api/login/ HTTP/1.1" 200 5079
+INFO 2025-09-25 09:13:38,540 basehttp "GET /admin HTTP/1.1" 301 0
+INFO 2025-09-25 09:13:38,555 basehttp "GET /admin/ HTTP/1.1" 302 0
+INFO 2025-09-25 09:13:38,574 basehttp "GET /admin/login/?next=/admin/ HTTP/1.1" 200 3690
+INFO 2025-09-25 09:13:38,590 basehttp "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2810
+INFO 2025-09-25 09:13:38,591 basehttp "GET /static/admin/css/base.css HTTP/1.1" 200 22120
+INFO 2025-09-25 09:13:38,592 basehttp "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2808
+INFO 2025-09-25 09:13:38,594 basehttp "GET /static/admin/js/theme.js HTTP/1.1" 200 1653
+INFO 2025-09-25 09:13:38,594 basehttp "GET /static/admin/css/login.css HTTP/1.1" 200 951
+INFO 2025-09-25 09:13:38,594 basehttp "GET /static/admin/css/responsive.css HTTP/1.1" 200 16565
+INFO 2025-09-25 09:13:38,598 basehttp "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+INFO 2025-09-25 09:13:53,691 basehttp "GET /admin/login/?next=/admin/ HTTP/1.1" 302 0
+INFO 2025-09-25 09:13:53,710 basehttp "GET /admin/ HTTP/1.1" 200 17036
+INFO 2025-09-25 09:13:53,734 basehttp "GET /static/admin/css/base.css HTTP/1.1" 304 0
+INFO 2025-09-25 09:13:53,736 basehttp "GET /static/admin/css/dark_mode.css HTTP/1.1" 304 0
+INFO 2025-09-25 09:13:53,737 basehttp "GET /static/admin/js/theme.js HTTP/1.1" 304 0
+INFO 2025-09-25 09:13:53,737 basehttp "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 304 0
+INFO 2025-09-25 09:13:53,737 basehttp "GET /static/admin/css/responsive.css HTTP/1.1" 304 0
+INFO 2025-09-25 09:13:53,738 basehttp "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 304 0
+INFO 2025-09-25 09:13:53,738 basehttp "GET /static/admin/css/dashboard.css HTTP/1.1" 304 0
+INFO 2025-09-25 09:13:53,751 basehttp "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+INFO 2025-09-25 09:13:53,751 basehttp "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380
+INFO 2025-09-25 09:13:53,752 basehttp "GET /static/admin/img/icon-deletelink.svg HTTP/1.1" 200 392
+INFO 2025-09-25 09:13:57,918 basehttp "GET /admin/main/question/ HTTP/1.1" 200 24612
+INFO 2025-09-25 09:13:57,935 basehttp "GET /static/admin/img/search.svg HTTP/1.1" 200 458
+INFO 2025-09-25 09:13:57,938 basehttp "GET /static/admin/css/changelists.css HTTP/1.1" 304 0
+INFO 2025-09-25 09:13:57,939 basehttp "GET /static/admin/js/jquery.init.js HTTP/1.1" 304 0
+INFO 2025-09-25 09:13:57,940 basehttp "GET /static/admin/js/core.js HTTP/1.1" 304 0
+INFO 2025-09-25 09:13:57,940 basehttp "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 304 0
+INFO 2025-09-25 09:13:57,942 basehttp "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 304 0
+INFO 2025-09-25 09:13:57,943 basehttp "GET /static/admin/js/urlify.js HTTP/1.1" 304 0
+INFO 2025-09-25 09:13:57,944 basehttp "GET /static/admin/js/actions.js HTTP/1.1" 304 0
+INFO 2025-09-25 09:13:57,944 basehttp "GET /static/admin/js/prepopulate.js HTTP/1.1" 304 0
+INFO 2025-09-25 09:13:57,945 basehttp "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 304 0
+INFO 2025-09-25 09:13:57,945 basehttp "GET /static/admin/js/filters.js HTTP/1.1" 304 0
+INFO 2025-09-25 09:13:57,948 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-09-25 09:13:57,964 basehttp "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+INFO 2025-09-25 09:13:57,964 basehttp "GET /static/admin/img/sorting-icons.svg HTTP/1.1" 200 1097
+INFO 2025-09-25 09:13:57,964 basehttp "GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 200 581
+INFO 2025-09-25 09:14:19,514 basehttp "GET /api/teacher-panel/add-question/?target=student HTTP/1.1" 200 39558
+WARNING 2025-09-25 09:15:46,441 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-09-25 09:15:46,441 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3157
+INFO 2025-09-25 09:15:52,226 basehttp "GET /api/teacher-panel/get-subjects-by-group-semester/?group_id=4&semester_id=1 HTTP/1.1" 200 47
+INFO 2025-09-25 09:16:08,921 basehttp "POST /api/teacher-panel/add-question/?target=student HTTP/1.1" 200 39582
+WARNING 2025-09-25 09:16:08,952 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-09-25 09:16:08,952 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3157
+INFO 2025-09-25 09:18:24,491 autoreload C:\project\TEST\backend\main\views_teacher_panel.py changed, reloading.
+INFO 2025-09-25 09:18:25,114 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 09:23:06,716 basehttp "POST /api/teacher-panel/add-question/?target=student HTTP/1.1" 200 39950
+WARNING 2025-09-25 09:23:06,750 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-09-25 09:23:06,750 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3157
+WARNING 2025-09-25 09:23:12,790 log Forbidden: /api/student-tests/1/history/
+WARNING 2025-09-25 09:23:17,432 log Forbidden: /api/student-tests/1/override/
+INFO 2025-09-25 09:23:55,266 basehttp "GET /api/teacher-panel/get-subjects-by-group-semester/?group_id=4&semester_id=1 HTTP/1.1" 200 47
+INFO 2025-09-25 09:24:26,001 basehttp "POST /api/teacher-panel/add-question/?target=student HTTP/1.1" 200 39950
+WARNING 2025-09-25 09:24:26,026 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-09-25 09:24:26,026 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3157
+INFO 2025-09-25 09:24:29,344 basehttp "POST /api/teacher-panel/add-question/?target=student HTTP/1.1" 200 39950
+WARNING 2025-09-25 09:24:29,367 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-09-25 09:24:29,367 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3157
+INFO 2025-09-25 09:24:33,260 basehttp "GET /api/teacher-panel/dashboard/ HTTP/1.1" 200 44975
+WARNING 2025-09-25 09:24:33,286 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-09-25 09:24:33,287 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3157
+INFO 2025-09-25 09:24:42,891 basehttp "GET /api/teacher-panel/delete-question/27/ HTTP/1.1" 302 0
+INFO 2025-09-25 09:24:42,900 basehttp "GET /api/teacher-panel/dashboard/ HTTP/1.1" 200 43187
+WARNING 2025-09-25 09:24:42,930 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-09-25 09:24:42,931 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3157
+INFO 2025-09-25 09:24:47,478 basehttp "GET /api/teacher-panel/delete-question/26/ HTTP/1.1" 302 0
+INFO 2025-09-25 09:24:47,488 basehttp "GET /api/teacher-panel/dashboard/ HTTP/1.1" 200 41399
+WARNING 2025-09-25 09:24:47,521 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-09-25 09:24:47,521 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3157
+INFO 2025-09-25 09:24:55,509 basehttp "GET /api/teacher-panel/delete-question/25/ HTTP/1.1" 302 0
+INFO 2025-09-25 09:24:55,517 basehttp "GET /api/teacher-panel/dashboard/ HTTP/1.1" 200 39618
+WARNING 2025-09-25 09:24:55,547 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-09-25 09:24:55,547 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3157
+INFO 2025-09-25 09:25:03,894 basehttp "GET /api/teacher-panel/dashboard/ HTTP/1.1" 200 39618
+WARNING 2025-09-25 09:25:03,920 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-09-25 09:25:03,921 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3157
+INFO 2025-09-25 09:31:29,282 autoreload C:\project\TEST\backend\main\views_teacher_panel.py changed, reloading.
+INFO 2025-09-25 09:31:29,990 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 09:31:48,171 basehttp "GET /api/teacher-panel/dashboard/ HTTP/1.1" 200 39618
+WARNING 2025-09-25 09:31:48,204 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-09-25 09:31:48,204 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3157
+INFO 2025-09-25 09:33:30,625 autoreload C:\project\TEST\backend\bace\settings.py changed, reloading.
+INFO 2025-09-25 09:33:31,176 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 09:38:20,434 basehttp "GET /api/teacher-panel/dashboard/ HTTP/1.1" 200 39618
+WARNING 2025-09-25 09:38:20,462 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-09-25 09:38:20,463 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3157
+INFO 2025-09-25 09:41:52,898 basehttp "GET /api/teacher-panel/dashboard/ HTTP/1.1" 200 39781
+WARNING 2025-09-25 09:41:52,925 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-09-25 09:41:52,926 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3157
+INFO 2025-09-25 09:41:55,629 basehttp "GET /api/teacher-panel/dashboard/ HTTP/1.1" 200 39781
+WARNING 2025-09-25 09:41:55,651 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-09-25 09:41:55,651 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3157
+INFO 2025-09-25 09:42:08,010 basehttp "GET /api/teacher-panel/add-question/?target=student HTTP/1.1" 200 39697
+WARNING 2025-09-25 09:42:08,045 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-09-25 09:42:08,045 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3157
+INFO 2025-09-25 09:42:12,314 basehttp "GET /api/teacher-panel/get-subjects-by-group-semester/?group_id=4&semester_id=1 HTTP/1.1" 200 47
+INFO 2025-09-25 09:42:34,384 basehttp "POST /api/teacher-panel/add-question/?target=student HTTP/1.1" 200 39950
+WARNING 2025-09-25 09:42:34,408 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-09-25 09:42:34,408 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3157
+INFO 2025-09-25 09:42:36,962 basehttp "GET /api/teacher-panel/dashboard/ HTTP/1.1" 200 41569
+WARNING 2025-09-25 09:42:36,986 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-09-25 09:42:36,986 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3157
+INFO 2025-09-25 09:42:43,399 basehttp "GET /api/teacher-panel/delete-question/28/ HTTP/1.1" 302 0
+INFO 2025-09-25 09:42:43,410 basehttp "GET /api/teacher-panel/dashboard/ HTTP/1.1" 200 39781
+WARNING 2025-09-25 09:42:43,440 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-09-25 09:42:43,440 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3157
+INFO 2025-09-25 09:56:27,094 autoreload C:\project\TEST\backend\main\middleware_security.py changed, reloading.
+INFO 2025-09-25 09:56:27,769 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 09:56:40,539 basehttp "GET /api/teacher-panel/add-question/?target=student HTTP/1.1" 200 39697
+INFO 2025-09-25 09:56:44,082 basehttp "GET /api/teacher-panel/get-subjects-by-group-semester/?group_id=4&semester_id=1 HTTP/1.1" 200 47
+INFO 2025-09-25 09:56:48,626 basehttp "GET /api/teacher-panel/get-subjects-by-group-semester/?group_id=4&semester_id=2 HTTP/1.1" 200 78
+INFO 2025-09-25 09:57:00,627 basehttp "POST /api/teacher-panel/add-question/?target=student HTTP/1.1" 200 39950
+INFO 2025-09-25 09:57:03,308 basehttp "GET /api/teacher-panel/dashboard/ HTTP/1.1" 200 41559
+INFO 2025-09-25 09:57:27,173 basehttp "GET /api/teacher-panel/add-question/?target=student HTTP/1.1" 200 39697
+INFO 2025-09-25 09:59:53,909 basehttp "GET /api/teacher-panel/dashboard/ HTTP/1.1" 200 41559
+INFO 2025-09-25 10:02:21,944 autoreload C:\project\TEST\backend\main\models.py changed, reloading.
+INFO 2025-09-25 10:02:22,605 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 10:02:35,490 autoreload C:\project\TEST\backend\main\views_teacher_panel.py changed, reloading.
+INFO 2025-09-25 10:02:36,048 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 10:02:43,359 autoreload C:\project\TEST\backend\main\views_controller_panel.py changed, reloading.
+INFO 2025-09-25 10:02:43,967 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 10:02:51,367 autoreload C:\project\TEST\backend\main\views.py changed, reloading.
+INFO 2025-09-25 10:02:51,989 autoreload Watching for file changes with StatReloader
+WARNING 2025-09-25 10:06:06,805 log Forbidden: /api/student-tests/1/history/
+WARNING 2025-09-25 10:06:11,453 log Forbidden: /api/student-tests/1/override/
+INFO 2025-09-25 10:07:07,159 basehttp "GET /api/teacher-panel/dashboard/ HTTP/1.1" 200 41559
+INFO 2025-09-25 10:07:14,276 basehttp "GET /api/teacher-panel/add-question/?target=student HTTP/1.1" 200 39697
+INFO 2025-09-25 10:07:18,546 basehttp "GET /api/teacher-panel/get-subjects-by-group-semester/?group_id=4&semester_id=1 HTTP/1.1" 200 47
+INFO 2025-09-25 10:07:20,401 basehttp "GET /api/teacher-panel/get-subjects-by-group-semester/?group_id=4&semester_id=2 HTTP/1.1" 200 78
+INFO 2025-09-25 10:07:30,049 basehttp "POST /api/teacher-panel/add-question/?target=student HTTP/1.1" 200 39950
+INFO 2025-09-25 10:07:32,882 basehttp "GET /api/teacher-panel/dashboard/ HTTP/1.1" 200 43337
+INFO 2025-09-25 10:11:05,983 autoreload C:\project\TEST\backend\main\views_teacher_panel.py changed, reloading.
+INFO 2025-09-25 10:11:06,566 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 10:11:53,166 autoreload C:\project\TEST\backend\main\views_teacher_panel.py changed, reloading.
+INFO 2025-09-25 10:11:53,733 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 10:12:37,573 autoreload C:\project\TEST\backend\main\views_teacher_panel.py changed, reloading.
+INFO 2025-09-25 10:12:38,119 autoreload Watching for file changes with StatReloader
+WARNING 2025-09-25 10:13:12,901 log Forbidden: /api/student-tests/1/history/
+WARNING 2025-09-25 10:13:17,471 log Forbidden: /api/student-tests/1/override/
+INFO 2025-09-25 10:15:22,745 basehttp "GET /api/teacher-panel/dashboard/ HTTP/1.1" 200 44486
+INFO 2025-09-25 10:15:39,553 basehttp "GET /api/teacher-panel/add-question/?target=student HTTP/1.1" 200 39697
+INFO 2025-09-25 10:15:44,098 basehttp "GET /api/teacher-panel/get-subjects-by-group-semester/?group_id=4&semester_id=1 HTTP/1.1" 200 47
+INFO 2025-09-25 10:15:46,706 basehttp "GET /api/teacher-panel/get-subjects-by-group-semester/?group_id=4&semester_id=2 HTTP/1.1" 200 78
+INFO 2025-09-25 10:15:59,626 basehttp "POST /api/teacher-panel/add-question/?target=student HTTP/1.1" 200 39950
+INFO 2025-09-25 10:16:04,643 basehttp "GET /api/teacher-panel/dashboard/ HTTP/1.1" 200 46262
+INFO 2025-09-25 10:17:05,037 basehttp "GET /api/teacher-panel/add-question/?target=student HTTP/1.1" 200 39697
+INFO 2025-09-25 10:17:08,427 basehttp "GET /api/teacher-panel/get-subjects-by-group-semester/?group_id=4&semester_id=1 HTTP/1.1" 200 47
+INFO 2025-09-25 10:17:16,968 basehttp "POST /api/teacher-panel/add-question/?target=student HTTP/1.1" 200 39950
+INFO 2025-09-25 10:17:18,603 basehttp "GET /api/teacher-panel/dashboard/ HTTP/1.1" 200 49136
+INFO 2025-09-25 10:18:20,575 basehttp "GET /admin/main/question/ HTTP/1.1" 200 26977
+INFO 2025-09-25 10:18:20,594 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-09-25 10:18:31,631 basehttp "GET /admin/main/question/32/change/ HTTP/1.1" 200 29924
+INFO 2025-09-25 10:18:31,654 basehttp "GET /static/admin/css/forms.css HTTP/1.1" 304 0
+INFO 2025-09-25 10:18:31,658 basehttp "GET /static/admin/js/inlines.js HTTP/1.1" 304 0
+INFO 2025-09-25 10:18:31,660 basehttp "GET /static/admin/js/change_form.js HTTP/1.1" 304 0
+INFO 2025-09-25 10:18:31,660 basehttp "GET /static/admin/js/prepopulate_init.js HTTP/1.1" 304 0
+INFO 2025-09-25 10:18:31,660 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-09-25 10:18:31,661 basehttp "GET /static/admin/css/widgets.css HTTP/1.1" 304 0
+INFO 2025-09-25 10:18:31,688 basehttp "GET /static/admin/img/inline-delete.svg HTTP/1.1" 200 537
+INFO 2025-09-25 10:18:36,181 basehttp "GET /admin/main/question/ HTTP/1.1" 200 26977
+INFO 2025-09-25 10:18:36,201 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-09-25 10:18:37,764 basehttp "GET /admin/main/question/14/change/ HTTP/1.1" 200 29900
+INFO 2025-09-25 10:18:37,785 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-09-25 10:18:43,217 basehttp "POST /admin/main/question/14/change/ HTTP/1.1" 302 0
+INFO 2025-09-25 10:18:43,248 basehttp "GET /admin/main/question/ HTTP/1.1" 200 27210
+INFO 2025-09-25 10:18:43,267 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-09-25 10:18:43,286 basehttp "GET /static/admin/img/icon-yes.svg HTTP/1.1" 200 436
+INFO 2025-09-25 10:18:45,159 basehttp "GET /admin/main/question/15/change/ HTTP/1.1" 200 30063
+INFO 2025-09-25 10:18:45,178 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-09-25 10:18:50,427 basehttp "POST /admin/main/question/15/change/ HTTP/1.1" 302 0
+INFO 2025-09-25 10:18:50,458 basehttp "GET /admin/main/question/ HTTP/1.1" 200 27248
+INFO 2025-09-25 10:18:50,482 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-09-25 10:18:51,720 basehttp "GET /admin/main/question/16/change/ HTTP/1.1" 200 30137
+INFO 2025-09-25 10:18:51,738 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-09-25 10:18:56,178 basehttp "POST /admin/main/question/16/change/ HTTP/1.1" 302 0
+INFO 2025-09-25 10:18:56,214 basehttp "GET /admin/main/question/ HTTP/1.1" 200 27248
+INFO 2025-09-25 10:18:56,233 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-09-25 10:18:58,826 basehttp "GET /admin/main/question/16/change/ HTTP/1.1" 200 30137
+INFO 2025-09-25 10:18:58,840 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-09-25 10:19:00,965 basehttp "GET /admin/main/question/ HTTP/1.1" 200 26974
+INFO 2025-09-25 10:19:00,984 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-09-25 10:19:03,273 basehttp "GET /admin/main/question/17/change/ HTTP/1.1" 200 26611
+INFO 2025-09-25 10:19:03,288 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-09-25 10:19:07,353 basehttp "POST /admin/main/question/17/change/ HTTP/1.1" 302 0
+INFO 2025-09-25 10:19:07,391 basehttp "GET /admin/main/question/ HTTP/1.1" 200 27242
+INFO 2025-09-25 10:19:07,412 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-09-25 10:19:09,969 basehttp "GET /admin/main/question/18/change/ HTTP/1.1" 200 26610
+INFO 2025-09-25 10:19:09,990 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-09-25 10:19:13,544 basehttp "POST /admin/main/question/18/change/ HTTP/1.1" 302 0
+INFO 2025-09-25 10:19:13,574 basehttp "GET /admin/main/question/ HTTP/1.1" 200 27241
+INFO 2025-09-25 10:19:13,592 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-09-25 10:19:15,203 basehttp "GET /admin/main/question/19/change/ HTTP/1.1" 200 28802
+INFO 2025-09-25 10:19:15,221 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-09-25 10:19:18,305 basehttp "POST /admin/main/question/19/change/ HTTP/1.1" 302 0
+INFO 2025-09-25 10:19:18,345 basehttp "GET /admin/main/question/ HTTP/1.1" 200 27212
+INFO 2025-09-25 10:19:18,364 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-09-25 10:19:20,183 basehttp "GET /admin/main/question/21/change/ HTTP/1.1" 200 30346
+INFO 2025-09-25 10:19:20,204 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-09-25 10:19:23,411 basehttp "POST /admin/main/question/21/change/ HTTP/1.1" 302 0
+INFO 2025-09-25 10:19:23,441 basehttp "GET /admin/main/question/ HTTP/1.1" 200 27233
+INFO 2025-09-25 10:19:23,455 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-09-25 10:19:25,580 basehttp "GET /admin/main/question/22/change/ HTTP/1.1" 200 30238
+INFO 2025-09-25 10:19:25,598 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-09-25 10:19:28,986 basehttp "POST /admin/main/question/22/change/ HTTP/1.1" 302 0
+INFO 2025-09-25 10:19:29,021 basehttp "GET /admin/main/question/ HTTP/1.1" 200 27223
+INFO 2025-09-25 10:19:29,046 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-09-25 10:19:30,381 basehttp "GET /admin/main/question/22/change/ HTTP/1.1" 200 30238
+INFO 2025-09-25 10:19:30,405 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-09-25 10:19:32,694 basehttp "GET /admin/main/question/ HTTP/1.1" 200 26971
+INFO 2025-09-25 10:19:32,709 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-09-25 10:19:34,372 basehttp "GET /admin/main/question/23/change/ HTTP/1.1" 200 29963
+INFO 2025-09-25 10:19:34,388 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-09-25 10:19:39,485 basehttp "POST /admin/main/question/23/change/ HTTP/1.1" 302 0
+INFO 2025-09-25 10:19:39,519 basehttp "GET /admin/main/question/ HTTP/1.1" 200 27210
+INFO 2025-09-25 10:19:39,536 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-09-25 10:19:41,398 basehttp "GET /admin/main/question/29/change/ HTTP/1.1" 200 29942
+INFO 2025-09-25 10:19:41,417 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-09-25 10:19:46,233 basehttp "POST /admin/main/question/29/change/ HTTP/1.1" 302 0
+INFO 2025-09-25 10:19:46,273 basehttp "GET /admin/main/question/ HTTP/1.1" 200 27201
+INFO 2025-09-25 10:19:46,292 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-09-25 10:19:56,596 basehttp "GET /api/teacher-panel/dashboard/ HTTP/1.1" 200 48025
+INFO 2025-09-25 10:20:11,506 basehttp "GET /admin/main/question/32/change/ HTTP/1.1" 200 29924
+INFO 2025-09-25 10:20:11,534 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-09-25 10:20:15,104 basehttp "POST /admin/main/question/32/change/ HTTP/1.1" 302 0
+INFO 2025-09-25 10:20:15,139 basehttp "GET /admin/main/question/ HTTP/1.1" 200 27203
+INFO 2025-09-25 10:20:15,161 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-09-25 10:20:17,244 basehttp "GET /api/teacher-panel/dashboard/ HTTP/1.1" 200 48024
+INFO 2025-09-25 10:20:37,800 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 25210
+INFO 2025-09-25 10:21:06,111 basehttp "GET /api/controller-panel/add-test/?target=student HTTP/1.1" 200 30330
+INFO 2025-09-25 10:21:09,096 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=4 HTTP/1.1" 200 210
+INFO 2025-09-25 10:21:13,019 basehttp "GET /api/subject-max-question-count/?subject_id=1 HTTP/1.1" 200 25
+INFO 2025-09-25 10:24:45,154 autoreload C:\project\TEST\backend\main\views.py changed, reloading.
+INFO 2025-09-25 10:24:45,831 autoreload Watching for file changes with StatReloader
+WARNING 2025-09-25 10:36:50,951 log Forbidden: /api/student-tests/1/history/
+WARNING 2025-09-25 10:36:55,567 log Forbidden: /api/student-tests/1/override/
+INFO 2025-09-25 10:37:30,107 basehttp "GET /api/controller-panel/add-test/?target=student HTTP/1.1" 200 30768
+INFO 2025-09-25 10:37:33,235 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=4 HTTP/1.1" 200 210
+INFO 2025-09-25 10:37:36,827 basehttp "GET /api/subject-max-question-count/?subject_id=1&semester_id=2 HTTP/1.1" 200 24
+ERROR 2025-09-25 10:37:44,962 log Internal Server Error: /api/controller-panel/add-test/
+Traceback (most recent call last):
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\backend\main\views_controller_panel.py", line 938, in add_test
+    if getattr(test, 'semester_id', None):
+               ^^^^
+UnboundLocalError: cannot access local variable 'test' where it is not associated with a value
+ERROR 2025-09-25 10:37:44,964 basehttp "POST /api/controller-panel/add-test/?target=student HTTP/1.1" 500 80637
+INFO 2025-09-25 10:38:18,139 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 20538
+INFO 2025-09-25 10:39:11,724 autoreload C:\project\TEST\backend\main\views_controller_panel.py changed, reloading.
+INFO 2025-09-25 10:39:12,549 autoreload Watching for file changes with StatReloader
+WARNING 2025-09-25 10:39:44,328 log Forbidden: /api/student-tests/1/history/
+WARNING 2025-09-25 10:39:48,985 log Forbidden: /api/student-tests/1/override/
+INFO 2025-09-25 10:42:53,672 basehttp "POST /api/controller-panel/add-test/?target=student HTTP/1.1" 302 0
+INFO 2025-09-25 10:42:53,689 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 29966
+INFO 2025-09-25 10:43:07,813 basehttp "POST /api/controller-panel/delete-test/54/ HTTP/1.1" 302 0
+INFO 2025-09-25 10:43:07,841 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 27588
+INFO 2025-09-25 10:43:10,274 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 20538
+INFO 2025-09-25 10:43:21,082 basehttp "GET /api/controller-panel/add-test/?target=student HTTP/1.1" 200 30768
+INFO 2025-09-25 10:43:24,069 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=4 HTTP/1.1" 200 210
+INFO 2025-09-25 10:43:26,706 basehttp "GET /api/subject-max-question-count/?subject_id=1&semester_id=1 HTTP/1.1" 200 24
+INFO 2025-09-25 10:43:32,725 basehttp "POST /api/controller-panel/add-test/?target=student HTTP/1.1" 302 0
+INFO 2025-09-25 10:43:32,725 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 29966
+INFO 2025-09-25 10:43:35,168 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 22734
+INFO 2025-09-25 10:43:40,281 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 200 21076
+INFO 2025-09-25 10:43:49,379 basehttp "POST /api/controller-panel/allow-retake/ HTTP/1.1" 200 17
+INFO 2025-09-25 10:43:49,399 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 200 20597
+INFO 2025-09-25 10:43:52,157 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 22728
+INFO 2025-09-25 10:43:54,046 basehttp "GET /api/test-api/test/53/ HTTP/1.1" 200 38060
+INFO 2025-09-25 10:43:55,413 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:44:01,541 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:44:02,174 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:44:02,421 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:44:02,628 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:44:02,804 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:44:02,974 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:44:03,141 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:44:03,301 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:44:03,444 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:44:03,590 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:44:03,773 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:44:03,900 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:44:04,036 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:44:09,961 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:44:11,544 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:44:11,645 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:44:12,184 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:44:12,799 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:44:12,843 basehttp "POST /api/test-api/test/53/ HTTP/1.1" 302 0
+INFO 2025-09-25 10:44:12,853 basehttp "GET /api/test-api/result/88/ HTTP/1.1" 200 13917
+INFO 2025-09-25 10:44:12,871 basehttp - Broken pipe from ('127.0.0.1', 2083)
+INFO 2025-09-25 10:44:14,273 basehttp - Broken pipe from ('127.0.0.1', 2082)
+INFO 2025-09-25 10:44:14,369 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 22734
+INFO 2025-09-25 10:44:27,995 basehttp "POST /api/controller-panel/allow-retake/ HTTP/1.1" 200 17
+INFO 2025-09-25 10:44:28,020 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 200 21671
+INFO 2025-09-25 10:44:31,366 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 22728
+INFO 2025-09-25 10:44:32,834 basehttp "GET /api/test-api/test/55/ HTTP/1.1" 200 63347
+INFO 2025-09-25 10:44:32,848 basehttp "GET /media/questions/tyuring_ymIYCJm.jpg HTTP/1.1" 304 0
+INFO 2025-09-25 10:44:32,851 basehttp "GET /media/questions/3.png HTTP/1.1" 304 0
+INFO 2025-09-25 10:44:34,213 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:44:42,782 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:44:42,987 basehttp "POST /api/test-api/test/55/ HTTP/1.1" 302 0
+INFO 2025-09-25 10:44:43,017 basehttp "GET /api/test-api/result/89/ HTTP/1.1" 200 28147
+INFO 2025-09-25 10:44:43,035 basehttp - Broken pipe from ('127.0.0.1', 2098)
+INFO 2025-09-25 10:44:44,456 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 22734
+INFO 2025-09-25 10:44:47,963 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 200 23226
+INFO 2025-09-25 10:44:55,429 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 29966
+INFO 2025-09-25 10:44:59,335 basehttp "GET /api/controller-panel/edit-test/53/ HTTP/1.1" 200 7032
+INFO 2025-09-25 10:45:01,763 basehttp "POST /api/controller-panel/edit-test/53/ HTTP/1.1" 302 0
+INFO 2025-09-25 10:45:01,776 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 29966
+INFO 2025-09-25 10:45:04,729 basehttp "POST /api/controller-panel/delete-test/53/ HTTP/1.1" 302 0
+INFO 2025-09-25 10:45:04,750 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 27588
+INFO 2025-09-25 10:45:06,072 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 27588
+INFO 2025-09-25 10:45:09,821 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 20538
+INFO 2025-09-25 10:45:17,669 basehttp "GET /api/controller-panel/add-test/?target=student HTTP/1.1" 200 30768
+INFO 2025-09-25 10:45:24,694 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=1,4 HTTP/1.1" 200 337
+INFO 2025-09-25 10:45:28,060 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=4 HTTP/1.1" 200 210
+INFO 2025-09-25 10:45:33,585 basehttp "GET /api/subject-max-question-count/?subject_id=1&semester_id=2 HTTP/1.1" 200 24
+INFO 2025-09-25 10:45:40,582 basehttp "POST /api/controller-panel/add-test/?target=student HTTP/1.1" 302 0
+INFO 2025-09-25 10:45:40,600 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 29966
+INFO 2025-09-25 10:45:43,209 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 22728
+INFO 2025-09-25 10:45:49,327 basehttp "GET /api/test-api/test/56/ HTTP/1.1" 200 42604
+INFO 2025-09-25 10:45:51,032 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:45:56,581 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:45:56,746 basehttp "POST /api/test-api/test/56/ HTTP/1.1" 302 0
+INFO 2025-09-25 10:45:56,801 basehttp "GET /api/test-api/result/90/ HTTP/1.1" 200 20313
+INFO 2025-09-25 10:45:56,839 basehttp - Broken pipe from ('127.0.0.1', 2096)
+INFO 2025-09-25 10:45:58,672 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 22734
+INFO 2025-09-25 10:46:03,506 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 200 23228
+INFO 2025-09-25 10:46:12,042 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 29966
+INFO 2025-09-25 10:46:15,184 basehttp "POST /api/controller-panel/delete-test/56/ HTTP/1.1" 302 0
+INFO 2025-09-25 10:46:15,210 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 27588
+INFO 2025-09-25 10:46:17,165 basehttp "POST /api/controller-panel/delete-test/55/ HTTP/1.1" 302 0
+INFO 2025-09-25 10:46:17,191 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 25210
+INFO 2025-09-25 10:46:19,271 basehttp "POST /api/controller-panel/delete-test/50/ HTTP/1.1" 302 0
+INFO 2025-09-25 10:46:19,290 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 22816
+INFO 2025-09-25 10:46:21,710 basehttp "POST /api/controller-panel/delete-test/49/ HTTP/1.1" 302 0
+INFO 2025-09-25 10:46:21,731 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 20471
+INFO 2025-09-25 10:46:24,587 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 200 13914
+INFO 2025-09-25 10:46:27,109 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 20471
+INFO 2025-09-25 10:46:31,816 basehttp "GET /api/controller-panel/add-test/?target=student HTTP/1.1" 200 30768
+INFO 2025-09-25 10:46:34,415 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=4 HTTP/1.1" 200 210
+INFO 2025-09-25 10:46:37,186 basehttp "GET /api/subject-max-question-count/?subject_id=1&semester_id=1 HTTP/1.1" 200 24
+INFO 2025-09-25 10:46:54,351 basehttp "POST /api/controller-panel/add-test/?target=student HTTP/1.1" 302 0
+INFO 2025-09-25 10:46:54,363 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 22800
+INFO 2025-09-25 10:46:55,754 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 20532
+INFO 2025-09-25 10:47:02,963 basehttp "GET /api/controller-panel/add-test/?target=student HTTP/1.1" 200 30768
+INFO 2025-09-25 10:47:05,584 basehttp "GET /api/controller-panel/get-subjects-by-group/?group_id=4 HTTP/1.1" 200 210
+INFO 2025-09-25 10:47:10,092 basehttp "GET /api/subject-max-question-count/?subject_id=1&semester_id=2 HTTP/1.1" 200 24
+INFO 2025-09-25 10:47:19,810 basehttp "POST /api/controller-panel/add-test/?target=student HTTP/1.1" 302 0
+INFO 2025-09-25 10:47:19,820 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 25178
+INFO 2025-09-25 10:47:22,397 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 22722
+INFO 2025-09-25 10:47:24,900 basehttp "GET /api/test-api/test/58/ HTTP/1.1" 200 42604
+INFO 2025-09-25 10:47:26,318 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:47:27,927 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:47:28,809 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:47:29,683 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:47:30,460 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:47:31,265 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:47:32,029 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:47:32,832 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:47:33,482 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:47:33,792 basehttp "POST /api/test-api/test/58/ HTTP/1.1" 302 0
+INFO 2025-09-25 10:47:33,908 basehttp "GET /api/test-api/result/91/ HTTP/1.1" 200 18685
+INFO 2025-09-25 10:47:33,952 basehttp - Broken pipe from ('127.0.0.1', 2133)
+INFO 2025-09-25 10:47:39,096 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 22728
+INFO 2025-09-25 10:47:42,368 basehttp "GET /api/test-api/test/57/ HTTP/1.1" 200 63347
+INFO 2025-09-25 10:47:44,057 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:47:45,318 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:47:47,128 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:47:47,853 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:47:48,616 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:47:49,932 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:47:52,549 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:47:53,250 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:47:54,712 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:47:55,820 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:47:57,091 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:47:58,182 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:47:59,181 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:48:00,120 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:48:01,180 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:48:01,762 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:48:02,828 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:48:03,851 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:48:05,322 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:48:06,207 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:48:07,808 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:48:08,316 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:48:09,479 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:48:15,537 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-09-25 10:48:16,135 basehttp "POST /api/test-api/test/57/ HTTP/1.1" 302 0
+INFO 2025-09-25 10:48:16,268 basehttp "GET /api/test-api/result/92/ HTTP/1.1" 200 24178
+INFO 2025-09-25 10:48:16,317 basehttp - Broken pipe from ('127.0.0.1', 2138)
+INFO 2025-09-25 10:48:24,726 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 22734
+INFO 2025-09-25 10:48:27,581 basehttp "GET /api/test-api/all-results/ HTTP/1.1" 200 99313
+INFO 2025-09-25 10:48:51,597 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 25178
+INFO 2025-09-25 10:48:54,834 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 200 21078
+INFO 2025-09-25 10:50:17,275 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 25178
+INFO 2025-09-25 10:50:31,986 autoreload C:\project\TEST\backend\main\models.py changed, reloading.
+INFO 2025-09-25 10:50:32,737 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 10:52:29,955 autoreload C:\project\TEST\backend\main\views_controller_panel.py changed, reloading.
+INFO 2025-09-25 10:52:30,709 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 11:15:29,929 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 25830
+INFO 2025-09-25 11:15:38,904 basehttp "GET /api/controller-panel/subject-questions/1/ HTTP/1.1" 200 6317
+INFO 2025-09-25 11:15:44,468 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 25830
+INFO 2025-09-25 11:17:27,504 basehttp "GET /admin/main/user/ HTTP/1.1" 200 20239
+INFO 2025-09-25 11:17:27,525 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-09-25 11:17:32,615 basehttp "GET /admin/main/user/5/change/ HTTP/1.1" 200 60448
+INFO 2025-09-25 11:17:32,638 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-09-25 11:17:32,641 basehttp "GET /static/admin/js/calendar.js HTTP/1.1" 304 0
+INFO 2025-09-25 11:17:32,642 basehttp "GET /static/admin/js/admin/DateTimeShortcuts.js HTTP/1.1" 304 0
+INFO 2025-09-25 11:17:32,642 basehttp "GET /static/admin/img/icon-no.svg HTTP/1.1" 200 560
+INFO 2025-09-25 11:17:32,686 basehttp "GET /static/admin/img/icon-calendar.svg HTTP/1.1" 200 1086
+INFO 2025-09-25 11:17:32,686 basehttp "GET /static/admin/img/icon-clock.svg HTTP/1.1" 200 677
+INFO 2025-09-25 11:17:52,929 basehttp "POST /admin/main/user/5/change/ HTTP/1.1" 302 0
+INFO 2025-09-25 11:17:52,947 basehttp "GET /admin/main/user/ HTTP/1.1" 200 20444
+INFO 2025-09-25 11:17:52,962 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-09-25 11:17:54,424 basehttp "GET /admin/main/user/5/change/ HTTP/1.1" 200 60451
+INFO 2025-09-25 11:17:54,449 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-09-25 11:22:52,881 autoreload C:\project\TEST\backend\main\views_controller_panel.py changed, reloading.
+INFO 2025-09-25 11:22:53,587 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 11:23:08,011 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 37452
+INFO 2025-09-25 11:28:13,540 autoreload C:\project\TEST\backend\main\urls_controller_panel.py changed, reloading.
+INFO 2025-09-25 11:28:14,017 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 11:28:38,133 autoreload C:\project\TEST\backend\main\views_controller_panel.py changed, reloading.
+INFO 2025-09-25 11:28:38,651 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 11:30:32,599 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 37683
+ERROR 2025-09-25 11:30:35,248 log Internal Server Error: /api/controller-panel/entities/
+Traceback (most recent call last):
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 510, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'macro'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\backend\main\views_controller_panel.py", line 414, in controller_entities_list
+    return render(request, 'controller_panel/entities_list.html', context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+           ^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+               ^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 577, in invalid_block_tag
+    raise self.error(
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 19: 'macro'. Did you forget to register or load this tag?
+ERROR 2025-09-25 11:30:35,251 basehttp "GET /api/controller-panel/entities/ HTTP/1.1" 500 182880
+INFO 2025-09-25 11:30:36,963 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 37683
+INFO 2025-09-25 11:30:38,102 basehttp "GET /api/controller-panel/group-subjects/table/ HTTP/1.1" 200 3302
+ERROR 2025-09-25 11:30:46,507 log Internal Server Error: /api/controller-panel/entities/
+Traceback (most recent call last):
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 510, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'macro'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\backend\main\views_controller_panel.py", line 414, in controller_entities_list
+    return render(request, 'controller_panel/entities_list.html', context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+           ^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+               ^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 577, in invalid_block_tag
+    raise self.error(
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 19: 'macro'. Did you forget to register or load this tag?
+ERROR 2025-09-25 11:30:46,509 basehttp "GET /api/controller-panel/entities/ HTTP/1.1" 500 182886
+INFO 2025-09-25 11:30:47,941 basehttp "GET /api/controller-panel/group-subjects/table/ HTTP/1.1" 200 3302
+INFO 2025-09-25 11:30:49,487 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 37683
+ERROR 2025-09-25 11:31:32,318 log Internal Server Error: /api/controller-panel/entities/
+Traceback (most recent call last):
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 510, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'macro'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\backend\main\views_controller_panel.py", line 414, in controller_entities_list
+    return render(request, 'controller_panel/entities_list.html', context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+           ^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+               ^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "C:\project\TEST\env\Lib\site-packages\django\template\base.py", line 577, in invalid_block_tag
+    raise self.error(
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 19: 'macro'. Did you forget to register or load this tag?
+ERROR 2025-09-25 11:31:32,319 basehttp "GET /api/controller-panel/entities/ HTTP/1.1" 500 182880
+INFO 2025-09-25 11:32:11,170 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 37683
+INFO 2025-09-25 11:33:19,037 basehttp "GET /api/controller-panel/entities/ HTTP/1.1" 200 4468
+INFO 2025-09-25 11:33:23,606 basehttp "GET /api/controller-panel/group-subjects/table/ HTTP/1.1" 200 3302
+INFO 2025-09-25 11:33:24,975 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 37683
+INFO 2025-09-25 11:33:26,434 basehttp "GET /api/controller-panel/entities/ HTTP/1.1" 200 4468
+INFO 2025-09-25 11:33:39,857 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 37683
+INFO 2025-09-25 11:33:56,843 basehttp "GET /api/controller-panel/entities/ HTTP/1.1" 200 4468
+INFO 2025-09-25 11:34:00,456 basehttp "GET /api/controller-panel/entities/ HTTP/1.1" 200 4468
+INFO 2025-09-25 11:34:09,417 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 37683
+INFO 2025-09-25 11:36:44,643 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 37683
+INFO 2025-09-25 11:36:47,372 basehttp "GET /api/controller-panel/entities/ HTTP/1.1" 200 9559
+INFO 2025-09-25 11:37:50,935 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 37683
+INFO 2025-09-25 11:37:51,466 basehttp "GET /api/controller-panel/entities/ HTTP/1.1" 200 9559
+INFO 2025-09-25 11:37:52,106 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 37683
+INFO 2025-09-25 11:37:52,775 basehttp "GET /api/controller-panel/group-subjects/table/ HTTP/1.1" 200 3302
+INFO 2025-09-25 11:37:54,699 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 37683
+INFO 2025-09-25 11:37:56,127 basehttp "GET /api/controller-panel/group-subjects/table/ HTTP/1.1" 200 3302
+INFO 2025-09-25 11:37:56,376 basehttp "GET /api/controller-panel/entities/ HTTP/1.1" 200 9559
+INFO 2025-09-25 11:37:59,065 basehttp "GET /api/controller-panel/entities/ HTTP/1.1" 200 9559
+INFO 2025-09-25 11:38:01,920 basehttp "GET /api/controller-panel/group-subjects/table/ HTTP/1.1" 200 3302
+INFO 2025-09-25 11:38:05,232 basehttp "GET /api/controller-panel/group-subjects/table/? HTTP/1.1" 200 3302
+INFO 2025-09-25 11:38:05,950 basehttp "GET /api/controller-panel/group-subjects/table/? HTTP/1.1" 200 3302
+INFO 2025-09-25 11:38:11,262 basehttp "GET /api/controller-panel/group-subjects/table/?group=&subject=&semester=1 HTTP/1.1" 200 2325
+INFO 2025-09-25 11:38:15,294 basehttp "GET /api/controller-panel/group-subjects/table/?group=&subject=&semester= HTTP/1.1" 200 3302
+ERROR 2025-09-25 11:38:24,475 log Internal Server Error: /api/controller-panel/group-subjects/table/
+Traceback (most recent call last):
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\fields\__init__.py", line 2128, in get_prep_value
+    return int(value)
+           ^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'matematika'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\backend\main\views_controller_panel.py", line 427, in group_subjects_table
+    qs = qs.filter(subject_id=sid)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\query.py", line 1493, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\query.py", line 1511, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\query.py", line 1518, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\query.py", line 1646, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\query.py", line 1678, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\query.py", line 1588, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\query.py", line 1415, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\lookups.py", line 38, in __init__
+    self.rhs = self.get_prep_lookup()
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\fields\related_lookups.py", line 112, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\fields\__init__.py", line 2130, in get_prep_value
+    raise e.__class__(
+ValueError: Field 'id' expected a number but got 'matematika'.
+ERROR 2025-09-25 11:38:24,479 basehttp "GET /api/controller-panel/group-subjects/table/?group=&subject=matematika&semester= HTTP/1.1" 500 132688
+INFO 2025-09-25 11:38:26,287 basehttp "GET /api/controller-panel/group-subjects/table/?group=&subject=&semester= HTTP/1.1" 200 3302
+INFO 2025-09-25 11:38:29,038 basehttp "GET /api/controller-panel/group-subjects/table/?group=&subject=&semester=1 HTTP/1.1" 200 2325
+INFO 2025-09-25 11:38:29,752 basehttp "GET /api/controller-panel/group-subjects/table/? HTTP/1.1" 200 3302
+INFO 2025-09-25 11:38:30,206 basehttp "GET /api/controller-panel/group-subjects/table/ HTTP/1.1" 200 3302
+INFO 2025-09-25 11:38:30,882 basehttp "GET /api/controller-panel/entities/ HTTP/1.1" 200 9559
+INFO 2025-09-25 11:38:33,115 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 37683
+INFO 2025-09-25 11:38:35,403 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 37683
+INFO 2025-09-25 11:39:12,903 autoreload C:\project\TEST\backend\main\views_controller_panel.py changed, reloading.
+INFO 2025-09-25 11:39:13,434 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 11:39:14,081 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 37452
+INFO 2025-09-25 11:41:33,952 autoreload C:\project\TEST\backend\main\views_controller_panel.py changed, reloading.
+INFO 2025-09-25 11:41:34,445 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 11:43:42,046 autoreload C:\project\TEST\backend\main\views_controller_panel.py changed, reloading.
+INFO 2025-09-25 11:43:42,517 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 11:43:51,868 autoreload C:\project\TEST\backend\main\views_controller_panel.py changed, reloading.
+INFO 2025-09-25 11:43:52,398 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 11:44:55,916 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 11:45:09,384 basehttp "GET /api/controller-panel/group-subjects/?id=50de02fe-275d-43ce-8e8f-02bf55786730&vscodeBrowserReqId=1758789909336 HTTP/1.1" 302 0
+INFO 2025-09-25 11:45:09,389 basehttp "GET /api/login/?next=/api/controller-panel/group-subjects/%3Fid%3D50de02fe-275d-43ce-8e8f-02bf55786730%26vscodeBrowserReqId%3D1758789909336 HTTP/1.1" 200 5079
+INFO 2025-09-25 11:45:13,533 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 36534
+INFO 2025-09-25 11:45:44,971 autoreload C:\project\TEST\backend\main\views_controller_panel.py changed, reloading.
+INFO 2025-09-25 11:45:45,520 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 11:46:50,368 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 43470
+INFO 2025-09-25 11:47:06,979 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 43590
+INFO 2025-09-25 11:47:21,001 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 44435
+INFO 2025-09-25 11:47:34,732 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 44736
+INFO 2025-09-25 11:47:42,865 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 44887
+INFO 2025-09-25 11:47:50,652 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 45039
+INFO 2025-09-25 11:47:55,186 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 45197
+INFO 2025-09-25 11:48:06,801 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 45486
+INFO 2025-09-25 11:48:29,333 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 45486
+INFO 2025-09-25 11:49:02,697 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 46401
+INFO 2025-09-25 11:49:36,645 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 46401
+INFO 2025-09-25 11:49:53,319 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 25862
+INFO 2025-09-25 11:49:57,384 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 200 21081
+INFO 2025-09-25 11:49:59,500 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 25862
+INFO 2025-09-25 11:50:02,603 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 46401
+INFO 2025-09-25 11:50:08,886 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 46401
+INFO 2025-09-25 11:50:45,250 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 46401
+INFO 2025-09-25 11:51:25,334 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 47621
+INFO 2025-09-25 11:51:36,393 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 51074
+INFO 2025-09-25 11:51:56,574 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 51225
+INFO 2025-09-25 11:52:20,505 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 51616
+INFO 2025-09-25 11:52:25,801 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 51855
+INFO 2025-09-25 11:52:34,754 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 51986
+INFO 2025-09-25 11:52:41,210 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 52202
+INFO 2025-09-25 11:52:43,994 basehttp "GET /api/controller-panel/group-subjects/?id=7bf212d7-f1a6-42ad-9f8a-4b01d30740b2&vscodeBrowserReqId=1758790363990 HTTP/1.1" 302 0
+INFO 2025-09-25 11:52:43,999 basehttp "GET /api/login/?next=/api/controller-panel/group-subjects/%3Fid%3D7bf212d7-f1a6-42ad-9f8a-4b01d30740b2%26vscodeBrowserReqId%3D1758790363990 HTTP/1.1" 200 5079
+INFO 2025-09-25 11:53:05,477 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 55095
+INFO 2025-09-25 11:53:22,204 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 55384
+INFO 2025-09-25 11:53:38,502 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 55384
+INFO 2025-09-25 11:53:49,170 basehttp "GET /api/controller-panel/group-subjects/?id=1782cc61-f66b-4681-86d8-369ee27449bd&vscodeBrowserReqId=1758790429166 HTTP/1.1" 302 0
+INFO 2025-09-25 11:53:49,172 basehttp "GET /api/login/?next=/api/controller-panel/group-subjects/%3Fid%3D1782cc61-f66b-4681-86d8-369ee27449bd%26vscodeBrowserReqId%3D1758790429166 HTTP/1.1" 200 5079
+INFO 2025-09-25 11:54:15,835 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 60402
+INFO 2025-09-25 11:54:24,239 basehttp "POST /api/controller-panel/group-subjects/?add_subject=1 HTTP/1.1" 200 61782
+INFO 2025-09-25 11:54:41,325 basehttp "GET /api/controller-panel/group-subjects/?delete_subject=11 HTTP/1.1" 200 60402
+INFO 2025-09-25 11:54:49,402 basehttp "POST /api/controller-panel/group-subjects/?add_subject=1 HTTP/1.1" 200 61782
+INFO 2025-09-25 11:55:12,427 basehttp "POST /api/controller-panel/group-subjects/?add_subject=1 HTTP/1.1" 200 62850
+INFO 2025-09-25 11:55:31,192 basehttp "POST /api/controller-panel/group-subjects/?add_subject=1 HTTP/1.1" 200 63918
+INFO 2025-09-25 11:55:40,939 basehttp "GET /api/controller-panel/group-subjects/?delete_subject=14 HTTP/1.1" 302 0
+INFO 2025-09-25 11:55:40,943 basehttp "GET /api/login/?next=/api/controller-panel/group-subjects/%3Fdelete_subject%3D14 HTTP/1.1" 200 5079
+INFO 2025-09-25 11:55:47,470 basehttp "POST /api/login/?next=/api/controller-panel/group-subjects/%3Fdelete_subject%3D14 HTTP/1.1" 302 0
+INFO 2025-09-25 11:55:47,478 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 20482
+INFO 2025-09-25 11:55:54,742 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 63606
+INFO 2025-09-25 11:56:01,589 basehttp "GET /api/controller-panel/group-subjects/?delete_subject=14 HTTP/1.1" 200 62538
+INFO 2025-09-25 11:56:07,341 basehttp "GET /api/controller-panel/group-subjects/?delete_subject=13 HTTP/1.1" 200 61470
+INFO 2025-09-25 11:56:13,802 basehttp "GET /api/controller-panel/group-subjects/?delete_subject=12 HTTP/1.1" 200 60402
+INFO 2025-09-25 11:56:21,667 autoreload C:\project\TEST\backend\main\views_controller_panel.py changed, reloading.
+INFO 2025-09-25 11:56:22,149 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 11:56:31,336 autoreload C:\project\TEST\backend\main\views_controller_panel.py changed, reloading.
+INFO 2025-09-25 11:56:31,841 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 11:56:40,061 basehttp "GET /api/controller-panel/group-subjects/?delete_subject=12 HTTP/1.1" 200 60402
+INFO 2025-09-25 11:56:51,184 basehttp "POST /api/controller-panel/group-subjects/?add_subject=1 HTTP/1.1" 200 61738
+INFO 2025-09-25 11:56:59,922 basehttp "GET /api/controller-panel/group-subjects/?delete_subject=15 HTTP/1.1" 200 60402
+INFO 2025-09-25 11:57:14,067 basehttp "GET /api/controller-panel/group-subjects/?delete_subject=15 HTTP/1.1" 200 61204
+INFO 2025-09-25 11:57:19,149 basehttp "POST /api/controller-panel/group-subjects/?add_subject=1 HTTP/1.1" 200 62556
+INFO 2025-09-25 11:57:24,572 basehttp "GET /api/controller-panel/group-subjects/?delete_subject=16 HTTP/1.1" 200 61204
+INFO 2025-09-25 11:58:23,402 basehttp "GET /api/controller-panel/group-subjects/?delete_subject=16 HTTP/1.1" 200 61668
+INFO 2025-09-25 11:58:29,677 basehttp "POST /api/controller-panel/group-subjects/?add_subject=1 HTTP/1.1" 200 63020
+INFO 2025-09-25 11:58:39,038 basehttp "POST /api/controller-panel/group-subjects/?add_group=1 HTTP/1.1" 200 65019
+INFO 2025-09-25 11:58:47,618 basehttp "GET /api/controller-panel/group-subjects/?delete_subject=17 HTTP/1.1" 200 63667
+INFO 2025-09-25 11:58:58,058 basehttp "GET /api/controller-panel/group-subjects/?delete_group=5 HTTP/1.1" 200 62519
+INFO 2025-09-25 11:59:00,679 basehttp "GET /api/controller-panel/group-subjects/?delete_group=5 HTTP/1.1" 200 62519
+INFO 2025-09-25 11:59:07,298 basehttp "POST /api/controller-panel/group-subjects/?add_group=1 HTTP/1.1" 200 63937
+INFO 2025-09-25 11:59:14,870 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 11:59:24,978 basehttp "POST /api/controller-panel/group-subjects/?add_group=1 HTTP/1.1" 200 65085
+INFO 2025-09-25 11:59:49,966 basehttp "POST /api/controller-panel/group-subjects/?add_group=1 HTTP/1.1" 200 66233
+INFO 2025-09-25 12:01:27,413 basehttp "POST /api/controller-panel/group-subjects/?add_subject=1 HTTP/1.1" 200 67305
+INFO 2025-09-25 12:01:58,818 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 12:04:59,156 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 12:05:44,388 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 12:06:18,591 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 12:07:51,553 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 12:11:07,412 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 12:27:14,904 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 12:35:50,865 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 12:40:35,259 autoreload C:\project\TEST\backend\bace\settings.py changed, reloading.
+INFO 2025-09-25 12:40:35,785 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 12:40:38,860 autoreload C:\project\TEST\backend\bace\settings.py changed, reloading.
+INFO 2025-09-25 12:40:39,370 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 12:40:58,539 autoreload C:\project\TEST\backend\bace\urls.py changed, reloading.
+INFO 2025-09-25 12:40:58,988 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 12:41:17,197 autoreload Watching for file changes with StatReloader
+INFO 2025-09-25 12:41:19,379 basehttp "GET / HTTP/1.1" 200 5079
+INFO 2025-09-25 12:41:19,444 basehttp "GET /static/main/1.png HTTP/1.1" 200 48202
+INFO 2025-09-25 12:41:24,618 basehttp "POST / HTTP/1.1" 302 0
+INFO 2025-09-25 12:41:24,626 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 20482
+INFO 2025-09-25 12:41:27,223 basehttp "GET /api/controller-panel/group-subjects/ HTTP/1.1" 200 39830
+INFO 2025-09-25 12:42:45,639 basehttp "GET /api/controller-panel/group-subjects/?delete=10 HTTP/1.1" 200 39347
+INFO 2025-09-25 12:42:56,779 basehttp "GET /api/controller-panel/group-subjects/?delete_subject=18 HTTP/1.1" 200 38373
+INFO 2025-09-25 12:43:03,541 basehttp "POST /api/controller-panel/group-subjects/?add_subject=1 HTTP/1.1" 200 39399
