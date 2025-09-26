@@ -1,0 +1,1 @@
+kel bunday qilamiz uqituvchi savollarni kiritib bulgach http://127.0.0.1:8000/api/teacher-panel/dashboard/ shu joyda rasmda ham kursatdim fanning nomi chiqiqb turgan joyda semestr chiqadigan joydan oldin yani fan va semestr ciqayotgan joyni urtasida chiroyli buttun kurinishda bu savollardan tuzilgan test 
