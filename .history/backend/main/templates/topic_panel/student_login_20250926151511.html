@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% block head_extra %}
+<style>
+  .login-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: -1.5rem -15px 0 -15px;
+    padding: 0;
+  }
+  .login-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 3rem 2.5rem;
+    width: 100%;
+    max-width: 420px;
+    transform: translateY(-20px);
+    animation: slideUp 0.6s ease-out;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(-20px); }
+  }
+  .login-title {
+    color: #4a5568;
+    font-weight: 700;
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+  .login-subtitle {
+    color: #718096;
+    font-size: 0.95rem;
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+  .form-control-modern {
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 0.8rem 1.2rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.9);
+  }
+  .form-control-modern:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    background: white;
+    outline: none;
+  }
+  .btn-modern {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 12px;
+    padding: 0.9rem 2rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .btn-modern:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+  }
+  .btn-modern:active {
+    transform: translateY(0);
+  }
+  .error-modern {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    padding: 0.8rem 1.2rem;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+  }
+  .help-text {
+    color: #a0aec0;
+    font-size: 0.85rem;
+    text-align: center;
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: rgba(160, 174, 192, 0.1);
+    border-radius: 10px;
+    border-left: 3px solid #667eea;
+  }
+  .student-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 50%;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+  }
+</style>
+{% endblock %}
+{% block content %}
+<div class="login-container">
+  <div class="login-card">
+    <div class="student-icon">
+      <i class="fas fa-user-graduate"></i>
+    </div>
+    <h1 class="login-title">Talaba Paneli</h1>
+    <p class="login-subtitle">Mavzulashtirilgan testlarga kirish</p>
+    
+    {% if error %}
+      <div class="alert error-modern">
+        <i class="fas fa-exclamation-triangle me-2"></i>{{ error }}
+      </div>
+    {% endif %}
+    
+    <form method="post">
+      {% csrf_token %}
+      <div class="mb-4">
+        <input 
+          name="username" 
+          class="form-control form-control-modern" 
+          placeholder="Username kiriting..." 
+          required
+          autocomplete="username"
+        >
+      </div>
+      <button type="submit" class="btn btn-modern w-100">
+        <i class="fas fa-sign-in-alt me-2"></i>Kirish
+      </button>
+    </form>
+    
+    <div class="help-text">
+      <i class="fas fa-info-circle me-2"></i>
+      Faqat username bilan kirish mumkin. Parol talab qilinmaydi.
+    </div>
+  </div>
+</div>
+
+<!-- FontAwesome icons -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+{% endblock %}

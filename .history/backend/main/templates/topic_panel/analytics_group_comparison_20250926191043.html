@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-4">
+  <div class="d-flex align-items-center mb-4">
+    <h3 class="me-auto">Guruhlar taqqoslash: {{ topic.title }}</h3>
+    <a href="/api/topic-panel/{{ topic.id }}/manage/" class="btn btn-outline-secondary me-2">← Orqaga</a>
+  </div>
+  {% if rows %}
+  <div class="table-responsive shadow-sm rounded bg-white p-3">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="table-light">
+        <tr>
+          <th>#</th>
+            <th>Guruh</th>
+            <th>Urinishlar</th>
+            <th>Talabalar</th>
+            <th>O'rtacha ball</th>
+            <th>O'rtacha %</th>
+            <th>Eng yuqori ball</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in rows %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ r.group_name }}</td>
+            <td>{{ r.attempts }}</td>
+            <td>{{ r.student_count }}</td>
+            <td><span class="badge bg-primary">{{ r.avg_score }}</span></td>
+            <td><span class="badge bg-info">{{ r.avg_percent }}%</span></td>
+            <td><span class="badge bg-success">{{ r.best_score }}</span></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+    <div class="alert alert-info">Hozircha natijalar yo'q.</div>
+  {% endif %}
+</div>
+{% endblock %}

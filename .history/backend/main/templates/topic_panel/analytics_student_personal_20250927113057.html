@@ -1,0 +1,281 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="personal-analytics-page" id="personalRoot">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-nav">
+          <a href="/api/topic-panel/student/panel/" class="hero-back-btn">
+            <i class="fas fa-arrow-left"></i>
+            <span>Orqaga</span>
+          </a>
+          <div class="hero-actions">
+            <button type="button" id="darkToggle" class="theme-toggle" title="Tungi rejim">
+              <i class="fas fa-moon"></i>
+            </button>
+          </div>
+        </div>
+        <div class="hero-title">
+          <h1 class="hero-heading">Shaxsiy statistika</h1>
+          <p class="hero-subtitle">{{ topic.title }}</p>
+          {% if personal_stats.total_attempts %}
+            <div class="hero-badge">
+              <span class="attempts-count">{{ personal_stats.total_attempts }}</span>
+              <span class="attempts-label">urinish</span>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="container">
+
+      <!-- Filter Section -->
+      <div class="filter-section">
+        <form method="get" class="filter-form">
+          <div class="filter-group">
+            <div class="date-filters">
+              <div class="date-input-group">
+                <label class="date-label">Dan</label>
+                <input type="date" name="start" value="{{ start_filter }}" class="date-input">
+              </div>
+              <div class="date-input-group">
+                <label class="date-label">Gacha</label>
+                <input type="date" name="end" value="{{ end_filter }}" class="date-input">
+              </div>
+              <button type="submit" class="filter-btn">
+                <i class="fas fa-filter"></i>
+                <span>Filtrlash</span>
+              </button>
+              {% if start_filter or end_filter %}
+                <a href="?" class="clear-btn">
+                  <i class="fas fa-times"></i>
+                  <span>Tozalash</span>
+                </a>
+              {% endif %}
+            </div>
+            <div class="quick-filters">
+              <button class="quick-filter-btn" type="button" data-range="7">7 kun</button>
+              <button class="quick-filter-btn" type="button" data-range="30">30 kun</button>
+              <button class="quick-filter-btn" type="button" data-range="all">Barchasi</button>
+            </div>
+          </div>
+          <div class="threshold-control">
+            <label class="threshold-label">O'tish chegarasi:</label>
+            <div class="threshold-input-group">
+              <input type="number" id="passThreshold" class="threshold-input" value="{{ personal_stats.pass_threshold }}" min="0" max="100">
+              <span class="threshold-unit">%</span>
+            </div>
+          </div>
+        </form>
+      </div>
+
+  {% if personal_stats.total_attempts %}
+  <!-- KPI Cards -->
+  <div class="row g-3 mb-4 kpi-row">
+    <div class="col-6 col-md-3">
+      <div class="kpi shadow-sm">
+        <div class="kpi-icon bg-primary"><i class="fas fa-layer-group"></i></div>
+        <div>
+          <div class="kpi-value">{{ personal_stats.total_attempts }}</div>
+          <div class="kpi-label">Urinishlar</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="kpi shadow-sm position-relative">
+        <div class="kpi-icon bg-success"><i class="fas fa-chart-line"></i></div>
+        <div>
+          <div class="d-flex align-items-center gap-2">
+            <div class="kpi-value mb-0">{{ personal_stats.avg_percent }}%</div>
+            {% if personal_stats.delta_percent %}
+              <span class="badge rounded-pill {% if personal_stats.delta_percent > 0 %}bg-success-subtle text-success{% elif personal_stats.delta_percent < 0 %}bg-danger-subtle text-danger{% else %}bg-secondary-subtle text-muted{% endif %}">
+                {% if personal_stats.delta_percent > 0 %}+{% endif %}{{ personal_stats.delta_percent }}%
+              </span>
+            {% endif %}
+          </div>
+          <div class="kpi-label">O'rtacha %</div>
+          <canvas class="spark" data-points="{{ personal_stats.percent_series|join:',' }}"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="kpi shadow-sm">
+        <div class="kpi-icon bg-warning"><i class="fas fa-trophy"></i></div>
+        <div>
+          <div class="kpi-value">{{ personal_stats.best_percent }}%</div>
+          <div class="kpi-label">Eng yaxshi %</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="kpi shadow-sm">
+        <div class="kpi-icon bg-info"><i class="fas fa-passport"></i></div>
+        <div>
+          <div class="kpi-value" id="passRateVal">{{ personal_stats.pass_rate }}%</div>
+          <div class="kpi-label">Pass rate</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Attempts Table -->
+  <div class="card shadow-sm mb-4" id="attemptCard">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h5 class="mb-0"><i class="fas fa-table me-2 text-primary"></i>Natijalar</h5>
+      <div class="small text-muted d-flex align-items-center gap-3">
+        <span class="sortable-hint"><i class="fas fa-sort text-secondary"></i> Saralash uchun sarlavhaga bosing</span>
+        <small class="text-muted">Umumiy baholash jadvali</small>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover table-borderless align-middle mb-0 attempts-table" id="attemptsTbl">
+        <thead class="table-light">
+          <tr>
+            <th data-sort="num">#</th>
+            <th data-sort="text">Test</th>
+            <th class="text-center" data-sort="num">Ball</th>
+            <th style="width:170px" data-sort="num">Foiz</th>
+            <th class="text-center" data-sort="num">To'g'ri/Jami</th>
+            <th data-sort="date">Vaqt</th>
+            <th> </th>
+          </tr>
+        </thead>
+        <tbody id="attemptBody">
+          {% for i in items %}
+          <tr data-idx="{{ forloop.counter0 }}">
+            <td class="fw-semibold row-index">{{ forloop.counter }}</td>
+            <td class="test-title">{{ i.test_title }}</td>
+            <td class="text-center"><span class="badge pass-badge" data-percent="{{ i.percent }}">{{ i.score }}</span></td>
+            <td>
+              <div class="progress progress-thin">
+                <div class="progress-bar percent-bar" data-percent="{{ i.percent }}" style="width: {{ i.percent }}%">{{ i.percent }}%</div>
+              </div>
+            </td>
+            <td class="text-center small"><span class="text-success fw-semibold">{{ i.correct }}</span>/<span class="text-muted total-q">{{ i.total_q }}</span></td>
+            <td class="small text-muted time-cell" data-time="{{ i.finished_at|date:'Y-m-d H:i' }}">{{ i.finished_at|date:'Y-m-d H:i' }}</td>
+            <td><button class="btn btn-sm btn-outline-primary attempt-detail" type="button"><i class="fas fa-magnifying-glass"></i></button></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="card-footer text-center p-2">
+      <button class="btn btn-sm btn-outline-primary" id="loadMore" type="button">Yana yuklash</button>
+    </div>
+  </div>
+
+  <!-- Attempt Detail Modal -->
+  <div class="modal fade" id="attemptModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Urinish tafsilotlari</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div id="attemptMeta" class="mb-3 small text-muted"></div>
+          <div id="attemptQuestions" class="list-group small"></div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Yopish</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chart -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-header"><h6 class="mb-0"><i class="fas fa-chart-area me-2 text-primary"></i>Natijalar dinamikasi</h6></div>
+    <div class="card-body"><canvas id="statsChart" height="170"></canvas></div>
+  </div>
+  {% else %}
+    <div class="alert alert-info"><i class="fas fa-info-circle me-1"></i> Hali yakunlangan testlaringiz yo'q.</div>
+  {% endif %}
+</div>
+
+<style>
+  :root.dark body,#personalRoot.dark{--bg:#0d1117;--card:#161b22;--text:#e6edf3;--muted:#8b949e}
+  body.dark,#personalRoot.dark{background:var(--bg)!important;color:var(--text)}
+  body.dark .card,#personalRoot.dark .card{background:var(--card);color:var(--text)}
+  body.dark .table-light{background:#1f242c!important}
+  body.dark .kpi{background:var(--card)!important}
+  .personal-analytics .kpi{display:flex;gap:12px;align-items:center;border-radius:12px;padding:12px 14px;background:var(--bs-body-bg);position:relative;overflow:hidden}
+  .personal-analytics .kpi::after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,255,255,.18),rgba(255,255,255,0));pointer-events:none}
+  .kpi-icon{width:46px;height:46px;display:flex;align-items:center;justify-content:center;color:#fff;border-radius:10px;font-size:1.1rem;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+  .kpi-value{font-size:1.4rem;font-weight:700;line-height:1}
+  .kpi-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.5px;font-weight:600;opacity:.7}
+  .progress-thin{height:20px;background:rgba(0,0,0,.06);border-radius:30px;overflow:hidden}
+  .progress-thin .progress-bar{font-size:.65rem;font-weight:600}
+  .attempts-table tbody tr:hover{background:rgba(99,102,241,.08)!important}
+  @media (max-width:768px){.attempts-table thead{display:none}.attempts-table tbody tr{display:block;margin-bottom:.75rem;border:1px solid #e5e7eb;border-radius:8px;padding:.5rem .75rem}.attempts-table td{display:flex;justify-content:space-between;border:0!important;padding:.25rem .25rem}.attempts-table td:first-child{font-weight:600}}
+  .spark{width:100%;height:26px}
+  .dark .progress-thin{background:#2a3140}
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+(function(){
+  const root=document.documentElement;const darkBtn=document.getElementById('darkToggle');
+  function applyDark(v){if(v){root.classList.add('dark');localStorage.setItem('pa_dark','1');}else{root.classList.remove('dark');localStorage.removeItem('pa_dark');}}
+  applyDark(localStorage.getItem('pa_dark')==='1');
+  if(darkBtn) darkBtn.addEventListener('click',()=>applyDark(!root.classList.contains('dark')));
+})();
+
+(function(){ // pass threshold live recolor
+  const thrInput=document.getElementById('passThreshold');
+  if(!thrInput) return; function recolor(){const thr=parseFloat(thrInput.value)||0;document.querySelectorAll('.pass-badge').forEach(b=>{const p=parseFloat(b.dataset.percent)||0;b.className='badge pass-badge '+(p>=thr?'bg-success':'bg-danger');});document.querySelectorAll('.percent-bar').forEach(pb=>{const p=parseFloat(pb.dataset.percent)||0;let cls='bg-danger';if(p>=thr){cls=p>=85?'bg-success':p>=70?'bg-info':'bg-warning';}pb.className='progress-bar percent-bar '+cls;});}
+  thrInput.addEventListener('input',recolor);recolor();
+})();
+
+(function(){ // quick filters
+  const btns=document.querySelectorAll('.quick-filters button[data-range]');
+  const start=document.querySelector('input[name=start]'); const end=document.querySelector('input[name=end]');
+  function fmt(d){return d.toISOString().slice(0,10);} 
+  btns.forEach(b=>b.addEventListener('click',()=>{const r=b.dataset.range; if(r==='all'){start.value='';end.value='';}else{const now=new Date();end.value=fmt(now);const days=parseInt(r);const past=new Date(now.getTime()- (days-1)*86400000);start.value=fmt(past);} b.closest('form').submit();}));
+})();
+
+(function(){ // load more pagination (15)
+  const rows=[...document.querySelectorAll('#attemptBody tr')]; const load=document.getElementById('loadMore');
+  let shown=15; function upd(){rows.forEach((r,i)=>{r.style.display = i<shown?'' :'none';}); if(shown>=rows.length) load.style.display='none';}
+  if(rows.length<=15) load.style.display='none'; else upd();
+  load.addEventListener('click',()=>{shown+=15;upd();});
+})();
+
+(function(){ // sortable table
+  const tbl=document.getElementById('attemptsTbl'); if(!tbl) return; const tbody=tbl.querySelector('tbody'); let dir=1, lastKey=null;
+  function getVal(cell,type){const t=cell.innerText.trim(); if(type==='num') return parseFloat(t)||0; if(type==='date') return new Date(t.replace(/-/g,'/')).getTime(); return t.toLowerCase();}
+  tbl.querySelectorAll('thead th[data-sort]').forEach((th,idx)=>{th.style.cursor='pointer'; th.addEventListener('click',()=>{const type=th.dataset.sort; const rows=[...tbody.querySelectorAll('tr')]; const key=idx; dir = (lastKey===key)? -dir : 1; lastKey=key; rows.sort((a,b)=>{const av=getVal(a.children[key],type), bv=getVal(b.children[key],type); if(av<bv) return -dir; if(av>bv) return dir; return 0;}); rows.forEach((r,i)=>{tbody.appendChild(r); r.querySelector('.row-index').innerText=i+1;});});});
+})();
+
+(function(){ // sparkline
+  const canvases=document.querySelectorAll('.spark'); canvases.forEach(c=>{const pts=(c.dataset.points||'').split(',').filter(Boolean).map(Number); if(pts.length<2) return; const w=c.clientWidth||120, h=c.clientHeight||26; c.width=w; c.height=h; const ctx=c.getContext('2d'); const max=Math.max(...pts), min=Math.min(...pts); const range=(max-min)||1; ctx.lineWidth=2; ctx.strokeStyle='#10b981'; ctx.beginPath(); pts.forEach((p,i)=>{const x=i/(pts.length-1)*w; const y=h - ((p-min)/range)*h; if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);}); ctx.stroke(); ctx.fillStyle='rgba(16,185,129,0.18)'; ctx.lineTo(w,h); ctx.lineTo(0,h); ctx.closePath(); ctx.fill();});
+})();
+
+(function(){ // attempt detail modal (client only summary)
+  if(typeof bootstrap==='undefined') return; const modalEl=document.getElementById('attemptModal'); if(!modalEl) return; let modal; try{modal=new bootstrap.Modal(modalEl);}catch(e){console.warn('Bootstrap modal init failed',e);return;} const rows=[...document.querySelectorAll('#attemptBody tr')];
+  rows.forEach(r=>{const btn=r.querySelector('.attempt-detail'); if(!btn) return; btn.addEventListener('click',()=>{try{const title=r.querySelector('.test-title').innerText; const percent=r.querySelector('.percent-bar').dataset.percent; const score=r.querySelector('.pass-badge').innerText.trim(); const correct=r.querySelector('.text-success').innerText; const total=r.querySelector('.total-q').innerText; const time=r.querySelector('.time-cell').dataset.time; document.getElementById('attemptMeta').innerHTML=`<strong>${title}</strong><br>Ball: ${score} | Foiz: ${percent}% | To'g'ri: ${correct}/${total} | ${time}`; document.getElementById('attemptQuestions').innerHTML='<div class="list-group-item">Savol tafsilotlari (backend API kerak) – hozircha soddalashtirilgan.</div>'; modal.show();}catch(e){console.error('Attempt modal error',e);}});});
+})();
+
+(function(){ // main chart with debug
+  try{
+    const raw = {{ items_js }}; console.log('Chart raw data:', raw);
+    if(!raw||!raw.length){console.log('Chart: no data'); return;} 
+    const labels=raw.map(r=>r.test_title||''); 
+    const perc=raw.map(r=>Number(r.percent)||0); 
+    const scores=raw.map(r=>Number(r.score)||0); 
+    const canvas=document.getElementById('statsChart'); if(!canvas){console.warn('Chart canvas missing'); return;} const ctx=canvas.getContext('2d');
+    if(window.Chart){
+      new Chart(ctx,{data:{labels,datasets:[
+        {type:'bar',label:'Ball',data:scores,backgroundColor:'rgba(16,185,129,0.55)',borderColor:'#10b981',borderWidth:1,yAxisID:'yScore'},
+        {type:'line',label:'Foiz %',data:perc,borderColor:'#6366f1',backgroundColor:'rgba(99,102,241,0.25)',borderWidth:2,tension:.35,pointRadius:4,pointBackgroundColor:'#6366f1',yAxisID:'yPercent'}
+      ]},options:{maintainAspectRatio:false,responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{labels:{font:{size:11}}},tooltip:{callbacks:{label:e=>e.dataset.label+': '+e.formattedValue+(e.dataset.yAxisID==='yPercent'?'%':'')}}},scales:{yPercent:{type:'linear',position:'right',beginAtZero:true,max:100,grid:{drawOnChartArea:false},ticks:{callback:v=>v+'%'}},yScore:{type:'linear',position:'left',beginAtZero:true,suggestedMax:Math.max(...scores,1)},x:{ticks:{autoSkip:false,maxRotation:50,minRotation:0}}}}});
+    } else { console.error('Chart.js not loaded'); }
+  }catch(err){console.error('Chart init error', err);}
+})();
+</script>
+{% endblock %}

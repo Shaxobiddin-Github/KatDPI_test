@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h5>Mavzulashtirilgan Testlar</h5>
+  {% if tests %}
+  <table class="table table-sm align-middle">
+    <thead><tr><th>ID</th><th>Sarlavha</th><th>Mavzu</th><th>Savol</th><th>Vaqt</th><th>Holat</th><th></th></tr></thead>
+    <tbody>
+      {% for item in tests %}
+        <tr>
+          <td>{{ item.obj.id }}</td>
+          <td>{{ item.obj.title }}</td>
+          <td>{{ item.obj.topic.title }}</td>
+          <td>{{ item.obj.question_count }}</td>
+          <td>{{ item.obj.duration }}</td>
+          <td>
+            {% if item.completed %}
+              <span class="badge bg-success">Tugagan ({{ item.score }})</span>
+            {% elif item.attempt_id %}
+              <span class="badge bg-warning text-dark">Boshlangan</span>
+            {% else %}
+              <span class="badge bg-secondary">Yangi</span>
+            {% endif %}
+          </td>
+          <td>
+            {% if item.completed %}
+              <a class="btn btn-sm btn-outline-secondary disabled">Tugatildi</a>
+            {% else %}
+              <a class="btn btn-sm btn-primary" href="{% url 'topic:start_test' item.obj.id %}">Boshlash</a>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    <div class="alert alert-info small">Sizning guruhingiz uchun testlar yo'q.</div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4" id="manage" data-topic="{{ topic.id }}">
+  <h4>{{ topic.title }} <small class="text-muted">(ID {{ topic.id }})</small></h4>
+  <div class="mb-3">
+    <strong>Fan:</strong> {{ topic.subject.name }} | <strong>Guruh:</strong> {{ topic.group.name }}
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card mb-3">
+        <div class="card-header">Kirish Video</div>
+        <div class="card-body">
+          {% if video %}
+            {% if video.video_url %}<div class="small text-break">URL: {{ video.video_url }}</div>{% endif %}
+            {% if video.video_file %}<div>Fayl: <a href="{{ video.video_file.url }}" target="_blank">Ko'rish</a></div>{% endif %}
+          {% else %}
+            <div class="text-muted small">Video yo'q</div>
+          {% endif %}
+          <form id="videoForm" class="mt-2" enctype="multipart/form-data">
+            <input type="text" name="video_url" class="form-control mb-1" placeholder="Video URL">
+            <input type="file" name="video_file" class="form-control mb-2">
+            <button class="btn btn-sm btn-primary w-100">Saqlash</button>
+          </form>
+          {% if video %}
+          <button id="deleteVideo" class="btn btn-sm btn-outline-danger w-100 mt-2">O'chirish</button>
+          {% endif %}
+        </div>
+      </div>
+      <div class="card mb-3">
+        <div class="card-header">Yangi Test</div>
+        <div class="card-body">
+          <form id="testForm">
+            <input name="title" class="form-control form-control-sm mb-2" placeholder="Sarlavha">
+            <input name="question_count" type="number" min="1" class="form-control form-control-sm mb-2" placeholder="Savol soni" required>
+            <input name="total_score" type="number" min="1" class="form-control form-control-sm mb-2" placeholder="Umumiy ball" required>
+            <input name="duration_minutes" type="number" min="1" class="form-control form-control-sm mb-2" placeholder="Daqiqa" required>
+            <label class="form-label small mb-1">Guruhlar (kamida bitta tanlang)</label>
+            <input type="text" id="groupSearch" class="form-control form-control-sm mb-1" placeholder="Qidirish...">
+            <select id="groupsSelect" name="group_ids" multiple class="form-select form-select-sm mb-2" size="8">
+              {% for g in all_groups %}
+                <option value="{{ g.id }}">{{ g.name }}</option>
+              {% endfor %}
+            </select>
+            <div class="form-text small mb-2">Faqat shu yerda tanlangan guruh talabalari testga kira oladi. Mavzu guruhi avtomatik qo'shilmaydi.</div>
+            <button class="btn btn-sm btn-success w-100">Yaratish</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="card mb-3">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <span>Savollar ({{ questions|length }})</span>
+        </div>
+        <div class="card-body" style="max-height:300px; overflow:auto;">
+          {% for q in questions %}
+            <div class="mb-2">
+              <strong>{{ forloop.counter }}. {{ q.text }}</strong> <span class="badge bg-secondary">{{ q.question_type }}</span>
+              <ul class="small mb-1">
+                {% for o in q.options.all %}
+                  <li {% if o.is_correct %}class="text-success"{% endif %}>{{ o.text }} {% if o.is_correct %}<strong>(+)</strong>{% endif %}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% empty %}
+            <div class="text-muted">Savol yo'q.</div>
+          {% endfor %}
+        </div>
+        <div class="card-footer">
+          <form id="questionForm" enctype="multipart/form-data" class="small">
+            <textarea name="text" class="form-control form-control-sm mb-1" placeholder="Savol matni" required></textarea>
+            <select name="question_type" class="form-select form-select-sm mb-1" required>
+              <option value="single">Bitta</option>
+              <option value="multi">Ko'p</option>
+            </select>
+            <input type="file" name="image" class="form-control form-control-sm mb-1">
+            <div id="optionsWrap" class="mb-2"></div>
+            <button type="button" id="addOption" class="btn btn-sm btn-outline-primary mb-2">Variant qo'shish</button>
+            <button class="btn btn-sm btn-primary w-100">Savol qo'shish</button>
+          </form>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">Testlar</div>
+        <div class="card-body">
+          <table class="table table-sm mb-0">
+            <thead><tr><th>ID</th><th>Sarlavha</th><th>Savol</th><th>Ball</th><th>Vaqt</th><th>Natija</th></tr></thead>
+            <tbody id="testsTbody">
+              {% for t in tests %}
+                <tr>
+                  <td>{{ t.id }}</td>
+                  <td>{{ t.title }}</td>
+                  <td>{{ t.question_count }}</td>
+                  <td>{{ t.total_score }}</td>
+                  <td>{{ t.duration }}</td>
+                  <td><a class="btn btn-sm btn-outline-secondary" href="{% url 'topic:test_results' t.id %}">Ko'rish</a></td>
+                </tr>
+              {% empty %}
+                <tr><td colspan="6" class="text-muted text-center">Test yo'q</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const topicId = document.getElementById('manage').dataset.topic;
+
+// Video save
+const videoForm = document.getElementById('videoForm');
+videoForm.addEventListener('submit', async e=>{
+  e.preventDefault();
+  const fd = new FormData(videoForm);
+  const resp = await fetch(`/api/topic-panel/${topicId}/video/save/`, {method:'POST', headers:{'X-CSRFToken':getCsrf()}, body: fd});
+  const data = await resp.json();
+  if(data.ok){ location.reload(); } else alert('Video xato');
+});
+const delBtn = document.getElementById('deleteVideo');
+if(delBtn){ delBtn.addEventListener('click', async ()=>{ if(!confirm('O\'chirish?')) return; const r = await fetch(`/api/topic-panel/${topicId}/video/delete/`, {method:'POST', headers:{'X-CSRFToken':getCsrf()}}); const d=await r.json(); if(d.ok) location.reload(); }); }
+
+// Dynamic answer options UI
+const optionsWrap = document.getElementById('optionsWrap');
+const addOptionBtn = document.getElementById('addOption');
+let optionCounter = 0;
+function addOption(){
+  optionCounter++;
+  const div = document.createElement('div');
+  div.className='input-group input-group-sm mb-1';
+  div.innerHTML = `<span class='input-group-text'>${optionCounter}</span>
+    <input name='option_text_${optionCounter}' class='form-control' placeholder='Variant'>
+    <div class='input-group-text'><input type='checkbox' name='is_correct_${optionCounter}' title='To\'g\'ri'></div>`;
+  optionsWrap.appendChild(div);
+}
+addOptionBtn.addEventListener('click', ()=>addOption());
+addOption(); addOption(); // initial two
+
+// Add question
+const qForm = document.getElementById('questionForm');
+qForm.addEventListener('submit', async e=>{
+  e.preventDefault();
+  const fd = new FormData(qForm);
+  const resp = await fetch(`/api/topic-panel/${topicId}/add-question/`, {method:'POST', headers:{'X-CSRFToken':getCsrf()}, body: fd});
+  const data = await resp.json();
+  if(data.id){ location.reload(); } else alert(data.error || 'Xato');
+});
+
+// Create test
+const testForm = document.getElementById('testForm');
+testForm.addEventListener('submit', async e=>{
+  e.preventDefault();
+  const fd = new FormData(testForm);
+  const resp = await fetch(`/api/topic-panel/${topicId}/create-test/`, {method:'POST', headers:{'X-CSRFToken':getCsrf()}, body: fd});
+  const data = await resp.json();
+  if(data.id){ location.reload(); } else alert(data.error || 'Xato');
+});
+
+function getCsrf(){ return document.cookie.split('; ').find(r=>r.startsWith('csrftoken='))?.split('=')[1]; }
+</script>
+{% endblock %}

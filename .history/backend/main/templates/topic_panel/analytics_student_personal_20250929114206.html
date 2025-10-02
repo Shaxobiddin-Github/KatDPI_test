@@ -1,0 +1,264 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+/* ---------- THEME & BASE ---------- */
+:root {--c-bg:#f8fafc;--c-card:#ffffff;--c-text:#0f172a;--c-muted:#64748b;--c-border:#e2e8f0;--c-accent:#8b5cf6;--c-accent-rgb:139,92,246;--c-danger:#ef4444;--c-warn:#f59e0b;--c-info:#06b6d4;--c-success:#10b981;--radius:16px;--shadow:0 8px 25px -5px rgba(0,0,0,.1),0 8px 10px -6px rgba(0,0,0,.1);--shadow-lg:0 20px 25px -5px rgba(0,0,0,.15),0 10px 10px -5px rgba(0,0,0,.04);--blur:blur(16px);} 
+[data-theme="dark"] {--c-bg:#0c0a1a;--c-card:#1a1625;--c-text:#f8fafc;--c-muted:#94a3b8;--c-border:#2d2438;--c-accent:#a855f7;--c-accent-rgb:168,85,247;--c-danger:#f87171;--c-warn:#fbbf24;--c-info:#22d3ee;--c-success:#34d399;} 
+body.analytics-personal {background:linear-gradient(135deg, var(--c-bg) 0%, rgba(var(--c-accent-rgb),.05) 100%);min-height:100vh;} 
+/* ---------- HERO ---------- */
+.analytics-hero {position:relative;padding:3rem 2.5rem;border-radius:var(--radius);background:linear-gradient(135deg,var(--c-accent) 0%,rgba(var(--c-accent-rgb),.9) 60%,rgba(var(--c-accent-rgb),.7) 100%);color:#fff;overflow:hidden;box-shadow:var(--shadow-lg);transform:translateY(0);transition:all .5s ease;animation:heroFloat 6s ease-in-out infinite;}
+.analytics-hero:before {content:"";position:absolute;inset:0;background:radial-gradient(circle at 75% 25%,rgba(255,255,255,.3),transparent 50%),radial-gradient(circle at 25% 75%,rgba(255,255,255,.15),transparent 40%);} 
+.analytics-hero:after {content:"";position:absolute;top:-50%;right:-50%;width:200%;height:200%;background:conic-gradient(from 0deg,transparent,rgba(255,255,255,.1),transparent);animation:rotate 20s linear infinite;}
+.analytics-hero h1 {font-size:1.75rem;font-weight:700;margin:0 0 .5rem;text-shadow:0 2px 8px rgba(0,0,0,.2);} 
+.mode-badge {display:inline-flex;align-items:center;gap:.5rem;font-size:.75rem;font-weight:700;padding:.5rem .8rem;border-radius:2rem;background:rgba(255,255,255,.22);backdrop-filter:var(--blur);text-transform:uppercase;letter-spacing:.8px;border:1px solid rgba(255,255,255,.2);} 
+.hero-sub {font-size:.9rem;opacity:.95;margin:0;text-shadow:0 1px 4px rgba(0,0,0,.1);} 
+.hero-actions {position:absolute;right:1.5rem;top:1.5rem;display:flex;gap:.6rem;z-index:10;}
+@keyframes heroFloat {0%,100%{transform:translateY(0px);}50%{transform:translateY(-5px);}}
+@keyframes rotate {from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+.btn-ghost {--_c:255,255,255;display:inline-flex;align-items:center;gap:.4rem;background:rgba(var(--_c),.18);border:1px solid rgba(var(--_c),.3);color:#fff;padding:.55rem .85rem;font-size:.75rem;font-weight:600;border-radius:12px;line-height:1;transition:all .3s cubic-bezier(.4,0,.2,1);backdrop-filter:var(--blur);position:relative;overflow:hidden;} 
+.btn-ghost:before {content:"";position:absolute;inset:0;background:linear-gradient(45deg,transparent,rgba(255,255,255,.1),transparent);transform:translateX(-100%);transition:transform .6s ease;} 
+.btn-ghost:hover {background:rgba(var(--_c),.35);transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,0,0,.15);} 
+.btn-ghost:hover:before {transform:translateX(100%);} 
+/* ---------- STATS GRID ---------- */
+.stats-grid {display:grid;gap:1.25rem;margin:2rem 0 2.5rem;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));}
+.stat-card {position:relative;background:var(--c-card);border:1px solid var(--c-border);border-radius:var(--radius);padding:1.25rem 1rem;display:flex;flex-direction:column;gap:.5rem;min-height:120px;overflow:hidden;transition:all .4s cubic-bezier(.4,0,.2,1);box-shadow:var(--shadow);cursor:pointer;}
+.stat-card:before {content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(var(--c-accent-rgb),.12),transparent 60%);opacity:0;transition:all .4s ease;}
+.stat-card:after {content:"";position:absolute;top:-2px;left:-2px;right:-2px;bottom:-2px;background:linear-gradient(45deg,var(--c-accent),var(--c-info),var(--c-accent));border-radius:var(--radius);z-index:-1;opacity:0;transition:opacity .4s ease;}
+.stat-card:hover {transform:translateY(-8px) scale(1.02);box-shadow:var(--shadow-lg);}
+.stat-card:hover:before {opacity:1;}
+.stat-card:hover:after {opacity:.15;}
+.stat-label {font-size:.7rem;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--c-muted);position:relative;} 
+.stat-value {font-size:1.6rem;font-weight:700;color:var(--c-text);line-height:1;position:relative;background:linear-gradient(135deg,var(--c-accent),var(--c-info));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+[data-theme="dark"] .stat-value {background:linear-gradient(135deg,var(--c-accent),var(--c-info));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.stat-trend {font-size:.75rem;font-weight:600;margin-top:auto;display:inline-flex;align-items:center;gap:.3rem;position:relative;}
+.trend-up {color:var(--c-success);} .trend-flat {color:var(--c-info);} .trend-down {color:var(--c-danger);} 
+/* ---------- FILTER BAR ---------- */
+.filter-bar {background:var(--c-card);border:1px solid var(--c-border);border-radius:var(--radius);padding:1.5rem 1.25rem 1rem;margin-bottom:1.8rem;display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));align-items:end;box-shadow:var(--shadow);backdrop-filter:var(--blur);position:relative;overflow:hidden;}
+.filter-bar:before {content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--c-accent),var(--c-info),var(--c-accent));opacity:.8;}
+.filter-bar label {font-size:.7rem;text-transform:uppercase;font-weight:700;letter-spacing:.7px;color:var(--c-muted);margin-bottom:.4rem;}
+.filter-bar input {font-size:.85rem;transition:all .3s ease;border-radius:10px;border:2px solid var(--c-border);}
+.filter-bar input:focus {border-color:var(--c-accent);box-shadow:0 0 0 3px rgba(var(--c-accent-rgb),.1);transform:scale(1.02);}
+.filter-bar .actions {text-align:right;}
+/* ---------- TABLE ---------- */
+.attempt-table-wrapper {background:var(--c-card);border:1px solid var(--c-border);border-radius:var(--radius);padding:1.5rem;box-shadow:var(--shadow);position:relative;overflow:hidden;}
+.attempt-table-wrapper:before {content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--c-accent) 0%,var(--c-info) 50%,var(--c-success) 100%);}
+.attempt-table {width:100%;border-collapse:separate;border-spacing:0 .8rem;font-size:.85rem;}
+.attempt-table thead th {font-size:.7rem;text-transform:uppercase;font-weight:700;letter-spacing:.6px;color:var(--c-muted);border:none;padding:0 1rem .5rem;cursor:pointer;user-select:none;position:relative;transition:color .3s ease;}
+.attempt-table thead th:hover {color:var(--c-accent);}
+.attempt-table thead th:after {content:"";position:absolute;bottom:0;left:50%;width:0;height:2px;background:var(--c-accent);transition:all .3s ease;transform:translateX(-50%);}
+.attempt-table thead th:hover:after {width:80%;}
+.attempt-table tbody tr {background:var(--c-card);box-shadow:var(--shadow);transition:all .4s cubic-bezier(.4,0,.2,1);border:1px solid var(--c-border);position:relative;overflow:hidden;} 
+.attempt-table tbody tr:before {content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(var(--c-accent-rgb),.05),transparent 50%);opacity:0;transition:opacity .3s ease;}
+.attempt-table tbody tr:hover {transform:translateY(-4px) scale(1.01);box-shadow:var(--shadow-lg);} 
+.attempt-table tbody tr:hover:before {opacity:1;}
+.attempt-table td {padding:.8rem 1rem;vertical-align:middle;border:none;position:relative;}
+.attempt-table td:first-child {border-top-left-radius:12px;border-bottom-left-radius:12px;}
+.attempt-table td:last-child {border-top-right-radius:12px;border-bottom-right-radius:12px;}
+.badge-score {font-size:.7rem;padding:.45rem .65rem;border-radius:10px;font-weight:700;display:inline-block;min-width:42px;text-align:center;position:relative;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.1);transition:all .3s ease;}
+.badge-score:before {content:"";position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(45deg,transparent,rgba(255,255,255,.3),transparent);transform:translateX(-100%) translateY(-100%);transition:transform .6s ease;}
+.badge-score:hover:before {transform:translateX(0) translateY(0);}
+.progress-slim {height:20px;border-radius:12px;background:var(--c-border);overflow:hidden;position:relative;box-shadow:inset 0 2px 4px rgba(0,0,0,.1);}
+[data-theme="dark"] .progress-slim {background:var(--c-border);}
+.progress-slim .bar {height:100%;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:#fff;line-height:1;white-space:nowrap;position:relative;background:linear-gradient(90deg,var(--c-accent),var(--c-info));box-shadow:0 2px 8px rgba(0,0,0,.2);}
+.progress-slim .bar:before {content:"";position:absolute;top:0;left:0;right:0;height:50%;background:linear-gradient(to bottom,rgba(255,255,255,.3),transparent);}
+/* ---------- CHART CARD ---------- */
+.chart-card {background:var(--c-card);border:1px solid var(--c-border);border-radius:var(--radius);padding:1.5rem 1.25rem;margin:2.5rem 0 1.5rem;box-shadow:var(--shadow);position:relative;overflow:hidden;}
+.chart-card:before {content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--c-accent) 0%,var(--c-info) 33%,var(--c-success) 66%,var(--c-warn) 100%);}
+.chart-card h6 {font-size:.75rem;letter-spacing:.7px;font-weight:700;text-transform:uppercase;color:var(--c-muted);margin-bottom:1rem;position:relative;padding-left:1rem;}
+.chart-card h6:before {content:"📊";position:absolute;left:0;top:-2px;font-size:1rem;}
+/* Toolbar */
+.table-toolbar {display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;justify-content:space-between;margin-top:.2rem;margin-bottom:.8rem;}
+.table-toolbar .left {display:flex;gap:.6rem;align-items:center;}
+.table-toolbar .right {display:flex;gap:.5rem;}
+.input-search {background:var(--c-card);border:1px solid var(--c-border);border-radius:8px;padding:.45rem .65rem;font-size:.75rem;min-width:200px;}
+[data-theme="dark"] .input-search {color:var(--c-text);} 
+.btn-small {border:1px solid var(--c-border);background:var(--c-card);color:var(--c-text);padding:.45rem .7rem;font-size:.65rem;font-weight:600;letter-spacing:.5px;text-transform:uppercase;border-radius:8px;display:inline-flex;align-items:center;gap:.35rem;transition:.25s;}
+.btn-small:hover {background:var(--c-accent);border-color:var(--c-accent);color:#fff;}
+.btn-small.outline {background:transparent;}
+/* Avg marker */
+.avg-line-wrap {position:relative;margin-top:1rem;}
+.avg-marker {position:absolute;left:0;right:0;height:0;border-top:2px dashed var(--c-accent);display:none;}
+.avg-marker-label {position:absolute;right:4px;top:-10px;font-size:.55rem;font-weight:600;background:var(--c-accent);color:#fff;padding:.15rem .4rem;border-radius:4px;display:none;}
+/* Row highlight when above average */
+.above-avg {outline:2px solid rgba(var(--c-accent-rgb),.35);} 
+/* ---------- DARK MODE TOGGLE ---------- */
+.theme-toggle {width:38px;height:22px;border-radius:20px;position:relative;display:inline-block;background:rgba(255,255,255,.25);cursor:pointer;}
+.theme-toggle span {position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.35s;box-shadow:0 2px 4px rgba(0,0,0,.25);} 
+[data-theme="dark"] .theme-toggle span {transform:translateX(16px);} 
+/* ---------- UTIL ---------- */
+.fade-in {animation:fadeIn .8s cubic-bezier(.4,0,.2,1);} 
+@keyframes fadeIn {from{opacity:0;transform:translateY(20px) scale(.95);}to{opacity:1;transform:translateY(0) scale(1);}}
+.text-muted-soft {color:var(--c-muted)!important;}
+.nowrap {white-space:nowrap;}
+/* Scroll improvements */
+.attempt-table-wrapper {overflow-x:auto;}
+.attempt-table-wrapper::-webkit-scrollbar {height:8px;}
+.attempt-table-wrapper::-webkit-scrollbar-track {background:var(--c-border);border-radius:4px;}
+.attempt-table-wrapper::-webkit-scrollbar-thumb {background:var(--c-accent);border-radius:4px;}
+.attempt-table-wrapper::-webkit-scrollbar-thumb:hover {background:rgba(var(--c-accent-rgb),.8);}
+/* Pulse animation for loading */
+@keyframes pulse {0%,100%{opacity:1;}50%{opacity:.7;}}
+.pulse {animation:pulse 2s ease-in-out infinite;}
+/* Micro interactions */
+.clickable {cursor:pointer;transition:all .3s ease;}
+.clickable:hover {transform:scale(1.05);} 
+</style>
+
+<div class="container py-4 analytics-personal">
+  <div class="analytics-hero fade-in">
+    <div class="hero-actions">
+      <a href="/api/topic-panel/student/panel/" class="btn-ghost">⬅ Panel</a>
+      <button type="button" id="themeToggle" class="btn-ghost" aria-label="Dark/Light"><div class="theme-toggle"><span></span></div></button>
+    </div>
+    <div class="mode-badge">{% if overall_mode %}UMUMIY{% else %}Mavzu{% endif %}</div>
+    <h1>Shaxsiy statistika</h1>
+    {% if overall_mode %}
+      <p class="hero-sub">Barcha testlaringiz bo'yicha umumlashtirilgan ko'rsatkichlar</p>
+    {% else %}
+      <p class="hero-sub">Mavzu: <strong>{{ topic.title }}</strong></p>
+    {% endif %}
+  </div>
+
+  {% if personal_stats.total_attempts %}
+  <!-- STAT CARDS -->
+  <div class="stats-grid fade-in">
+    <div class="stat-card">
+      <div class="stat-label">Urinishlar</div>
+      <div class="stat-value">{{ personal_stats.total_attempts }}</div>
+      <div class="stat-trend trend-up">↺ Barchasi</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">O'rtacha %</div>
+      <div class="stat-value">{{ personal_stats.avg_percent }}%</div>
+      <div class="stat-trend trend-info">≈ Barqaror</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Eng yaxshi %</div>
+      <div class="stat-value">{{ personal_stats.best_percent }}%</div>
+      <div class="stat-trend trend-up">⬆ Yaxshi</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">O'tish foizi</div>
+      <div class="stat-value">{{ personal_stats.pass_rate }}%</div>
+      <div class="stat-trend trend-flat">%</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">O'rtacha ball</div>
+      <div class="stat-value">{{ personal_stats.avg_score }}</div>
+      <div class="stat-trend trend-info">Score</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Eng yuqori ball</div>
+      <div class="stat-value">{{ personal_stats.best_score }}</div>
+      <div class="stat-trend trend-up">Top</div>
+    </div>
+  </div>
+
+  <!-- FILTERS -->
+  <form method="get" class="filter-bar fade-in" id="filterForm">
+    <div>
+      <label>Boshlanish</label>
+      <input type="date" name="start" value="{{ start_filter }}" class="form-control form-control-sm">
+    </div>
+    <div>
+      <label>Tugash</label>
+      <input type="date" name="end" value="{{ end_filter }}" class="form-control form-control-sm">
+    </div>
+    <div>
+      <label>O'tish (%)</label>
+      <input type="number" id="passThreshold" value="{{ personal_stats.pass_threshold }}" min="0" max="100" class="form-control form-control-sm">
+    </div>
+    <div class="actions">
+      <button class="btn btn-primary btn-sm" style="min-width:110px;">Filtrlash</button>
+      {% if start_filter or end_filter %}
+        <a class="btn btn-outline-secondary btn-sm" href="?">Tozalash</a>
+      {% endif %}
+    </div>
+  </form>
+
+  <!-- ATTEMPTS TABLE -->
+  <div class="attempt-table-wrapper fade-in">
+    <div class="table-toolbar">
+      <div class="left">
+        <input type="text" id="searchInput" class="input-search" placeholder="Qidirish (test / mavzu)..." autocomplete="off" />
+      </div>
+      <div class="right">
+        <button type="button" id="toggleChartType" class="btn-small" data-type="line">Bar Chart</button>
+        <button type="button" id="toggleAvg" class="btn-small outline" data-active="0">O'rtacha chiziq</button>
+        <button type="button" id="exportCsv" class="btn-small">CSV</button>
+      </div>
+    </div>
+    <table class="attempt-table" id="attemptsTbl">
+      <thead><tr>
+        <th data-sort="index">#</th>
+        <th data-sort="test">Test</th>
+        {% if overall_mode %}<th data-sort="topic">Mavzu</th>{% endif %}
+        <th class="text-center" data-sort="score">Ball</th>
+        <th style="width:160px" data-sort="percent">Foiz</th>
+        <th class="text-center" data-sort="correct">To'g'ri/Jami</th>
+        <th data-sort="time" class="nowrap">Vaqt</th>
+      </tr></thead>
+      <tbody id="attemptBody">
+        {% for i in items %}
+        <tr>
+          <td class="nowrap">{{ forloop.counter }}</td>
+          <td>{{ i.test_title }}</td>
+          {% if overall_mode %}<td class="text-muted-soft small">{{ i.topic_title }}</td>{% endif %}
+          <td class="text-center">
+            <span class="badge-score pass-badge" data-percent="{{ i.percent }}">{{ i.score }}</span>
+          </td>
+          <td>
+            <div class="progress-slim">
+              <div class="bar percent-bar" data-percent="{{ i.percent }}" style="width: {{ i.percent }}%">{{ i.percent }}%</div>
+            </div>
+          </td>
+          <td class="text-center small"><span class="text-success fw-semibold">{{ i.correct }}</span>/<span class="text-muted">{{ i.total_q }}</span></td>
+          <td class="small text-muted-soft">{{ i.finished_at|date:'Y-m-d H:i' }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CHART -->
+  <div class="chart-card fade-in">
+    <h6>Foiz dinamikasi</h6>
+    <div class="avg-line-wrap" style="position:relative;">
+      <canvas id="statsChart" height="170"></canvas>
+      <div class="avg-marker" id="avgMarker"></div>
+      <div class="avg-marker-label" id="avgMarkerLabel"></div>
+    </div>
+  </div>
+  {% else %}
+    <div class="alert alert-info mt-4 fade-in">Hozircha yakunlangan test yo'q.</div>
+  {% endif %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+// Theme toggle persistence
+(function(){const key='analytics-theme';const root=document.documentElement;function apply(v){if(v==='dark'){root.setAttribute('data-theme','dark');}else{root.removeAttribute('data-theme');}}
+apply(localStorage.getItem(key));
+document.getElementById('themeToggle').addEventListener('click',()=>{const cur=root.getAttribute('data-theme')==='dark'?'dark':'light';const nxt=cur==='dark'?'light':'dark';apply(nxt);localStorage.setItem(key,nxt);});})();
+// Pass threshold recolor
+(function(){const thrIn=document.getElementById('passThreshold');function recolor(){const thr=parseFloat(thrIn.value)||0;document.querySelectorAll('.pass-badge').forEach(b=>{const p=parseFloat(b.dataset.percent)||0;b.style.background=p>=thr?'var(--c-accent)':'var(--c-danger)';b.style.color='#fff';});document.querySelectorAll('.percent-bar').forEach(pb=>{const p=parseFloat(pb.dataset.percent)||0;let col='var(--c-danger)';if(p>=thr){col=p>=85?'var(--c-accent)':p>=70?'var(--c-info)':'var(--c-warn)';}pb.style.background=col;});}
+if(thrIn){thrIn.addEventListener('input',recolor);recolor();}})();
+// Simple table sorting + search + average highlight
+(function(){const tbl=document.getElementById('attemptsTbl');if(!tbl)return;const overallMode={{ overall_mode|yesno:'true,false' }};const tbody=tbl.querySelector('tbody');let dir=1,lastKey='';function getCell(tr,key){const cells=[...tr.children];const map={index:0,test:1,topic:overallMode?2:null,score:overallMode?overallMode?3:3:3,percent:overallMode?overallMode?4:4:4,correct:overallMode?overallMode?5:5:5,time:overallMode?overallMode?6:6:6};return cells[map[key]];} function sort(key){dir=key===lastKey?-dir:1;lastKey=key;const rows=[...tbody.querySelectorAll('tr')];rows.sort((a,b)=>{let va=getCell(a,key)?.innerText.trim(),vb=getCell(b,key)?.innerText.trim();if(key==='percent'){va=parseFloat(a.querySelector('.percent-bar').dataset.percent)||0;vb=parseFloat(b.querySelector('.percent-bar').dataset.percent)||0;} else if(key==='score'){va=parseFloat(a.querySelector('.pass-badge').dataset.percent)||0;vb=parseFloat(b.querySelector('.pass-badge').dataset.percent)||0;} else if(key==='correct'){va=parseFloat(a.querySelectorAll('td')[overallMode?5:5].innerText)||0;vb=parseFloat(b.querySelectorAll('td')[overallMode?5:5].innerText)||0;} else if(key==='index'){va=parseInt(va)||0;vb=parseInt(vb)||0;} return va>vb?dir:va<vb?-dir:0;});rows.forEach(r=>tbody.appendChild(r));markAboveAvg();}
+tbl.querySelectorAll('thead th[data-sort]').forEach(th=>th.addEventListener('click',()=>sort(th.dataset.sort)));
+// search
+const search=document.getElementById('searchInput');if(search){search.addEventListener('input',()=>{const q=search.value.toLowerCase();[...tbody.querySelectorAll('tr')].forEach(tr=>{const txt=tr.innerText.toLowerCase();tr.style.display=txt.includes(q)?'':'none';});markAboveAvg();});}
+function markAboveAvg(){const percEls=[...tbody.querySelectorAll('.percent-bar')].filter(e=>e.closest('tr').style.display!=='none');if(!percEls.length)return;const avg=percEls.reduce((s,e)=>s+(parseFloat(e.dataset.percent)||0),0)/percEls.length;percEls.forEach(e=>{const tr=e.closest('tr');const p=parseFloat(e.dataset.percent)||0;tr.classList.toggle('above-avg',p>=avg && avg>0);});}
+markAboveAvg();})();
+// Chart init
+(function(){try{const raw={{ items_js }};if(!raw||!raw.length)return;const ctx=document.getElementById('statsChart').getContext('2d');const btnType=document.getElementById('toggleChartType');const btnAvg=document.getElementById('toggleAvg');const avgMarker=document.getElementById('avgMarker');const avgLabel=document.getElementById('avgMarkerLabel');const labels=raw.map(r=>r.test_title);const perc=raw.map(r=>r.percent);let chartType='line';let chartRef=null;const avgVal=perc.reduce((s,v)=>s+v,0)/perc.length;function render(){if(chartRef){chartRef.destroy();}chartRef=new Chart(ctx,{type:chartType,data:{labels,datasets:[{label:'Foiz %',data:perc,borderColor:'var(--c-accent)',backgroundColor:'rgba(var(--c-accent-rgb),.25)',tension:.35,fill:chartType==='line',pointRadius:3,pointHoverRadius:5,barPercentage:.55,categoryPercentage:.55}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,max:100,grid:{color:'rgba(0,0,0,.05)'}},x:{grid:{display:false}}}}});positionAvg();}
+function positionAvg(){if(btnAvg.dataset.active!=='1') {avgMarker.style.display='none';avgLabel.style.display='none';return;} const wrap=ctx.canvas.parentElement;const h=wrap.clientHeight;const pct=1-(avgVal/100);avgMarker.style.display='block';avgLabel.style.display='block';avgMarker.style.top=(pct*h)+'px';avgLabel.style.top='calc('+(pct*h)+'px - 10px)';avgLabel.textContent='AVG '+avgVal.toFixed(1)+'%';}
+btnType.addEventListener('click',()=>{chartType=chartType==='line'?'bar':'line';btnType.textContent=chartType==='line'?'Bar Chart':'Line Chart';render();});
+btnAvg.addEventListener('click',()=>{btnAvg.dataset.active=btnAvg.dataset.active==='1'?'0':'1';btnAvg.classList.toggle('active');positionAvg();});
+render();
+// CSV export
+document.getElementById('exportCsv').addEventListener('click',()=>{const rows=[[...document.querySelectorAll('#attemptsTbl thead th')].map(th=>th.innerText.trim())];document.querySelectorAll('#attemptsTbl tbody tr').forEach(tr=>{if(tr.style.display==='none')return;rows.push([...tr.children].map(td=>td.innerText.trim()));});const csv=rows.map(r=>r.map(v=>`"${v.replace(/"/g,'""')}"`).join(',')).join('\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='statistika.csv';a.click();});
+window.addEventListener('resize',positionAvg);
+}catch(e){console.error(e);}})();
+</script>
+{% endblock %}

@@ -1,0 +1,702 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head_extra %}
+<style>
+  .teacher-dashboard {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    margin: -1.5rem -15px 0 -15px;
+    padding: 0;
+    position: relative;
+    overflow-x: hidden;
+  }
+  
+  .teacher-dashboard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(120, 119, 198, 0.2) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .dashboard-header {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 2.5rem 0;
+    color: white;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .dashboard-title {
+    font-size: 3.2rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 1rem;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    background: linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .dashboard-subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    opacity: 0.95;
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+  }
+  
+  .dashboard-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  
+  .stat-item {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 1rem 1.5rem;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    min-width: 120px;
+  }
+  
+  .stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+  
+  .stat-label {
+    font-size: 0.9rem;
+    opacity: 0.9;
+  }
+  .main-content {
+    padding: 3rem 0;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .create-form-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    padding: 2.5rem;
+    margin-bottom: 3rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .create-form-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+  
+  .form-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+    justify-content: center;
+  }
+  
+  .form-control-modern {
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 1rem 1.25rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: rgba(248, 250, 252, 0.8);
+    backdrop-filter: blur(10px);
+  }
+  
+  .form-control-modern:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+    background: rgba(255, 255, 255, 0.95);
+    outline: none;
+    transform: translateY(-1px);
+  }
+  
+  .btn-create {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border: none;
+    border-radius: 16px;
+    padding: 1rem 2rem;
+    color: white;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+  }
+  
+  .btn-create:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(102, 126, 234, 0.5);
+    color: white;
+  }
+  
+  .btn-create:active {
+    transform: translateY(-1px);
+  }
+  .topics-section {
+    position: relative;
+  }
+  
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  }
+  
+  .section-subtitle {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 300;
+  }
+  
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+  
+  .topic-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .topic-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+  
+  .topic-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+  }
+  
+  .topic-card:hover::before {
+    transform: scaleX(1);
+  }
+  
+  .topic-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+  
+  .topic-id {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    min-width: 50px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  }
+  
+  .topic-subject {
+    background: rgba(102, 126, 234, 0.1);
+    color: #667eea;
+    padding: 0.4rem 1rem;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  
+  .topic-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+  
+  .topic-title a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .topic-title a:hover {
+    color: #667eea;
+  }
+  
+  .topic-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .stat-item-card {
+    background: rgba(248, 250, 252, 0.8);
+    border: 1px solid rgba(226, 232, 240, 0.5);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+  
+  .stat-item-card:hover {
+    background: rgba(102, 126, 234, 0.05);
+    border-color: rgba(102, 126, 234, 0.2);
+    transform: translateY(-2px);
+  }
+  
+  .stat-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2d3748;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+  
+  .stat-label {
+    font-size: 0.8rem;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+  }
+  
+  .topic-actions {
+    display: flex;
+    gap: 0.75rem;
+  }
+  
+  .action-btn {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  
+  .btn-manage {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  }
+  
+  .btn-manage:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+    color: white;
+  }
+  
+  .btn-stats {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+  }
+  
+  .btn-stats:hover {
+    background: rgba(16, 185, 129, 0.15);
+    transform: translateY(-2px);
+    color: #059669;
+  }
+  
+  .video-indicator {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  
+  .video-yes {
+    background: #10b981;
+  }
+  
+  .video-no {
+    background: #ef4444;
+  }
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  }
+  
+  .empty-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    color: rgba(102, 126, 234, 0.4);
+  }
+  
+  .empty-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #2d3748;
+  }
+  
+  .empty-description {
+    font-size: 1.1rem;
+    color: #64748b;
+    margin-bottom: 2rem;
+  }
+  
+  .btn-get-started {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 16px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+  }
+  
+  .btn-get-started:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(102, 126, 234, 0.5);
+    color: white;
+  }
+  /* Animation styles */
+  .fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
+  
+  .slide-up {
+    animation: slideUp 0.6s ease-out;
+  }
+  
+  .stagger-animation {
+    animation: slideUp 0.6s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes slideUp {
+    from { 
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to { 
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+  .loading-overlay.show {
+    opacity: 1;
+    visibility: visible;
+  }
+  .spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid #e2e8f0;
+    border-left: 4px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  .success-message {
+    background: linear-gradient(135deg, #48bb78, #38a169);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    display: none;
+    align-items: center;
+    gap: 0.8rem;
+  }
+</style>
+{% endblock %}
+{% block content %}
+<div class="teacher-dashboard">
+  <div class="dashboard-header fade-in">
+    <div class="container">
+      <h1 class="dashboard-title">
+        <i class="fas fa-chalkboard-teacher me-3"></i>O'qituvchi Paneli
+      </h1>
+      <p class="dashboard-subtitle">Test savollarini boshqarish va tahlilash</p>
+      
+      <div class="dashboard-stats">
+        <div class="stat-item">
+          <span class="stat-number">{{ topics.count }}</span>
+          <small class="stat-label">Mavzular</small>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">{% for t in topics %}{{ t.questions.count }}{% if not forloop.last %}+{% endif %}{% endfor %}</span>
+          <small class="stat-label">Savollar</small>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">{% for t in topics %}{{ t.tests.count }}{% if not forloop.last %}+{% endif %}{% endfor %}</span>
+          <small class="stat-label">Testlar</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div class="container">
+      <div id="successMessage" class="success-message">
+        <i class="fas fa-check-circle"></i>
+        <span>Mavzu muvaffaqiyatli qo'shildi!</span>
+      </div>
+
+      <div class="create-form-card slide-up">
+        <h3 class="form-title">
+          <i class="fas fa-plus-circle"></i>
+          Yangi Mavzu Qo'shish
+        </h3>
+        <form id="createTopicForm" class="row g-4">
+          <div class="col-md-4">
+            <label class="form-label fw-semibold text-dark">
+              <i class="fas fa-heading me-2"></i>Sarlavha
+            </label>
+            <input name="title" class="form-control form-control-modern" placeholder="Mavzu sarlavhasini kiriting..." required>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label fw-semibold text-dark">
+              <i class="fas fa-book me-2"></i>Fan
+            </label>
+            <select name="subject_id" class="form-control form-control-modern" required>
+              <option value="" disabled selected>Fanni tanlang...</option>
+              {% for s in subjects %}
+                <option value="{{ s.id }}">{{ s.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label fw-semibold text-dark">
+              <i class="fas fa-info-circle me-2"></i>Izoh (ixtiyoriy)
+            </label>
+            <input name="description" class="form-control form-control-modern" placeholder="Qo'shimcha ma'lumot...">
+          </div>
+          <div class="col-md-1 d-flex align-items-end">
+            <button type="submit" class="btn btn-create w-100">
+              <i class="fas fa-magic me-2"></i>Yaratish
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="topics-card">
+        <div class="topics-header">
+          <i class="fas fa-list"></i>
+          <h4>Mavzular Ro'yxati</h4>
+        </div>
+        <div class="table-responsive">
+          <table class="table topics-table" id="topicsTable">
+            <thead>
+              <tr>
+                <th><i class="fas fa-hashtag me-2"></i>ID</th>
+                <th><i class="fas fa-book me-2"></i>Sarlavha</th>
+                <th><i class="fas fa-question-circle me-2"></i>Savollar</th>
+                <th><i class="fas fa-file-alt me-2"></i>Testlar</th>
+                <th><i class="fas fa-video me-2"></i>Video</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for t in topics %}
+              <tr data-id="{{ t.id }}">
+                <td><span class="topic-id">{{ t.id }}</span></td>
+                <td class="topic-title">
+                  <a href="{% url 'topic:topic_manage' t.id %}">{{ t.title }}</a>
+                </td>
+                <td>
+                  <span class="stat-badge {% if t.questions.count > 0 %}has-items{% endif %}">
+                    <i class="fas fa-question"></i>
+                    {{ t.questions.count }}
+                  </span>
+                </td>
+                <td>
+                  <span class="stat-badge {% if t.tests.count > 0 %}has-items{% endif %}">
+                    <i class="fas fa-clipboard-list"></i>
+                    {{ t.tests.count }}
+                  </span>
+                </td>
+                <td>
+                  {% if t.intro_video %}
+                    <span class="video-badge video-yes">
+                      <i class="fas fa-check"></i>Mavjud
+                    </span>
+                  {% else %}
+                    <span class="video-badge video-no">
+                      <i class="fas fa-times"></i>Yo'q
+                    </span>
+                  {% endif %}
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="5">
+                  <div class="empty-state">
+                    <div class="empty-icon">
+                      <i class="fas fa-folder-open"></i>
+                    </div>
+                    <h5 class="empty-title">Mavzular mavjud emas</h5>
+                    <p>Yangi mavzu qo'shish uchun yuqoridagi formadan foydalaning.</p>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="loadingOverlay" class="loading-overlay">
+  <div class="spinner"></div>
+</div>
+
+<!-- FontAwesome icons -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+<script>
+const form = document.getElementById('createTopicForm');
+const loadingOverlay = document.getElementById('loadingOverlay');
+const successMessage = document.getElementById('successMessage');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  // Show loading
+  loadingOverlay.classList.add('show');
+  
+  const fd = new FormData(form);
+  
+  try {
+    const resp = await fetch('{% url 'topic:create_topic' %}', {
+      method: 'POST', 
+      headers: {'X-CSRFToken': getCsrf()}, 
+      body: fd
+    });
+    const data = await resp.json();
+    
+    if (data.id) {
+      // Show success message
+      successMessage.style.display = 'flex';
+      form.reset();
+      
+      // Hide success message after 3 seconds
+      setTimeout(() => {
+        successMessage.style.display = 'none';
+      }, 3000);
+      
+      // Reload after short delay
+      setTimeout(() => {
+        location.reload();
+      }, 1000);
+    } else {
+      alert(data.error || 'Xato yuz berdi!');
+    }
+  } catch (error) {
+    alert('Tarmoq xatosi yuz berdi!');
+  } finally {
+    // Hide loading
+    loadingOverlay.classList.remove('show');
+  }
+});
+
+function getCsrf() {
+  return document.cookie.split('; ').find(r => r.startsWith('csrftoken='))?.split('=')[1];
+}
+
+// Add hover effects to table rows
+document.addEventListener('DOMContentLoaded', function() {
+  const tableRows = document.querySelectorAll('#topicsTable tbody tr');
+  tableRows.forEach(row => {
+    row.addEventListener('mouseenter', function() {
+      this.style.transform = 'scale(1.02)';
+    });
+    row.addEventListener('mouseleave', function() {
+      this.style.transform = 'scale(1)';
+    });
+  });
+});
+</script>
+{% endblock %}

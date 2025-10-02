@@ -1,0 +1,1134 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="personal-analytics-page" id="personalRoot">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="container position-relative">
+      <a href="/api/topic-panel/student/panel/" class="floating-back" title="Orqaga">
+        <span class="icon"><i class="fas fa-arrow-left"></i></span>
+        <span class="label d-none d-md-inline">Orqaga</span>
+      </a>
+      <div class="hero-content">
+        <div class="hero-nav">
+          <div class="hero-actions">
+            <button type="button" id="darkToggle" class="theme-toggle" title="Tungi rejim">
+              <i class="fas fa-moon"></i>
+            </button>
+          </div>
+        </div>
+        <div class="hero-title">
+          <h1 class="hero-heading">Shaxsiy statistika</h1>
+          <p class="hero-subtitle">{{ topic.title }}</p>
+          {% if personal_stats.total_attempts %}
+            <div class="hero-badge">
+              <span class="attempts-count">{{ personal_stats.total_attempts }}</span>
+              <span class="attempts-label">urinish</span>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="container">
+
+      <!-- Filter Section -->
+      <div class="filter-section">
+        <form method="get" class="filter-form">
+          <div class="filter-group">
+            <div class="date-filters">
+              <div class="date-input-group">
+                <label class="date-label">Dan</label>
+                <input type="date" name="start" value="{{ start_filter }}" class="date-input">
+              </div>
+              <div class="date-input-group">
+                <label class="date-label">Gacha</label>
+                <input type="date" name="end" value="{{ end_filter }}" class="date-input">
+              </div>
+              <button type="submit" class="filter-btn">
+                <i class="fas fa-filter"></i>
+                <span>Filtrlash</span>
+              </button>
+              {% if start_filter or end_filter %}
+                <a href="?" class="clear-btn">
+                  <i class="fas fa-times"></i>
+                  <span>Tozalash</span>
+                </a>
+              {% endif %}
+            </div>
+            <div class="quick-filters">
+              <button class="quick-filter-btn" type="button" data-range="7">7 kun</button>
+              <button class="quick-filter-btn" type="button" data-range="30">30 kun</button>
+              <button class="quick-filter-btn" type="button" data-range="all">Barchasi</button>
+            </div>
+          </div>
+          <div class="threshold-control">
+            <label class="threshold-label">O'tish chegarasi:</label>
+            <div class="threshold-input-group">
+              <input type="number" id="passThreshold" class="threshold-input" value="{{ personal_stats.pass_threshold }}" min="0" max="100">
+              <span class="threshold-unit">%</span>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      {% if personal_stats.total_attempts %}
+      <!-- Statistics Cards -->
+      <div class="stats-grid">
+        <div class="stat-card total-attempts">
+          <div class="stat-icon">
+            <i class="fas fa-layer-group"></i>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value">{{ personal_stats.total_attempts }}</div>
+            <div class="stat-label">Jami urinishlar</div>
+          </div>
+          <div class="stat-decoration"></div>
+        </div>
+
+        <div class="stat-card average-score">
+          <div class="stat-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value-row">
+              <span class="stat-value">{{ personal_stats.avg_percent }}%</span>
+              {% if personal_stats.delta_percent %}
+                <span class="stat-delta {% if personal_stats.delta_percent > 0 %}positive{% elif personal_stats.delta_percent < 0 %}negative{% endif %}">
+                  {% if personal_stats.delta_percent > 0 %}+{% endif %}{{ personal_stats.delta_percent }}%
+                </span>
+              {% endif %}
+            </div>
+            <div class="stat-label">O'rtacha natija</div>
+            <canvas class="stat-sparkline" data-points="{{ personal_stats.percent_series|join:',' }}"></canvas>
+          </div>
+          <div class="stat-decoration"></div>
+        </div>
+
+        <div class="stat-card best-score">
+          <div class="stat-icon">
+            <i class="fas fa-trophy"></i>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value">{{ personal_stats.best_percent }}%</div>
+            <div class="stat-label">Eng yaxshi natija</div>
+          </div>
+          <div class="stat-decoration"></div>
+        </div>
+
+        <div class="stat-card pass-rate">
+          <div class="stat-icon">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value" id="passRateVal">{{ personal_stats.pass_rate }}%</div>
+            <div class="stat-label">O'tish foizi</div>
+          </div>
+          <div class="stat-decoration"></div>
+        </div>
+      </div>
+
+      <!-- Results Section -->
+      <div class="results-section">
+        <div class="section-header">
+          <div class="section-title">
+            <i class="fas fa-chart-bar"></i>
+            <h2>Test natijalari</h2>
+          </div>
+          <div class="section-actions">
+            <span class="sort-hint">
+              <i class="fas fa-sort"></i>
+              Saralash uchun ustunni bosing
+            </span>
+          </div>
+        </div>
+        <div class="results-table-container" id="attemptCard">
+    <div class="table-responsive">
+      <table class="table table-hover table-borderless align-middle mb-0 attempts-table" id="attemptsTbl">
+        <thead class="table-light">
+          <tr>
+            <th data-sort="num">#</th>
+            <th data-sort="text">Test</th>
+            <th class="text-center" data-sort="num">Ball</th>
+            <th style="width:170px" data-sort="num">Foiz</th>
+            <th class="text-center" data-sort="num">To'g'ri/Jami</th>
+            <th data-sort="date">Vaqt</th>
+            <th> </th>
+          </tr>
+        </thead>
+        <tbody id="attemptBody">
+          {% for i in items %}
+          <tr data-idx="{{ forloop.counter0 }}">
+            <td class="fw-semibold row-index">{{ forloop.counter }}</td>
+            <td class="test-title">{{ i.test_title }}</td>
+            <td class="text-center"><span class="badge pass-badge" data-percent="{{ i.percent }}">{{ i.score }}</span></td>
+            <td>
+              <div class="progress progress-thin">
+                <div class="progress-bar percent-bar" data-percent="{{ i.percent }}" style="width: {{ i.percent }}%">{{ i.percent }}%</div>
+              </div>
+            </td>
+            <td class="text-center small"><span class="text-success fw-semibold">{{ i.correct }}</span>/<span class="text-muted total-q">{{ i.total_q }}</span></td>
+            <td class="small text-muted time-cell" data-time="{{ i.finished_at|date:'Y-m-d H:i' }}">{{ i.finished_at|date:'Y-m-d H:i' }}</td>
+            <td><button class="btn btn-sm btn-outline-primary attempt-detail" type="button"><i class="fas fa-magnifying-glass"></i></button></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="card-footer text-center p-2">
+      <button class="btn btn-sm btn-outline-primary" id="loadMore" type="button">Yana yuklash</button>
+    </div>
+  </div>
+
+  <!-- Attempt Detail Modal -->
+  <div class="modal fade" id="attemptModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Urinish tafsilotlari</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div id="attemptMeta" class="mb-3 small text-muted"></div>
+          <div id="attemptQuestions" class="list-group small"></div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Yopish</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+        <!-- Chart Section -->
+        <div class="chart-section">
+          <div class="chart-header">
+            <h3 class="chart-title">
+              <i class="fas fa-chart-area"></i>
+              Natijalar dinamikasi
+            </h3>
+          </div>
+          <div class="chart-container">
+            <canvas id="statsChart"></canvas>
+          </div>
+        </div>
+        {% else %}
+        <div class="empty-state">
+          <div class="empty-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h3 class="empty-title">Statistika mavjud emas</h3>
+          <p class="empty-description">Hali yakunlangan testlaringiz yo'q. Birinchi testni topshiring!</p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Global Variables */
+:root {
+  --primary-color: #6366f1;
+  --primary-light: #a5b4fc;
+  --primary-dark: #4f46e5;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --danger-color: #ef4444;
+  --info-color: #06b6d4;
+  --dark-bg: #0f172a;
+  --dark-card: #1e293b;
+  --dark-border: #334155;
+  --light-bg: #f8fafc;
+  --light-card: #ffffff;
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --border-color: #e2e8f0;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+/* Dark Mode */
+.dark {
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --border-color: var(--dark-border);
+  --light-bg: var(--dark-bg);
+  --light-card: var(--dark-card);
+}
+
+/* Base Styles */
+.personal-analytics-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--light-bg) 0%, #e0e7ff 100%);
+  transition: all 0.3s ease;
+}
+
+.dark .personal-analytics-page {
+  background: linear-gradient(135deg, var(--dark-bg) 0%, #1e1b4b 100%);
+}
+
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  color: white;
+  padding: 2rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="white" opacity="0.1"/><circle cx="80" cy="40" r="1" fill="white" opacity="0.1"/><circle cx="40" cy="80" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>') repeat;
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.hero-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  text-decoration: none;
+/* Optional: Deprecate old hero-back-btn styles */
+.hero-back-btn {
+  /* Deprecated styles can be removed in future versions */
+}
+
+/* Floating Back Button (new) */
+.floating-back {
+  position: absolute;
+  top: 1.2rem;
+  left: 0.75rem;
+  z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.1rem 0 0.9rem;
+  height: 44px;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: 0 4px 18px -6px rgba(0, 0, 0, 0.25), 0 2px 6px -2px rgba(0, 0, 0, 0.2);
+  color: #1f2937;
+  transition: all .25s ease;
+  text-decoration: none;
+}
+.floating-back .icon {
+  display: flex;
+  width: 34px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  font-size: .95rem;
+  color: #2563eb;
+  background: rgba(37,99,235,0.12);
+  border-radius: 50%;
+  margin-right: .35rem;
+}
+.floating-back .label {font-weight:600;font-size:.85rem;letter-spacing:.5px;color:#1e293b;}
+.dark .floating-back .label{color:#e2e8f0}
+.floating-back:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px -8px rgba(0, 0, 0, .35);
+  background: #ffffff;
+}
+.floating-back:active {
+  transform: translateY(-1px);
+}
+.dark .floating-back {
+  background: rgba(38, 45, 55, 0.9);
+  border-color: rgba(255, 255, 255, 0.08);
+  color: #e2e8f0;
+}
+.dark .floating-back .icon {
+  color: #3b82f6;
+}
+.dark .floating-back:hover {
+  background: rgba(46, 54, 65, 0.95);
+  border-radius: 50px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.hero-back-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.theme-toggle {
+  width: 44px;
+  height: 44px;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 50%;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.hero-title {
+  text-align: center;
+}
+
+.hero-heading {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, white 0%, rgba(255, 255, 255, 0.8) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+  font-weight: 400;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 50px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Unified Back Button */
+.btn-back-nav{display:inline-flex;align-items:center;gap:.55rem;background:linear-gradient(135deg,#f8f9fa,#e9ecef);border:1px solid #dee2e6;color:#343a40;font-weight:600;padding:.55rem 1rem;border-radius:50px;text-decoration:none;box-shadow:0 2px 4px rgba(0,0,0,.06);transition:.25s ease;position:relative;overflow:hidden}
+.btn-back-nav .icon{display:inline-flex;width:1.1rem;height:1.1rem;align-items:center;justify-content:center;border-radius:50%;background:#0d6efd;color:#fff;font-size:.6rem;box-shadow:0 0 0 3px rgba(13,110,253,.15)}
+.btn-back-nav:hover{transform:translateY(-2px);box-shadow:0 6px 18px -4px rgba(0,0,0,.15);color:#0d6efd;border-color:#cfd4da}
+.btn-back-nav:active{transform:translateY(0)}
+.dark .btn-back-nav{background:linear-gradient(135deg,#252a31,#1e2227);border-color:#343a40;color:#e9ecef}
+.dark .btn-back-nav .icon{background:#4dabf7;box-shadow:0 0 0 3px rgba(77,171,247,.2)}
+.dark .btn-back-nav:hover{color:#4dabf7;border-color:#3a4047}
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: end;
+  flex: 1;
+}
+
+.date-filters {
+  display: flex;
+  gap: 1rem;
+  align-items: end;
+}
+
+.date-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.date-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.date-input {
+  padding: 0.75rem;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--light-card);
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+  font-size: 0.875rem;
+}
+
+.dark .date-input {
+  background: var(--dark-bg);
+}
+
+.date-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.filter-btn, .clear-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.filter-btn {
+  background: var(--primary-color);
+  color: white;
+}
+
+.filter-btn:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.clear-btn {
+  background: #ef4444;
+  color: white;
+}
+
+.clear-btn:hover {
+  background: #dc2626;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.quick-filters {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.quick-filter-btn {
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--border-color);
+  background: var(--light-card);
+  color: var(--text-primary);
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dark .quick-filter-btn {
+  background: var(--dark-bg);
+}
+
+.quick-filter-btn:hover {
+  border-color: var(--primary-color);
+  background: var(--primary-color);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.threshold-control {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.threshold-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.threshold-input-group {
+  display: flex;
+  align-items: center;
+  background: var(--light-card);
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.dark .threshold-input-group {
+  background: var(--dark-bg);
+}
+
+.threshold-input-group:focus-within {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.threshold-input {
+  width: 60px;
+  padding: 0.75rem;
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-weight: 600;
+  text-align: center;
+}
+
+.threshold-input:focus {
+  outline: none;
+}
+
+.threshold-unit {
+  padding: 0.75rem;
+  background: var(--border-color);
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.dark .threshold-unit {
+  background: var(--dark-border);
+}
+
+/* Statistics Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.stat-card {
+  background: var(--light-card);
+  border-radius: 16px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.dark .stat-card {
+  background: var(--dark-card);
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+}
+
+.stat-card.total-attempts::before {
+  background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+}
+
+.stat-card.average-score::before {
+  background: linear-gradient(90deg, var(--success-color), #34d399);
+}
+
+.stat-card.best-score::before {
+  background: linear-gradient(90deg, var(--warning-color), #fbbf24);
+}
+
+.stat-card.pass-rate::before {
+  background: linear-gradient(90deg, var(--info-color), #22d3ee);
+}
+
+.stat-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: white;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-md);
+}
+
+.total-attempts .stat-icon {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+}
+
+.average-score .stat-icon {
+  background: linear-gradient(135deg, var(--success-color), #059669);
+}
+
+.best-score .stat-icon {
+  background: linear-gradient(135deg, var(--warning-color), #d97706);
+}
+
+.pass-rate .stat-icon {
+  background: linear-gradient(135deg, var(--info-color), #0891b2);
+}
+
+.stat-value-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.stat-value {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.stat-delta {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.stat-delta.positive {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--success-color);
+}
+
+.stat-delta.negative {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--danger-color);
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 1rem;
+}
+
+.stat-sparkline {
+  width: 100%;
+  height: 40px;
+  opacity: 0.7;
+}
+
+.stat-decoration {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(99, 102, 241, 0.02));
+  border-radius: 50%;
+  transform: translate(30%, -30%);
+}
+
+/* Results Section */
+.results-section {
+  background: var(--light-card);
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  margin-bottom: 3rem;
+}
+
+.dark .results-section {
+  background: var(--dark-card);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  border-bottom: 1px solid var(--border-color);
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(99, 102, 241, 0.02));
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.section-title i {
+  color: var(--primary-color);
+  font-size: 1.5rem;
+}
+
+.section-title h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.sort-hint {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.sort-hint i {
+  color: var(--primary-color);
+}
+
+.results-table-container {
+  padding: 2rem;
+}
+
+/* Chart Section */
+.chart-section {
+  background: var(--light-card);
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  margin-bottom: 3rem;
+}
+
+.dark .chart-section {
+  background: var(--dark-card);
+}
+
+.chart-header {
+  padding: 2rem 2rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(99, 102, 241, 0.02));
+}
+
+.chart-title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.chart-title i {
+  color: var(--primary-color);
+}
+
+.chart-container {
+  padding: 2rem;
+  height: 400px;
+}
+
+#statsChart {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--text-secondary);
+}
+
+.empty-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 2rem;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: white;
+  box-shadow: var(--shadow-lg);
+}
+
+.empty-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.empty-description {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* Table Styles */
+.table {
+  color: var(--text-primary);
+}
+
+.table thead th {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(99, 102, 241, 0.05)) !important;
+  border: none;
+  font-weight: 600;
+  color: var(--text-primary);
+  padding: 1rem;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.table tbody tr {
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.table tbody tr:hover {
+  background: rgba(99, 102, 241, 0.05) !important;
+  transform: translateX(4px);
+}
+
+.table tbody td {
+  padding: 1rem;
+  border: none;
+  vertical-align: middle;
+}
+
+.progress-thin {
+  height: 24px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+.dark .progress-thin {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.progress-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.percent-bar.bg-success {
+  background: linear-gradient(90deg, var(--success-color), #34d399) !important;
+}
+
+.percent-bar.bg-info {
+  background: linear-gradient(90deg, var(--info-color), #22d3ee) !important;
+}
+
+.percent-bar.bg-warning {
+  background: linear-gradient(90deg, var(--warning-color), #fbbf24) !important;
+}
+
+.percent-bar.bg-danger {
+  background: linear-gradient(90deg, var(--danger-color), #f87171) !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero-heading {
+    font-size: 2rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+  
+  .filter-form {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .date-filters {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .quick-filters {
+    justify-content: center;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .stat-card {
+    padding: 1.5rem;
+  }
+  
+  .stat-value {
+    font-size: 2rem;
+  }
+  
+  .section-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .results-table-container,
+  .chart-container {
+    padding: 1rem;
+  }
+  
+  .chart-container {
+    height: 300px;
+  }
+  
+  .table thead {
+    display: none;
+  }
+  
+  .table tbody tr {
+    display: block;
+    margin-bottom: 1rem;
+    background: var(--light-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: var(--shadow-sm);
+  }
+  
+  .dark .table tbody tr {
+    background: var(--dark-bg);
+  }
+  
+  .table tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border: none;
+  }
+  
+  .table tbody td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+  }
+}
+
+/* Animation Classes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+(function(){
+  const root=document.documentElement;const darkBtn=document.getElementById('darkToggle');
+  function applyDark(v){if(v){root.classList.add('dark');localStorage.setItem('pa_dark','1');}else{root.classList.remove('dark');localStorage.removeItem('pa_dark');}}
+  applyDark(localStorage.getItem('pa_dark')==='1');
+  if(darkBtn) darkBtn.addEventListener('click',()=>applyDark(!root.classList.contains('dark')));
+})();
+
+(function(){ // pass threshold live recolor
+  const thrInput=document.getElementById('passThreshold');
+  if(!thrInput) return; function recolor(){const thr=parseFloat(thrInput.value)||0;document.querySelectorAll('.pass-badge').forEach(b=>{const p=parseFloat(b.dataset.percent)||0;b.className='badge pass-badge '+(p>=thr?'bg-success':'bg-danger');});document.querySelectorAll('.percent-bar').forEach(pb=>{const p=parseFloat(pb.dataset.percent)||0;let cls='bg-danger';if(p>=thr){cls=p>=85?'bg-success':p>=70?'bg-info':'bg-warning';}pb.className='progress-bar percent-bar '+cls;});}
+  thrInput.addEventListener('input',recolor);recolor();
+})();
+
+(function(){ // quick filters
+  const btns=document.querySelectorAll('.quick-filters button[data-range]');
+  const start=document.querySelector('input[name=start]'); const end=document.querySelector('input[name=end]');
+  function fmt(d){return d.toISOString().slice(0,10);} 
+  btns.forEach(b=>b.addEventListener('click',()=>{const r=b.dataset.range; if(r==='all'){start.value='';end.value='';}else{const now=new Date();end.value=fmt(now);const days=parseInt(r);const past=new Date(now.getTime()- (days-1)*86400000);start.value=fmt(past);} b.closest('form').submit();}));
+})();
+
+(function(){ // load more pagination (15)
+  const rows=[...document.querySelectorAll('#attemptBody tr')]; const load=document.getElementById('loadMore');
+  let shown=15; function upd(){rows.forEach((r,i)=>{r.style.display = i<shown?'' :'none';}); if(shown>=rows.length) load.style.display='none';}
+  if(rows.length<=15) load.style.display='none'; else upd();
+  load.addEventListener('click',()=>{shown+=15;upd();});
+})();
+
+(function(){ // sortable table
+  const tbl=document.getElementById('attemptsTbl'); if(!tbl) return; const tbody=tbl.querySelector('tbody'); let dir=1, lastKey=null;
+  function getVal(cell,type){const t=cell.innerText.trim(); if(type==='num') return parseFloat(t)||0; if(type==='date') return new Date(t.replace(/-/g,'/')).getTime(); return t.toLowerCase();}
+  tbl.querySelectorAll('thead th[data-sort]').forEach((th,idx)=>{th.style.cursor='pointer'; th.addEventListener('click',()=>{const type=th.dataset.sort; const rows=[...tbody.querySelectorAll('tr')]; const key=idx; dir = (lastKey===key)? -dir : 1; lastKey=key; rows.sort((a,b)=>{const av=getVal(a.children[key],type), bv=getVal(b.children[key],type); if(av<bv) return -dir; if(av>bv) return dir; return 0;}); rows.forEach((r,i)=>{tbody.appendChild(r); r.querySelector('.row-index').innerText=i+1;});});});
+})();
+
+(function(){ // sparkline
+  const canvases=document.querySelectorAll('.spark'); canvases.forEach(c=>{const pts=(c.dataset.points||'').split(',').filter(Boolean).map(Number); if(pts.length<2) return; const w=c.clientWidth||120, h=c.clientHeight||26; c.width=w; c.height=h; const ctx=c.getContext('2d'); const max=Math.max(...pts), min=Math.min(...pts); const range=(max-min)||1; ctx.lineWidth=2; ctx.strokeStyle='#10b981'; ctx.beginPath(); pts.forEach((p,i)=>{const x=i/(pts.length-1)*w; const y=h - ((p-min)/range)*h; if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);}); ctx.stroke(); ctx.fillStyle='rgba(16,185,129,0.18)'; ctx.lineTo(w,h); ctx.lineTo(0,h); ctx.closePath(); ctx.fill();});
+})();
+
+(function(){ // attempt detail modal (client only summary)
+  if(typeof bootstrap==='undefined') return; const modalEl=document.getElementById('attemptModal'); if(!modalEl) return; let modal; try{modal=new bootstrap.Modal(modalEl);}catch(e){console.warn('Bootstrap modal init failed',e);return;} const rows=[...document.querySelectorAll('#attemptBody tr')];
+  rows.forEach(r=>{const btn=r.querySelector('.attempt-detail'); if(!btn) return; btn.addEventListener('click',()=>{try{const title=r.querySelector('.test-title').innerText; const percent=r.querySelector('.percent-bar').dataset.percent; const score=r.querySelector('.pass-badge').innerText.trim(); const correct=r.querySelector('.text-success').innerText; const total=r.querySelector('.total-q').innerText; const time=r.querySelector('.time-cell').dataset.time; document.getElementById('attemptMeta').innerHTML=`<strong>${title}</strong><br>Ball: ${score} | Foiz: ${percent}% | To'g'ri: ${correct}/${total} | ${time}`; document.getElementById('attemptQuestions').innerHTML='<div class="list-group-item">Savol tafsilotlari (backend API kerak) – hozircha soddalashtirilgan.</div>'; modal.show();}catch(e){console.error('Attempt modal error',e);}});});
+})();
+
+(function(){ // main chart with debug
+  try{
+    const raw = {{ items_js }}; console.log('Chart raw data:', raw);
+    if(!raw||!raw.length){console.log('Chart: no data'); return;} 
+    const labels=raw.map(r=>r.test_title||''); 
+    const perc=raw.map(r=>Number(r.percent)||0); 
+    const scores=raw.map(r=>Number(r.score)||0); 
+    const canvas=document.getElementById('statsChart'); if(!canvas){console.warn('Chart canvas missing'); return;} const ctx=canvas.getContext('2d');
+    if(window.Chart){
+      new Chart(ctx,{data:{labels,datasets:[
+        {type:'bar',label:'Ball',data:scores,backgroundColor:'rgba(16,185,129,0.55)',borderColor:'#10b981',borderWidth:1,yAxisID:'yScore'},
+        {type:'line',label:'Foiz %',data:perc,borderColor:'#6366f1',backgroundColor:'rgba(99,102,241,0.25)',borderWidth:2,tension:.35,pointRadius:4,pointBackgroundColor:'#6366f1',yAxisID:'yPercent'}
+      ]},options:{maintainAspectRatio:false,responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{labels:{font:{size:11}}},tooltip:{callbacks:{label:e=>e.dataset.label+': '+e.formattedValue+(e.dataset.yAxisID==='yPercent'?'%':'')}}},scales:{yPercent:{type:'linear',position:'right',beginAtZero:true,max:100,grid:{drawOnChartArea:false},ticks:{callback:v=>v+'%'}},yScore:{type:'linear',position:'left',beginAtZero:true,suggestedMax:Math.max(...scores,1)},x:{ticks:{autoSkip:false,maxRotation:50,minRotation:0}}}}});
+    } else { console.error('Chart.js not loaded'); }
+  }catch(err){console.error('Chart init error', err);}
+})();
+</script>
+{% endblock %}

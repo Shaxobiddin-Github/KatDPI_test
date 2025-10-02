@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-5">
+  <h4>{{ test.title }} – Kirish video</h4>
+  <div class="ratio ratio-16x9 mb-3">
+    {% if video.video_url %}
+      <iframe src="{{ video.video_url }}" allowfullscreen></iframe>
+    {% elif video.video_file %}
+      <video controls style="width:100%"><source src="{{ video.video_file.url }}"></video>
+    {% else %}
+      <div class="alert alert-warning">Video topilmadi.</div>
+    {% endif %}
+  </div>
+  <button id="continueBtn" class="btn btn-success">Testni boshlash</button>
+</div>
+<script>
+const btn = document.getElementById('continueBtn');
+btn.addEventListener('click', async ()=>{
+  const resp = await fetch('{% url 'topic:video_seen' test.id %}', {method:'GET'});
+  const data = await resp.json();
+  if(data.ok){
+    window.location.href = '{% url 'topic:start_test' test.id %}';
+  }
+});
+</script>
+{% endblock %}

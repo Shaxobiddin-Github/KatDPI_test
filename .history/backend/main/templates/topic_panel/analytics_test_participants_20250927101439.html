@@ -1,0 +1,331 @@
+{% extends 'base.html' %}
+{% load dict_extras custom_filters %}
+{% block content %}
+<div class="container-fluid py-3 analytics-page">
+  <!-- Top Bar -->
+  <div class="d-flex flex-wrap gap-2 justify-content-between align-items-center mb-3">
+    <div class="d-flex align-items-center gap-3">
+      <a href="/api/topic-panel/{{ topic.id }}/manage/" class="btn btn-outline-secondary"><i class="fas fa-arrow-left me-1"></i>Orqaga</a>
+      <h2 class="h4 mb-0 fw-bold"><i class="fas fa-chart-pie me-2 text-primary"></i>{{ test.title }} – Analytics</h2>
+      <span class="badge bg-primary-subtle text-primary fw-normal">{{ topic.title }}</span>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+      <button class="btn btn-outline-primary btn-sm" onclick="exportToExcel()"><i class="fas fa-file-excel me-1"></i>Excel</button>
+      <button class="btn btn-outline-secondary btn-sm" onclick="printResults()"><i class="fas fa-print me-1"></i>Print</button>
+      <button id="toggleDark" class="btn btn-sm btn-dark" type="button"><i class="fas fa-moon"></i></button>
+    </div>
+  </div>
+
+  {% if rows %}
+  <!-- KPI Cards -->
+  <div class="row g-3 mb-4 kpi-cards">
+    <div class="col-6 col-md-3">
+      <div class="kpi shadow-sm">
+        <div class="kpi-icon bg-primary"><i class="fas fa-users"></i></div>
+        <div class="kpi-body">
+          <div class="kpi-value">{{ stats.total_participants }}</div>
+          <div class="kpi-label">Qatnashchilar</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="kpi shadow-sm">
+        <div class="kpi-icon bg-success"><i class="fas fa-check-circle"></i></div>
+        <div class="kpi-body">
+          <div class="kpi-value">{{ stats.passed_count }}</div>
+          <div class="kpi-label">O'tgan ({{ stats.pass_rate }}%)</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="kpi shadow-sm">
+        <div class="kpi-icon bg-info"><i class="fas fa-percentage"></i></div>
+        <div class="kpi-body">
+          <div class="kpi-value">{{ stats.average_percent }}%</div>
+          <div class="kpi-label">O'rtacha natija</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="kpi shadow-sm">
+        <div class="kpi-icon bg-warning"><i class="fas fa-question-circle"></i></div>
+        <div class="kpi-body">
+          <div class="kpi-value">{{ stats.total_questions }}</div>
+          <div class="kpi-label">Savollar</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Tabs -->
+  <ul class="nav nav-pills mb-3" id="analyticsTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#tab-overview" type="button" role="tab"><i class="fas fa-list me-1"></i>Umumiy</button>
+    </li>
+    {% if rows %}
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-matrix" type="button" role="tab"><i class="fas fa-th me-1"></i>Matritsa</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-questions" type="button" role="tab"><i class="fas fa-question me-1"></i>Savollar</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-students" type="button" role="tab"><i class="fas fa-user-graduate me-1"></i>Talabalar</button>
+    </li>
+    {% endif %}
+  </ul>
+
+  <div class="tab-content">
+    <!-- Overview Tab -->
+    <div class="tab-pane fade show active" id="tab-overview" role="tabpanel">
+      <div class="card shadow-sm mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0"><i class="fas fa-table me-2 text-primary"></i>Reyting jadvali</h5>
+          <div class="btn-group btn-group-sm" role="group">
+            <button type="button" class="btn btn-outline-primary active" onclick="sortTable(0)"><i class="fas fa-sort-numeric-down me-1"></i>Reyting</button>
+            <button type="button" class="btn btn-outline-primary" onclick="sortTable(1)"><i class="fas fa-sort-alpha-down me-1"></i>Ism</button>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0" id="resultsTable">
+              <thead class="table-light">
+                <tr>
+                  <th style="width:60px">#</th>
+                  <th>Talaba</th>
+                  <th>Guruh</th>
+                  <th class="text-center">To'g'ri</th>
+                  <th class="text-center">Noto'g'ri</th>
+                  <th class="text-center">Natija</th>
+                  <th class="text-center">Ball</th>
+                  <th class="text-center">Vaqt</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% if rows %}
+                {% for r in rows %}
+                <tr class="row-rank rank-{{ forloop.counter }}">
+                  <td class="fw-bold">
+                    {% if forloop.counter == 1 %}<i class="fas fa-crown text-warning me-1"></i>{% endif %}
+                    {{ forloop.counter }}
+                  </td>
+                  <td class="fw-semibold">{{ r.student_name }}</td>
+                  <td><span class="badge bg-light text-dark">{{ r.group_name }}</span></td>
+                  <td class="text-center"><span class="badge bg-success">{{ r.correct }}</span></td>
+                  <td class="text-center"><span class="badge bg-danger">{{ r.incorrect }}</span></td>
+                  <td class="text-center">
+                    <div class="progress score-bar">
+                      <div class="progress-bar bg-score" data-score="{{ r.percent }}" style="width: {{ r.percent }}%">{{ r.percent }}%</div>
+                    </div>
+                  </td>
+                  <td class="text-center fw-bold">{{ r.score }}</td>
+                  <td class="text-center text-muted small">{{ r.finished_at|date:'M d, H:i' }}</td>
+                </tr>
+                {% endfor %}
+              {% else %}
+                <tr><td colspan="8" class="text-center py-5 text-muted">Hali yakunlangan urinish yo'q</td></tr>
+              {% endif %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% if rows %}
+    <!-- Matrix Tab -->
+    <div class="tab-pane fade" id="tab-matrix" role="tabpanel">
+      <div class="card shadow-sm mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0"><i class="fas fa-th me-2 text-primary"></i>Javoblar matriksi</h5>
+          <span class="badge bg-primary-subtle text-primary">{{ question_meta|length }} savol • {{ rows|length }} talaba</span>
+        </div>
+        <div class="card-body p-0">
+          {% if too_many %}
+            <div class="alert alert-warning m-2">
+              <i class="fas fa-exclamation-triangle me-1"></i> Juda ko'p ma'lumot – qisqartirilgan.
+            </div>
+          {% endif %}
+          <div class="table-responsive matrix-wrapper">
+            <table class="table table-sm table-bordered mb-0 matrix-table">
+              <thead class="table-dark">
+                <tr>
+                  <th class="sticky-col bg-dark"><i class="fas fa-user me-1"></i>Talaba</th>
+                  {% for q in question_meta %}
+                  <th class="text-center" title="Q{{ forloop.counter }} | Variantlar: {{ q.option_count }}">Q{{ forloop.counter }}</th>
+                  {% endfor %}
+                </tr>
+              </thead>
+              <tbody>
+                {% for r in rows %}
+                <tr>
+                  <td class="sticky-col bg-body fw-semibold">{{ r.student_name }}<div class="small text-muted">{{ r.percent }}%</div></td>
+                  {% for q in question_meta %}
+                  {% if r.answers|get_item:q.id %}
+                  {% with ans=r.answers|get_item:q.id sel_ids=r.answers|get_item:q.id.selected_option_ids %}
+                  <td class="text-center p-1 matrix-cell {% if ans.is_correct %}correct{% else %}incorrect{% endif %}" title="Talaba: {{ r.student_name }}&#10;Q{{ forloop.parentloop.counter }}{% if ans.is_correct %} – To'g'ri{% else %} – Noto'g'ri{% endif %}">
+                    {% for opt_id, letter in q.option_sequence %}
+                      {% if opt_id in sel_ids %}<span class="badge bg-light text-dark border me-1">{{ letter }}</span>{% endif %}
+                    {% endfor %}
+                  </td>
+                  {% endwith %}
+                  {% else %}
+                  <td class="text-center p-1 bg-secondary bg-opacity-10 text-muted">–</td>
+                  {% endif %}
+                  {% endfor %}
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div class="p-3 border-top bg-light small d-flex flex-wrap gap-3 align-items-center">
+            <div><span class="legend-box bg-correct"></span>To'g'ri</div>
+            <div><span class="legend-box bg-incorrect"></span>Noto'g'ri</div>
+            <div><span class="legend-box bg-unanswered"></span>Javobsiz</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Questions Tab -->
+    <div class="tab-pane fade" id="tab-questions" role="tabpanel">
+      <div class="row g-3">
+        {% for s in question_summaries %}
+        <div class="col-sm-6 col-lg-4">
+          <div class="card question-card h-100 border-0 shadow-sm">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <span class="badge bg-primary-subtle text-primary">Q{{ forloop.counter }}</span>
+                <span class="badge {% if s.percent_correct >= 80 %}bg-success{% elif s.percent_correct >= 60 %}bg-warning{% else %}bg-danger{% endif %}">{{ s.percent_correct }}%</span>
+              </div>
+              <div class="small text-muted mb-2">To'g'ri: {{ s.correct }} / {{ s.answered }}</div>
+              <div class="progress compact-progress mb-2">
+                <div class="progress-bar {% if s.percent_correct >= 80 %}bg-success{% elif s.percent_correct >= 60 %}bg-warning{% else %}bg-danger{% endif %}" style="width: {{ s.percent_correct }}%"></div>
+              </div>
+              <button class="btn btn-sm btn-outline-primary w-100 mt-2" data-bs-toggle="modal" data-bs-target="#qModal{{ forloop.counter }}"><i class="fas fa-search me-1"></i>Batafsil</button>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Students Tab -->
+    <div class="tab-pane fade" id="tab-students" role="tabpanel">
+      <div class="row g-3">
+        {% for r in rows %}
+        <div class="col-md-6 col-lg-4">
+          <div class="card h-100 shadow-sm border-0 student-card">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <h6 class="mb-0 fw-bold">{{ r.student_name }}</h6>
+                <span class="badge bg-secondary-subtle text-secondary">{{ r.percent }}%</span>
+              </div>
+              <div class="small mb-2 text-muted">Guruh: {{ r.group_name }}</div>
+              <div class="d-flex flex-wrap gap-2 mb-3">
+                <span class="stat-chip bg-success-subtle text-success"><i class="fas fa-check me-1"></i>{{ r.correct }}</span>
+                <span class="stat-chip bg-danger-subtle text-danger"><i class="fas fa-times me-1"></i>{{ r.incorrect }}</span>
+                <span class="stat-chip bg-primary-subtle text-primary"><i class="fas fa-trophy me-1"></i>{{ r.score }}</span>
+              </div>
+              <div class="mt-auto small text-muted">Tugagan: {{ r.finished_at|date:'M d, H:i' }}</div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+  {% if not rows %}
+    <div class="alert alert-info mt-4"><i class="fas fa-info-circle me-1"></i> Hali yakunlangan urinish yo'q.</div>
+  {% endif %}
+</div>
+
+{% if rows %}
+<!-- Question Detail Modals -->
+{% for q in question_meta %}
+<div class="modal fade" id="qModal{{ forloop.counter }}" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="fas fa-question-circle me-2 text-primary"></i>Q{{ forloop.counter }} – Savol</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <div class="fw-semibold">Matn:</div>
+          <div class="small text-muted">{{ q.text_short }}</div>
+        </div>
+        <div>
+          <div class="fw-semibold mb-2">To'g'ri variant(lar):</div>
+          {% for opt_id, letter in q.option_sequence %}
+            {% if opt_id in q.correct_option_ids %}
+              <span class="badge bg-success me-1">{{ letter }}</span>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Yopish</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+{% endif %}
+
+<style>
+  .analytics-page .kpi {display:flex; background:var(--bs-body-bg); border-radius:12px; padding:12px 14px; align-items:center; gap:12px; position:relative; overflow:hidden;}
+  .analytics-page .kpi::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(120deg,rgba(255,255,255,.15),rgba(255,255,255,0));opacity:.6;}
+  .kpi-icon{width:46px;height:46px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:#fff;font-size:1.2rem;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+  .kpi-value{font-size:1.4rem;font-weight:700;line-height:1}
+  .kpi-label{font-size:.75rem;letter-spacing:.5px;text-transform:uppercase;font-weight:600;opacity:.7}
+  .nav-pills .nav-link{border-radius:20px;font-weight:500}
+  .nav-pills .nav-link.active{box-shadow:0 4px 12px rgba(0,0,0,.15)}
+  .score-bar{height:18px;min-width:90px}
+  .progress-bar.bg-score{font-size:.65rem;font-weight:600}
+  .matrix-wrapper{max-height:560px;overflow:auto}
+  .matrix-table thead th{position:sticky;top:0;z-index:10}
+  .sticky-col{position:sticky;left:0;z-index:11}
+  .matrix-cell.correct{background:linear-gradient(135deg,#28a745,#20c997);color:#fff;font-weight:600}
+  .matrix-cell.incorrect{background:linear-gradient(135deg,#dc3545,#fd7e14);color:#fff;font-weight:600}
+  .legend-box{display:inline-block;width:16px;height:16px;border-radius:4px;margin-right:4px;vertical-align:middle}
+  .bg-correct{background:linear-gradient(135deg,#28a745,#20c997)}
+  .bg-incorrect{background:linear-gradient(135deg,#dc3545,#fd7e14)}
+  .bg-unanswered{background:#ced4da}
+  .question-card .compact-progress{height:6px}
+  .student-card .stat-chip{padding:4px 8px;border-radius:20px;font-size:.7rem;font-weight:600;display:inline-flex;align-items:center;}
+  .student-card .stat-chip i{font-size:.65rem}
+  /* Dark mode */
+  .dark-mode{--bg:#181a1e;--fg:#e2e6ea;--card:#22252b;--border:#343a40;--accent:#4dabf7;--danger:#fa5252;--warn:#fab005;--success:#51cf66;}
+  .dark-mode body,.dark-mode .analytics-page{background:var(--bg);color:var(--fg);} 
+  .dark-mode .card{background:var(--card)!important;color:var(--fg);border-color:var(--border)!important;}
+  .dark-mode .table{color:var(--fg);}
+  .dark-mode .table-hover tbody tr:hover{background:rgba(255,255,255,.05)!important}
+  .dark-mode .table-light{--bs-table-bg:var(--card);}
+  .dark-mode .nav-pills .nav-link.active{background:var(--accent);}
+  .dark-mode .kpi{background:var(--card);}
+  .dark-mode .kpi-icon.bg-primary{background:var(--accent)!important}
+  .dark-mode .matrix-cell.correct{background:linear-gradient(135deg,var(--success),#2b8a3e)}
+  .dark-mode .matrix-cell.incorrect{background:linear-gradient(135deg,var(--danger),#fd7e14)}
+  .dark-mode .badge.bg-light{background:#2f343b!important;color:var(--fg)!important}
+  .dark-mode .modal-content{background:var(--card);color:var(--fg)}
+  .dark-mode .bg-primary-subtle{background:rgba(82,149,247,.15)!important;color:var(--accent)!important}
+  .dark-mode .bg-secondary-subtle{background:rgba(108,117,125,.2)!important}
+  .rank-1{background:linear-gradient(to right,rgba(255,215,0,.15),transparent)}
+  .rank-2{background:linear-gradient(to right,rgba(192,192,192,.15),transparent)}
+  .rank-3{background:linear-gradient(to right,rgba(205,127,50,.15),transparent)}
+  .matrix-table td,.matrix-table th{white-space:nowrap}
+  .matrix-table td{font-size:.7rem;padding:.35rem .3rem}
+  .matrix-table .badge{font-size:.55rem;padding:.25em .4em}
+</style>
+
+<script>
+function sortTable(columnIndex){const table=document.getElementById('resultsTable');if(!table)return;const tbody=table.querySelector('tbody');const rows=Array.from(tbody.querySelectorAll('tr'));document.querySelectorAll('.btn-group .btn').forEach(btn=>btn.classList.remove('active'));event.target.closest('button').classList.add('active');rows.sort((a,b)=>{let aVal,bVal;if(columnIndex===0){aVal=parseInt(a.cells[0].textContent.replace(/[^\d]/g,''));bVal=parseInt(b.cells[0].textContent.replace(/[^\d]/g,''));return aVal-bVal}else if(columnIndex===1){aVal=a.cells[1].textContent.trim().toLowerCase();bVal=b.cells[1].textContent.trim().toLowerCase();return aVal.localeCompare(bVal)}});rows.forEach(r=>tbody.appendChild(r));if(columnIndex===1){rows.forEach((row,i)=>{const cell=row.cells[0];cell.innerHTML=(i+1)})}}
+document.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('.progress-bar.bg-score').forEach(bar=>{const w=bar.getAttribute('data-score');bar.style.width='0%';setTimeout(()=>bar.style.width=w+'%',100)});const darkBtn=document.getElementById('toggleDark');if(darkBtn){darkBtn.addEventListener('click',()=>{document.documentElement.classList.toggle('dark-mode');darkBtn.classList.toggle('btn-dark');darkBtn.classList.toggle('btn-light');darkBtn.innerHTML=document.documentElement.classList.contains('dark-mode')?'<i class="fas fa-sun"></i>':'<i class="fas fa-moon"></i>';})}});
+function printResults(){window.print();}
+function exportToExcel(){alert('Excel eksport funksiyasi backend tomonida amalga oshirilishi kerak');}
+</script>
+{% endblock %}

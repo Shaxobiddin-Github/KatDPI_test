@@ -1,0 +1,793 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+.card-modern {
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-modern:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+.card-header-modern {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 16px 16px 0 0 !important;
+  font-weight: 600;
+  border: none;
+  padding: 1rem 1.5rem;
+}
+.card-header-modern.video {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+.card-header-modern.test {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+.card-header-modern.questions {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+.card-header-modern.results {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+.btn-modern {
+  border-radius: 10px;
+  font-weight: 500;
+  padding: 0.5rem 1.2rem;
+  transition: all 0.3s ease;
+}
+.btn-modern:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+.form-control-modern {
+  border-radius: 10px;
+  border: 1px solid #e0e6ed;
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
+}
+.form-control-modern:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+.topic-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 2rem;
+  border-radius: 20px;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+.stats-badge {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  margin: 0 0.25rem;
+}
+.question-item {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-left: 4px solid #667eea;
+  transition: all 0.3s ease;
+}
+.question-item:hover {
+  background: #e9ecef;
+  border-left-color: #764ba2;
+}
+.option-correct {
+  background: #d4edda;
+  color: #155724;
+  border-radius: 6px;
+  padding: 0.25rem 0.5rem;
+  font-weight: 500;
+}
+</style>
+
+<div class="container-fluid mt-4" id="manage" data-topic="{{ topic.id }}">
+  <!-- Header Section -->
+  <div class="topic-header">
+    <h2 class="mb-3">
+      <i class="fas fa-book-open me-2"></i>
+      {{ topic.title }}
+    </h2>
+    <div class="d-flex justify-content-center flex-wrap">
+      <span class="stats-badge"><i class="fas fa-graduation-cap me-1"></i>{{ topic.subject.name }}</span>
+      {% if topic.group %}<span class="stats-badge"><i class="fas fa-users me-1"></i>{{ topic.group.name }}</span>{% endif %}
+      <span class="stats-badge"><i class="fas fa-question-circle me-1"></i>{{ questions|length }} savol</span>
+      <span class="stats-badge"><i class="fas fa-clipboard-list me-1"></i>{{ tests|length }} test</span>
+    </div>
+    <div class="mt-3 d-flex justify-content-center flex-wrap gap-2">
+      <a href="/api/topic-panel/{{ topic.id }}/import/" class="btn btn-sm btn-light btn-modern"><i class="fas fa-file-import me-1"></i>Import</a>
+      <a href="/api/topic-panel/{{ topic.id }}/analytics/group-comparison/" class="btn btn-sm btn-light btn-modern"><i class="fas fa-chart-bar me-1"></i>Guruh taqqoslash</a>
+      <a href="/api/topic-panel/{{ topic.id }}/analytics/personal/" class="btn btn-sm btn-light btn-modern"><i class="fas fa-user-chart me-1"></i>Talaba statistikasi</a>
+      <a href="/api/topic-panel/{{ topic.id }}/export/" class="btn btn-sm btn-light btn-modern"><i class="fas fa-download me-1"></i>Export CSV</a>
+    </div>
+  </div>
+  <div class="row g-4">
+    <div class="col-lg-4">
+      <!-- Video Section -->
+      <div class="card card-modern mb-4">
+        <div class="card-header card-header-modern video">
+          <i class="fas fa-video me-2"></i>Kirish Video
+        </div>
+        <div class="card-body">
+          {% if video %}
+            <div class="mb-3">
+              {% if video.video_url %}
+                <div class="d-flex align-items-center mb-2">
+                  <i class="fas fa-link text-primary me-2"></i>
+                  <small class="text-break">{{ video.video_url }}</small>
+                </div>
+              {% endif %}
+              {% if video.video_file %}
+                <div class="d-flex align-items-center">
+                  <i class="fas fa-file-video text-success me-2"></i>
+                  <a href="{{ video.video_file.url }}" target="_blank" class="btn btn-sm btn-outline-success">
+                    <i class="fas fa-play me-1"></i>Ko'rish
+                  </a>
+                </div>
+              {% endif %}
+            </div>
+          {% else %}
+            <div class="text-center text-muted py-3">
+              <i class="fas fa-video-slash fa-2x mb-2 opacity-50"></i>
+              <p class="mb-0">Video yuklanmagan</p>
+            </div>
+          {% endif %}
+          
+          <form id="videoForm" class="mt-3" enctype="multipart/form-data">
+            <div class="mb-3">
+              <label class="form-label small fw-semibold">Video URL</label>
+              <input type="text" name="video_url" class="form-control form-control-modern" placeholder="https://youtube.com/...">
+            </div>
+            <div class="mb-3">
+              <label class="form-label small fw-semibold">Yoki fayl yuklang</label>
+              <input type="file" name="video_file" class="form-control form-control-modern" accept="video/*">
+            </div>
+            <button class="btn btn-primary btn-modern w-100">
+              <i class="fas fa-save me-1"></i>Saqlash
+            </button>
+          </form>
+          
+          {% if video %}
+          <button id="deleteVideo" class="btn btn-outline-danger btn-modern w-100 mt-2">
+            <i class="fas fa-trash me-1"></i>O'chirish
+          </button>
+          {% endif %}
+        </div>
+      </div>
+      <!-- Test Creation Section -->
+      <div class="card card-modern">
+        <div class="card-header card-header-modern test">
+          <i class="fas fa-plus-circle me-2"></i>Yangi Test Yaratish
+        </div>
+        <div class="card-body">
+          <form id="testForm">
+            <div class="row mb-3">
+              <div class="col-12">
+                <label class="form-label small fw-semibold">Test nomi</label>
+                <input name="title" class="form-control form-control-modern" placeholder="Masalan: Matematika asoslari testi">
+              </div>
+            </div>
+            
+            <div class="row mb-3">
+              <div class="col-4">
+                <label class="form-label small fw-semibold">Savollar</label>
+                <input name="question_count" type="number" min="1" class="form-control form-control-modern" placeholder="10" required>
+              </div>
+              <div class="col-4">
+                <label class="form-label small fw-semibold">Umumiy ball</label>
+                <input name="total_score" type="number" min="1" class="form-control form-control-modern" placeholder="100" required>
+              </div>
+              <div class="col-4">
+                <label class="form-label small fw-semibold">Vaqt (daq)</label>
+                <input name="duration_minutes" type="number" min="1" class="form-control form-control-modern" placeholder="60" required>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label small fw-semibold">
+                <i class="fas fa-users me-1"></i>Guruhlar (kamida bitta tanlang)
+              </label>
+              <input type="text" id="groupSearch" class="form-control form-control-modern mb-2" placeholder="Guruh nomini qidiring...">
+              
+              <div class="border rounded-3 p-2 mb-2" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <small class="text-muted fw-semibold" id="groupsInfo"></small>
+                  <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-sm btn-outline-secondary" id="prevGroups">
+                      <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" id="nextGroups">
+                      <i class="fas fa-chevron-right"></i>
+                    </button>
+                  </div>
+                </div>
+                <select id="groupsSelect" multiple class="form-select" size="6" style="border-radius: 8px;"></select>
+                <div class="d-flex justify-content-between align-items-center mt-2">
+                  <small class="text-primary fw-semibold">
+                    <i class="fas fa-check-circle me-1"></i>Tanlangan: <span id="selectedCount" class="badge bg-primary">0</span>
+                  </small>
+                </div>
+                <div id="selectedHidden"></div>
+              </div>
+              
+              <div class="alert alert-info py-2 px-3" style="border-radius: 10px; border: none; background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);">
+                <small><i class="fas fa-info-circle me-1"></i>Faqat tanlangan guruh talabalari bu testga kirish huquqiga ega bo'ladi.</small>
+              </div>
+            </div>
+            
+            <button class="btn btn-success btn-modern w-100" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); border: none;">
+              <i class="fas fa-rocket me-2"></i>Test Yaratish
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-8">
+      <!-- Questions Section -->
+      <div class="card card-modern mb-4">
+        <div class="card-header card-header-modern questions d-flex justify-content-between align-items-center">
+          <span><i class="fas fa-question-circle me-2"></i>Savollar</span>
+          <span class="badge bg-white text-dark">{{ questions|length }} ta</span>
+        </div>
+        <div class="card-body" style="max-height:350px; overflow-y:auto;">
+          {% for q in questions %}
+            <div class="question-item" data-qid="{{ q.id }}">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <h6 class="mb-1">
+                  <span class="badge bg-primary me-2">{{ forloop.counter }}</span>
+                  {{ q.text }}
+                </h6>
+                <div class="d-flex align-items-center gap-2">
+                  <span class="badge {% if q.question_type == 'single' %}bg-info{% else %}bg-warning{% endif %}">
+                    {% if q.question_type == 'single' %}Bitta{% else %}Ko'p{% endif %}
+                  </span>
+                  <button class="btn btn-sm btn-outline-secondary btn-modern edit-question" title="Tahrirlash">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="btn btn-sm btn-outline-danger btn-modern delete-question" title="O'chirish">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="options-list">
+                {% for o in q.options.all %}
+                  <div class="d-flex align-items-center mb-1" data-oid="{{ o.id }}">
+                    <i class="fas fa-{% if o.is_correct %}check-circle text-success{% else %}circle text-muted{% endif %} me-2"></i>
+                    <span {% if o.is_correct %}class="option-correct"{% endif %}>{{ o.text }}</span>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          {% empty %}
+            <div class="text-center text-muted py-5">
+              <i class="fas fa-question-circle fa-3x mb-3 opacity-50"></i>
+              <h6>Hali savollar qo'shilmagan</h6>
+              <p class="small">Birinchi savolni quyidagi formadan qo'shing</p>
+            </div>
+          {% endfor %}
+        </div>
+        <div class="card-footer" style="background: linear-gradient(135deg, #f8f9fc 0%, #f1f3f6 100%);">
+          <h6 class="mb-3"><i class="fas fa-plus me-2"></i>Yangi Savol Qo'shish</h6>
+          <form id="questionForm" enctype="multipart/form-data">
+            <div class="row mb-3">
+              <div class="col-md-8">
+                <label class="form-label small fw-semibold">Savol matni</label>
+                <textarea name="text" class="form-control form-control-modern" rows="2" placeholder="Savolni kiriting..." required></textarea>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label small fw-semibold">Turi</label>
+                <select name="question_type" class="form-select form-control-modern" required>
+                  <option value="single">Bitta to'g'ri javob</option>
+                  <option value="multi">Ko'p to'g'ri javob</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label small fw-semibold">Rasm (ixtiyoriy)</label>
+              <input type="file" name="image" class="form-control form-control-modern" accept="image/*">
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label small fw-semibold">Javob variantlari</label>
+              <div id="optionsWrap"></div>
+              <button type="button" id="addOption" class="btn btn-outline-primary btn-modern">
+                <i class="fas fa-plus me-1"></i>Variant qo'shish
+              </button>
+            </div>
+            
+            <button class="btn btn-primary btn-modern w-100" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none;">
+              <i class="fas fa-save me-2"></i>Savol Saqlash
+            </button>
+          </form>
+        </div>
+      </div>
+      <!-- Tests Section -->
+      <div class="card card-modern">
+        <div class="card-header card-header-modern results d-flex justify-content-between align-items-center">
+          <span><i class="fas fa-clipboard-list me-2"></i>Yaratilgan Testlar</span>
+          <span class="badge bg-white text-dark">{{ tests|length }} ta</span>
+        </div>
+        <div class="card-body">
+          {% if tests %}
+            <div class="table-responsive">
+              <table class="table table-hover mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th><i class="fas fa-hashtag me-1"></i>ID</th>
+                    <th><i class="fas fa-heading me-1"></i>Sarlavha</th>
+                    <th><i class="fas fa-question me-1"></i>Savollar</th>
+                    <th><i class="fas fa-star me-1"></i>Ball</th>
+                    <th><i class="fas fa-clock me-1"></i>Vaqt</th>
+                    <th><i class="fas fa-chart-bar me-1"></i>Amallar</th>
+                  </tr>
+                </thead>
+                <tbody id="testsTbody">
+                  {% for t in tests %}
+                    <tr style="transition: all 0.3s ease;" data-testid="{{ t.id }}" data-group-ids="{% for g in t.groups.all %}{{ g.id }}{% if not forloop.last %},{% endif %}{% endfor %}">
+                      <td><span class="badge bg-light text-dark">{{ t.id }}</span></td>
+                      <td class="fw-semibold">{{ t.title }}</td>
+                      <td><span class="badge bg-info">{{ t.question_count }} ta</span></td>
+                      <td><span class="badge bg-success">{{ t.total_score }} ball</span></td>
+                      <td><span class="badge bg-warning text-dark">{{ t.duration }}</span></td>
+                      <td class="d-flex flex-wrap gap-1">
+                        <a class="btn btn-sm btn-outline-primary btn-modern" href="{% url 'topic:test_results' t.id %}">
+                          <i class="fas fa-chart-line me-1"></i>Natijalar
+                        </a>
+                        <button class="btn btn-sm btn-outline-secondary btn-modern edit-test" title="Testni tahrirlash">
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger btn-modern delete-test" title="Testni o'chirish">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          {% else %}
+            <div class="text-center text-muted py-5">
+              <i class="fas fa-clipboard-list fa-3x mb-3 opacity-50"></i>
+              <h6>Hali testlar yaratilmagan</h6>
+              <p class="small">Birinchi testni yuqoridagi formadan yarating</p>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const topicId = document.getElementById('manage').dataset.topic;
+
+// Video save
+const videoForm = document.getElementById('videoForm');
+videoForm.addEventListener('submit', async e=>{
+  e.preventDefault();
+  const fd = new FormData(videoForm);
+  const resp = await fetch(`/api/topic-panel/${topicId}/video/save/`, {method:'POST', headers:{'X-CSRFToken':getCsrf()}, body: fd});
+  const data = await resp.json();
+  if(data.ok){ location.reload(); } else alert('Video xato');
+});
+const delBtn = document.getElementById('deleteVideo');
+if(delBtn){ delBtn.addEventListener('click', async ()=>{ if(!confirm('O\'chirish?')) return; const r = await fetch(`/api/topic-panel/${topicId}/video/delete/`, {method:'POST', headers:{'X-CSRFToken':getCsrf()}}); const d=await r.json(); if(d.ok) location.reload(); }); }
+
+// Dynamic answer options UI
+const optionsWrap = document.getElementById('optionsWrap');
+const addOptionBtn = document.getElementById('addOption');
+let optionCounter = 0;
+function addOption(){
+  optionCounter++;
+  const div = document.createElement('div');
+  div.className='input-group mb-2';
+  div.innerHTML = `
+    <span class='input-group-text' style='background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px 0 0 8px;'>
+      <i class='fas fa-list-ol me-1'></i>${optionCounter}
+    </span>
+    <input name='option_text_${optionCounter}' class='form-control form-control-modern' placeholder='Javob variantini kiriting...' style='border-radius: 0;'>
+    <div class='input-group-text' style='background: #f8f9fa; border: 1px solid #e0e6ed; border-radius: 0 8px 8px 0;'>
+      <div class='form-check form-switch'>
+        <input type='checkbox' name='is_correct_${optionCounter}' class='form-check-input' title='To\\'g\\'ri javob' style='cursor: pointer;'>
+        <label class='form-check-label small text-success'><i class='fas fa-check'></i></label>
+      </div>
+    </div>`;
+  optionsWrap.appendChild(div);
+}
+addOptionBtn.addEventListener('click', ()=>addOption());
+addOption(); addOption(); // initial two
+
+// Add question
+const qForm = document.getElementById('questionForm');
+qForm.addEventListener('submit', async e=>{
+  e.preventDefault();
+  const fd = new FormData(qForm);
+  const resp = await fetch(`/api/topic-panel/${topicId}/add-question/`, {method:'POST', headers:{'X-CSRFToken':getCsrf()}, body: fd});
+  const data = await resp.json();
+  if(data.id){ location.reload(); } else alert(data.error || 'Xato');
+});
+
+// Create test
+const testForm = document.getElementById('testForm');
+testForm.addEventListener('submit', async e=>{
+  e.preventDefault();
+  const fd = new FormData(testForm);
+  const resp = await fetch(`/api/topic-panel/${topicId}/create-test/`, {method:'POST', headers:{'X-CSRFToken':getCsrf()}, body: fd});
+  const data = await resp.json();
+  if(data.id){ location.reload(); } else alert(data.error || 'Xato');
+});
+
+function getCsrf(){ return document.cookie.split('; ').find(r=>r.startsWith('csrftoken='))?.split('=')[1]; }
+
+// Group search filter
+const groupSearch = document.getElementById('groupSearch');
+const groupsSelect = document.getElementById('groupsSelect');
+const prevGroups = document.getElementById('prevGroups');
+const nextGroups = document.getElementById('nextGroups');
+const groupsInfo = document.getElementById('groupsInfo');
+const selectedHidden = document.getElementById('selectedHidden');
+const selectedCount = document.getElementById('selectedCount');
+
+// Prepare groups data from Django context (rendered as JSON-like list)
+window.ALL_GROUPS = [
+  {% for g in all_groups %}{id: {{ g.id }}, name: "{{ g.name|escapejs }}"}{% if not forloop.last %}, {% endif %}{% endfor %}
+];
+let page = 1;
+const pageSize = 10;
+let filterTerm = '';
+const selectedIds = new Set();
+
+function filteredGroups(){
+  if(!filterTerm) return ALL_GROUPS;
+  return ALL_GROUPS.filter(g=>g.name.toLowerCase().includes(filterTerm));
+}
+function totalPages(){
+  const fg = filteredGroups();
+  return Math.max(1, Math.ceil(fg.length / pageSize));
+}
+function clampPage(){
+  const tp = totalPages();
+  if(page>tp) page = tp;
+  if(page<1) page = 1;
+}
+function renderGroups(){
+  clampPage();
+  groupsSelect.innerHTML='';
+  const fg = filteredGroups();
+  const start = (page-1)*pageSize;
+  const slice = fg.slice(start, start+pageSize);
+  slice.forEach(g=>{
+    const opt = document.createElement('option');
+    opt.value = g.id;
+    opt.textContent = g.name + ' ('+g.id+')';
+    if(selectedIds.has(String(g.id))) opt.selected = true;
+    groupsSelect.appendChild(opt);
+  });
+  groupsInfo.textContent = `${fg.length} ta guruh | ${page}/${totalPages()}`;
+  updateSelectedHidden();
+}
+function updateSelectedHidden(){
+  selectedHidden.innerHTML='';
+  selectedIds.forEach(id=>{
+    const inp = document.createElement('input');
+    inp.type='hidden';
+    inp.name='group_ids';
+    inp.value=id;
+    selectedHidden.appendChild(inp);
+  });
+  selectedCount.textContent = selectedIds.size;
+}
+
+groupsSelect?.addEventListener('change', ()=>{
+  // Add newly selected
+  for(const opt of groupsSelect.options){
+    if(opt.selected) selectedIds.add(opt.value); else selectedIds.delete(opt.value);
+  }
+  updateSelectedHidden();
+});
+
+groupSearch?.addEventListener('input', ()=>{
+  filterTerm = groupSearch.value.toLowerCase();
+  page = 1;
+  renderGroups();
+});
+prevGroups?.addEventListener('click', ()=>{ page--; renderGroups(); });
+nextGroups?.addEventListener('click', ()=>{ page++; renderGroups(); });
+
+renderGroups();
+
+// Add hover effects and animations
+document.addEventListener('DOMContentLoaded', function() {
+  // Table row hover effects
+  const tableRows = document.querySelectorAll('tbody tr');
+  tableRows.forEach(row => {
+    row.addEventListener('mouseenter', function() {
+      this.style.transform = 'scale(1.01)';
+      this.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
+    });
+    row.addEventListener('mouseleave', function() {
+      this.style.transform = 'scale(1)';
+      this.style.boxShadow = 'none';
+    });
+  });
+  
+  // Form input focus effects
+  const inputs = document.querySelectorAll('.form-control-modern');
+  inputs.forEach(input => {
+    input.addEventListener('focus', function() {
+      this.parentElement.style.transform = 'translateY(-1px)';
+    });
+    input.addEventListener('blur', function() {
+      this.parentElement.style.transform = 'translateY(0)';
+    });
+  });
+});
+</script>
+
+<!-- CRUD Modal -->
+<div id="crudModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:5000;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:18px;max-width:700px;width:95%;box-shadow:0 10px 40px -10px rgba(0,0,0,.4);overflow:hidden;">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;">
+      <h5 id="crudModalTitle" style="margin:0;font-weight:600;">Tahrirlash</h5>
+      <button id="crudModalClose" class="btn btn-sm btn-light" style="font-weight:600;">✕</button>
+    </div>
+    <div id="crudModalBody" style="padding:1.25rem;max-height:60vh;overflow-y:auto;"></div>
+    <div style="display:flex;justify-content:flex-end;gap:.5rem;padding:.85rem 1.1rem;background:#f8f9fa;">
+      <button id="crudModalCancel" class="btn btn-secondary btn-modern">Bekor</button>
+      <button id="crudModalSave" class="btn btn-primary btn-modern"><i class="fas fa-save me-1"></i>Saqlash</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// CRUD modal logic (added after existing script to ensure functions exist)
+const crudModal = document.getElementById('crudModal');
+const crudModalTitle = document.getElementById('crudModalTitle');
+const crudModalBody = document.getElementById('crudModalBody');
+const crudModalCancel = document.getElementById('crudModalCancel');
+const crudModalClose = document.getElementById('crudModalClose');
+const crudModalSave = document.getElementById('crudModalSave');
+let currentCrud = null;
+
+function openCrudModal(title, bodyHtml, onSave){
+  crudModalTitle.textContent = title;
+  crudModalBody.innerHTML = bodyHtml;
+  crudModal.style.display='flex';
+  currentCrud = { onSave };
+}
+function closeCrudModal(){ crudModal.style.display='none'; currentCrud=null; }
+crudModalCancel.onclick = closeCrudModal; crudModalClose.onclick = closeCrudModal; crudModal.addEventListener('click',e=>{if(e.target===crudModal) closeCrudModal();});
+crudModalSave.onclick = ()=>{ if(currentCrud?.onSave) currentCrud.onSave(); };
+
+// Reattach handlers after DOM ready (in case earlier script executed before new elements)
+window.addEventListener('DOMContentLoaded', ()=>{
+  // Question edit
+  document.querySelectorAll('.edit-question').forEach(btn=>{
+    if(btn.dataset.bound) return; btn.dataset.bound='1';
+    btn.addEventListener('click', ()=>{
+      const card = btn.closest('.question-item');
+      const qid = card.dataset.qid;
+      const originalText = card.querySelector('h6').innerText.trim();
+      const isMulti = card.querySelector('.badge.bg-warning') !== null;
+      const options = [...card.querySelectorAll('.options-list > div')].map((row)=>{
+        const span = row.querySelector('span:last-child');
+        const icon = row.querySelector('i');
+        const correct = icon && icon.className.includes('check-circle');
+        const oid = row.dataset.oid; // real option id
+        return {text: span.textContent.trim(), correct, oid};
+      });
+      let body = `<form id='editQuestionForm'>
+        <div class='mb-3'>
+          <label class='form-label small fw-semibold'>Savol matni</label>
+          <textarea name='text' class='form-control form-control-modern' rows='2'>${originalText}</textarea>
+        </div>
+        <div class='mb-3'>
+          <label class='form-label small fw-semibold'>Turi</label>
+          <select name='question_type' class='form-select form-control-modern'>
+            <option value='single' ${!isMulti?'selected':''}>Bitta</option>
+            <option value='multi' ${isMulti?'selected':''}>Ko'p</option>
+          </select>
+        </div>
+        <div class='mb-2'>
+          <label class='form-label small fw-semibold d-flex justify-content-between align-items-center'>Variantlar <button type='button' class='btn btn-sm btn-outline-primary' id='addNewOption'><i class='fas fa-plus'></i></button></label>`;
+      options.forEach((o)=>{
+        body += `<div class='border rounded p-2 mb-2 position-relative existing-option-row' data-oid='${o.oid}'>
+          <input type='text' class='form-control mb-1' value="${o.text.replace(/"/g,'&quot;')}">
+          <div class='form-check form-switch'>
+            <input class='form-check-input' type='checkbox' ${o.correct?'checked':''}>
+            <label class='form-check-label small'>To'g'ri</label>
+          </div>
+          <button type='button' class='btn btn-sm btn-outline-danger position-absolute top-0 end-0 m-1 remove-existing-option'><i class='fas fa-times'></i></button>
+        </div>`;
+      });
+      body += `<div id='newOptionsWrap'></div></div></form>`;
+      openCrudModal('Savolni tahrirlash', body, async ()=>{
+        const f = document.getElementById('editQuestionForm');
+        const fd = new FormData();
+        fd.append('text', f.text.value);
+        fd.append('question_type', f.question_type.value);
+        // Existing options use real DB IDs via data-oid
+        f.querySelectorAll('.existing-option-row').forEach(row=>{
+          const oid = row.dataset.oid;
+            const inp = row.querySelector('input[type=text]');
+            fd.append(`option_${oid}`, inp.value);
+            const corr = row.querySelector('input[type=checkbox]').checked;
+            if(corr) fd.append(`correct_${oid}`,'on');
+            if(row.dataset.removed==='1') fd.append(`delete_${oid}`,'1');
+        });
+        let newIdx=1;
+        [...f.querySelectorAll('.new-option-row')].forEach(row=>{
+          const t = row.querySelector('input[type=text]').value.trim();
+          if(!t) return;
+          fd.append(`new_option_text_${newIdx}`, t);
+          if(row.querySelector('input[type=checkbox]').checked) fd.append(`new_option_correct_${newIdx}`,'on');
+          newIdx++;
+        });
+        const resp = await fetch(`/api/topic-panel/${topicId}/question/${qid}/update/`, {method:'POST', headers:{'X-CSRFToken':getCsrf()}, body: fd});
+        const data = await resp.json();
+        if(data.ok){ location.reload(); } else alert('Tahrirlashda xato');
+      });
+      setTimeout(()=>{
+        const addBtn = document.getElementById('addNewOption');
+        addBtn?.addEventListener('click', ()=>{
+          const wrap = document.getElementById('newOptionsWrap');
+          const div = document.createElement('div');
+            div.className='border rounded p-2 mb-2 new-option-row position-relative';
+            div.innerHTML = `<input type='text' class='form-control mb-1' placeholder='Yangi variant'>
+              <div class='form-check form-switch'>
+                <input class='form-check-input' type='checkbox'>
+                <label class='form-check-label small'>To'g'ri</label>
+              </div>
+              <button type='button' class='btn btn-sm btn-outline-danger position-absolute top-0 end-0 m-1 remove-new-option'><i class='fas fa-times'></i></button>`;
+            wrap.appendChild(div);
+            div.querySelector('.remove-new-option').onclick=()=>div.remove();
+        });
+        document.querySelectorAll('.remove-existing-option').forEach(btn2=>{
+          btn2.addEventListener('click', ()=>{
+            const box = btn2.closest('.border');
+            box.style.opacity='0.4';
+            box.dataset.removed='1';
+          });
+        });
+      },50);
+    });
+  });
+  // Delete question
+  document.querySelectorAll('.delete-question').forEach(btn=>{
+    if(btn.dataset.bound) return; btn.dataset.bound='1';
+    btn.addEventListener('click', async ()=>{
+      if(!confirm('Savolni o\'chirasizmi?')) return;
+      const qid = btn.closest('.question-item').dataset.qid;
+      const resp = await fetch(`/api/topic-panel/${topicId}/question/${qid}/delete/`, {method:'POST', headers:{'X-CSRFToken':getCsrf()}});
+      const data = await resp.json();
+      if(data.ok){ location.reload(); } else alert('O\'chirishda xato');
+    });
+  });
+  // Edit test
+  document.querySelectorAll('.edit-test').forEach(btn=>{
+    if(btn.dataset.bound) return; btn.dataset.bound='1';
+    btn.addEventListener('click', ()=>{
+      const row = btn.closest('tr');
+      const testId = row.dataset.testid;
+      const title = row.children[1].innerText.trim();
+      const score = row.children[3].innerText.replace(/[^0-9]/g,'');
+      const duration = row.children[4].innerText.trim();
+      let durationMinutes = 0;
+      if(duration.includes(':')){
+        const parts = duration.split(':');
+        if(parts.length===3){ durationMinutes = parseInt(parts[0])*60 + parseInt(parts[1]); }
+      }
+  const assignedIds = (row.dataset.groupIds||'').split(',').filter(Boolean);
+      const body = `<form id='editTestForm'>
+        <div class='mb-3'>
+          <label class='form-label small fw-semibold'>Sarlavha</label>
+          <input type='text' name='title' class='form-control form-control-modern' value="${title.replace(/"/g,'&quot;')}">
+        </div>
+        <div class='row mb-3'>
+          <div class='col-6'>
+            <label class='form-label small fw-semibold'>Umumiy ball</label>
+            <input type='number' name='total_score' class='form-control form-control-modern' value='${score}'>
+          </div>
+          <div class='col-6'>
+            <label class='form-label small fw-semibold'>Vaqt (daq)</label>
+            <input type='number' name='duration_minutes' class='form-control form-control-modern' value='${durationMinutes}'>
+          </div>
+        </div>
+        <div class='form-check form-switch mb-3'>
+          <input class='form-check-input' type='checkbox' name='is_published' checked>
+          <label class='form-check-label small'>Faol (talabalar ko'radi)</label>
+        </div>
+        <div class='mb-3'>
+          <label class='form-label small fw-semibold d-block mb-1'><i class="fas fa-users me-1"></i>Guruhlar (kamida bitta tanlang)</label>
+          <input type='text' id='editTestGroupSearch' class='form-control form-control-modern mb-2' placeholder='Guruh nomini qidiring...'>
+          <div class='border rounded-3 p-2 mb-2' style='background: linear-gradient(135deg,#f8f9fa 0%, #e9ecef 100%);'>
+            <div class='d-flex justify-content-between align-items-center mb-2'>
+              <small class='text-muted fw-semibold' id='editTestGroupsInfo'></small>
+              <div class='btn-group' role='group'>
+                <button type='button' class='btn btn-sm btn-outline-secondary' id='editTestPrevGroups'><i class='fas fa-chevron-left'></i></button>
+                <button type='button' class='btn btn-sm btn-outline-secondary' id='editTestNextGroups'><i class='fas fa-chevron-right'></i></button>
+              </div>
+            </div>
+            <select id='editTestGroupsSelect' multiple class='form-select' size='8' style='border-radius:8px;'></select>
+            <div class='d-flex justify-content-between align-items-center mt-2'>
+              <small class='text-primary fw-semibold'><i class='fas fa-check-circle me-1'></i>Tanlangan: <span id='editTestSelectedCount' class='badge bg-primary'>0</span></small>
+            </div>
+          </div>
+        </div>
+      </form>`;
+      openCrudModal('Testni tahrirlash', body, async ()=>{
+        const f = document.getElementById('editTestForm');
+        const fd = new FormData();
+        fd.append('title', f.title.value);
+        fd.append('total_score', f.total_score.value);
+        fd.append('duration_minutes', f.duration_minutes.value);
+        fd.append('is_published', f.is_published.checked ? '1':'0');
+        const sel = f.querySelector('#editTestGroupsSelect');
+        [...sel.options].forEach(opt=>{ if(opt.selected) fd.append('group_ids', opt.value); });
+        const resp = await fetch(`/api/topic-panel/${topicId}/test/${testId}/update/`, {method:'POST', headers:{'X-CSRFToken':getCsrf()}, body: fd});
+        const data = await resp.json();
+        if(data.ok){ location.reload(); } else alert('Test tahrirlashda xato');
+      });
+      // Initialize modal group search & pagination after rendering
+      setTimeout(()=>{
+        const ALL = window.ALL_GROUPS || [];
+        let et_page = 1; const et_pageSize = 10; let et_filter='';
+        const etSearch = document.getElementById('editTestGroupSearch');
+        const etSelect = document.getElementById('editTestGroupsSelect');
+        const etPrev = document.getElementById('editTestPrevGroups');
+        const etNext = document.getElementById('editTestNextGroups');
+        const etInfo = document.getElementById('editTestGroupsInfo');
+        const etCount = document.getElementById('editTestSelectedCount');
+        const selectedIds = new Set(assignedIds);
+        function filtered(){ if(!et_filter) return ALL; return ALL.filter(g=>g.name.toLowerCase().includes(et_filter)); }
+        function totalPages(){ const f=filtered(); return Math.max(1, Math.ceil(f.length/et_pageSize)); }
+        function clamp(){ const tp=totalPages(); if(et_page>tp) et_page=tp; if(et_page<1) et_page=1; }
+        function render(){
+          clamp();
+            etSelect.innerHTML='';
+            const f=filtered();
+            const start=(et_page-1)*et_pageSize;
+            f.slice(start,start+et_pageSize).forEach(g=>{
+              const opt=document.createElement('option');
+              opt.value=g.id; opt.textContent=g.name+' ('+g.id+')';
+              if(selectedIds.has(String(g.id))) opt.selected=true;
+              etSelect.appendChild(opt);
+            });
+            etInfo.textContent = `${f.length} ta guruh | ${et_page}/${totalPages()}`;
+            etCount.textContent = selectedIds.size;
+        }
+        etSelect.addEventListener('change', ()=>{
+          for(const opt of etSelect.options){ if(opt.selected) selectedIds.add(opt.value); else selectedIds.delete(opt.value); }
+          etCount.textContent = selectedIds.size;
+        });
+        etSearch.addEventListener('input', ()=>{ et_filter = etSearch.value.toLowerCase(); et_page=1; render(); });
+        etPrev.addEventListener('click', ()=>{ et_page--; render(); });
+        etNext.addEventListener('click', ()=>{ et_page++; render(); });
+        render();
+      },30);
+    });
+  });
+  // Delete test
+  document.querySelectorAll('.delete-test').forEach(btn=>{
+    if(btn.dataset.bound) return; btn.dataset.bound='1';
+    btn.addEventListener('click', async ()=>{
+      if(!confirm('Testni o\'chirasizmi?')) return;
+      const testId = btn.closest('tr').dataset.testid;
+      const resp = await fetch(`/api/topic-panel/${topicId}/test/${testId}/delete/`, {method:'POST', headers:{'X-CSRFToken':getCsrf()}});
+      const data = await resp.json();
+      if(data.ok){ location.reload(); } else alert('O\'chirishda xato');
+    });
+  });
+});
+</script>
+
+<!-- FontAwesome Icons -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+{% endblock %}

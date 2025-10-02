@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-5">
+  <h4 class="mb-3">{{ test.title }} – Kirish video</h4>
+  <div class="ratio ratio-16x9 mb-3 border rounded shadow-sm overflow-hidden">
+    {% if embed_url %}
+      {% if 'youtube.com/embed' in embed_url %}
+        <iframe src="{{ embed_url }}" title="YouTube video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      {% else %}
+        <iframe src="{{ embed_url }}" allowfullscreen loading="lazy"></iframe>
+      {% endif %}
+    {% elif video.video_file %}
+      <video controls style="width:100%" preload="metadata"><source src="{{ video.video_file.url }}"></video>
+    {% else %}
+      <div class="alert alert-warning m-3">Video topilmadi.</div>
+    {% endif %}
+  </div>
+  <button id="continueBtn" class="btn btn-success">Testni boshlash</button>
+</div>
+<script>
+const btn = document.getElementById('continueBtn');
+btn.addEventListener('click', async ()=>{
+  const resp = await fetch('{% url 'topic:video_seen' test.id %}', {method:'GET'});
+  const data = await resp.json();
+  if(data.ok){
+    window.location.href = '{% url 'topic:start_test' test.id %}';
+  }
+});
+</script>
+{% endblock %}

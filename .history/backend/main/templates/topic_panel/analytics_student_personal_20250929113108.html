@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-4">
+  <a href="/api/topic-panel/student/panel/" class="btn btn-sm btn-secondary mb-3">⬅ Orqaga</a>
+  <h1 class="h3 mb-1">Shaxsiy statistika</h1>
+  {% if overall_mode %}
+    <p class="text-muted mb-4">Barcha testlar bo'yicha umumiy natijalar</p>
+  {% else %}
+    <p class="text-muted mb-4">Mavzu: {{ topic.title }}</p>
+  {% endif %}
+
+  {% if personal_stats.total_attempts %}
+  <div class="row g-3 mb-4">
+    <div class="col-6 col-md-2"><div class="border rounded p-2 text-center small"><div class="fw-semibold">Urinish</div><div class="fs-5">{{ personal_stats.total_attempts }}</div></div></div>
+    <div class="col-6 col-md-2"><div class="border rounded p-2 text-center small"><div class="fw-semibold">O'rtacha %</div><div class="fs-5">{{ personal_stats.avg_percent }}%</div></div></div>
+    <div class="col-6 col-md-2"><div class="border rounded p-2 text-center small"><div class="fw-semibold">Eng yaxshi %</div><div class="fs-5">{{ personal_stats.best_percent }}%</div></div></div>
+    <div class="col-6 col-md-2"><div class="border rounded p-2 text-center small"><div class="fw-semibold">O'tish foizi</div><div class="fs-5">{{ personal_stats.pass_rate }}%</div></div></div>
+    <div class="col-6 col-md-2"><div class="border rounded p-2 text-center small"><div class="fw-semibold">Avg ball</div><div class="fs-5">{{ personal_stats.avg_score }}</div></div></div>
+    <div class="col-6 col-md-2"><div class="border rounded p-2 text-center small"><div class="fw-semibold">Best ball</div><div class="fs-5">{{ personal_stats.best_score }}</div></div></div>
+  </div>
+
+  <form method="get" class="row g-2 align-items-end mb-3">
+    <div class="col-6 col-md-3"><label class="form-label small mb-1">Boshlanish</label><input type="date" name="start" value="{{ start_filter }}" class="form-control form-control-sm"></div>
+    <div class="col-6 col-md-3"><label class="form-label small mb-1">Tugash</label><input type="date" name="end" value="{{ end_filter }}" class="form-control form-control-sm"></div>
+    <div class="col-6 col-md-2"><label class="form-label small mb-1">O'tish (%)</label><input type="number" id="passThreshold" value="{{ personal_stats.pass_threshold }}" min="0" max="100" class="form-control form-control-sm"></div>
+    <div class="col-6 col-md-4 text-end"><button class="btn btn-primary btn-sm">Filtrlash</button> {% if start_filter or end_filter %}<a class="btn btn-outline-secondary btn-sm" href="?">Tozalash</a>{% endif %}</div>
+  </form>
+
+  <div class="table-responsive mb-4">
+    <table class="table table-sm align-middle" id="attemptsTbl">
+      <thead class="table-light"><tr><th>#</th><th>Test</th>{% if overall_mode %}<th>Mavzu</th>{% endif %}<th class="text-center">Ball</th><th style="width:140px">Foiz</th><th class="text-center">To'g'ri/Jami</th><th>Vaqt</th></tr></thead>
+      <tbody id="attemptBody">
+        {% for i in items %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ i.test_title }}</td>
+          {% if overall_mode %}<td class="small text-muted">{{ i.topic_title }}</td>{% endif %}
+          <td class="text-center"><span class="badge bg-secondary pass-badge" data-percent="{{ i.percent }}">{{ i.score }}</span></td>
+          <td>
+            <div class="progress" style="height:18px;">
+              <div class="progress-bar percent-bar" role="progressbar" data-percent="{{ i.percent }}" style="width: {{ i.percent }}%">{{ i.percent }}%</div>
+            </div>
+          </td>
+          <td class="text-center small"><span class="text-success fw-semibold">{{ i.correct }}</span>/<span class="text-muted">{{ i.total_q }}</span></td>
+          <td class="small text-muted">{{ i.finished_at|date:'Y-m-d H:i' }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card p-3 mb-4">
+    <h6 class="mb-3">Foiz dinamikasi</h6>
+    <canvas id="statsChart" height="160"></canvas>
+  </div>
+  {% else %}
+    <div class="alert alert-info">Hozircha yakunlangan test yo'q.</div>
+  {% endif %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+(function(){const thrIn=document.getElementById('passThreshold');function recolor(){const thr=parseFloat(thrIn.value)||0;document.querySelectorAll('.pass-badge').forEach(b=>{const p=parseFloat(b.dataset.percent)||0;b.classList.remove('bg-secondary','bg-danger','bg-success');b.classList.add(p>=thr?'bg-success':'bg-danger');});document.querySelectorAll('.percent-bar').forEach(pb=>{const p=parseFloat(pb.dataset.percent)||0;pb.classList.remove('bg-success','bg-info','bg-warning','bg-danger');let cls='bg-danger';if(p>=thr){cls=p>=85?'bg-success':p>=70?'bg-info':'bg-warning';}pb.classList.add(cls);});}if(thrIn){thrIn.addEventListener('input',recolor);recolor();}})();
+(function(){try{const raw={{ items_js }};if(!raw||!raw.length)return;const ctx=document.getElementById('statsChart').getContext('2d');const labels=raw.map(r=>r.test_title);const perc=raw.map(r=>r.percent);if(window.Chart){new Chart(ctx,{type:'line',data:{labels,datasets:[{label:'Foiz %',data:perc,borderColor:'#6366f1',backgroundColor:'rgba(99,102,241,.25)',tension:.3,fill:true}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,max:100}}}});}}catch(e){console.error(e);}})();
+</script>
+{% endblock %}

@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>Kirish</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'login/login.css' %}">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="login-header">
+                <span class="login-icon">�</span>
+                <div class="login-title">Test Tizimi</div>
+                <div class="login-subtitle">Xush kelibsiz! Ro'yxatdan o'ting</div>
+                <div class="mt-3">
+                    <a href="/api/topic-panel/student/login/" class="btn btn-outline-primary btn-sm">
+                        📚 Mavzuli Testga Kirish
+                    </a>
+                </div>
+            </div>
+            
+            <div class="login-form">
+                {% if error %}
+                    <div class="alert alert-danger" role="alert">
+                        <strong>⚠️ Xatolik:</strong> {{ error }}
+                    </div>
+                {% endif %}
+                
+                <form method="post" id="loginForm">
+                    {% csrf_token %}
+                    
+                    <div class="role-selector">
+                        <label class="form-label">Rolni tanlang:</label>
+                        <div class="role-cards">
+                            <div class="role-card active" data-role="student">
+                                <span class="role-icon">🎓</span>
+                                <div class="role-name">Talaba</div>
+                            </div>
+                            <div class="role-card" data-role="tutor">
+                                <span class="role-icon">🧑‍🏫</span>
+                                <div class="role-name">Tutor</div>
+                            </div>
+                            <div class="role-card" data-role="employee">
+                                <span class="role-icon">💼</span>
+                                <div class="role-name">Xodim</div>
+                            </div>
+                            <div class="role-card" data-role="teacher">
+                                <span class="role-icon">👨‍🏫</span>
+                                <div class="role-name">O'qituvchi</div>
+                            </div>
+                            <div class="role-card" data-role="controller">
+                                <span class="role-icon">⚙️</span>
+                                <div class="role-name">Controller</div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="role" id="selectedRole" value="student">
+                    </div>
+                    
+                    <div id="access-fields" class="form-group field-transition">
+                        <label for="access-code" class="form-label">Access Code</label>
+                        <div class="input-group">
+                            <span class="input-icon">🔑</span>
+                            <input 
+                                type="text" 
+                                name="access_code" 
+                                id="access-code" 
+                                class="form-control with-icon" 
+                                placeholder="5 raqamli kodingizni kiriting"
+                                autocomplete="off"
+                                maxlength="5"
+                            >
+                        </div>
+                    </div>
+                    <div id="user-fields" class="form-group field-transition" style="display:none;">
+                        <label for="username" class="form-label">Username</label>
+                        <div class="input-group">
+                            <span class="input-icon">👤</span>
+                            <input 
+                                type="text" 
+                                name="username" 
+                                id="username" 
+                                class="form-control with-icon" 
+                                placeholder="Foydalanuvchi nomingizni kiriting"
+                                autocomplete="off"
+                            >
+                        </div>
+                        <label for="password" class="form-label" style="margin-top:15px;">Parol</label>
+                        <div class="input-group">
+                            <span class="input-icon">🔒</span>
+                            <input 
+                                type="password" 
+                                name="password" 
+                                id="password" 
+                                class="form-control with-icon" 
+                                placeholder="Parolingizni kiriting"
+                                autocomplete="off"
+                            >
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn-login">
+                        <span id="loginText">Kirish</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+   <script src="{% static 'login/login.js' %}"></script>
+</body>
+</html>

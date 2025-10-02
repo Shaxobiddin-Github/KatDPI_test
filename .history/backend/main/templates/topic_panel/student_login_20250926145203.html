@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5" style="max-width:400px;">
+  <h5 class="mb-3">Talaba Login (Mavzu Test)</h5>
+  {% if error %}<div class="alert alert-danger py-1 small">{{ error }}</div>{% endif %}
+  <form method="post">
+    {% csrf_token %}
+    <input name="username" class="form-control form-control-sm mb-2" placeholder="Username" required>
+    <button class="btn btn-sm btn-primary w-100">Kirish</button>
+  </form>
+  <div class="small text-muted mt-3">Faqat username bilan kirish. Parol kerak emas (test rejimi).</div>
+</div>
+{% endblock %}

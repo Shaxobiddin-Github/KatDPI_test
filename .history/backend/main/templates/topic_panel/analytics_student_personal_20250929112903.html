@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Overall/Topic Personal Analytics Page -->
+<div class="personal-analytics-page" id="personalRoot">
+  <!-- Hero Section -->
+  <div class="hero-section hero-v2">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-left">
+          <div class="hero-top-row">
+            <a href="/api/topic-panel/student/panel/" class="btn-back-solid" title="Orqaga">
+              <i class="fas fa-arrow-left"></i><span class="d-none d-sm-inline"> Orqaga</span>
+            </a>
+            <button type="button" id="darkToggle" class="theme-toggle" title="Tungi rejim">
+              <i class="fas fa-moon"></i>
+            </button>
+          </div>
+          <h1 class="hero-heading">Shaxsiy statistika</h1>
+          {% if overall_mode %}
+            <p class="hero-subtitle">Barcha testlar (umumiy ko'rinish)</p>
+          {% else %}
+            <p class="hero-subtitle">{{ topic.title }}</p>
+          {% endif %}
+          {% if personal_stats.total_attempts %}
+          <div class="hero-mini-stats">
+            <div class="mini-item"><span class="mini-label">Urinish</span><span class="mini-value">{{ personal_stats.total_attempts }}</span></div>
+            <div class="mini-item"><span class="mini-label">O'rtacha %</span><span class="mini-value">{{ personal_stats.avg_percent }}%</span></div>
+            <div class="mini-item"><span class="mini-label">Eng yaxshi</span><span class="mini-value">{{ personal_stats.best_percent }}%</span></div>
+            <div class="mini-item"><span class="mini-label">Pass rate</span><span class="mini-value">{{ personal_stats.pass_rate }}%</span></div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="container">
+      <div class="filter-section-modern">
+        <div class="filter-card">
+          <div class="filter-header"><h5 class="filter-title"><i class="fas fa-filter"></i> Filtrlar</h5></div>
+          <form method="get" class="filter-form-modern">
+            <div class="row g-3 mb-3">
+              <div class="col-md-4">
+                <label class="form-label small text-muted">Sana oralig'i</label>
+                <div class="row g-2">
+                  <div class="col-6"><input type="date" name="start" value="{{ start_filter }}" class="form-control form-control-sm" placeholder="Dan"></div>
+                  <div class="col-6"><input type="date" name="end" value="{{ end_filter }}" class="form-control form-control-sm" placeholder="Gacha"></div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label small text-muted">Tez filtrlar</label>
+                <div class="quick-filter-group">
+                  <button class="quick-filter-chip" type="button" data-range="7">7 kun</button>
+                  <button class="quick-filter-chip" type="button" data-range="30">30 kun</button>
+                  <button class="quick-filter-chip" type="button" data-range="all">Barchasi</button>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label small text-muted">O'tish chegarasi</label>
+                <div class="input-group input-group-sm">
+                  <input type="number" id="passThreshold" class="form-control" value="{{ personal_stats.pass_threshold }}" min="0" max="100"><span class="input-group-text">%</span>
+                </div>
+              </div>
+            </div>
+            <div class="filter-actions">
+              <button type="submit" class="btn btn-primary btn-sm px-3"><i class="fas fa-search me-1"></i>Qidirish</button>
+              {% if start_filter or end_filter %}<a href="?" class="btn btn-outline-secondary btn-sm px-3"><i class="fas fa-times me-1"></i>Tozalash</a>{% endif %}
+            </div>
+          </form>
+        </div>
+      </div>
+
+      {% if personal_stats.total_attempts %}
+      <div class="row g-3 stats-section mb-4">
+        <div class="col-sm-6 col-lg-3"><div class="stat-card-modern primary"><div class="stat-header"><div class="stat-icon-wrapper"><i class="fas fa-layer-group"></i></div><div class="stat-main"><div class="stat-value">{{ personal_stats.total_attempts }}</div><div class="stat-label">Jami urinishlar</div></div></div></div></div>
+        <div class="col-sm-6 col-lg-3"><div class="stat-card-modern success"><div class="stat-header"><div class="stat-icon-wrapper"><i class="fas fa-chart-line"></i></div><div class="stat-main"><div class="stat-value">{{ personal_stats.avg_percent }}%</div><div class="stat-label">O'rtacha natija</div></div></div></div></div>
+        <div class="col-sm-6 col-lg-3"><div class="stat-card-modern warning"><div class="stat-header"><div class="stat-icon-wrapper"><i class="fas fa-trophy"></i></div><div class="stat-main"><div class="stat-value">{{ personal_stats.best_percent }}%</div><div class="stat-label">Eng yaxshi natija</div></div></div></div></div>
+        <div class="col-sm-6 col-lg-3"><div class="stat-card-modern info"><div class="stat-header"><div class="stat-icon-wrapper"><i class="fas fa-check-circle"></i></div><div class="stat-main"><div class="stat-value" id="passRateVal">{{ personal_stats.pass_rate }}%</div><div class="stat-label">O'tish foizi</div></div></div></div></div>
+      </div>
+
+      <div class="results-section">
+        <div class="section-header"><div class="section-title"><i class="fas fa-chart-bar"></i><h2>Test natijalari</h2></div><div class="section-actions"><span class="sort-hint"><i class="fas fa-sort"></i>Saralash uchun ustunni bosing</span></div></div>
+        <div class="results-table-container" id="attemptCard">
+          <div class="table-responsive">
+            <table class="table table-hover table-borderless align-middle mb-0 attempts-table" id="attemptsTbl">
+              <thead class="table-light"><tr><th data-sort="num">#</th><th data-sort="text">Test</th><th class="text-center" data-sort="num">Ball</th><th style="width:170px" data-sort="num">Foiz</th><th class="text-center" data-sort="num">To'g'ri/Jami</th><th data-sort="date">Vaqt</th><th></th></tr></thead>
+              <tbody id="attemptBody">
+                {% for i in items %}<tr data-idx="{{ forloop.counter0 }}"><td class="fw-semibold row-index">{{ forloop.counter }}</td><td class="test-title">{{ i.test_title }}</td><td class="text-center"><span class="badge pass-badge" data-percent="{{ i.percent }}">{{ i.score }}</span></td><td><div class="progress progress-thin"><div class="progress-bar percent-bar" data-percent="{{ i.percent }}" style="width: {{ i.percent }}%">{{ i.percent }}%</div></div></td><td class="text-center small"><span class="text-success fw-semibold">{{ i.correct }}</span>/<span class="text-muted total-q">{{ i.total_q }}</span></td><td class="small text-muted time-cell" data-time="{{ i.finished_at|date:'Y-m-d H:i' }}">{{ i.finished_at|date:'Y-m-d H:i' }}</td><td><button class="btn btn-sm btn-outline-primary attempt-detail" type="button"><i class="fas fa-magnifying-glass"></i></button></td></tr>{% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div class="card-footer text-center p-2"><button class="btn btn-sm btn-outline-primary" id="loadMore" type="button">Yana yuklash</button></div>
+        </div>
+      </div>
+
+      <div class="chart-section"><div class="chart-header"><h3 class="chart-title"><i class="fas fa-chart-area"></i>Natijalar dinamikasi</h3></div><div class="chart-container"><canvas id="statsChart"></canvas></div></div>
+      {% else %}
+        <div class="empty-state"><div class="empty-icon"><i class="fas fa-chart-line"></i></div><h3 class="empty-title">Statistika mavjud emas</h3><p class="empty-description">Hali yakunlangan testlaringiz yo'q. Birinchi testni topshiring!</p></div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<style>
+/* (Trimmed original huge CSS for brevity; keep essential classes already present above.) */
+.progress-thin{height:24px;background:rgba(0,0,0,0.05);border-radius:12px;overflow:hidden;position:relative}
+.dark .progress-thin{background:rgba(255,255,255,0.1)}
+.percent-bar{display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:600;color:#fff;transition:.3s}
+.empty-state{text-align:center;padding:4rem 2rem;color:#64748b}
+.empty-icon{width:80px;height:80px;margin:0 auto 2rem;background:linear-gradient(135deg,#6366f1,#4f46e5);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;color:#fff;box-shadow:0 6px 18px -4px rgba(0,0,0,.25)}
+.hero-section{background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff;padding:2.8rem 0 2rem;position:relative}
+.hero-heading{font-size:2.2rem;font-weight:700;margin:0 0 .4rem}
+.hero-subtitle{text-transform:uppercase;font-size:.8rem;letter-spacing:1px;opacity:.9;margin:0 0 .8rem}
+.mini-item{background:rgba(255,255,255,.14);padding:.55rem .85rem;border:1px solid rgba(255,255,255,.25);border-radius:12px;min-width:105px}
+.mini-label{display:block;font-size:.55rem;text-transform:uppercase;letter-spacing:1.2px;opacity:.85;font-weight:600;margin-bottom:.15rem}
+.mini-value{display:block;font-size:.95rem;font-weight:700;letter-spacing:.5px}
+.stat-card-modern{background:#fff;border-radius:12px;border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,.1);transition:.3s;overflow:hidden;height:100%}
+.dark .stat-card-modern{background:#1e293b;border-color:#334155}
+.stat-header{display:flex;align-items:center;padding:1.1rem 1.2rem;gap:1rem}
+.stat-icon-wrapper{width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:#fff}
+.stat-card-modern.primary .stat-icon-wrapper{background:linear-gradient(135deg,#667eea,#764ba2)}
+.stat-card-modern.success .stat-icon-wrapper{background:linear-gradient(135deg,#4ade80,#22c55e)}
+.stat-card-modern.warning .stat-icon-wrapper{background:linear-gradient(135deg,#f59e0b,#d97706)}
+.stat-card-modern.info .stat-icon-wrapper{background:linear-gradient(135deg,#06b6d4,#0891b2)}
+.stat-value{font-size:1.7rem;font-weight:700;color:#1e293b;line-height:1;margin-bottom:.2rem}
+.dark .stat-value{color:#f1f5f9}
+.stat-label{font-size:.72rem;font-weight:600;color:#64748b;margin:0;text-transform:uppercase;letter-spacing:.5px}
+.dark .stat-label{color:#94a3b8}
+.results-section{background:#fff;border-radius:16px;box-shadow:0 1px 3px rgba(0,0,0,.1);border:1px solid #e2e8f0;overflow:hidden;margin-bottom:3rem}
+.dark .results-section{background:#1e293b;border-color:#334155}
+.section-header{display:flex;justify-content:space-between;align-items:center;padding:1.4rem 1.6rem;border-bottom:1px solid #e2e8f0;background:linear-gradient(135deg,rgba(99,102,241,.05),rgba(99,102,241,.02))}

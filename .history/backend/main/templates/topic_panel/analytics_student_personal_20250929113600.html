@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+/* ---------- THEME & BASE ---------- */
+:root {--c-bg:#f5f7fb;--c-card:#ffffff;--c-text:#1e293b;--c-muted:#64748b;--c-border:#e2e8f0;--c-accent:#6366f1;--c-accent-rgb:99,102,241;--c-danger:#ef4444;--c-warn:#f59e0b;--c-info:#0ea5e9;--radius:12px;--shadow:0 4px 12px -2px rgba(0,0,0,.08),0 2px 4px -2px rgba(0,0,0,.06);} 
+[data-theme="dark"] {--c-bg:#0f172a;--c-card:#1e293b;--c-text:#f1f5f9;--c-muted:#94a3b8;--c-border:#334155;--c-accent:#818cf8;--c-accent-rgb:129,140,248;--c-danger:#f87171;--c-warn:#fbbf24;--c-info:#38bdf8;} 
+body.analytics-personal {background:var(--c-bg);} 
+/* ---------- HERO ---------- */
+.analytics-hero {position:relative;padding:2.2rem 2rem;border-radius:var(--radius);background:linear-gradient(110deg,var(--c-accent) 0%,rgba(var(--c-accent-rgb),.85) 55%,rgba(var(--c-accent-rgb),.55) 100%);color:#fff;overflow:hidden;}
+.analytics-hero:before {content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 20%,rgba(255,255,255,.25),transparent 60%);} 
+.analytics-hero h1 {font-size:1.55rem;font-weight:600;margin:0 0 .35rem;} 
+.mode-badge {display:inline-flex;align-items:center;gap:.4rem;font-size:.7rem;font-weight:600;padding:.35rem .6rem;border-radius:2rem;background:rgba(255,255,255,.18);backdrop-filter:blur(4px);text-transform:uppercase;letter-spacing:.5px;} 
+.hero-sub {font-size:.85rem;opacity:.92;margin:0;} 
+.hero-actions {position:absolute;right:1rem;top:1rem;display:flex;gap:.5rem;}
+.btn-ghost {--_c:255,255,255;display:inline-flex;align-items:center;gap:.4rem;background:rgba(var(--_c),.15);border:1px solid rgba(var(--_c),.25);color:#fff;padding:.45rem .75rem;font-size:.75rem;font-weight:500;border-radius:8px;line-height:1;transition:.25s;backdrop-filter:blur(6px);} 
+.btn-ghost:hover {background:rgba(var(--_c),.3);} 
+/* ---------- STATS GRID ---------- */
+.stats-grid {display:grid;gap:1rem;margin:1.5rem 0 2rem;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));}
+.stat-card {position:relative;background:var(--c-card);border:1px solid var(--c-border);border-radius:var(--radius);padding:.9rem .85rem .85rem;display:flex;flex-direction:column;gap:.35rem;min-height:100px;overflow:hidden;}
+.stat-card:before {content:"";position:absolute;inset:0;background:linear-gradient(145deg,rgba(var(--c-accent-rgb),.08),transparent 55%);opacity:0;transition:.35s;}
+.stat-card:hover:before {opacity:1;}
+.stat-label {font-size:.65rem;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--c-muted);} 
+.stat-value {font-size:1.4rem;font-weight:600;color:var(--c-text);line-height:1;}
+[data-theme="dark"] .stat-value {color:#fff;}
+.stat-trend {font-size:.7rem;font-weight:500;margin-top:auto;display:inline-flex;align-items:center;gap:.25rem;}
+.trend-up {color:var(--c-accent);} .trend-flat {color:var(--c-info);} .trend-down {color:var(--c-danger);} 
+/* ---------- FILTER BAR ---------- */
+.filter-bar {background:var(--c-card);border:1px solid var(--c-border);border-radius:var(--radius);padding:1rem 1rem .75rem;margin-bottom:1.4rem;display:grid;gap:.9rem;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));align-items:end;}
+.filter-bar label {font-size:.65rem;text-transform:uppercase;font-weight:600;letter-spacing:.6px;color:var(--c-muted);margin-bottom:.25rem;}
+.filter-bar input {font-size:.8rem;}
+.filter-bar .actions {text-align:right;}
+/* ---------- TABLE ---------- */
+.attempt-table-wrapper {background:var(--c-card);border:1px solid var(--c-border);border-radius:var(--radius);padding:1rem;}
+.attempt-table {width:100%;border-collapse:separate;border-spacing:0 .5rem;font-size:.8rem;}
+.attempt-table thead th {font-size:.6rem;text-transform:uppercase;font-weight:600;letter-spacing:.5px;color:var(--c-muted);border:none;padding:0 .75rem .25rem;cursor:pointer;user-select:none;}
+.attempt-table tbody tr {background:var(--c-card);box-shadow:0 2px 4px -2px rgba(0,0,0,.08),0 1px 2px -1px rgba(0,0,0,.06);transition:.25s;border:1px solid var(--c-border);} 
+.attempt-table tbody tr:hover {transform:translateY(-2px);box-shadow:0 6px 14px -4px rgba(0,0,0,.15);} 
+.attempt-table td {padding:.55rem .75rem;vertical-align:middle;border:none;}
+.attempt-table td:first-child {border-top-left-radius:8px;border-bottom-left-radius:8px;}
+.attempt-table td:last-child {border-top-right-radius:8px;border-bottom-right-radius:8px;}
+.badge-score {font-size:.65rem;padding:.35rem .55rem;border-radius:6px;font-weight:600;display:inline-block;min-width:36px;text-align:center;}
+.progress-slim {height:16px;border-radius:8px;background:#e2e8f0;overflow:hidden;}
+[data-theme="dark"] .progress-slim {background:#334155;}
+.progress-slim .bar {height:100%;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:600;color:#fff;line-height:1;white-space:nowrap;}
+/* ---------- CHART CARD ---------- */
+.chart-card {background:var(--c-card);border:1px solid var(--c-border);border-radius:var(--radius);padding:1.1rem 1rem;margin:2rem 0 1rem;}
+.chart-card h6 {font-size:.7rem;letter-spacing:.6px;font-weight:700;text-transform:uppercase;color:var(--c-muted);margin-bottom:.75rem;}
+/* ---------- DARK MODE TOGGLE ---------- */
+.theme-toggle {width:38px;height:22px;border-radius:20px;position:relative;display:inline-block;background:rgba(255,255,255,.25);cursor:pointer;}
+.theme-toggle span {position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.35s;box-shadow:0 2px 4px rgba(0,0,0,.25);} 
+[data-theme="dark"] .theme-toggle span {transform:translateX(16px);} 
+/* ---------- UTIL ---------- */
+.fade-in {animation:fadeIn .5s ease;} @keyframes fadeIn {from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+.text-muted-soft {color:var(--c-muted)!important;}
+.nowrap {white-space:nowrap;}
+/* Scroll tweak */
+.attempt-table-wrapper {overflow-x:auto;} 
+</style>
+
+<div class="container py-4 analytics-personal">
+  <div class="analytics-hero fade-in">
+    <div class="hero-actions">
+      <a href="/api/topic-panel/student/panel/" class="btn-ghost">⬅ Panel</a>
+      <button type="button" id="themeToggle" class="btn-ghost" aria-label="Dark/Light"><div class="theme-toggle"><span></span></div></button>
+    </div>
+    <div class="mode-badge">{% if overall_mode %}UMUMIY{% else %}Mavzu{% endif %}</div>
+    <h1>Shaxsiy statistika</h1>
+    {% if overall_mode %}
+      <p class="hero-sub">Barcha testlaringiz bo'yicha umumlashtirilgan ko'rsatkichlar</p>
+    {% else %}
+      <p class="hero-sub">Mavzu: <strong>{{ topic.title }}</strong></p>
+    {% endif %}
+  </div>
+
+  {% if personal_stats.total_attempts %}
+  <!-- STAT CARDS -->
+  <div class="stats-grid fade-in">
+    <div class="stat-card">
+      <div class="stat-label">Urinishlar</div>
+      <div class="stat-value">{{ personal_stats.total_attempts }}</div>
+      <div class="stat-trend trend-up">↺ Barchasi</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">O'rtacha %</div>
+      <div class="stat-value">{{ personal_stats.avg_percent }}%</div>
+      <div class="stat-trend trend-info">≈ Barqaror</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Eng yaxshi %</div>
+      <div class="stat-value">{{ personal_stats.best_percent }}%</div>
+      <div class="stat-trend trend-up">⬆ Yaxshi</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">O'tish foizi</div>
+      <div class="stat-value">{{ personal_stats.pass_rate }}%</div>
+      <div class="stat-trend trend-flat">%</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">O'rtacha ball</div>
+      <div class="stat-value">{{ personal_stats.avg_score }}</div>
+      <div class="stat-trend trend-info">Score</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Eng yuqori ball</div>
+      <div class="stat-value">{{ personal_stats.best_score }}</div>
+      <div class="stat-trend trend-up">Top</div>
+    </div>
+  </div>
+
+  <!-- FILTERS -->
+  <form method="get" class="filter-bar fade-in" id="filterForm">
+    <div>
+      <label>Boshlanish</label>
+      <input type="date" name="start" value="{{ start_filter }}" class="form-control form-control-sm">
+    </div>
+    <div>
+      <label>Tugash</label>
+      <input type="date" name="end" value="{{ end_filter }}" class="form-control form-control-sm">
+    </div>
+    <div>
+      <label>O'tish (%)</label>
+      <input type="number" id="passThreshold" value="{{ personal_stats.pass_threshold }}" min="0" max="100" class="form-control form-control-sm">
+    </div>
+    <div class="actions">
+      <button class="btn btn-primary btn-sm" style="min-width:110px;">Filtrlash</button>
+      {% if start_filter or end_filter %}
+        <a class="btn btn-outline-secondary btn-sm" href="?">Tozalash</a>
+      {% endif %}
+    </div>
+  </form>
+
+  <!-- ATTEMPTS TABLE -->
+  <div class="attempt-table-wrapper fade-in">
+    <table class="attempt-table" id="attemptsTbl">
+      <thead><tr>
+        <th data-sort="index">#</th>
+        <th data-sort="test">Test</th>
+        {% if overall_mode %}<th data-sort="topic">Mavzu</th>{% endif %}
+        <th class="text-center" data-sort="score">Ball</th>
+        <th style="width:160px" data-sort="percent">Foiz</th>
+        <th class="text-center" data-sort="correct">To'g'ri/Jami</th>
+        <th data-sort="time" class="nowrap">Vaqt</th>
+      </tr></thead>
+      <tbody id="attemptBody">
+        {% for i in items %}
+        <tr>
+          <td class="nowrap">{{ forloop.counter }}</td>
+          <td>{{ i.test_title }}</td>
+          {% if overall_mode %}<td class="text-muted-soft small">{{ i.topic_title }}</td>{% endif %}
+          <td class="text-center">
+            <span class="badge-score pass-badge" data-percent="{{ i.percent }}">{{ i.score }}</span>
+          </td>
+          <td>
+            <div class="progress-slim">
+              <div class="bar percent-bar" data-percent="{{ i.percent }}" style="width: {{ i.percent }}%">{{ i.percent }}%</div>
+            </div>
+          </td>
+          <td class="text-center small"><span class="text-success fw-semibold">{{ i.correct }}</span>/<span class="text-muted">{{ i.total_q }}</span></td>
+          <td class="small text-muted-soft">{{ i.finished_at|date:'Y-m-d H:i' }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CHART -->
+  <div class="chart-card fade-in">
+    <h6>Foiz dinamikasi</h6>
+    <canvas id="statsChart" height="170"></canvas>
+  </div>
+  {% else %}
+    <div class="alert alert-info mt-4 fade-in">Hozircha yakunlangan test yo'q.</div>
+  {% endif %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+// Theme toggle persistence
+(function(){const key='analytics-theme';const root=document.documentElement;function apply(v){if(v==='dark'){root.setAttribute('data-theme','dark');}else{root.removeAttribute('data-theme');}}
+apply(localStorage.getItem(key));
+document.getElementById('themeToggle').addEventListener('click',()=>{const cur=root.getAttribute('data-theme')==='dark'?'dark':'light';const nxt=cur==='dark'?'light':'dark';apply(nxt);localStorage.setItem(key,nxt);});})();
+// Pass threshold recolor
+(function(){const thrIn=document.getElementById('passThreshold');function recolor(){const thr=parseFloat(thrIn.value)||0;document.querySelectorAll('.pass-badge').forEach(b=>{const p=parseFloat(b.dataset.percent)||0;b.style.background=p>=thr?'var(--c-accent)':'var(--c-danger)';b.style.color='#fff';});document.querySelectorAll('.percent-bar').forEach(pb=>{const p=parseFloat(pb.dataset.percent)||0;let col='var(--c-danger)';if(p>=thr){col=p>=85?'var(--c-accent)':p>=70?'var(--c-info)':'var(--c-warn)';}pb.style.background=col;});}
+if(thrIn){thrIn.addEventListener('input',recolor);recolor();}})();
+// Simple table sorting
+(function(){const tbl=document.getElementById('attemptsTbl');if(!tbl)return;const tbody=tbl.querySelector('tbody');let dir=1,lastKey='';function getCell(tr,key){const cells=[...tr.children];const map={index:0,test:1,topic:overallMode?2:null,score:overallMode?overallMode?3:3:3,percent:overallMode?overallMode?4:4:4,correct:overallMode?overallMode?5:5:5,time:overallMode?overallMode?6:6:6};return cells[map[key]];} const overallMode={{ overall_mode|yesno:'true,false' }};tbl.querySelectorAll('thead th[data-sort]').forEach(th=>th.addEventListener('click',()=>{const key=th.dataset.sort;dir=key===lastKey?-dir:1;lastKey=key;const rows=[...tbody.querySelectorAll('tr')];rows.sort((a,b)=>{let va=getCell(a,key)?.innerText.trim(),vb=getCell(b,key)?.innerText.trim();if(key==='percent'){va=parseFloat(a.querySelector('.percent-bar').dataset.percent)||0;vb=parseFloat(b.querySelector('.percent-bar').dataset.percent)||0;} else if(key==='score'){va=parseFloat(a.querySelector('.pass-badge').dataset.percent)||0;vb=parseFloat(b.querySelector('.pass-badge').dataset.percent)||0;} else if(key==='correct'){const ap=a.children;va=parseFloat(ap[overallMode?5:5].innerText)||0;vb=parseFloat(b.children[overallMode?5:5].innerText)||0;} else if(key==='index'){va=parseInt(va)||0;vb=parseInt(vb)||0;} return va>vb?dir:va<vb?-dir:0;});rows.forEach(r=>tbody.appendChild(r));}));})();
+// Chart init
+(function(){try{const raw={{ items_js }};if(!raw||!raw.length)return;const ctx=document.getElementById('statsChart').getContext('2d');const labels=raw.map(r=>r.test_title);const perc=raw.map(r=>r.percent);new Chart(ctx,{type:'line',data:{labels,datasets:[{label:'Foiz %',data:perc,borderColor:'var(--c-accent)',backgroundColor:'rgba(var(--c-accent-rgb),.25)',tension:.35,fill:true,pointRadius:3,pointHoverRadius:5}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,max:100,grid:{color:'rgba(0,0,0,.05)'}},x:{grid:{display:false}}}}});}catch(e){console.error(e);}})();
+</script>
+{% endblock %}

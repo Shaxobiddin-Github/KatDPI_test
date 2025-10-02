@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-4">
+  <div class="d-flex align-items-center mb-4">
+    <h3 class="me-auto">Shaxsiy statistika: {{ topic.title }}</h3>
+    <a href="/api/topic-panel/student/panel/" class="btn btn-outline-secondary me-2">← Orqaga</a>
+  </div>
+  {% if items %}
+  <div class="table-responsive shadow-sm rounded bg-white p-3">
+    <table class="table table-striped align-middle mb-0">
+      <thead class="table-light">
+        <tr>
+          <th>#</th>
+          <th>Test</th>
+          <th>Ball</th>
+          <th>Foiz</th>
+          <th>To'g'ri / Jami</th>
+          <th>Vaqt</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in items %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ i.test_title }}</td>
+            <td><span class="badge bg-success">{{ i.score }}</span></td>
+            <td>{{ i.percent }}%</td>
+            <td>{{ i.correct }} / {{ i.total_q }}</td>
+            <td>{{ i.finished_at|date:'Y-m-d H:i' }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+    <div class="alert alert-info">Hali yakunlangan testlaringiz yo'q.</div>
+  {% endif %}
+</div>
+{% endblock %}

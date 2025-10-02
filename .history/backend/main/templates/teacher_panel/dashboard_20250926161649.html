@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>O'qituvchi Paneli - Test Tizimi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- MathJax for math rendering -->
+    <script>
+        // MathJax v3: linebreaks config should be under options, not chtml
+        window.MathJax = {
+            tex: { inlineMath: [["\\(","\\)"],["$","$"]] },
+            options: { linebreaks: { automatic: true, width: 'container' } }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background: url('/static/main/1.png') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Animated background particles */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)" opacity="0.6"><animate attributeName="cy" values="20;80;20" dur="4s" repeatCount="indefinite"/></circle><circle cx="80" cy="80" r="3" fill="rgba(255,255,255,0.08)" opacity="0.4"><animate attributeName="cx" values="80;20;80" dur="6s" repeatCount="indefinite"/></circle><circle cx="50" cy="50" r="1.5" fill="rgba(255,255,255,0.12)" opacity="0.8"><animate attributeName="r" values="1.5;3;1.5" dur="3s" repeatCount="indefinite"/></circle></svg>') repeat;
+            pointer-events: none;
+            z-index: 1;
+        }>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>O‘qituvchi Paneli</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- MathJax for math rendering -->
+    <script>
+        // Ensure inlineMath and linebreaks remain set if this block loads later
+        window.MathJax = window.MathJax || {};
+        window.MathJax.tex = window.MathJax.tex || { inlineMath: [["\\(","\\)"],["$","$"]] };
+        window.MathJax.options = Object.assign({ linebreaks: { automatic: true, width: 'container' } }, window.MathJax.options || {});
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            background: linear-gradient(120deg, #f0f6ff 0%, #e6e9f8 100%);
+            min-height: 100vh;
+        }
+        
+        .main-container {
+            position: relative;
+            z-index: 2;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+        }
+        
+    .panel-title {
+            font-weight: 700;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+        
+    .panel-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            border: none;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 14px 32px;
+            color: white;
+            box-shadow: 0 4px 24px rgba(59, 130, 246, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s;
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(59, 130, 246, 0.4);
+        }
+        
+        .accordion {
+            --bs-accordion-border-width: 0;
+        }
+        
+        .accordion-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+    .accordion-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+        }
+        
+        .accordion-button {
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            border-radius: 20px !important;
+            color: white;
+            font-weight: 600;
+            font-size: 1.2rem;
+            padding: 1.5rem 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .accordion-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.8s;
+        }
+        
+        .accordion-button:hover::before {
+            left: 100%;
+        }
+        
+        .accordion-button:not(.collapsed) {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            box-shadow: none;
+        }
+        
+        .accordion-button:focus {
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+            border: none;
+        }
+        
+        .accordion-button::after {
+            filter: brightness(0) invert(1);
+            transition: transform 0.3s ease;
+        }
+        
+    .accordion-body {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border-radius: 0 0 20px 20px;
+            padding: 2rem;
+        }
+
+        .topic-link-wrapper {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            animation: slideInRight 0.6s ease-out;
+        }
+        
+        .btn-topic-panel {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 20px;
+            padding: 16px 32px;
+            font-weight: 700;
+            color: white;
+            font-size: 1.1rem;
+            text-decoration: none;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.4);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .btn-topic-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s;
+        }
+        
+        .btn-topic-panel:hover::before {
+            left: 100%;
+        }
+        
+        .btn-topic-panel:hover {
+            background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 15px 45px rgba(102, 126, 234, 0.6);
+            color: white;
+        }
+        
+        .btn-topic-panel:active {
+            transform: translateY(-2px) scale(1.02);
+        }
+        
+        .topic-panel-icon {
+            font-size: 1.3em;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 8px 32px rgba(102, 126, 234, 0.4);
+            }
+            50% {
+                box-shadow: 0 8px 32px rgba(102, 126, 234, 0.6);
+            }
+        }
+        
+        .btn-topic-panel.pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .topic-link-wrapper {
+                position: static;
+                text-align: center;
+                margin: 2rem 0;
+                animation: slideInUp 0.6s ease-out;
+            }
+            
+            .btn-topic-panel {
+                padding: 14px 24px;
+                font-size: 1rem;
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+        
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .section-title {
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .question-card {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(15px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            margin-bottom: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .question-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #3b82f6, #1d4ed8);
+            transition: width 0.3s ease;
+        }
+        
+        .question-card:hover::before {
+            width: 8px;
+        }
+        
+        .question-card:hover {
+            transform: translateX(4px);
+            background: rgba(255, 255, 255, 0.18);
+            box-shadow: 0 6px 28px rgba(0, 0, 0, 0.15);
+        }
+        
+        .question-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .question-main {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            min-width: 0;
+            gap: 1rem;
+        }
+        
+        .question-index {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+        }
+        
+        .question-text {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 1.05rem;
+            line-height: 1.6;
+            word-break: break-word;
+            overflow-wrap: anywhere;
+            white-space: normal;
+        }
+        
+        .question-image {
+            max-width: 60px;
+            max-height: 60px;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .question-image:hover {
+            transform: scale(1.05);
+        }
+
+        /* Let MathJax content wrap inside cards */
+        .question-text .mjx-container {
+            overflow-x: clip;
+            overflow-wrap: anywhere;
+            white-space: normal !important;
+        }
+        
+        .question-type-badge {
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+            color: white;
+            font-weight: 500;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            white-space: nowrap;
+            box-shadow: 0 2px 8px rgba(6, 182, 212, 0.3);
+        }
+        
+        .question-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+        }
+        
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-edit {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            border: none;
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+        }
+        
+        .btn-edit:hover {
+            background: linear-gradient(135deg, #d97706, #b45309);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+            color: white;
+        }
+        
+        .btn-delete {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            border: none;
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+        }
+        
+        .btn-delete:hover {
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+            color: white;
+        }
+        
+        .badge.bg-success {
+            background: linear-gradient(135deg, #10b981, #059669) !important;
+            font-size: 0.85rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+        }
+        
+        .badge.bg-secondary {
+            background: linear-gradient(135deg, #6b7280, #4b5563) !important;
+            font-size: 0.85rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+        }
+        
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        
+        .alert-warning {
+            background: rgba(245, 158, 11, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 16px;
+            color: rgba(255, 255, 255, 0.9);
+            padding: 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Ripple effect */
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ripple::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .ripple:active::after {
+            width: 300px;
+            height: 300px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 1rem 0.5rem;
+            }
+            
+            .glass-card {
+                padding: 1.5rem;
+                border-radius: 20px;
+            }
+            
+            .panel-title {
+                font-size: 2rem;
+            }
+            
+            .accordion-button {
+                font-size: 1rem;
+                padding: 1rem 1.5rem;
+            }
+            
+            .question-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .question-main {
+                width: 100%;
+            }
+            
+            .question-actions {
+                width: 100%;
+                justify-content: flex-start;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .panel-title {
+                font-size: 1.75rem;
+            }
+            
+            .btn-primary {
+                padding: 12px 24px;
+                font-size: 1rem;
+            }
+            
+            .question-actions {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="topic-link-wrapper">
+        <a href="/api/topic-panel/dashboard/" class="btn-topic-panel pulse" id="topicPanelBtn">
+            <span class="topic-panel-icon">🚀</span>
+            <span>Yangi Test Tizimi</span>
+        </a>
+    </div>
+    <div class="main-container">
+        <div class="glass-card">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap: 1rem;flex-wrap:wrap;">
+                <div>
+                    <h1 class="panel-title">� O'qituvchi Paneli</h1>
+                    <div style="font-size:1.1rem;color:#1d3557;font-weight:600;margin-top:2px;">
+                        👤 
+                        {{ request.user.get_full_name|default:request.user.username }}
+                    </div>
+                </div>
+                <div style="display:flex;gap:0.5rem;align-items:center;">
+                    <a href="/api/teacher-panel/help/" class="btn btn-info" style="font-weight:600;display:inline-flex;align-items:center;gap:8px;">
+                        <span style="font-size:1.2em;">❓</span> Foydalanish qo‘llanmasi
+                    </a>
+                    <a href="/api/teacher-panel/logout/" class="btn btn-danger" style="font-weight:600;display:inline-flex;align-items:center;gap:8px;">
+                        <span style="font-size:1.2em;">🚪</span> Chiqish
+                    </a>
+                </div>
+            </div>
+            <p class="panel-subtitle">Test savollarini boshqarish va tahrirlash</p>
+            <div class="text-center">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary ripple" data-bs-toggle="modal" data-bs-target="#addQuestionModal">
+                    ✨ Yangi savol qo'shish
+                </button>
+            </div>
+        </div>
+
+        <div class="accordion" id="subjectsAccordion">
+            {% for item in subject_semesters %}
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading{{ item.accordion_id }}">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ item.accordion_id }}" aria-expanded="false" aria-controls="collapse{{ item.accordion_id }}">
+                        <span class="me-3">📚</span>
+                        {{ item.subject.name }}
+                        <span class="ms-auto opacity-75">
+                            {% if item.semester %}({{ item.semester.number }}-semestr){% else %}(semestrsiz){% endif %}
+                        </span>
+                    </button>
+                </h2>
+                <div id="collapse{{ item.accordion_id }}" class="accordion-collapse collapse" aria-labelledby="heading{{ item.accordion_id }}" data-bs-parent="#subjectsAccordion">
+                    <div class="accordion-body">
+                        <h5 class="section-title">
+                            <span>📝</span>
+                            Ushbu fanga tuzilgan savollar
+                        </h5>
+
+                        {% if item.questions %}
+                            {% for question in item.questions %}
+                                <div class="question-card">
+                                    <div class="question-row">
+                                        <div class="question-main">
+                                            <div class="question-index">{{ forloop.counter }}</div>
+                                            <div>
+                                                {% load latex_filters %}
+                                                <div class="question-text">{{ question.text|render_latex_inline|safe }}</div>
+                                                {% if question.image %}
+                                                    <img src="{{ question.image.url }}" alt="Savol rasmi" class="question-image mt-2">
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                                            <span class="question-type-badge">{{ question.get_question_type_display }}</span>
+                                            {% if question.question_type == 'fill_in_blank' and question.correct_answer %}
+                                                <span class="badge bg-success">Javob: {{ question.correct_answer }}</span>
+                                            {% elif question.question_type == 'sentence_ordering' and question.correct_order %}
+                                                <span class="badge bg-secondary">Tartib: {{ question.correct_order }}</span>
+                                            {% endif %}
+                                            <div class="question-actions">
+                                                <a href="/api/teacher-panel/edit-question/{{ question.id }}/" class="btn btn-sm btn-edit ripple" title="Savolni tahrirlash">
+                                                    ✏️ Tahrirlash
+                                                </a>
+                                                <a href="/api/teacher-panel/delete-question/{{ question.id }}/" class="btn btn-sm btn-delete ripple" title="Savolni o'chirish" onclick="return confirm('❗ Ushbu savolni o\'chirishni xohlaysizmi?')">
+                                                    🗑️ O'chirish
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="empty-state">
+                                <div class="empty-state-icon">📝</div>
+                                <p>Hozircha savollar mavjud emas</p>
+                                <small class="opacity-75">Yangi savollar qo'shish uchun yuqoridagi tugmani bosing</small>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="alert alert-warning">
+                <strong>📚 Fanlar mavjud emas!</strong><br>
+                Avval fanlarni qo'shish kerak.
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Modal and JS moved to end of body for proper Bootstrap behavior -->
+        </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // MathJax initialization
+            if(window.MathJax && MathJax.typeset) {
+                MathJax.typeset();
+            }
+            
+            // Re-render MathJax when accordion opens
+            document.querySelectorAll('.accordion-button').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    setTimeout(function() {
+                        if(window.MathJax && MathJax.typeset) {
+                            MathJax.typeset();
+                        }
+                    }, 350);
+                });
+            });
+            
+            // Ripple effect for buttons
+            document.querySelectorAll('.ripple').forEach(function(button) {
+                button.addEventListener('click', function(e) {
+                    const ripple = document.createElement('span');
+                    const rect = button.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.width = ripple.style.height = size + 'px';
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+                    ripple.classList.add('ripple-effect');
+                    
+                    button.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+            
+            // Smooth scroll animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('.accordion-item, .question-card').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        });
+    </script>
+    
+    <style>
+        .ripple-effect {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+        
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+    </style>
+</body>
+<!-- Modal (moved to end of body for z-index and JS correctness) -->
+<div class="modal fade" id="addQuestionModal" tabindex="-1" aria-labelledby="addQuestionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addQuestionModalLabel">Kim uchun savol qo‘shmoqchisiz?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="mb-3">
+                    <select class="form-select" id="questionTargetSelect" required>
+                        <option value="" selected disabled>Tanlang...</option>
+                        <option value="student">Talaba</option>
+                        <option value="tutor">Tutor</option>
+                        <option value="employee">Xodim</option>
+                    </select>
+                </div>
+                <button type="button" class="btn btn-primary" id="questionTargetBtn">Davom etish</button>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .modal { z-index: 2000 !important; }
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var btn = document.getElementById('questionTargetBtn');
+    if(btn) {
+        btn.addEventListener('click', function() {
+            var target = document.getElementById('questionTargetSelect').value;
+            if(target) {
+                window.location.href = '/api/teacher-panel/add-question/?target=' + target;
+            }
+        });
+    }
+});
+</script>
+</html>

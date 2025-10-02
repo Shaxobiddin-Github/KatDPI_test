@@ -1,0 +1,211 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4" id="app" data-student-test="{{ student_test.id }}" data-duration="{{ duration_seconds }}">
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <h4 class="mb-0">{{ test.title }}</h4>
+    <div><strong>Vaqt:</strong> <span id="timer"></span></div>
+  </div>
+  <div class="mb-2"><strong>Ball:</strong> <span id="totalScore">{{ student_test.total_score }}</span> / {{ test.total_score }}</div>
+  <div class="progress mb-3" style="height:8px;">
+    <div class="progress-bar" id="progressBar" role="progressbar" style="width:0%"></div>
+  </div>
+  <div class="row">
+    <div class="col-md-3 mb-3" id="navCol">
+      <div class="list-group small" id="questionIndex"></div>
+    </div>
+    <div class="col-md-9">
+      <div id="questionsWrap"><!-- dynamic --></div>
+      <div class="d-flex justify-content-between mt-3">
+        <button id="prevBtn" class="btn btn-outline-secondary btn-sm" disabled>Orqaga</button>
+        <div>
+          <button id="submitAnswer" class="btn btn-primary btn-sm me-2">Saqlash / Keyingi</button>
+          <button id="finishBtn" class="btn btn-danger btn-sm">Tugatish</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const appEl = document.getElementById('app');
+const studentTestId = appEl.dataset.studentTest;
+const totalDuration = parseInt(appEl.dataset.duration || '0');
+const questionIds = {{ student_test.randomized_question_ids|safe }};
+let currentIndex = 0;
+let answersCache = {}; // {questionId: [optionIds]}
+let timerInterval;
+
+function initIndex(){
+  const list = document.getElementById('questionIndex');
+  questionIds.forEach((id, i)=>{
+    const a = document.createElement('button');
+    a.type='button';
+    a.className='list-group-item list-group-item-action';
+    a.textContent = (i+1);
+    a.dataset.idx = i;
+    a.onclick = ()=>{saveCurrentSelection(false); goTo(i);};
+    list.appendChild(a);
+  });
+  highlightIndex();
+}
+
+function highlightIndex(){
+  document.querySelectorAll('#questionIndex button').forEach(btn=>{
+    const i = parseInt(btn.dataset.idx);
+    btn.classList.toggle('active', i===currentIndex);
+    const qid = questionIds[i];
+    if(answersCache[qid]){
+      btn.classList.add('list-group-item-success');
+    }
+  });
+  document.getElementById('prevBtn').disabled = currentIndex===0;
+  document.getElementById('submitAnswer').textContent = currentIndex === questionIds.length-1 ? 'Saqlash / Yakunlash' : 'Saqlash / Keyingi';
+  updateProgress();
+}
+
+function updateProgress(){
+  const answered = Object.keys(answersCache).length;
+  const pct = (answered / questionIds.length)*100;
+  document.getElementById('progressBar').style.width = pct + '%';
+}
+
+async function loadQuestion(){
+  const wrap = document.getElementById('questionsWrap');
+  if(currentIndex >= questionIds.length){
+    wrap.innerHTML = '<div class="alert alert-info">Barcha savollar yakunlandi.</div>';
+    return;
+  }
+  const qid = questionIds[currentIndex];
+  const resp = await fetch('/api/topic-panel/question/' + qid + '/');
+  if(!resp.ok){
+    wrap.innerHTML = '<div class="alert alert-danger">Savolni yuklab bo\'lmadi</div>';
+    return;
+  }
+  const q = await resp.json();
+  renderQuestion(q);
+  restoreSelection();
+  highlightIndex();
+}
+
+function renderQuestion(q){
+  const wrap = document.getElementById('questionsWrap');
+  let html = `<div class="card"><div class="card-body"><h5>${currentIndex+1}. ${q.text}</h5>`;
+  if(q.image){ html += `<img src="${q.image}" class="img-fluid mb-2"/>`; }
+  q.options.forEach(o=>{
+    const inputType = q.question_type === 'single' ? 'radio' : 'checkbox';
+    html += `<div class="form-check">
+      <input class="form-check-input" type="${inputType}" name="answerOption" value="${o.id}" id="opt${o.id}">
+      <label class="form-check-label" for="opt${o.id}">${o.text}</label>
+    </div>`;
+  });
+  html += `</div></div>`;
+  wrap.innerHTML = html;
+}
+
+function getSelectedOptionIds(){
+  return Array.from(document.querySelectorAll('input[name="answerOption"]:checked')).map(i=>i.value);
+}
+
+function saveCurrentSelection(submit=true){
+  const qid = questionIds[currentIndex];
+  const selected = getSelectedOptionIds();
+  if(selected.length){
+    answersCache[qid] = selected;
+  }
+  if(submit && selected.length){
+    submitAnswer(selected, qid);
+  }
+}
+
+function restoreSelection(){
+  const qid = questionIds[currentIndex];
+  const selected = answersCache[qid] || [];
+  selected.forEach(id=>{
+    const el = document.getElementById('opt'+id);
+    if(el) el.checked = true;
+  });
+}
+
+async function submitAnswer(selectedOverride=null, qidOverride=null){
+  const qid = qidOverride ?? questionIds[currentIndex];
+  const selected = selectedOverride ?? getSelectedOptionIds();
+  const form = new FormData();
+  form.append('question_id', qid);
+  selected.forEach(v=>form.append('options', v));
+  const resp = await fetch(`/api/topic-panel/student/answer/${studentTestId}/submit/`, {method:'POST', headers:{'X-CSRFToken':getCsrf()}, body: form});
+  const data = await resp.json();
+  if(data.correct !== undefined){
+    document.getElementById('totalScore').textContent = data.total;
+  }
+}
+
+function goTo(idx){
+  currentIndex = idx;
+  loadQuestion();
+}
+
+document.getElementById('submitAnswer').addEventListener('click', async ()=>{
+  saveCurrentSelection();
+  if(currentIndex < questionIds.length-1){
+    currentIndex++;
+    loadQuestion();
+  } else {
+    finishTest();
+  }
+});
+document.getElementById('prevBtn').addEventListener('click', ()=>{
+  saveCurrentSelection(false);
+  if(currentIndex>0){ currentIndex--; loadQuestion(); }
+});
+document.getElementById('finishBtn').addEventListener('click', finishTest);
+
+async function finishTest(){
+  if(!confirm('Haqiqatan yakunlaysizmi?')) return;
+  const resp = await fetch(`/api/topic-panel/student/test/${studentTestId}/finish/`, {method:'POST', headers:{'X-CSRFToken':getCsrf()}});
+  const data = await resp.json();
+  if(data.completed){
+    const wrap = document.getElementById('questionsWrap');
+    wrap.innerHTML = `
+      <div class="card">
+        <div class="card-body">
+          <h5 class="mb-3">Test yakunlandi</h5>
+          <p class="mb-1"><strong>Umumiy ball:</strong> ${data.total_score}</p>
+          <p class="mb-1"><strong>Jami savol:</strong> ${data.total_questions}</p>
+          <p class="mb-1 text-success"><strong>To'g'ri:</strong> ${data.correct}</p>
+          <p class="mb-1 text-danger"><strong>Noto'g'ri:</strong> ${data.incorrect}</p>
+          <p class="mb-3 text-muted"><strong>Javobsiz:</strong> ${data.unanswered}</p>
+          <a href="/api/topic-panel/student/panel/" class="btn btn-primary btn-sm">Dashboardga qaytish</a>
+        </div>
+      </div>`;
+    document.getElementById('submitAnswer').disabled = true;
+    document.getElementById('finishBtn').disabled = true;
+    document.getElementById('prevBtn').disabled = true;
+  }
+}
+
+function startTimer(){
+  if(!totalDuration) return;
+  let remaining = totalDuration;
+  const timerEl = document.getElementById('timer');
+  function tick(){
+    const m = Math.floor(remaining/60);
+    const s = remaining % 60;
+    timerEl.textContent = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+    if(remaining<=0){
+      clearInterval(timerInterval);
+      finishTest();
+    }
+    remaining--;
+  }
+  tick();
+  timerInterval = setInterval(tick, 1000);
+}
+
+function getCsrf(){
+  return document.cookie.split('; ').find(r=>r.startsWith('csrftoken='))?.split('=')[1];
+}
+
+initIndex();
+loadQuestion();
+startTimer();
+</script>
+{% endblock %}

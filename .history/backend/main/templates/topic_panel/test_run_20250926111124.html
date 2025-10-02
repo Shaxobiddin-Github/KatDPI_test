@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4" id="app" data-student-test="{{ student_test.id }}">
+  <h4>{{ test.title }}</h4>
+  <div class="mb-2"><strong>Ball:</strong> <span id="totalScore">{{ student_test.total_score }}</span> / {{ test.total_score }}</div>
+  <div id="questionsWrap">
+    <!-- Questions will load via fetch -->
+  </div>
+  <button id="finishBtn" class="btn btn-danger mt-3">Tugatish</button>
+</div>
+<script>
+const studentTestId = document.getElementById('app').dataset.studentTest;
+const questionIds = {{ student_test.randomized_question_ids|safe }};
+let currentIndex = 0;
+
+async function loadQuestion(){
+  if(currentIndex >= questionIds.length){
+    document.getElementById('questionsWrap').innerHTML = '<div class="alert alert-info">Barcha savollar yakunlandi.</div>';
+    return;
+  }
+  const qid = questionIds[currentIndex];
+  const resp = await fetch('/api/question-detail/' + qid + '/'); // Placeholder endpoint; implement if needed
+  if(!resp.ok){
+    document.getElementById('questionsWrap').innerHTML = '<div class="alert alert-danger">Savolni yuklab bo\'lmadi</div>';
+    return;
+  }
+  const q = await resp.json();
+  renderQuestion(q);
+}
+
+function renderQuestion(q){
+  const wrap = document.getElementById('questionsWrap');
+  let html = `<div class="card"><div class="card-body"><h5>${currentIndex+1}. ${q.text}</h5>`;
+  if(q.image){ html += `<img src="${q.image}" class="img-fluid mb-2"/>`; }
+  q.options.forEach(o=>{
+    const inputType = q.question_type === 'single' ? 'radio' : 'checkbox';
+    html += `<div class="form-check">
+      <input class="form-check-input" type="${inputType}" name="answerOption" value="${o.id}" id="opt${o.id}">
+      <label class="form-check-label" for="opt${o.id}">${o.text}</label>
+    </div>`;
+  });
+  html += `<button class="btn btn-primary mt-3" id="submitAnswer">Yuborish</button>`;
+  html += `</div></div>`;
+  wrap.innerHTML = html;
+  document.getElementById('submitAnswer').addEventListener('click', submitAnswer);
+}
+
+async function submitAnswer(){
+  const selected = Array.from(document.querySelectorAll('input[name="answerOption"]:checked')).map(i=>i.value);
+  const form = new FormData();
+  form.append('question_id', questionIds[currentIndex]);
+  selected.forEach(v=>form.append('options', v));
+  const resp = await fetch(`/api/topic-panel/student/answer/${studentTestId}/submit/`, {method:'POST', headers:{'X-CSRFToken':getCsrf()}, body: form});
+  const data = await resp.json();
+  if(data.correct !== undefined){
+    document.getElementById('totalScore').textContent = data.total;
+    currentIndex++;
+    loadQuestion();
+  } else {
+    alert(data.error || 'Xato');
+  }
+}
+
+async function finishTest(){
+  const resp = await fetch(`/api/topic-panel/student/test/${studentTestId}/finish/`, {method:'POST', headers:{'X-CSRFToken':getCsrf()}});
+  const data = await resp.json();
+  if(data.completed){
+    alert('Yakunlandi! Ball: ' + data.total_score);
+    window.location.href = '/api/topic-panel/dashboard/';
+  }
+}
+
+document.getElementById('finishBtn').addEventListener('click', finishTest);
+
+function getCsrf(){
+  return document.cookie.split('; ').find(r=>r.startsWith('csrftoken='))?.split('=')[1];
+}
+
+loadQuestion();
+</script>
+{% endblock %}

@@ -1,0 +1,553 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+:root {
+  --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --card-bg: rgba(255, 255, 255, 0.95);
+  --text-primary: #2d3748;
+  --text-secondary: #64748b;
+  --accent: #667eea;
+  --accent-light: rgba(102, 126, 234, 0.1);
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --radius: 16px;
+  --blur: blur(16px);
+}
+
+body {
+  background: var(--bg-gradient);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.analytics-container {
+  background: var(--bg-gradient);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.analytics-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(120, 119, 198, 0.2) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.content-wrapper {
+  position: relative;
+  z-index: 1;
+  padding: 2rem 0;
+}
+
+.page-header {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: var(--blur);
+  border-radius: var(--radius);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: var(--shadow);
+}
+
+.btn-back-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: var(--blur);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1.25rem;
+  border-radius: 50px;
+  text-decoration: none;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.btn-back-nav::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), transparent, rgba(255, 255, 255, 0.1));
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.btn-back-nav:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  color: white;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.btn-back-nav:hover::before {
+  transform: translateX(100%);
+}
+
+.btn-back-nav .icon {
+  display: inline-flex;
+  width: 1.25rem;
+  height: 1.25rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  font-size: 0.75rem;
+}
+
+.page-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.page-subtitle {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0.5rem 0 0 0;
+  font-weight: 400;
+}
+
+.stats-overview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: var(--card-bg);
+  backdrop-filter: var(--blur);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: var(--shadow);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent), var(--success));
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.comparison-table-wrapper {
+  background: var(--card-bg);
+  backdrop-filter: var(--blur);
+  border-radius: var(--radius);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  position: relative;
+}
+
+.comparison-table-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--success) 50%, var(--warning) 100%);
+}
+
+.table-header {
+  background: rgba(102, 126, 234, 0.05);
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.table-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.comparison-table thead th {
+  background: rgba(248, 250, 252, 0.8);
+  padding: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  border: none;
+  position: relative;
+}
+
+.comparison-table tbody tr {
+  transition: all 0.3s ease;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.comparison-table tbody tr:hover {
+  background: rgba(102, 126, 234, 0.03);
+  transform: scale(1.01);
+}
+
+.comparison-table td {
+  padding: 1.25rem 1rem;
+  vertical-align: middle;
+  border: none;
+}
+
+.rank-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: white;
+  background: linear-gradient(135deg, var(--accent), var(--success));
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.group-name {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 1rem;
+}
+
+.metric-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  min-width: 3rem;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.metric-primary {
+  background: rgba(102, 126, 234, 0.1);
+  color: var(--accent);
+  border: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+.metric-success {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--success);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.metric-warning {
+  background: rgba(245, 158, 11, 0.1);
+  color: var(--warning);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.progress-bar-wrapper {
+  position: relative;
+  width: 100%;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--success));
+  border-radius: 4px;
+  transition: width 0.6s ease;
+  position: relative;
+}
+
+.progress-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), transparent);
+  border-radius: 4px 4px 0 0;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: var(--card-bg);
+  backdrop-filter: var(--blur);
+  border-radius: var(--radius);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: var(--shadow);
+}
+
+.empty-icon {
+  font-size: 4rem;
+  color: rgba(102, 126, 234, 0.4);
+  margin-bottom: 1.5rem;
+}
+
+.empty-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.empty-description {
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.slide-up {
+  animation: slideUp 0.6s ease-out;
+}
+
+.stagger-animation {
+  animation: slideUp 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 1.75rem;
+  }
+  
+  .stats-overview {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+  
+  .comparison-table {
+    font-size: 0.8rem;
+  }
+  
+  .comparison-table th,
+  .comparison-table td {
+    padding: 0.75rem 0.5rem;
+  }
+  
+  .content-wrapper {
+    padding: 1rem 0;
+  }
+  
+  .page-header {
+    padding: 1.5rem;
+  }
+}
+</style>
+
+<div class="analytics-container">
+  <div class="content-wrapper">
+    <div class="container">
+      <div class="page-header fade-in">
+        <a href="{% url 'topic:topic_manage' topic.id %}" class="btn-back-nav">
+          <span class="icon"><i class="fas fa-arrow-left"></i></span>
+          <span class="label">Orqaga</span>
+        </a>
+        <h1 class="page-title">
+          <i class="fas fa-users"></i>
+          Guruhlar taqqoslash
+        </h1>
+        <p class="page-subtitle">{{ topic.title }} mavzusi bo'yicha guruhlarning ko'rsatkichlari</p>
+      </div>
+
+      {% if rows %}
+        <div class="stats-overview slide-up">
+          <div class="stat-card" style="animation-delay: 100ms;">
+            <div class="stat-label">Jami guruhlar</div>
+            <div class="stat-value">{{ rows|length }}</div>
+          </div>
+          <div class="stat-card" style="animation-delay: 200ms;">
+            <div class="stat-label">Jami urinishlar</div>
+            <div class="stat-value">{% for r in rows %}{{ r.attempts }}{% if not forloop.last %}+{% endif %}{% endfor %}</div>
+          </div>
+          <div class="stat-card" style="animation-delay: 300ms;">
+            <div class="stat-label">Jami talabalar</div>
+            <div class="stat-value">{% for r in rows %}{{ r.student_count }}{% if not forloop.last %}+{% endif %}{% endfor %}</div>
+          </div>
+        </div>
+
+        <div class="comparison-table-wrapper stagger-animation" style="animation-delay: 400ms;">
+          <div class="table-header">
+            <h2 class="table-title">
+              <i class="fas fa-chart-bar"></i>
+              Guruhlar reytingi
+            </h2>
+          </div>
+          
+          <div class="table-responsive">
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>Reyting</th>
+                  <th>Guruh nomi</th>
+                  <th>Urinishlar</th>
+                  <th>Talabalar</th>
+                  <th>O'rtacha ball</th>
+                  <th>O'rtacha foiz</th>
+                  <th>Eng yuqori ball</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for r in rows %}
+                  <tr class="stagger-animation" style="animation-delay: {{ forloop.counter|add:4 }}00ms;">
+                    <td>
+                      <div class="rank-badge">{{ forloop.counter }}</div>
+                    </td>
+                    <td>
+                      <div class="group-name">{{ r.group_name }}</div>
+                    </td>
+                    <td>
+                      <span class="metric-badge metric-primary">{{ r.attempts }}</span>
+                    </td>
+                    <td>
+                      <span class="metric-badge metric-primary">{{ r.student_count }}</span>
+                    </td>
+                    <td>
+                      <span class="metric-badge metric-success">{{ r.avg_score }}</span>
+                    </td>
+                    <td>
+                      <div>
+                        <span class="metric-badge {% if r.avg_percent >= 70 %}metric-success{% elif r.avg_percent >= 50 %}metric-warning{% else %}metric-primary{% endif %}">
+                          {{ r.avg_percent }}%
+                        </span>
+                        <div class="progress-bar-wrapper">
+                          <div class="progress-bar" style="width: {{ r.avg_percent }}%"></div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <span class="metric-badge metric-success">{{ r.best_score }}</span>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      {% else %}
+        <div class="empty-state slide-up">
+          <div class="empty-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h3 class="empty-title">Hozircha natijalar yo'q</h3>
+          <p class="empty-description">
+            Guruhlar tomonidan test topshirilgach, bu yerda taqqoslash ko'rsatkichlari paydo bo'ladi
+          </p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Add stagger animation delays to table rows
+  const tableRows = document.querySelectorAll('.comparison-table tbody tr');
+  tableRows.forEach((row, index) => {
+    row.style.animationDelay = `${(index + 5) * 100}ms`;
+  });
+  
+  // Animate progress bars
+  setTimeout(() => {
+    const progressBars = document.querySelectorAll('.progress-bar');
+    progressBars.forEach(bar => {
+      const width = bar.style.width;
+      bar.style.width = '0%';
+      setTimeout(() => {
+        bar.style.width = width;
+      }, 100);
+    });
+  }, 800);
+  
+  // Add hover effects to stat cards
+  const statCards = document.querySelectorAll('.stat-card');
+  statCards.forEach(card => {
+    card.addEventListener('mouseenter', function() {
+      this.style.transform = 'translateY(-8px) scale(1.02)';
+    });
+    
+    card.addEventListener('mouseleave', function() {
+      this.style.transform = 'translateY(0) scale(1)';
+    });
+  });
+});
+</script>
+{% endblock %}

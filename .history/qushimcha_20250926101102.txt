@@ -1,0 +1,21 @@
+TemplateSyntaxError at /api/teacher-panel/dashboard/
+'with' received an invalid token: 'if'
+Request Method:	GET
+Request URL:	http://127.0.0.1:8000/api/teacher-panel/dashboard/
+Django Version:	5.2.4
+Exception Type:	TemplateSyntaxError
+Exception Value:	
+'with' received an invalid token: 'if'
+Exception Location:	C:\project\TEST\env\Lib\site-packages\django\template\defaulttags.py, line 1537, in do_with
+Raised during:	main.views_teacher_panel.teacher_dashboard
+Python Executable:	C:\project\TEST\env\Scripts\python.exe
+Python Version:	3.11.8
+Python Path:	
+['C:\\project\\TEST\\backend',
+ 'C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python311\\python311.zip',
+ 'C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python311\\DLLs',
+ 'C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python311\\Lib',
+ 'C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python311',
+ 'C:\\project\\TEST\\env',
+ 'C:\\project\\TEST\\env\\Lib\\site-packages']
+Server time:	Fri, 26 Sep 2025 07:10:44 +0000 xatrolik

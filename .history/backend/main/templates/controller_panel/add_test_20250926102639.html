@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nazorat Paneli - Test Yaratish</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+    html { text-size-adjust: 100%; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            background: url('/static/main/1.png') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Animated particles background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.3), transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.2), transparent),
+                radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.4), transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.3), transparent),
+                radial-gradient(2px 2px at 160px 30px, rgba(255,255,255,0.2), transparent);
+            background-repeat: repeat;
+            background-size: 200px 100px;
+            animation: sparkle 20s linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes sparkle {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-100px) rotate(360deg); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 3rem;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.1),
+                0 2px 8px rgba(0, 0, 0, 0.05),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+        }
+
+        .title {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 2.5rem;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            letter-spacing: -0.5px;
+        }
+
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.6rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 0.3px;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 1rem;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 
+                0 0 0 3px rgba(255, 255, 255, 0.1),
+                0 8px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .form-select option {
+            background: rgba(30, 30, 30, 0.95);
+            color: white;
+            padding: 0.8rem;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.1rem 2rem;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 16px;
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.2) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateX(-3px);
+            color: rgba(255, 255, 255, 1);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .glass-card {
+                padding: 2rem 1.5rem;
+                margin: 1rem;
+                border-radius: 20px;
+            }
+            
+            .title {
+                font-size: 1.8rem;
+                margin-bottom: 2rem;
+            }
+            
+            .form-input,
+            .form-select {
+                padding: 0.9rem 1rem;
+                font-size: 0.95rem;
+            }
+            
+            .submit-btn {
+                padding: 1rem 1.5rem;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .glass-card {
+                padding: 1.5rem 1rem;
+            }
+            
+            .title {
+                font-size: 1.6rem;
+            }
+            
+            .form-group {
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        /* --- Fancy multi-select (groups) --- */
+        .ms-container { position: relative; }
+        .ms-control {
+            display: flex; align-items: center; gap: 8px; min-height: 48px; width: 100%;
+            padding: 10px 12px; border-radius: 12px; cursor: pointer;
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+            color: rgba(255,255,255,0.95); transition: all .25s ease;
+        }
+        .ms-control:hover { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.35); }
+        .ms-placeholder { opacity: .7; }
+        .ms-chips { display:flex; flex-wrap:wrap; gap:6px; }
+        .ms-chip { background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.25); color:#fff; padding:4px 8px; border-radius:999px; font-size:.85rem; }
+        .ms-caret { margin-left:auto; opacity:.8; }
+        .ms-dropdown {
+            position: absolute; left:0; right:0; top: calc(100% + 8px); z-index: 20; display:none;
+            background: rgba(20,20,20,0.92); border:1px solid rgba(255,255,255,0.18); border-radius: 12px; overflow: hidden;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.35);
+        }
+        .ms-open .ms-dropdown{ display:block; }
+        .ms-toolbar { display:flex; gap:6px; padding:8px; border-bottom:1px solid rgba(255,255,255,0.08); }
+        .ms-btn { background: rgba(255,255,255,0.08); color:#fff; border:1px solid rgba(255,255,255,0.18); border-radius:8px; padding:6px 10px; font-size:.8rem; cursor:pointer; }
+        .ms-btn:hover { background: rgba(255,255,255,0.14); }
+        .ms-search { width:100%; padding:8px 10px; background: rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.18); border-radius:8px; color:#fff; }
+        .ms-list { max-height: 240px; overflow:auto; padding:4px 0; }
+        .ms-option { display:flex; align-items:center; gap:10px; padding:8px 10px; color:#fff; }
+        .ms-option:hover { background: rgba(255,255,255,0.06); }
+        .ms-count { opacity:.7; font-size:.85rem; margin-left:6px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="glass-card">
+            <h1 class="title">📝 Yangi Test Yaratish</h1>
+            
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+
+                {% if target == 'student' %}
+                <div class="form-group">
+                    <label class="form-label" for="group">👥 Guruh:</label>
+                    <!-- Native select (hidden) to keep form semantics -->
+                    <select class="form-select" name="groups" id="group" multiple required style="display:none;">
+                        {% for group in groups %}
+                            <option value="{{ group.id }}">{{ group.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <!-- Custom UI -->
+                    <div id="group-ms" class="ms-container"></div>
+                </div>
+                {% elif target == 'tutor' %}
+                <div class="form-group">
+                    <label class="form-label" for="kafedra">🏢 Kafedra:</label>
+                    <select class="form-select" name="kafedra" id="kafedra" required>
+                        <option value="">Kafedrani tanlang...</option>
+                        {% for kafedra in kafedralar %}
+                            <option value="{{ kafedra.id }}">{{ kafedra.name }} ({{ kafedra.faculty.name }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% elif target == 'employee' %}
+                <div class="form-group">
+                    <label class="form-label" for="bulim">🏢 Bo'lim:</label>
+                    <select class="form-select" name="bulim" id="bulim" required>
+                        <option value="">Bo'limni tanlang...</option>
+                        {% for bulim in bulimlar %}
+                            <option value="{{ bulim.id }}">{{ bulim.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% endif %}
+
+                <div class="form-group">
+                    <label class="form-label" for="subject">📚 Fan (Semestr bilan):</label>
+                    <!-- Value format for student target: `${subject_id}::${semester_id||''}` to preserve semester -->
+                    <select class="form-select" name="subject" id="subject" required>
+                        <option value="">Fanni tanlang...</option>
+                    </select>
+                    <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const groupSelect = document.getElementById('group');
+                        const kafedraSelect = document.getElementById('kafedra');
+                        const bulimSelect = document.getElementById('bulim');
+                        const subjectSelect = document.getElementById('subject');
+                        const questionCountInput = document.getElementById('question_count');
+                        const maxQuestionInfo = document.getElementById('max_question_info');
+
+                        // Build fancy multiselect for groups (keeps original <select> in sync)
+                        (function initGroupsMultiSelect(){
+                            if(!groupSelect) return;
+                            const mount = document.getElementById('group-ms');
+                            if(!mount) return;
+                            const wrap = document.createElement('div');
+                            const control = document.createElement('div'); control.className='ms-control';
+                            const chips = document.createElement('div'); chips.className='ms-chips';
+                            const placeholder = document.createElement('span'); placeholder.className='ms-placeholder'; placeholder.textContent='Guruhni tanlang...';
+                            const caret = document.createElement('span'); caret.className='ms-caret'; caret.textContent='▾';
+                            control.appendChild(chips); control.appendChild(placeholder); control.appendChild(caret);
+                            const dropdown = document.createElement('div'); dropdown.className='ms-dropdown';
+                            const toolbar = document.createElement('div'); toolbar.className='ms-toolbar';
+                            const btnAll = document.createElement('button'); btnAll.type='button'; btnAll.className='ms-btn'; btnAll.textContent='Hammasi';
+                            const btnClear = document.createElement('button'); btnClear.type='button'; btnClear.className='ms-btn'; btnClear.textContent='Tozalash';
+                            const count = document.createElement('span'); count.className='ms-count';
+                            const search = document.createElement('input'); search.type='text'; search.className='ms-search'; search.placeholder="Qidirish...";
+                            toolbar.appendChild(btnAll); toolbar.appendChild(btnClear); toolbar.appendChild(count);
+                            const list = document.createElement('div'); list.className='ms-list';
+                            dropdown.appendChild(toolbar);
+                            dropdown.appendChild(document.createElement('div')).appendChild(search);
+                            dropdown.lastChild.style.padding='8px';
+                            dropdown.appendChild(list);
+                            wrap.appendChild(control); wrap.appendChild(dropdown); mount.appendChild(wrap);
+                            function setOpen(v){ wrap.classList.toggle('ms-open', !!v); }
+                            control.addEventListener('click',()=>setOpen(!wrap.classList.contains('ms-open')));
+                            document.addEventListener('click',(e)=>{ if(!wrap.contains(e.target)) setOpen(false); });
+                            function makeOption(opt){
+                                const row = document.createElement('label'); row.className='ms-option'; row.dataset.text = (opt.textContent||'').toLowerCase();
+                                const cb = document.createElement('input'); cb.type='checkbox'; cb.value = opt.value; cb.checked = opt.selected;
+                                const tx = document.createElement('span'); tx.textContent = opt.textContent;
+                                row.appendChild(cb); row.appendChild(tx);
+                                cb.addEventListener('change',()=>{ opt.selected = cb.checked; update(); groupSelect.dispatchEvent(new Event('change')); });
+                                return row;
+                            }
+                            const rows = Array.from(groupSelect.options).map(o=>{ const r=makeOption(o); list.appendChild(r); return r; });
+                            function update(){
+                                // chips
+                                chips.innerHTML='';
+                                const sel = Array.from(groupSelect.selectedOptions);
+                                if(sel.length){
+                                    sel.slice(0,3).forEach(o=>{ const c=document.createElement('span'); c.className='ms-chip'; c.textContent=o.textContent; chips.appendChild(c); });
+                                    if(sel.length>3){ const more=document.createElement('span'); more.className='ms-chip'; more.textContent=`+${sel.length-3}`; chips.appendChild(more);}    
+                                    placeholder.style.display='none';
+                                } else { placeholder.style.display=''; }
+                                count.textContent = sel.length ? `${sel.length} tanlandi` : '';
+                                // sync checkboxes (in case of programmatic change)
+                                rows.forEach((row,i)=>{ row.querySelector('input').checked = groupSelect.options[i].selected; });
+                            }
+                            btnAll.addEventListener('click',()=>{ Array.from(groupSelect.options).forEach(o=>o.selected=true); update(); groupSelect.dispatchEvent(new Event('change')); });
+                            btnClear.addEventListener('click',()=>{ Array.from(groupSelect.options).forEach(o=>o.selected=false); update(); groupSelect.dispatchEvent(new Event('change')); });
+                            search.addEventListener('input',()=>{
+                                const q = search.value.trim().toLowerCase();
+                                rows.forEach(r=>{ r.style.display = r.dataset.text.includes(q)?'flex':'none'; });
+                            });
+                            update();
+                        })();
+
+                        function clearSubjects() {
+                            subjectSelect.innerHTML = '<option value="">Fanni tanlang...</option>';
+                        }
+
+                        function loadSubjectsBy(url) {
+                            clearSubjects();
+                            fetch(url)
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.subjects) {
+                                        data.subjects.forEach(function(subject) {
+                                            let opt = document.createElement('option');
+                                            // Encode semester_id when present so backend can create semester-specific tests
+                                            const value = (subject.semester_id && subject.semester) ? `${subject.id}::${subject.semester_id}` : `${subject.id}`;
+                                            opt.value = value;
+                                            opt.textContent = subject.name + (subject.semester ? ` (${subject.semester}-semestr)` : '');
+                                            subjectSelect.appendChild(opt);
+                                        });
+                                    }
+                                });
+                        }
+
+                        if (groupSelect) {
+                            groupSelect.addEventListener('change', function() {
+                                const selected = Array.from(this.selectedOptions).map(o => o.value).filter(Boolean);
+                                if (!selected.length) { clearSubjects(); return; }
+                                const ids = selected.join(',');
+                                loadSubjectsBy(`/api/controller-panel/get-subjects-by-group/?group_id=${ids}`);
+                            });
+                        }
+                        if (kafedraSelect) {
+                            kafedraSelect.addEventListener('change', function() {
+                                const kafedraId = this.value;
+                                if (!kafedraId) { clearSubjects(); return; }
+                                loadSubjectsBy(`/api/controller-panel/get-subjects-by-group/?kafedra_id=${kafedraId}`);
+                            });
+                        }
+                        if (bulimSelect) {
+                            bulimSelect.addEventListener('change', function() {
+                                const bulimId = this.value;
+                                if (!bulimId) { clearSubjects(); return; }
+                                loadSubjectsBy(`/api/controller-panel/get-subjects-by-group/?bulim_id=${bulimId}`);
+                            });
+                        }
+
+                        // Prevent entering more than max questions
+                        questionCountInput.addEventListener('input', function() {
+                            const max = parseInt(questionCountInput.max);
+                            const val = parseInt(questionCountInput.value);
+                            let warning = document.getElementById('question_count_warning');
+                            if (!warning) {
+                                warning = document.createElement('span');
+                                warning.id = 'question_count_warning';
+                                warning.style.color = '#dc3545';
+                                warning.style.display = 'none';
+                                warning.style.marginTop = '0.5rem';
+                                warning.style.fontWeight = '600';
+                                questionCountInput.parentNode.appendChild(warning);
+                            }
+                            if (!isNaN(max) && val > max) {
+                                questionCountInput.value = max;
+                                warning.style.display = 'block';
+                                warning.innerText = `Kiritilgan son mavjud savollardan oshib ketdi! Maksimal: ${max}`;
+                            } else {
+                                warning.style.display = 'none';
+                                warning.innerText = '';
+                            }
+                        });
+
+                        subjectSelect.addEventListener('change', function() {
+                            const raw = this.value;
+                            // Value is "<subject_id>::<semester_id>" when semester-aware; extract both
+                            let subjectId = raw;
+                            let semesterId = '';
+                            if (raw && raw.includes('::')) {
+                                const parts = raw.split('::');
+                                subjectId = parts[0];
+                                semesterId = parts[1] || '';
+                            }
+                            if (!subjectId) {
+                                questionCountInput.removeAttribute('max');
+                                questionCountInput.value = '';
+                                questionCountInput.disabled = false;
+                                maxQuestionInfo.innerText = '';
+                                return;
+                            }
+                            const url = semesterId ? `/api/subject-max-question-count/?subject_id=${subjectId}&semester_id=${semesterId}`
+                                                   : `/api/subject-max-question-count/?subject_id=${subjectId}`;
+                            fetch(url)
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.max_question_count !== undefined) {
+                                        questionCountInput.max = data.max_question_count;
+                                        questionCountInput.disabled = false;
+                                        maxQuestionInfo.innerText = `Maksimal savollar soni: ${data.max_question_count}`;
+                                        if (parseInt(questionCountInput.value) > data.max_question_count) {
+                                            questionCountInput.value = data.max_question_count;
+                                        }
+                                        if (data.max_question_count === 0) {
+                                            questionCountInput.disabled = true;
+                                            maxQuestionInfo.innerText = 'Bu fanga savol qo‘shilmagan!';
+                                        }
+                                    } else {
+                                        questionCountInput.removeAttribute('max');
+                                        questionCountInput.value = '';
+                                        questionCountInput.disabled = true;
+                                        maxQuestionInfo.innerText = 'Fan uchun savollar topilmadi';
+                                    }
+                                });
+                            // Intro video fetch + dropdown integration
+                            const ivBox = document.getElementById('intro_video_suggest');
+                            const ivDesc = document.getElementById('intro_video_desc');
+                            const applyBtn = document.getElementById('apply_intro_video');
+                            const urlSelect = document.getElementById('video_url_select');
+                            const urlInput = document.getElementById('video_url');
+                            const urlHelp = document.getElementById('video_url_help');
+                            if(ivBox){ ivBox.style.display='none'; ivDesc.innerHTML=''; }
+                            if(urlSelect){ urlSelect.style.display='none'; urlSelect.innerHTML=''; }
+                            if(urlInput){ urlInput.disabled = false; urlInput.style.display='block'; }
+                            fetch(`/api/controller/get-intro-video/?subject_id=${subjectId}&semester_id=${semesterId}`)
+                              .then(r=>r.json())
+                              .then(v => {
+                                  if(!(v && (v.video_url || v.video_file))) return;
+                                  if(ivBox){
+                                      ivBox.style.display='block';
+                                      let txt='';
+                                      if(v.video_url) txt += `URL: <code>${v.video_url}</code>`;
+                                      if(v.video_file) txt += (txt?' | ':'')+ 'Fayl mavjud';
+                                      ivDesc.innerHTML = txt;
+                                      if(applyBtn){
+                                          applyBtn.onclick = () => {
+                                              if(v.video_url){ urlInput.value = v.video_url; }
+                                              else if(v.video_file){ alert('Fayl serverda mavjud, test saqlanganda bog‘lanadi.'); }
+                                          };
+                                      }
+                                  }
+                                  if(v.video_url && urlSelect){
+                                      urlSelect.style.display='block';
+                                      const optExist = document.createElement('option');
+                                      optExist.value = v.video_url; optExist.textContent = 'Mavjud URL: ' + v.video_url;
+                                      const optNew = document.createElement('option'); optNew.value='__new__'; optNew.textContent='Yangi URL kiritish';
+                                      urlSelect.appendChild(optExist); urlSelect.appendChild(optNew); urlSelect.value = v.video_url;
+                                      urlInput.value = v.video_url; urlInput.style.display='none'; urlInput.disabled=true;
+                                      if(urlHelp){ urlHelp.textContent='Mavjud URL dan foydalanish yoki yangi URL kiritish.'; }
+                                      urlSelect.onchange = () => {
+                                          if(urlSelect.value==='__new__'){
+                                              urlInput.disabled=false; urlInput.style.display='block'; urlInput.value=''; urlInput.focus();
+                                          } else {
+                                              urlInput.value=urlSelect.value; urlInput.disabled=true; urlInput.style.display='none';
+                                          }
+                                      };
+                                  } else if(v.video_file && urlHelp){
+                                      urlHelp.textContent='O‘qituvchi fayl yuklagan; URL kiritmasangiz shu fayl qo‘llanadi.';
+                                  }
+                              }).catch(()=>{});
+                        });
+                    });
+            </script>
+                </div>
+
+                <div class="form-group" id="video_url_group">
+                    <label class="form-label" for="video_url">🎬 Video URL (ixtiyoriy):</label>
+                    <select id="video_url_select" class="form-select" style="display:none;margin-bottom:0.5rem;"></select>
+                    <input class="form-input" type="url" name="video_url" id="video_url" placeholder="https://... (YouTube, Vimeo, mp4 link)" />
+                    <small id="video_url_help" style="color:rgba(255,255,255,0.75);display:block;margin-top:6px;">O‘qituvchi yuklagan video bo‘lsa avtomatik paydo bo‘ladi.</small>
+                </div>
+                <div class="form-group" id="intro_video_suggest" style="display:none;">
+                    <div style="background:rgba(255,255,255,0.08);padding:10px 14px;border:1px solid rgba(255,255,255,0.15);border-radius:10px;">
+                        <strong>🎬 O‘qituvchi yuklagan video topildi.</strong>
+                        <div id="intro_video_desc" style="margin:6px 0 10px;font-size:0.75rem;color:#ddd;"></div>
+                        <button type="button" id="apply_intro_video" class="btn btn-sm" style="background:#2e7d32;color:#fff;font-weight:600;">Videoni qo‘llash</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="video_file">📁 Video fayl (ixtiyoriy):</label>
+                    <input class="form-input" type="file" name="video_file" id="video_file" accept="video/*" />
+                    <small style="color: rgba(255,255,255,0.85);">Agar URL va fayl birga yuborilsa, har ikkalasi ham saqlanadi; ko‘rsatishda mavjud bo‘lgani ishlatiladi.</small>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="question_count">❓ Savollar soni:</label>
+                    <input class="form-input" type="number" name="question_count" id="question_count" required min="1" placeholder="Masalan: 20">
+                    <span id="max_question_info" style="color:#ff0; display:block; margin-top:0.5rem;"></span>
+                    <span id="question_count_warning" style="color:#dc3545; display:none; margin-top:0.5rem; font-weight:600;"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="total_score">⭐ Umumiy ball:</label>
+                    <input class="form-input" type="number" name="total_score" id="total_score" required min="1" placeholder="Masalan: 100">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="minutes">⏰ Test vaqti (daqiqa):</label>
+                    <input class="form-input" type="number" name="minutes" id="minutes" required min="1" value="30" placeholder="Masalan: 30">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="duration">📅 Test muddati (soat:daqiq:soniya):</label>
+                    <div class="duration-picker" style="background:rgba(255,255,255,0.08);padding:10px 12px;border:1px solid rgba(255,255,255,0.18);border-radius:10px;">
+                        <div class="dp-row" style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
+                            <input type="number" id="dur_hours" min="0" max="23" value="0" style="width:70px;" class="form-input" placeholder="Soat">
+                            <span style="font-weight:600;font-size:1.1rem;">:</span>
+                            <input type="number" id="dur_minutes" min="0" max="59" value="30" style="width:70px;" class="form-input" placeholder="Daqiqa">
+                            <span style="font-weight:600;font-size:1.1rem;">:</span>
+                            <input type="number" id="dur_seconds" min="0" max="59" value="0" style="width:70px;" class="form-input" placeholder="Soniya">
+                            <input class="form-input" type="text" name="duration" id="duration" value="00:30:00" readonly style="flex:1;min-width:140px;background:rgba(0,0,0,0.15);">
+                        </div>
+                        <div class="dp-buttons" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px;">
+                            <button type="button" class="preset-btn" data-preset="00:10:00" style="padding:4px 10px;border:1px solid #5a6cfa;background:#3143c7;color:#fff;border-radius:6px;font-size:0.8rem;">10m</button>
+                            <button type="button" class="preset-btn" data-preset="00:15:00" style="padding:4px 10px;border:1px solid #5a6cfa;background:#3143c7;color:#fff;border-radius:6px;font-size:0.8rem;">15m</button>
+                            <button type="button" class="preset-btn" data-preset="00:30:00" style="padding:4px 10px;border:1px solid #5a6cfa;background:#3143c7;color:#fff;border-radius:6px;font-size:0.8rem;">30m</button>
+                            <button type="button" class="preset-btn" data-preset="00:45:00" style="padding:4px 10px;border:1px solid #5a6cfa;background:#3143c7;color:#fff;border-radius:6px;font-size:0.8rem;">45m</button>
+                            <button type="button" class="preset-btn" data-preset="01:00:00" style="padding:4px 10px;border:1px solid #5a6cfa;background:#3143c7;color:#fff;border-radius:6px;font-size:0.8rem;">1 soat</button>
+                            <button type="button" class="preset-btn" data-preset="01:30:00" style="padding:4px 10px;border:1px solid #5a6cfa;background:#3143c7;color:#fff;border-radius:6px;font-size:0.8rem;">1:30</button>
+                        </div>
+                        <small style="color:#bbb;display:block;font-size:0.75rem;">Maydonlarni o'zgartiring yoki tez tanlash tugmalaridan foydalaning.</small>
+                    </div>
+                </div>
+                <script>
+                // Duration builder
+                (function(){
+                    const h = document.getElementById('dur_hours');
+                    const m = document.getElementById('dur_minutes');
+                    const s = document.getElementById('dur_seconds');
+                    const out = document.getElementById('duration');
+                    function pad(v){return String(Math.max(0, Math.min(99, parseInt(v||0)))).padStart(2,'0');}
+                    function clamp(){
+                        if(parseInt(h.value)>23) h.value=23; if(parseInt(h.value)<0||!h.value) h.value=0;
+                        if(parseInt(m.value)>59) m.value=59; if(parseInt(m.value)<0||!m.value) m.value=0;
+                        if(parseInt(s.value)>59) s.value=59; if(parseInt(s.value)<0||!s.value) s.value=0;
+                    }
+                    function update(){
+                        clamp();
+                        out.value = `${pad(h.value)}:${pad(m.value)}:${pad(s.value)}`;
+                    }
+                    [h,m,s].forEach(el=>el.addEventListener('input', update));
+                    document.querySelectorAll('.preset-btn[data-preset]').forEach(btn=>{
+                        btn.addEventListener('click',()=>{
+                            const parts = btn.dataset.preset.split(':');
+                            if(parts.length===3){h.value=parseInt(parts[0]);m.value=parseInt(parts[1]);s.value=parseInt(parts[2]);update();}
+                        });
+                    });
+                    update();
+                })();
+                </script>
+
+                <button type="submit" class="submit-btn">✅ Test Yaratish</button>
+            </form>
+            
+            <a href="/api/controller-panel/dashboard/" class="back-link">
+                <span>⬅️</span>
+                <span>Panelga Qaytish</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

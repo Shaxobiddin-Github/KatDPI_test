@@ -1,0 +1,493 @@
+{% extends 'base.html' %}
+{% load dict_extras custom_filters %}
+{% block content %}
+<div class="container-fluid mt-4">
+  <!-- Header Section -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card border-0 shadow-sm bg-gradient" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+        <div class="card-body text-white">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h2 class="mb-1"><i class="fas fa-chart-bar me-3"></i>{{ test.title }}</h2>
+              <p class="mb-0 opacity-75"><i class="fas fa-users me-2"></i>Qatnashchilar statistikasi • {{ topic.title }}</p>
+            </div>
+            <div>
+              <a href="/api/topic-panel/{{ topic.id }}/manage/" class="btn btn-light btn-lg">
+                <i class="fas fa-arrow-left me-2"></i>Orqaga
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if rows %}
+  <!-- Statistics Cards -->
+  <div class="row mb-4">
+    <div class="col-md-3">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body text-center">
+          <div class="d-flex align-items-center justify-content-center mb-2">
+            <div class="bg-primary bg-opacity-10 rounded-circle p-3">
+              <i class="fas fa-users fa-2x text-primary"></i>
+            </div>
+          </div>
+          <h3 class="fw-bold text-primary mb-1">{{ stats.total_participants }}</h3>
+          <p class="text-muted mb-0">Jami qatnashchilar</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body text-center">
+          <div class="d-flex align-items-center justify-content-center mb-2">
+            <div class="bg-success bg-opacity-10 rounded-circle p-3">
+              <i class="fas fa-check-circle fa-2x text-success"></i>
+            </div>
+          </div>
+          <h3 class="fw-bold text-success mb-1">{{ stats.passed_count }}</h3>
+          <p class="text-muted mb-0">O'tgan talabalar ({{ stats.pass_rate }}%)</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body text-center">
+          <div class="d-flex align-items-center justify-content-center mb-2">
+            <div class="bg-info bg-opacity-10 rounded-circle p-3">
+              <i class="fas fa-percentage fa-2x text-info"></i>
+            </div>
+          </div>
+          <h3 class="fw-bold text-info mb-1">{{ stats.average_percent }}%</h3>
+          <p class="text-muted mb-0">O'rtacha natija</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body text-center">
+          <div class="d-flex align-items-center justify-content-center mb-2">
+            <div class="bg-warning bg-opacity-10 rounded-circle p-3">
+              <i class="fas fa-question-circle fa-2x text-warning"></i>
+            </div>
+          </div>
+          <h3 class="fw-bold text-warning mb-1">{{ stats.total_questions }}</h3>
+          <p class="text-muted mb-0">Jami savollar</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  <!-- Main Results Table -->
+  <div class="card border-0 shadow-sm">
+    <div class="card-header bg-white border-bottom-0 py-3">
+      <div class="d-flex justify-content-between align-items-center">
+        <h5 class="mb-0 fw-semibold">
+          <i class="fas fa-table me-2 text-primary"></i>Umumiy natijalar
+        </h5>
+        <div class="btn-group btn-group-sm" role="group">
+          <button type="button" class="btn btn-outline-primary active" onclick="sortTable(0)">
+            <i class="fas fa-sort-numeric-down me-1"></i>Reyting
+          </button>
+          <button type="button" class="btn btn-outline-primary" onclick="sortTable(1)">
+            <i class="fas fa-sort-alpha-down me-1"></i>Ism
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover mb-0" id="resultsTable">
+          <thead class="table-light">
+            <tr>
+              <th class="fw-semibold px-4">#</th>
+              <th class="fw-semibold">
+                <i class="fas fa-user me-1"></i>Talaba
+              </th>
+              <th class="fw-semibold">
+                <i class="fas fa-users me-1"></i>Guruh
+              </th>
+              <th class="fw-semibold text-center">
+                <i class="fas fa-check me-1 text-success"></i>To'g'ri
+              </th>
+              <th class="fw-semibold text-center">
+                <i class="fas fa-times me-1 text-danger"></i>Noto'g'ri
+              </th>
+              <th class="fw-semibold text-center">
+                <i class="fas fa-percentage me-1"></i>Natija
+              </th>
+              <th class="fw-semibold text-center">
+                <i class="fas fa-trophy me-1"></i>Ball
+              </th>
+              <th class="fw-semibold text-center">
+                <i class="fas fa-clock me-1"></i>Tugagan vaqt
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if rows %}
+              {% for r in rows %}
+              <tr class="{% if r.percent >= 85 %}table-success{% elif r.percent >= 70 %}table-info{% elif r.percent >= 56 %}table-warning{% else %}table-danger{% endif %}">
+                <td class="px-4 fw-bold">
+                  {% if forloop.counter == 1 %}
+                    <i class="fas fa-crown text-warning me-2"></i>
+                  {% elif forloop.counter == 2 %}
+                    <i class="fas fa-medal text-secondary me-2"></i>
+                  {% elif forloop.counter == 3 %}
+                    <i class="fas fa-award text-warning me-2"></i>
+                  {% endif %}
+                  {{ forloop.counter }}
+                </td>
+                <td class="fw-semibold">{{ r.student_name }}</td>
+                <td><span class="badge bg-light text-dark">{{ r.group_name }}</span></td>
+                <td class="text-center">
+                  <span class="badge bg-success">{{ r.correct }}</span>
+                </td>
+                <td class="text-center">
+                  <span class="badge bg-danger">{{ r.incorrect }}</span>
+                </td>
+                <td class="text-center">
+                  <div class="progress" style="height: 20px; width: 80px; margin: 0 auto;">
+                    <div class="progress-bar {% if r.percent >= 85 %}bg-success{% elif r.percent >= 70 %}bg-info{% elif r.percent >= 56 %}bg-warning{% else %}bg-danger{% endif %}" 
+                         role="progressbar" 
+                         style="width: {{ r.percent }}%">
+                      {{ r.percent }}%
+                    </div>
+                  </div>
+                </td>
+                <td class="text-center fw-bold">{{ r.score }}</td>
+                <td class="text-center text-muted">{{ r.finished_at|date:'M d, H:i' }}</td>
+              </tr>
+              {% endfor %}
+            {% else %}
+              <tr>
+                <td colspan="8" class="text-center py-5">
+                  <div class="text-muted">
+                    <i class="fas fa-inbox fa-3x mb-3 d-block"></i>
+                    <h5>Hali yakunlangan urinish yo'q</h5>
+                    <p>Talabalar testni yakunlaganlaridan so'ng natijalar bu yerda ko'rinadi</p>
+                  </div>
+                </td>
+              </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  {% if rows and question_meta %}
+  <!-- Detailed Analysis Matrix -->
+  <div class="mt-5">
+    <div class="card border-0 shadow-sm">
+      <div class="card-header bg-gradient text-white" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+        <div class="d-flex justify-content-between align-items-center">
+          <h5 class="mb-0 fw-semibold">
+            <i class="fas fa-microscope me-2"></i>Batafsil tahlil matriksi
+          </h5>
+          <div>
+            <button class="btn btn-light btn-sm me-2" type="button" data-bs-toggle="collapse" data-bs-target="#matrixWrap" aria-expanded="false">
+              <i class="fas fa-eye me-1"></i>Ko'rsat/Yashir
+            </button>
+            <span class="badge bg-light text-dark">{{ question_meta|length }} savol • {{ rows|length }} talaba</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-body p-0">
+        {% if too_many %}
+          <div class="alert alert-warning border-0 rounded-0 m-0">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            Savollar yoki talabalar juda ko'p. Matritsa qisqartirildi ({{ question_meta|length }} savol, {{ rows|length }} talaba).
+          </div>
+        {% endif %}
+        <div class="collapse" id="matrixWrap">
+          <!-- Detailed Question Breakdown -->
+          <div class="p-3 border-bottom">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h6 class="fw-semibold mb-0"><i class="fas fa-list-alt me-2"></i>Savollar va javoblar</h6>
+              <button class="btn btn-outline-primary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#questionDetails" aria-expanded="false">
+                <i class="fas fa-info-circle me-1"></i>Batafsil ko'rish
+              </button>
+            </div>
+            <div class="collapse" id="questionDetails">
+              <div class="row g-3">
+                {% for q in question_meta %}
+                <div class="col-12">
+                  <div class="card border-start border-primary border-4">
+                    <div class="card-body p-3">
+                      <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h6 class="fw-bold text-primary mb-0">
+                          Q{{ forloop.counter }}. {{ q.text_short }}
+                        </h6>
+                        <span class="badge {% if q.is_multi %}bg-warning{% else %}bg-info{% endif %}">
+                          {% if q.is_multi %}Ko'p tanlovli{% else %}Bitta tanlovli{% endif %}
+                        </span>
+                      </div>
+                      <div class="row g-2">
+                        {% for option in q.options_data %}
+                        <div class="col-md-6">
+                          <div class="d-flex align-items-center p-2 rounded {% if option.is_correct %}bg-success bg-opacity-10 border border-success{% else %}bg-light{% endif %}">
+                            <span class="badge {% if option.is_correct %}bg-success{% else %}bg-secondary{% endif %} me-2">{{ option.letter }}</span>
+                            <span class="small flex-grow-1">
+                              {{ option.text|truncatechars:50 }}
+                              {% if option.is_correct %}
+                                <i class="fas fa-check text-success ms-1" title="To'g'ri javob"></i>
+                              {% endif %}
+                            </span>
+                          </div>
+                        </div>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+
+          <!-- Question Statistics Header -->
+          {% if question_summaries %}
+          <div class="p-3 bg-light border-bottom">
+            <h6 class="fw-semibold mb-3"><i class="fas fa-chart-line me-2"></i>Savollar bo'yicha statistika</h6>
+            <div class="row g-2">
+              {% for s in question_summaries %}
+              <div class="col-auto">
+                <div class="card border {% if s.percent_correct >= 80 %}border-success{% elif s.percent_correct >= 60 %}border-warning{% else %}border-danger{% endif %}" style="min-width: 120px;">
+                  <div class="card-body p-2 text-center">
+                    <div class="small fw-bold">Q{{ forloop.counter }}</div>
+                    <div class="progress mb-1" style="height: 6px;">
+                      <div class="progress-bar {% if s.percent_correct >= 80 %}bg-success{% elif s.percent_correct >= 60 %}bg-warning{% else %}bg-danger{% endif %}" 
+                           style="width: {{ s.percent_correct }}%"></div>
+                    </div>
+                    <div class="small">{{ s.percent_correct }}%</div>
+                    <div class="text-muted" style="font-size: 0.7rem;">{{ s.correct }}/{{ s.answered }}</div>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+
+          <!-- Answer Matrix -->
+          <div class="table-responsive" style="max-height:600px; overflow:auto;">
+            <table class="table table-sm table-bordered align-middle mb-0">
+              <thead class="table-dark sticky-top">
+                <tr>
+                  <th style="min-width:200px; position: sticky; left: 0; z-index: 10;" class="bg-dark">
+                    <i class="fas fa-user me-2"></i>Talaba
+                  </th>
+                  {% for q in question_meta %}
+                    <th class="text-center px-2" 
+                        title="Savol: {{ q.text_short }}&#10;Turi: {% if q.is_multi %}Ko'p tanlovli{% else %}Bitta tanlovli{% endif %}">
+                      <div class="fw-bold">Q{{ forloop.counter }}</div>
+                      <div class="small opacity-75">{{ q.option_count }} variant</div>
+                    </th>
+                  {% endfor %}
+                </tr>
+              </thead>
+              <tbody>
+                {% for r in rows %}
+                  <tr class="{% cycle 'table-light' '' %}">
+                    <td class="fw-semibold sticky-left bg-white border-end" style="position: sticky; left: 0; z-index: 5;">
+                      <div class="d-flex align-items-center">
+                        <div class="me-2">
+                          {% if forloop.counter <= 3 %}
+                            <i class="fas fa-star text-warning"></i>
+                          {% endif %}
+                        </div>
+                        <div>
+                          <div class="fw-bold">{{ r.student_name }}</div>
+                          <div class="small text-muted">{{ r.percent }}%</div>
+                        </div>
+                      </div>
+                    </td>
+                    {% for q in question_meta %}
+                      {% if r.answers|get_item:q.id %}
+                        {% with ans=r.answers|get_item:q.id %}
+                          {% with sel_ids=ans.selected_option_ids %}
+                            <td class="text-center p-2 position-relative" 
+                                style="{% if ans.is_correct %}background: linear-gradient(135deg, #28a745, #20c997);{% else %}background: linear-gradient(135deg, #dc3545, #fd7e14);{% endif %} color: white; font-weight: bold; border: 2px solid {% if ans.is_correct %}#28a745{% else %}#dc3545{% endif %};">
+                              <div class="d-flex justify-content-center align-items-center" style="min-height: 40px;">
+                                {% for opt_id, letter in q.option_sequence %}
+                                  {% if opt_id in sel_ids %}
+                                    <span class="badge bg-white text-dark me-1 shadow-sm">{{ letter }}</span>
+                                  {% endif %}
+                                {% endfor %}
+                              </div>
+                              {% if ans.is_correct %}
+                                <i class="fas fa-check-circle position-absolute top-0 start-0 m-1" style="font-size: 0.7rem;"></i>
+                              {% else %}
+                                <i class="fas fa-times-circle position-absolute top-0 start-0 m-1" style="font-size: 0.7rem;"></i>
+                              {% endif %}
+                            </td>
+                          {% endwith %}
+                        {% endwith %}
+                      {% else %}
+                        <td class="text-center p-2 bg-secondary bg-opacity-25 text-muted" style="min-height: 40px;">
+                          <i class="fas fa-minus-circle" title="Javob berilmagan"></i>
+                        </td>
+                      {% endif %}
+                    {% endfor %}
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          
+          <!-- Legend -->
+          <div class="p-3 bg-light border-top">
+            <div class="row align-items-center">
+              <div class="col-md-8">
+                <h6 class="fw-semibold mb-2"><i class="fas fa-info-circle me-2"></i>Belgilar izohı</h6>
+                <div class="d-flex flex-wrap gap-3">
+                  <div class="d-flex align-items-center">
+                    <div class="bg-success text-white px-2 py-1 rounded me-2 small">A</div>
+                    <span class="small">To'g'ri javob</span>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <div class="bg-danger text-white px-2 py-1 rounded me-2 small">B</div>
+                    <span class="small">Noto'g'ri javob</span>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <i class="fas fa-minus-circle text-muted me-2"></i>
+                    <span class="small">Javob berilmagan</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 text-end">
+                <button class="btn btn-outline-primary btn-sm me-2">
+                  <i class="fas fa-download me-1"></i>Excel yuklab olish
+                </button>
+                <button class="btn btn-outline-secondary btn-sm">
+                  <i class="fas fa-print me-1"></i>Chop etish
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+<style>
+  .sticky-left {
+    position: sticky !important;
+    left: 0;
+    z-index: 5;
+  }
+  
+  .card-header.bg-gradient {
+    border: none;
+  }
+  
+  .progress-bar {
+    transition: width 0.3s ease;
+  }
+  
+  .table-hover tbody tr:hover {
+    background-color: rgba(0,123,255,.075) !important;
+    transform: scale(1.01);
+    transition: all 0.2s ease;
+  }
+  
+  .badge {
+    font-size: 0.8em;
+  }
+  
+  /* Tooltip improvements */
+  [title] {
+    cursor: help;
+  }
+  
+  /* Animation for cards */
+  .card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+  }
+</style>
+
+<script>
+  // Table sorting functionality
+  function sortTable(columnIndex) {
+    const table = document.getElementById('resultsTable');
+    const tbody = table.querySelector('tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    
+    // Remove active class from all buttons
+    document.querySelectorAll('.btn-group .btn').forEach(btn => btn.classList.remove('active'));
+    
+    // Add active class to clicked button
+    event.target.closest('button').classList.add('active');
+    
+    rows.sort((a, b) => {
+      let aVal, bVal;
+      
+      if (columnIndex === 0) { // Numeric ranking
+        aVal = parseInt(a.cells[0].textContent.replace(/[^\d]/g, ''));
+        bVal = parseInt(b.cells[0].textContent.replace(/[^\d]/g, ''));
+        return aVal - bVal;
+      } else if (columnIndex === 1) { // Alphabetical name
+        aVal = a.cells[1].textContent.trim().toLowerCase();
+        bVal = b.cells[1].textContent.trim().toLowerCase();
+        return aVal.localeCompare(bVal);
+      }
+    });
+    
+    // Re-append sorted rows
+    rows.forEach(row => tbody.appendChild(row));
+    
+    // Update ranking numbers if sorting by name
+    if (columnIndex === 1) {
+      rows.forEach((row, index) => {
+        const rankCell = row.cells[0];
+        // Remove existing icons
+        rankCell.innerHTML = rankCell.innerHTML.replace(/<i[^>]*><\/i>/g, '');
+        // Update rank number
+        rankCell.innerHTML = (index + 1) + rankCell.innerHTML.substring(rankCell.innerHTML.indexOf(' ') + 1);
+      });
+    }
+  }
+  
+  // Initialize tooltips if Bootstrap is available
+  document.addEventListener('DOMContentLoaded', function() {
+    if (typeof bootstrap !== 'undefined') {
+      const tooltipTriggerList = [].slice.call(document.querySelectorAll('[title]'));
+      const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+      });
+    }
+    
+    // Animate progress bars on load
+    setTimeout(() => {
+      document.querySelectorAll('.progress-bar').forEach(bar => {
+        const width = bar.style.width;
+        bar.style.width = '0%';
+        setTimeout(() => {
+          bar.style.width = width;
+        }, 100);
+      });
+    }, 500);
+  });
+  
+  // Print functionality
+  function printResults() {
+    window.print();
+  }
+  
+  // Excel export placeholder (would need backend implementation)
+  function exportToExcel() {
+    alert('Excel eksport funksiyasi backend tomonida amalga oshirilishi kerak');
+  }
+</script>
+
+{% endblock %}

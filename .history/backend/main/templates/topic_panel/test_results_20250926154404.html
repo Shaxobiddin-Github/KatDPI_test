@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h4>Natijalar: {{ test.title }}</h4>
+  <table class="table table-sm table-striped">
+    <thead>
+      <tr><th>Talaba</th><th>Ball</th><th>%</th><th>Boshlagan</th><th>Tugatgan</th><th>Holat</th></tr>
+    </thead>
+    <tbody>
+      {% for a in attempts %}
+        <tr>
+          <td>{{ a.student.username }}</td>
+          <td>{{ a.total_score }} / {{ test.total_score }}</td>
+          <td>
+            {% if test.total_score %}
+              {% widthratio a.total_score test.total_score 100 as pct %}
+              {{ pct }}%
+            {% endif %}
+          </td>
+          <td>{{ a.created_at|date:"Y-m-d H:i" }}</td>
+          <td>{% if a.finished_at %}{{ a.finished_at|date:"Y-m-d H:i" }}{% else %}-{% endif %}</td>
+          <td>{% if a.completed %}<span class="badge bg-success">Yakunlangan</span>{% else %}<span class="badge bg-warning text-dark">Jarayonda</span>{% endif %}</td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="6" class="text-center text-muted">Hali urinish yo'q</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

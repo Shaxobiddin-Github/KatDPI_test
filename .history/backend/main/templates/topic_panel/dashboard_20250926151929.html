@@ -1,0 +1,378 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head_extra %}
+<style>
+  .teacher-dashboard {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    margin: -1.5rem -15px 0 -15px;
+    padding: 0;
+  }
+  .dashboard-header {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 2rem 0;
+    color: white;
+  }
+  .dashboard-title {
+    font-size: 2.8rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  .dashboard-subtitle {
+    text-align: center;
+    font-size: 1.1rem;
+    opacity: 0.9;
+    font-weight: 300;
+  }
+  .main-content {
+    padding: 2rem 0;
+  }
+  .create-form-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  .form-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .form-control-modern {
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 0.8rem 1rem;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    background: #f8fafc;
+  }
+  .form-control-modern:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    background: white;
+    outline: none;
+  }
+  .btn-create {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border: none;
+    border-radius: 12px;
+    padding: 0.8rem 1.5rem;
+    color: white;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .btn-create:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+    color: white;
+  }
+  .topics-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  .topics-header {
+    background: linear-gradient(135deg, #4a5568, #2d3748);
+    color: white;
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .topics-header h4 {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
+  .topics-table {
+    margin: 0;
+  }
+  .topics-table thead th {
+    background: #f8fafc;
+    border: none;
+    padding: 1.2rem 1.5rem;
+    font-weight: 600;
+    color: #4a5568;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.85rem;
+  }
+  .topics-table tbody tr {
+    border: none;
+    transition: all 0.3s ease;
+  }
+  .topics-table tbody tr:hover {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+    transform: scale(1.01);
+  }
+  .topics-table tbody td {
+    padding: 1.2rem 1.5rem;
+    border: none;
+    vertical-align: middle;
+    font-size: 0.95rem;
+  }
+  .topic-id {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    display: inline-block;
+    min-width: 40px;
+    text-align: center;
+  }
+  .topic-title a {
+    color: #2d3748;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+  }
+  .topic-title a:hover {
+    color: #667eea;
+    text-decoration: underline;
+  }
+  .stat-badge {
+    background: #e2e8f0;
+    color: #4a5568;
+    padding: 0.4rem 0.8rem;
+    border-radius: 15px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-width: 50px;
+    justify-content: center;
+  }
+  .stat-badge.has-items {
+    background: linear-gradient(135deg, #48bb78, #38a169);
+    color: white;
+  }
+  .video-badge {
+    padding: 0.4rem 0.8rem;
+    border-radius: 15px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .video-yes {
+    background: linear-gradient(135deg, #48bb78, #38a169);
+    color: white;
+  }
+  .video-no {
+    background: #fed7d7;
+    color: #e53e3e;
+  }
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #718096;
+  }
+  .empty-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+  }
+  .empty-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  .loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+  .loading-overlay.show {
+    opacity: 1;
+    visibility: visible;
+  }
+  .spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid #e2e8f0;
+    border-left: 4px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  .success-message {
+    background: linear-gradient(135deg, #48bb78, #38a169);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    display: none;
+    align-items: center;
+    gap: 0.8rem;
+  }
+</style>
+{% endblock %}
+{% block content %}
+<div class="teacher-dashboard">
+  <div class="dashboard-header">
+    <div class="container">
+      <h1 class="dashboard-title">
+        <i class="fas fa-chalkboard-teacher me-3"></i>O'qituvchi Paneli
+      </h1>
+      <p class="dashboard-subtitle">Mavzulashtirilgan testlarni boshqarish tizimi</p>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div class="container">
+      <div id="successMessage" class="success-message">
+        <i class="fas fa-check-circle"></i>
+        <span>Mavzu muvaffaqiyatli qo'shildi!</span>
+      </div>
+
+      <div class="create-form-card">
+        <h3 class="form-title">
+          <i class="fas fa-plus-circle"></i>
+          Yangi Mavzu Qo'shish
+        </h3>
+        <form id="createTopicForm" class="row g-3">
+          <div class="col-md-3">
+            <label class="form-label fw-semibold">Sarlavha</label>
+            <input name="title" class="form-control form-control-modern" placeholder="Mavzu sarlavhasini kiriting..." required>
+          </div>
+          <div class="col-md-2">
+            <label class="form-label fw-semibold">Subject ID</label>
+            <input name="subject_id" class="form-control form-control-modern" placeholder="1" type="number" required>
+          </div>
+          <div class="col-md-2">
+            <label class="form-label fw-semibold">Group ID</label>
+            <input name="group_id" class="form-control form-control-modern" placeholder="1" type="number" required>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label fw-semibold">Izoh (ixtiyoriy)</label>
+            <input name="description" class="form-control form-control-modern" placeholder="Qo'shimcha ma'lumot...">
+          </div>
+          <div class="col-md-1 d-flex align-items-end">
+            <button type="submit" class="btn btn-create w-100">
+              <i class="fas fa-paper-plane me-2"></i>Qo'shish
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="topics-card">
+        <div class="topics-header">
+          <i class="fas fa-list"></i>
+          <h4>Mavzular Ro'yxati</h4>
+        </div>
+        <div class="table-responsive">
+          <table class="table topics-table" id="topicsTable">
+            <thead>
+              <tr>
+                <th><i class="fas fa-hashtag me-2"></i>ID</th>
+                <th><i class="fas fa-book me-2"></i>Sarlavha</th>
+                <th><i class="fas fa-question-circle me-2"></i>Savollar</th>
+                <th><i class="fas fa-file-alt me-2"></i>Testlar</th>
+                <th><i class="fas fa-video me-2"></i>Video</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for t in topics %}
+              <tr data-id="{{ t.id }}">
+                <td><span class="topic-id">{{ t.id }}</span></td>
+                <td class="topic-title">
+                  <a href="{% url 'topic:topic_manage' t.id %}">{{ t.title }}</a>
+                </td>
+                <td>
+                  <span class="stat-badge {% if t.questions.count > 0 %}has-items{% endif %}">
+                    <i class="fas fa-question"></i>
+                    {{ t.questions.count }}
+                  </span>
+                </td>
+                <td>
+                  <span class="stat-badge {% if t.tests.count > 0 %}has-items{% endif %}">
+                    <i class="fas fa-clipboard-list"></i>
+                    {{ t.tests.count }}
+                  </span>
+                </td>
+                <td>
+                  {% if t.intro_video %}
+                    <span class="video-badge video-yes">
+                      <i class="fas fa-check"></i>Mavjud
+                    </span>
+                  {% else %}
+                    <span class="video-badge video-no">
+                      <i class="fas fa-times"></i>Yo'q
+                    </span>
+                  {% endif %}
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="5">
+                  <div class="empty-state">
+                    <div class="empty-icon">
+                      <i class="fas fa-folder-open"></i>
+                    </div>
+                    <h5 class="empty-title">Mavzular mavjud emas</h5>
+                    <p>Yangi mavzu qo'shish uchun yuqoridagi formadan foydalaning.</p>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="loadingOverlay" class="loading-overlay">
+  <div class="spinner"></div>
+</div>
+
+<!-- FontAwesome icons -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+<script>
+const form = document.getElementById('createTopicForm');
+form.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const fd = new FormData(form);
+  const resp = await fetch('{% url 'topic:create_topic' %}', {method:'POST', headers:{'X-CSRFToken': getCsrf()}, body: fd});
+  const data = await resp.json();
+  if(data.id){
+    location.reload();
+  } else { alert(data.error || 'Xato'); }
+});
+function getCsrf(){
+  return document.cookie.split('; ').find(r=>r.startsWith('csrftoken='))?.split('=')[1];
+}
+</script>
+{% endblock %}

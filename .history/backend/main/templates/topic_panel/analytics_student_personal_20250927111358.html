@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-4 personal-analytics">
+  <div class="d-flex flex-wrap gap-2 align-items-center mb-3">
+    <a href="/api/topic-panel/student/panel/" class="btn btn-outline-secondary"><i class="fas fa-arrow-left me-1"></i>Orqaga</a>
+    <h3 class="mb-0 fw-bold">Shaxsiy statistika – {{ topic.title }}</h3>
+    {% if personal_stats.total_attempts %}
+      <span class="badge bg-primary-subtle text-primary ms-auto">{{ personal_stats.total_attempts }} urinish</span>
+    {% endif %}
+  </div>
+
+  <form method="get" class="row g-2 mb-4 filter-bar">
+    <div class="col-auto"><input type="date" name="start" value="{{ start_filter }}" class="form-control form-control-sm"></div>
+    <div class="col-auto"><input type="date" name="end" value="{{ end_filter }}" class="form-control form-control-sm"></div>
+    <div class="col-auto"><button class="btn btn-sm btn-primary"><i class="fas fa-filter me-1"></i>Filtrlash</button></div>
+    {% if start_filter or end_filter %}
+      <div class="col-auto"><a href="?" class="btn btn-sm btn-outline-secondary"><i class="fas fa-times me-1"></i>Tozalash</a></div>
+    {% endif %}
+  </form>
+
+  {% if personal_stats.total_attempts %}
+  <!-- KPI Cards -->
+  <div class="row g-3 mb-4 kpi-row">
+    <div class="col-6 col-md-3">
+      <div class="kpi shadow-sm">
+        <div class="kpi-icon bg-primary"><i class="fas fa-layer-group"></i></div>
+        <div>
+          <div class="kpi-value">{{ personal_stats.total_attempts }}</div>
+          <div class="kpi-label">Urinishlar</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="kpi shadow-sm">
+        <div class="kpi-icon bg-success"><i class="fas fa-chart-line"></i></div>
+        <div>
+          <div class="kpi-value">{{ personal_stats.avg_percent }}%</div>
+          <div class="kpi-label">O'rtacha %</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="kpi shadow-sm">
+        <div class="kpi-icon bg-warning"><i class="fas fa-trophy"></i></div>
+        <div>
+          <div class="kpi-value">{{ personal_stats.best_percent }}%</div>
+          <div class="kpi-label">Eng yaxshi %</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="kpi shadow-sm">
+        <div class="kpi-icon bg-info"><i class="fas fa-passport"></i></div>
+        <div>
+          <div class="kpi-value">{{ personal_stats.pass_rate }}%</div>
+          <div class="kpi-label">Pass rate</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Attempts Table -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h5 class="mb-0"><i class="fas fa-table me-2 text-primary"></i>Natijalar</h5>
+      <small class="text-muted">Umumiy baholash jadvali</small>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover table-borderless align-middle mb-0 attempts-table">
+        <thead class="table-light">
+          <tr>
+            <th>#</th><th>Test</th><th class="text-center">Ball</th><th style="width:160px">Foiz</th><th class="text-center">To'g'ri/Jami</th><th>Vaqt</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in items %}
+          <tr>
+            <td class="fw-semibold">{{ forloop.counter }}</td>
+            <td>{{ i.test_title }}</td>
+            <td class="text-center"><span class="badge {% if i.percent >= personal_stats.pass_threshold %}bg-success{% else %}bg-danger{% endif %}">{{ i.score }}</span></td>
+            <td>
+              <div class="progress progress-thin">
+                <div class="progress-bar {% if i.percent >= 85 %}bg-success{% elif i.percent >= 70 %}bg-info{% elif i.percent >= personal_stats.pass_threshold %}bg-warning{% else %}bg-danger{% endif %}" style="width: {{ i.percent }}%">{{ i.percent }}%</div>
+              </div>
+            </td>
+            <td class="text-center small"><span class="text-success fw-semibold">{{ i.correct }}</span>/<span class="text-muted">{{ i.total_q }}</span></td>
+            <td class="small text-muted">{{ i.finished_at|date:'Y-m-d H:i' }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Chart -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-header"><h6 class="mb-0"><i class="fas fa-chart-area me-2 text-primary"></i>Natijalar dinamikasi</h6></div>
+    <div class="card-body">
+      <canvas id="statsChart" height="170"></canvas>
+    </div>
+  </div>
+  {% else %}
+    <div class="alert alert-info"><i class="fas fa-info-circle me-1"></i> Hali yakunlangan testlaringiz yo'q.</div>
+  {% endif %}
+</div>
+
+<style>
+  .personal-analytics .kpi{display:flex;gap:12px;align-items:center;border-radius:12px;padding:12px 14px;background:var(--bs-body-bg);position:relative;overflow:hidden}
+  .personal-analytics .kpi::after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,255,255,.18),rgba(255,255,255,0));pointer-events:none}
+  .kpi-icon{width:46px;height:46px;display:flex;align-items:center;justify-content:center;color:#fff;border-radius:10px;font-size:1.1rem;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+  .kpi-value{font-size:1.4rem;font-weight:700;line-height:1}
+  .kpi-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.5px;font-weight:600;opacity:.7}
+  .progress-thin{height:20px;background:rgba(0,0,0,.05);border-radius:30px;overflow:hidden}
+  .progress-thin .progress-bar{font-size:.65rem;font-weight:600}
+  .attempts-table tbody tr:hover{background:rgba(99,102,241,.08)!important}
+  @media (max-width:768px){.attempts-table thead{display:none}.attempts-table tbody tr{display:block;margin-bottom:.75rem;border:1px solid #e5e7eb;border-radius:8px;padding:.5rem .75rem}.attempts-table td{display:flex;justify-content:space-between;border:0!important;padding:.25rem .25rem}.attempts-table td:first-child{font-weight:600}}
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{const raw={{ items|safe }};if(!raw||!raw.length)return;const labels=raw.map(r=>r.test_title);const perc=raw.map(r=>r.percent);const scores=raw.map(r=>r.score);const ctx=document.getElementById('statsChart').getContext('2d');new Chart(ctx,{data:{labels,datasets:[{type:'bar',label:'Ball',data:scores,backgroundColor:'rgba(16,185,129,0.55)',borderColor:'#10b981',borderWidth:1,yAxisID:'yScore'},{type:'line',label:'Foiz %',data:perc,borderColor:'#6366f1',backgroundColor:'rgba(99,102,241,0.25)',borderWidth:2,tension:.35,pointRadius:4,pointBackgroundColor:'#6366f1',yAxisID:'yPercent'}]},options:{maintainAspectRatio:false,responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{labels:{font:{size:11}}},tooltip:{callbacks:{label:e=>e.dataset.label+': '+e.formattedValue+(e.dataset.yAxisID==='yPercent'?'%':'')}}},scales:{yPercent:{type:'linear',position:'right',beginAtZero:true,max:100,grid:{drawOnChartArea:false},ticks:{callback:v=>v+'%'}},yScore:{type:'linear',position:'left',beginAtZero:true,suggestedMax:Math.max(...scores,1)},x:{ticks:{autoSkip:false,maxRotation:50,minRotation:0}}}});});
+</script>
+{% endblock %}

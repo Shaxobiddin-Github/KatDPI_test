@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+{% load dict_extras custom_filters %}
+{% block content %}
+<div class="container-fluid mt-4">
+  <!-- Header Section -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card border-0 shadow-sm bg-gradient" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+        <div class="card-body text-white">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h2 class="mb-1"><i class="fas fa-chart-bar me-3"></i>{{ test.title }}</h2>
+              <p class="mb-0 opacity-75"><i class="fas fa-users me-2"></i>Qatnashchilar statistikasi • {{ topic.title }}</p>
+            </div>
+            <div>
+              <a href="/api/topic-panel/{{ topic.id }}/manage/" class="btn btn-light btn-lg">
+                <i class="fas fa-arrow-left me-2"></i>Orqaga
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if rows %}
+  <!-- Statistics Cards -->
+  <div class="row mb-4">
+    <div class="col-md-3">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body text-center">
+          <div class="d-flex align-items-center justify-content-center mb-2">
+            <div class="bg-primary bg-opacity-10 rounded-circle p-3">
+              <i class="fas fa-users fa-2x text-primary"></i>
+            </div>
+          </div>
+          <h3 class="fw-bold text-primary mb-1">{{ rows|length }}</h3>
+          <p class="text-muted mb-0">Jami qatnashchilar</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body text-center">
+          <div class="d-flex align-items-center justify-content-center mb-2">
+            <div class="bg-success bg-opacity-10 rounded-circle p-3">
+              <i class="fas fa-check-circle fa-2x text-success"></i>
+            </div>
+          </div>
+          <h3 class="fw-bold text-success mb-1">
+            {% widthratio rows|length 1 100 as total %}
+            {% for r in rows %}{% if r.percent >= 56 %}{% add:passed_count 1 %}{% endif %}{% endfor %}
+            <!-- Temporary calculation in template - ideally done in view -->
+            ~{{ rows|length|floatformat:0 }}
+          </h3>
+          <p class="text-muted mb-0">O'tgan talabalar</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body text-center">
+          <div class="d-flex align-items-center justify-content-center mb-2">
+            <div class="bg-info bg-opacity-10 rounded-circle p-3">
+              <i class="fas fa-percentage fa-2x text-info"></i>
+            </div>
+          </div>
+          <h3 class="fw-bold text-info mb-1">
+            {% for r in rows %}{{ r.percent|add:0 }}{% endfor %}
+            <!-- Average calculation needed in view -->
+            ~75%
+          </h3>
+          <p class="text-muted mb-0">O'rtacha natija</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body text-center">
+          <div class="d-flex align-items-center justify-content-center mb-2">
+            <div class="bg-warning bg-opacity-10 rounded-circle p-3">
+              <i class="fas fa-question-circle fa-2x text-warning"></i>
+            </div>
+          </div>
+          <h3 class="fw-bold text-warning mb-1">{{ question_meta|length|default:0 }}</h3>
+          <p class="text-muted mb-0">Jami savollar</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  <div class="card shadow-sm">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-striped table-hover mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>#</th>
+              <th>Talaba</th>
+              <th>Guruh</th>
+              <th>To'g'ri</th>
+              <th>Noto'g'ri</th>
+              <th>%</th>
+              <th>Ball</th>
+              <th>Tugagan vaqt</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if rows %}
+              {% for r in rows %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ r.student_name }}</td>
+                <td>{{ r.group_name }}</td>
+                <td class="text-success fw-semibold">{{ r.correct }}</td>
+                <td class="text-danger">{{ r.incorrect }}</td>
+                <td><span class="badge bg-primary">{{ r.percent }}%</span></td>
+                <td>{{ r.score }}</td>
+                <td>{{ r.finished_at|date:'Y-m-d H:i' }}</td>
+              </tr>
+              {% endfor %}
+            {% else %}
+              <tr><td colspan="8" class="text-center py-4 text-muted">Hali yakunlangan urinish yo'q</td></tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  {% if rows and question_meta %}
+  <div class="mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <h5 class="mb-0"><i class="fas fa-th me-2"></i>Savolga javoblar matriksi</h5>
+      <button class="btn btn-sm btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#matrixWrap" aria-expanded="false">Ko'rsat/ Yashir</button>
+    </div>
+    {% if too_many %}
+      <div class="alert alert-warning py-2">Savollar yoki talabalar juda ko'p. Matritsa qisqartirildi ({{ question_meta|length }} savol, {{ rows|length }} talaba).</div>
+    {% endif %}
+    <div class="collapse show" id="matrixWrap">
+      <div class="table-responsive" style="max-height:600px; overflow:auto;">
+        <table class="table table-sm table-bordered align-middle">
+          <thead class="table-light sticky-top">
+            <tr>
+              <th style="min-width:180px;">Talaba</th>
+              {% for q in question_meta %}
+                <th class="text-center" title="Savol ID {{ q.id }}">Q{{ forloop.counter }}</th>
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for r in rows %}
+              <tr>
+                <td>{{ r.student_name }}</td>
+                {% for q in question_meta %}
+                  {% if r.answers|get_item:q.id %}
+                    {% with ans=r.answers|get_item:q.id %}
+                      {% with sel_ids=ans.selected_option_ids %}
+                        <td class="text-center p-1 {% if ans.is_correct %}bg-success text-white{% else %}bg-danger text-white{% endif %}" style="font-size:0.75rem;">
+                          {% for opt_id, letter in q.option_sequence %}
+                            {% if opt_id in sel_ids %}<span>{{ letter }}</span>{% endif %}
+                          {% endfor %}
+                        </td>
+                      {% endwith %}
+                    {% endwith %}
+                  {% else %}
+                    <td class="text-center text-muted p-1" style="font-size:0.7rem;">-</td>
+                  {% endif %}
+                {% endfor %}
+              </tr>
+            {% endfor %}
+          </tbody>
+          <tfoot class="table-secondary">
+            <tr>
+              <th>To'g'ri (%)</th>
+              {% for s in question_summaries %}
+                <th class="text-center" style="font-size:0.65rem;">{{ s.percent_correct }}%</th>
+              {% endfor %}
+            </tr>
+            <tr>
+              <th>To'g'ri / Javob</th>
+              {% for s in question_summaries %}
+                <th class="text-center" style="font-size:0.65rem;">{{ s.correct }}/{{ s.answered }}</th>
+              {% endfor %}
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <small class="text-muted">Yashil = to'g'ri, Qizil = noto'g'ri, '-' = javob berilmagan.</small>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

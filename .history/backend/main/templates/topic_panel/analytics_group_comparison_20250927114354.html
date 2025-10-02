@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-4">
+  <div class="mb-3">
+    <a href="/api/topic-panel/{{ topic.id }}/manage/" class="btn-back-nav">
+      <span class="icon"><i class="fas fa-arrow-left"></i></span>
+      <span class="label">Orqaga</span>
+    </a>
+  </div>
+  <h3 class="mb-4 fw-bold"><i class="fas fa-layer-group me-2 text-primary"></i>Guruhlar taqqoslash: {{ topic.title }}</h3>
+  {% if rows %}
+  <div class="table-responsive shadow-sm rounded bg-white p-3">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="table-light">
+        <tr>
+          <th>#</th>
+            <th>Guruh</th>
+            <th>Urinishlar</th>
+            <th>Talabalar</th>
+            <th>O'rtacha ball</th>
+            <th>O'rtacha %</th>
+            <th>Eng yuqori ball</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in rows %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ r.group_name }}</td>
+            <td>{{ r.attempts }}</td>
+            <td>{{ r.student_count }}</td>
+            <td><span class="badge bg-primary">{{ r.avg_score }}</span></td>
+            <td><span class="badge bg-info">{{ r.avg_percent }}%</span></td>
+            <td><span class="badge bg-success">{{ r.best_score }}</span></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+    <div class="alert alert-info">Hozircha natijalar yo'q.</div>
+  {% endif %}
+</div>
+<style>
+  .btn-back-nav{display:inline-flex;align-items:center;gap:.55rem;background:linear-gradient(135deg,#f8f9fa,#e9ecef);border:1px solid #dee2e6;color:#343a40;font-weight:600;padding:.55rem 1rem;border-radius:50px;text-decoration:none;box-shadow:0 2px 4px rgba(0,0,0,.06);transition:.25s ease;position:relative;overflow:hidden}
+  .btn-back-nav .icon{display:inline-flex;width:1.2rem;height:1.2rem;align-items:center;justify-content:center;border-radius:50%;background:#0d6efd;color:#fff;font-size:.7rem;box-shadow:0 0 0 3px rgba(13,110,253,.15)}
+  .btn-back-nav:hover{transform:translateY(-2px);box-shadow:0 6px 18px -4px rgba(0,0,0,.15);color:#0d6efd;border-color:#cfd4da}
+  .btn-back-nav:active{transform:translateY(0)}
+</style>
+{# TODO: Consider extracting .btn-back-nav into a shared include if reused more widely #}
+{% endblock %}

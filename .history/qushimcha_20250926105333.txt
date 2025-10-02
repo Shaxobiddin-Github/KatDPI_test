@@ -1,0 +1,5 @@
+kel bunday qilamiz
+ teachers uchun bitta zur funksiyanallik qushamiz uqituvchi uchun mavzulashtirilgan test degan bitta tugma qushamiz ( uni bosgach   ) va u  yerda uqituvchi uzi mavzu quhsadi va usha mavzuga doir savolarni qushadi 
+savol ikki tur ga bulinadi bitta tugri javobli savol va kub tugri javobli savol ikki xil turda buladi savol turi va savollarni qushib bulgach 
+
+yana bitta tugma buladi tuzilgan savollarda test yaratish va test yaratishni bosgach usha savolardan yani mavzuni tanlaydi usha mavzuga tayyorlangan savolardan foydalangan holda test yaratadi nechata savol bulishi testda va necha bal berilishi va qancha vaqat berilsihi 
