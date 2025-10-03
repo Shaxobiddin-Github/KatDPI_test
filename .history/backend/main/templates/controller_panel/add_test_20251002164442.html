@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nazorat Paneli - Test Yaratish</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+    html { text-size-adjust: 100%; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            background: url('/static/main/1.png') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Animated particles background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.3), transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.2), transparent),
+                radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.4), transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.3), transparent),
+                radial-gradient(2px 2px at 160px 30px, rgba(255,255,255,0.2), transparent);
+            background-repeat: repeat;
+            background-size: 200px 100px;
+            animation: sparkle 20s linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes sparkle {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-100px) rotate(360deg); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 3rem;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.1),
+                0 2px 8px rgba(0, 0, 0, 0.05),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+        }
+
+        .title {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 2.5rem;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            letter-spacing: -0.5px;
+        }
+
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.6rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 0.3px;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 1rem;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 
+                0 0 0 3px rgba(255, 255, 255, 0.1),
+                0 8px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .form-select option {
+            background: rgba(30, 30, 30, 0.95);
+            color: white;
+            padding: 0.8rem;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.1rem 2rem;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 16px;
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.2) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateX(-3px);
+            color: rgba(255, 255, 255, 1);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .glass-card {
+                padding: 2rem 1.5rem;
+                margin: 1rem;
+                border-radius: 20px;
+            }
+            
+            .title {
+                font-size: 1.8rem;
+                margin-bottom: 2rem;
+            }
+            
+            .form-input,
+            .form-select {
+                padding: 0.9rem 1rem;
+                font-size: 0.95rem;
+            }
+            
+            .submit-btn {
+                padding: 1rem 1.5rem;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .glass-card {
+                padding: 1.5rem 1rem;
+            }
+            
+            .title {
+                font-size: 1.6rem;
+            }
+            
+            .form-group {
+                margin-bottom: 1.5rem;
+            }
+        }
+
+    /* --- New single group stylish box --- */
+    .group-box{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.25);border-radius:20px;padding:14px 14px 18px 14px;backdrop-filter:blur(14px);position:relative;box-shadow:0 6px 24px -4px rgba(0,0,0,0.28);}        
+    .group-box-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+    .group-search{flex:1;padding:11px 14px;font-size:.85rem;background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.18);border-radius:13px;color:#fff;outline:none;transition:.25s;}
+    .group-search:focus{background:rgba(0,0,0,0.55);border-color:#5aa2ff;box-shadow:0 0 0 2px #5aa2ff44;}
+    .group-clear{background:linear-gradient(135deg,#ff6767,#e93434);border:1px solid #ff9a9a;color:#fff;padding:10px 16px;border-radius:13px;font-size:.72rem;cursor:pointer;font-weight:600;letter-spacing:.5px;display:flex;align-items:center;justify-content:center;gap:4px;transition:.25s;}
+    .group-clear:hover{filter:brightness(1.1);}        
+    .group-select-wrap{border:1px solid rgba(255,255,255,0.18);background:linear-gradient(135deg,rgba(255,255,255,0.07),rgba(255,255,255,0.16));border-radius:16px;overflow:hidden;position:relative;}
+    .group-select{width:100%;background:transparent;border:none;outline:none;color:#fff;padding:0;font-size:.9rem;font-weight:500;min-height:250px;}
+    .group-select option{padding:10px 16px 10px 54px;position:relative;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.06);font-weight:500;letter-spacing:.3px;}
+    .group-select option:last-child{border-bottom:none;}
+    .group-select option:hover, .group-select option:focus{background:rgba(255,255,255,0.17);}        
+    .group-select option:checked{background:linear-gradient(90deg,rgba(94,170,255,0.6),rgba(53,130,235,0.5));}        
+    .group-select option::before{content:"";position:absolute;left:18px;top:50%;transform:translateY(-50%);width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#4e9fff,#1b74d9);box-shadow:0 2px 6px rgba(0,0,0,0.4);}        
+    /* Scrollbar */
+    .group-select{scrollbar-width:thin;scrollbar-color:#4e9fff40 transparent;}
+    .group-select::-webkit-scrollbar{width:11px;}
+    .group-select::-webkit-scrollbar-track{background:transparent;}
+    .group-select::-webkit-scrollbar-thumb{background:linear-gradient(#4e9fff66,#1b74d966);border-radius:8px;border:2px solid rgba(0,0,0,0.15);}        
+    .group-select::-webkit-scrollbar-thumb:hover{background:linear-gradient(#66b5ff,#288dff);}        
+    @media (max-width:640px){.group-box{padding:10px 12px 14px 12px;}.group-search{padding:9px 12px;font-size:.78rem;}.group-clear{padding:8px 12px;}.group-select option{padding:8px 12px 8px 46px;font-size:.78rem;}}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="glass-card">
+            <h1 class="title">📝 Yangi Test Yaratish</h1>
+            
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+
+                {% if target == 'student' %}
+                <div class="form-group">
+                  <label class="form-label" for="group">👥 Guruh:</label>
+                  <div class="group-box">
+                      <div class="group-box-head">
+                          <input type="text" id="group-search" placeholder="Qidirish..." class="group-search" autocomplete="off" />
+                          <button type="button" id="group-clear" class="group-clear" title="Tanlovni tozalash">Tozalash</button>
+                      </div>
+                      <div class="group-select-wrap">
+                          <select name="groups" id="group" required size="12" class="group-select">
+                              {% for group in groups %}
+                                  <option value="{{ group.id }}">{{ group.name }}</option>
+                              {% endfor %}
+                          </select>
+                      </div>
+                  </div>
+                </div>
+                {% elif target == 'tutor' %}
+                <div class="form-group">
+                    <label class="form-label" for="kafedra">🏢 Kafedra:</label>
+                    <select class="form-select" name="kafedra" id="kafedra" required>
+                        <option value="">Kafedrani tanlang...</option>
+                        {% for kafedra in kafedralar %}
+                            <option value="{{ kafedra.id }}">{{ kafedra.name }} ({{ kafedra.faculty.name }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% elif target == 'employee' %}
+                <div class="form-group">
+                    <label class="form-label" for="bulim">🏢 Bo'lim:</label>
+                    <select class="form-select" name="bulim" id="bulim" required>
+                        <option value="">Bo'limni tanlang...</option>
+                        {% for bulim in bulimlar %}
+                            <option value="{{ bulim.id }}">{{ bulim.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% endif %}
+
+                <div class="form-group">
+                    <label class="form-label" for="subject">📚 Fan (Semestr bilan):</label>
+                    <!-- Value format for student target: `${subject_id}::${semester_id||''}` to preserve semester -->
+                    <select class="form-select" name="subject" id="subject" required>
+                        <option value="">Fanni tanlang...</option>
+                    </select>
+                    <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const groupSelect = document.getElementById('group');
+                        const kafedraSelect = document.getElementById('kafedra');
+                        const bulimSelect = document.getElementById('bulim');
+                        const subjectSelect = document.getElementById('subject');
+                        const questionCountInput = document.getElementById('question_count');
+                        const maxQuestionInfo = document.getElementById('max_question_info');
+
+                        // Single select live search + clear button + selected highlight
+                        (function initSingleGroupSearch(){
+                            const search = document.getElementById('group-search');
+                            const clearBtn = document.getElementById('group-clear');
+                            if(!groupSelect) return;
+                            function filter(){
+                                const q = (search?search.value:'').trim().toLowerCase();
+                                Array.from(groupSelect.options).forEach(opt=>{
+                                    const txt = (opt.textContent||'').toLowerCase();
+                                    opt.style.display = txt.includes(q) ? '' : 'none';
+                                });
+                                const sel = groupSelect.options[groupSelect.selectedIndex];
+                                if(sel && sel.style.display==='none'){ groupSelect.selectedIndex = -1; }
+                            }
+                            if(search){ search.addEventListener('input', filter); }
+                            if(clearBtn){ clearBtn.addEventListener('click', ()=>{ groupSelect.selectedIndex=-1; if(search){search.value='';} filter(); document.getElementById('subject').innerHTML='<option value="">Fanni tanlang...</option>'; }); }
+                            // double click to confirm selection visually
+                            groupSelect.addEventListener('change', ()=>{
+                                Array.from(groupSelect.options).forEach(o=>o.dataset.sel='0');
+                                const sel = groupSelect.options[groupSelect.selectedIndex];
+                                if(sel){ sel.dataset.sel='1'; }
+                            });
+                        })();
+
+                        function clearSubjects() {
+                            subjectSelect.innerHTML = '<option value="">Fanni tanlang...</option>';
+                        }
+
+                        function loadSubjectsBy(url) {
+                            clearSubjects();
+                            fetch(url)
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.subjects) {
+                                        data.subjects.forEach(function(subject) {
+                                            let opt = document.createElement('option');
+                                            // Encode semester_id when present so backend can create semester-specific tests
+                                            const value = (subject.semester_id && subject.semester) ? `${subject.id}::${subject.semester_id}` : `${subject.id}`;
+                                            opt.value = value;
+                                            opt.textContent = subject.name + (subject.semester ? ` (${subject.semester}-semestr)` : '');
+                                            subjectSelect.appendChild(opt);
+                                        });
+                                    }
+                                });
+                        }
+
+                        if (groupSelect) {
+                            groupSelect.addEventListener('change', function() {
+                                const gid = this.value;
+                                if(!gid){ clearSubjects(); return; }
+                                loadSubjectsBy(`/api/controller-panel/get-subjects-by-group/?group_id=${gid}`);
+                            });
+                        }
+                        if (kafedraSelect) {
+                            kafedraSelect.addEventListener('change', function() {
+                                const kafedraId = this.value;
+                                if (!kafedraId) { clearSubjects(); return; }
+                                loadSubjectsBy(`/api/controller-panel/get-subjects-by-group/?kafedra_id=${kafedraId}`);
+                            });
+                        }
+                        if (bulimSelect) {
+                            bulimSelect.addEventListener('change', function() {
+                                const bulimId = this.value;
+                                if (!bulimId) { clearSubjects(); return; }
+                                loadSubjectsBy(`/api/controller-panel/get-subjects-by-group/?bulim_id=${bulimId}`);
+                            });
+                        }
+
+                        // Prevent entering more than max questions
+                        questionCountInput.addEventListener('input', function() {
+                            const max = parseInt(questionCountInput.max);
+                            const val = parseInt(questionCountInput.value);
+                            let warning = document.getElementById('question_count_warning');
+                            if (!warning) {
+                                warning = document.createElement('span');
+                                warning.id = 'question_count_warning';
+                                warning.style.color = '#dc3545';
+                                warning.style.display = 'none';
+                                warning.style.marginTop = '0.5rem';
+                                warning.style.fontWeight = '600';
+                                questionCountInput.parentNode.appendChild(warning);
+                            }
+                            if (!isNaN(max) && val > max) {
+                                questionCountInput.value = max;
+                                warning.style.display = 'block';
+                                warning.innerText = `Kiritilgan son mavjud savollardan oshib ketdi! Maksimal: ${max}`;
+                            } else {
+                                warning.style.display = 'none';
+                                warning.innerText = '';
+                            }
+                        });
+
+                        subjectSelect.addEventListener('change', function() {
+                            const raw = this.value;
+                            // Value is "<subject_id>::<semester_id>" when semester-aware; extract both
+                            let subjectId = raw;
+                            let semesterId = '';
+                            if (raw && raw.includes('::')) {
+                                const parts = raw.split('::');
+                                subjectId = parts[0];
+                                semesterId = parts[1] || '';
+                            }
+                            if (!subjectId) {
+                                questionCountInput.removeAttribute('max');
+                                questionCountInput.value = '';
+                                questionCountInput.disabled = false;
+                                maxQuestionInfo.innerText = '';
+                                return;
+                            }
+                            // Guruh tanlangan bo'lsa group_id ham yuboramiz (majburiy backend talabi)
+                            let groupId = '';
+                            if (groupSelect) {
+                                groupId = groupSelect.value || '';
+                            }
+                            if (!groupId) {
+                                // Agar guruh hali tanlanmagan bo'lsa, subject o'zgarishida API chaqirmaymiz
+                                questionCountInput.removeAttribute('max');
+                                questionCountInput.value='';
+                                questionCountInput.disabled = true;
+                                maxQuestionInfo.innerText = 'Avval guruhni tanlang';
+                                return;
+                            }
+                            const base = `/api/subject-max-question-count/?subject_id=${subjectId}&group_id=${groupId}`;
+                            const url = semesterId ? `${base}&semester_id=${semesterId}` : base;
+                            fetch(url)
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.max_question_count !== undefined) {
+                                        questionCountInput.max = data.max_question_count;
+                                        questionCountInput.disabled = false;
+                                        maxQuestionInfo.innerText = `Maksimal savollar soni: ${data.max_question_count}`;
+                                        if (parseInt(questionCountInput.value) > data.max_question_count) {
+                                            questionCountInput.value = data.max_question_count;
+                                        }
+                                        if (data.max_question_count === 0) {
+                                            questionCountInput.disabled = true;
+                                            maxQuestionInfo.innerText = 'Bu fanga savol qo‘shilmagan!';
+                                        }
+                                    } else {
+                                        questionCountInput.removeAttribute('max');
+                                        questionCountInput.value = '';
+                                        questionCountInput.disabled = true;
+                                        maxQuestionInfo.innerText = 'Fan uchun savollar topilmadi';
+                                    }
+                                });
+                        });
+                    });
+            </script>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="video_url">🎬 Video URL (ixtiyoriy):</label>
+                    <input class="form-input" type="url" name="video_url" id="video_url" placeholder="https://... (YouTube, Vimeo, mp4 link)" />
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="video_file">📁 Video fayl (ixtiyoriy):</label>
+                    <input class="form-input" type="file" name="video_file" id="video_file" accept="video/*" />
+                    <small style="color: rgba(255,255,255,0.85);">Agar URL va fayl birga yuborilsa, har ikkalasi ham saqlanadi; ko‘rsatishda mavjud bo‘lgani ishlatiladi.</small>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="question_count">❓ Savollar soni:</label>
+                    <input class="form-input" type="number" name="question_count" id="question_count" required min="1" placeholder="Masalan: 20">
+                    <span id="max_question_info" style="color:#ff0; display:block; margin-top:0.5rem;"></span>
+                    <span id="question_count_warning" style="color:#dc3545; display:none; margin-top:0.5rem; font-weight:600;"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="total_score">⭐ Umumiy ball:</label>
+                    <input class="form-input" type="number" name="total_score" id="total_score" required min="1" placeholder="Masalan: 100">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="minutes">⏰ Test vaqti (daqiqa):</label>
+                    <input class="form-input" type="number" name="minutes" id="minutes" required min="1" value="30" placeholder="Masalan: 30">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="duration">📅 Test muddati (soat:daqiq:soniya):</label>
+                    <div class="duration-picker" style="background:rgba(255,255,255,0.08);padding:10px 12px;border:1px solid rgba(255,255,255,0.18);border-radius:10px;">
+                        <div class="dp-row" style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
+                            <input type="number" id="dur_hours" min="0" max="23" value="0" style="width:70px;" class="form-input" placeholder="Soat">
+                            <span style="font-weight:600;font-size:1.1rem;">:</span>
+                            <input type="number" id="dur_minutes" min="0" max="59" value="30" style="width:70px;" class="form-input" placeholder="Daqiqa">
+                            <span style="font-weight:600;font-size:1.1rem;">:</span>
+                            <input type="number" id="dur_seconds" min="0" max="59" value="0" style="width:70px;" class="form-input" placeholder="Soniya">
+                            <input class="form-input" type="text" name="duration" id="duration" value="00:30:00" readonly style="flex:1;min-width:140px;background:rgba(0,0,0,0.15);">
+                        </div>
+                        <div class="dp-buttons" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px;">
+                            <button type="button" class="preset-btn" data-preset="00:10:00" style="padding:4px 10px;border:1px solid #5a6cfa;background:#3143c7;color:#fff;border-radius:6px;font-size:0.8rem;">10m</button>
+                            <button type="button" class="preset-btn" data-preset="00:15:00" style="padding:4px 10px;border:1px solid #5a6cfa;background:#3143c7;color:#fff;border-radius:6px;font-size:0.8rem;">15m</button>
+                            <button type="button" class="preset-btn" data-preset="00:30:00" style="padding:4px 10px;border:1px solid #5a6cfa;background:#3143c7;color:#fff;border-radius:6px;font-size:0.8rem;">30m</button>
+                            <button type="button" class="preset-btn" data-preset="00:45:00" style="padding:4px 10px;border:1px solid #5a6cfa;background:#3143c7;color:#fff;border-radius:6px;font-size:0.8rem;">45m</button>
+                            <button type="button" class="preset-btn" data-preset="01:00:00" style="padding:4px 10px;border:1px solid #5a6cfa;background:#3143c7;color:#fff;border-radius:6px;font-size:0.8rem;">1 soat</button>
+                            <button type="button" class="preset-btn" data-preset="01:30:00" style="padding:4px 10px;border:1px solid #5a6cfa;background:#3143c7;color:#fff;border-radius:6px;font-size:0.8rem;">1:30</button>
+                        </div>
+                        <small style="color:#bbb;display:block;font-size:0.75rem;">Maydonlarni o'zgartiring yoki tez tanlash tugmalaridan foydalaning.</small>
+                    </div>
+                </div>
+                <script>
+                // Duration builder
+                (function(){
+                    const h = document.getElementById('dur_hours');
+                    const m = document.getElementById('dur_minutes');
+                    const s = document.getElementById('dur_seconds');
+                    const out = document.getElementById('duration');
+                    function pad(v){return String(Math.max(0, Math.min(99, parseInt(v||0)))).padStart(2,'0');}
+                    function clamp(){
+                        if(parseInt(h.value)>23) h.value=23; if(parseInt(h.value)<0||!h.value) h.value=0;
+                        if(parseInt(m.value)>59) m.value=59; if(parseInt(m.value)<0||!m.value) m.value=0;
+                        if(parseInt(s.value)>59) s.value=59; if(parseInt(s.value)<0||!s.value) s.value=0;
+                    }
+                    function update(){
+                        clamp();
+                        out.value = `${pad(h.value)}:${pad(m.value)}:${pad(s.value)}`;
+                    }
+                    [h,m,s].forEach(el=>el.addEventListener('input', update));
+                    document.querySelectorAll('.preset-btn[data-preset]').forEach(btn=>{
+                        btn.addEventListener('click',()=>{
+                            const parts = btn.dataset.preset.split(':');
+                            if(parts.length===3){h.value=parseInt(parts[0]);m.value=parseInt(parts[1]);s.value=parseInt(parts[2]);update();}
+                        });
+                    });
+                    update();
+                })();
+                </script>
+
+                <button type="submit" class="submit-btn">✅ Test Yaratish</button>
+            </form>
+            
+            <a href="/api/controller-panel/dashboard/" class="back-link">
+                <span>⬅️</span>
+                <span>Panelga Qaytish</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
