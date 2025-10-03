@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>Statistik tahlil</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 30px;
+            background: url('/static/main/1.png') no-repeat center center fixed;
+            background-size: cover;
+        }
+        h2 {
+            color: #333;
+        }
+        ul {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            list-style-type: none;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        li {
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        li:last-child {
+            border-bottom: none;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: white;
+            background-color: #007BFF;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h2>Statistik tahlil</h2>
+    <ul>
+        <li><strong>Testlar soni:</strong> {{ stats.total_tests }}</li>
+        <li><strong>Savollar soni:</strong> {{ stats.total_questions }}</li>
+        <li><strong>Foydalanuvchilar soni:</strong> {{ stats.total_students }}</li>
+        <li><strong>Javoblar soni:</strong> {{ stats.total_answers }}</li>
+    </ul>
+    <a href="/test-api/dashboard/">Dashboardga qaytish</a>
+</body>
+</html>

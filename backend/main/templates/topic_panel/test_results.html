@@ -1,0 +1,368 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+.card-modern {
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+.card-modern:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 35px rgba(0, 0, 0, 0.15);
+}
+.results-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.results-header::before {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 20%, transparent 21%);
+  background-size: 50px 50px;
+  animation: float 20s linear infinite;
+}
+@keyframes float {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+.stat-card {
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+.stat-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  font-size: 1.5rem;
+  color: white;
+}
+.stat-icon.total { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+.stat-icon.completed { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
+.stat-icon.pending { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+.stat-icon.average { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+.student-row {
+  background: white;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  padding: 1.25rem;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  border-left: 4px solid transparent;
+}
+.student-row:hover {
+  transform: translateX(5px);
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+}
+.student-row.completed {
+  border-left-color: #28a745;
+}
+.student-row.pending {
+  border-left-color: #ffc107;
+}
+.progress-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.85rem;
+  color: white;
+}
+.badge-modern {
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+.table-modern {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+.table-modern thead th {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border: none;
+  padding: 1.25rem 1rem;
+  font-weight: 600;
+  color: #495057;
+}
+.table-modern tbody td {
+  border: none;
+  padding: 1.25rem 1rem;
+  vertical-align: middle;
+}
+.table-modern tbody tr {
+  transition: all 0.3s ease;
+}
+.table-modern tbody tr:hover {
+  background: #f8f9fa;
+  transform: scale(1.01);
+}
+</style>
+
+<style>
+/* Back Button Styles */
+.btn-back-nav{display:inline-flex;align-items:center;gap:.55rem;background:linear-gradient(135deg,#f8f9fa,#e9ecef);border:1px solid #dee2e6;color:#343a40;font-weight:600;padding:.55rem 1rem;border-radius:50px;text-decoration:none;box-shadow:0 2px 4px rgba(0,0,0,.06);transition:.25s ease;position:relative;overflow:hidden}
+.btn-back-nav .icon{display:inline-flex;width:1.1rem;height:1.1rem;align-items:center;justify-content:center;border-radius:50%;background:#0d6efd;color:#fff;font-size:.6rem;box-shadow:0 0 0 3px rgba(13,110,253,.15)}
+.btn-back-nav:hover{transform:translateY(-2px);box-shadow:0 6px 18px -4px rgba(0,0,0,.15);color:#0d6efd;border-color:#cfd4da}
+.btn-back-nav:active{transform:translateY(0)}
+</style>
+
+<div class="container-fluid mt-4">
+  <!-- Back Button -->
+  <div class="mb-3">
+    <a href="{% url 'topic:topic_manage' test.topic.id %}" class="btn-back-nav">
+      <span class="icon"><i class="fas fa-arrow-left"></i></span>
+      <span class="label">Orqaga</span>
+    </a>
+  </div>
+  <!-- Header Section -->
+  <div class="results-header mb-4">
+    <h1 class="mb-3">
+      <i class="fas fa-chart-line me-3"></i>
+      Test Natijalari
+    </h1>
+    <h3 class="mb-0 opacity-90">{{ test.title }}</h3>
+  </div>
+
+  <!-- Statistics Cards -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon total">
+        <i class="fas fa-users"></i>
+      </div>
+      <h3 class="mb-1">{{ attempts|length }}</h3>
+      <p class="text-muted mb-0">Jami ishtirokchi</p>
+    </div>
+    
+    <div class="stat-card">
+      <div class="stat-icon completed">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <h3 class="mb-1">
+        {% with completed_count=0 %}
+          {% for a in attempts %}
+            {% if a.completed %}
+              {% with completed_count=completed_count|add:1 %}{% endwith %}
+            {% endif %}
+          {% endfor %}
+          {{ completed_count }}
+        {% endwith %}
+      </h3>
+      <p class="text-muted mb-0">Yakunlangan</p>
+    </div>
+    
+    <div class="stat-card">
+      <div class="stat-icon pending">
+        <i class="fas fa-clock"></i>
+      </div>
+      <h3 class="mb-1">
+        {% with pending_count=0 %}
+          {% for a in attempts %}
+            {% if not a.completed %}
+              {% with pending_count=pending_count|add:1 %}{% endwith %}
+            {% endif %}
+          {% endfor %}
+          {{ pending_count }}
+        {% endwith %}
+      </h3>
+      <p class="text-muted mb-0">Jarayonda</p>
+    </div>
+    
+    <div class="stat-card">
+      <div class="stat-icon average">
+        <i class="fas fa-calculator"></i>
+      </div>
+      <h3 class="mb-1">
+        {% if attempts %}
+          {% with total_score=0 completed_count=0 %}
+            {% for a in attempts %}
+              {% if a.completed %}
+                {% with total_score=total_score|add:a.total_score completed_count=completed_count|add:1 %}{% endwith %}
+              {% endif %}
+            {% endfor %}
+            {% if completed_count > 0 %}
+              {% widthratio total_score completed_count 1 %}
+            {% else %}
+              0
+            {% endif %}
+          {% endwith %}
+        {% else %}
+          0
+        {% endif %}
+      </h3>
+      <p class="text-muted mb-0">O'rtacha ball</p>
+    </div>
+  </div>
+
+  <!-- Results Table -->
+  <div class="card card-modern">
+    <div class="card-body p-0">
+      {% if attempts %}
+        <div class="table-responsive">
+          <table class="table table-modern mb-0">
+            <thead>
+              <tr>
+                <th><i class="fas fa-user me-2"></i>Talaba</th>
+                <th><i class="fas fa-star me-2"></i>Ball</th>
+                <th><i class="fas fa-percentage me-2"></i>Foiz</th>
+                <th><i class="fas fa-play me-2"></i>Boshlangan</th>
+                <th><i class="fas fa-stop me-2"></i>Tugatilgan</th>
+                <th><i class="fas fa-flag me-2"></i>Holat</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for a in attempts %}
+                <tr>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <div class="avatar-circle me-3" style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+                        {{ a.student.username|first|upper }}
+                      </div>
+                      <div>
+                        <div class="fw-semibold">{{ a.student.username }}</div>
+                        <small class="text-muted">ID: {{ a.student.id }}</small>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <span class="fw-bold me-2">{{ a.total_score }}</span>
+                      <small class="text-muted">/ {{ test.total_score }}</small>
+                    </div>
+                  </td>
+                  <td>
+                    {% if test.total_score %}
+                      {% widthratio a.total_score test.total_score 100 as pct %}
+                      <div class="progress-circle" style="background: conic-gradient(#28a745 {{ pct|floatformat:0 }}%, #e9ecef {{ pct|floatformat:0 }}%);">
+                        {{ pct }}%
+                      </div>
+                    {% endif %}
+                  </td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <i class="fas fa-calendar-alt text-primary me-2"></i>
+                      <div>
+                        <div class="small">{{ a.created_at|date:"d.m.Y" }}</div>
+                        <div class="small text-muted">{{ a.created_at|date:"H:i" }}</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    {% if a.finished_at %}
+                      <div class="d-flex align-items-center">
+                        <i class="fas fa-calendar-check text-success me-2"></i>
+                        <div>
+                          <div class="small">{{ a.finished_at|date:"d.m.Y" }}</div>
+                          <div class="small text-muted">{{ a.finished_at|date:"H:i" }}</div>
+                        </div>
+                      </div>
+                    {% else %}
+                      <span class="text-muted">
+                        <i class="fas fa-minus-circle me-1"></i>
+                        Tugallanmagan
+                      </span>
+                    {% endif %}
+                  </td>
+                  <td>
+                    {% if a.completed %}
+                      <span class="badge badge-modern bg-success">
+                        <i class="fas fa-check-circle me-1"></i>
+                        Yakunlangan
+                      </span>
+                    {% else %}
+                      <span class="badge badge-modern bg-warning text-dark">
+                        <i class="fas fa-hourglass-half me-1"></i>
+                        Jarayonda
+                      </span>
+                    {% endif %}
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <div class="text-center py-5">
+          <div style="font-size: 4rem; color: #e9ecef; margin-bottom: 1rem;">
+            <i class="fas fa-inbox"></i>
+          </div>
+          <h5 class="text-muted mb-3">Hali ishtirokchilar yo'q</h5>
+          <p class="text-muted">Bu test hali hech kim tomonidan ishlanmagan</p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Add smooth animations for stat cards
+  const statCards = document.querySelectorAll('.stat-card');
+  statCards.forEach((card, index) => {
+    card.style.animationDelay = `${index * 0.1}s`;
+    card.style.animation = 'fadeInUp 0.6s ease forwards';
+  });
+  
+  // Add hover effects for table rows
+  const tableRows = document.querySelectorAll('.table-modern tbody tr');
+  tableRows.forEach(row => {
+    row.addEventListener('mouseenter', function() {
+      this.style.borderLeft = '4px solid #667eea';
+    });
+    row.addEventListener('mouseleave', function() {
+      this.style.borderLeft = 'none';
+    });
+  });
+});
+
+// CSS animations
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+`;
+document.head.appendChild(style);
+</script>
+
+<!-- FontAwesome Icons -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+{% endblock %}

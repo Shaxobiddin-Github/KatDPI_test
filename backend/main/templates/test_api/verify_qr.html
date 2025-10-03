@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<title>QR Tasdiqlash</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<style>
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(-45deg, #0f172a, #1e293b, #0ea5e9, #6366f1);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    color: #f8fafc;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  @keyframes gradientShift {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+  }
+
+  .card {
+    background: rgba(30, 41, 59, 0.85);
+    border-radius: 20px;
+    padding: 2.5rem;
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 20px;
+    padding: 2px;
+    background: linear-gradient(135deg,#38bdf8,#6366f1,#a855f7,#f43f5e);
+    background-size: 400% 400%;
+    animation: borderAnim 8s linear infinite;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  @keyframes borderAnim {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+  }
+
+  .card:hover {
+    transform: translateY(-10px) scale(1.02);
+  }
+
+  h3 {
+    font-weight: 700;
+    color: #f1f5f9;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+  }
+
+  .badge-valid, .badge-invalid {
+    font-size: 1rem;
+    padding: .6rem 1.2rem;
+    border-radius: 9999px;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+    box-shadow: 0 0 12px rgba(0,0,0,0.4);
+  }
+
+  .badge-valid {
+    background: linear-gradient(135deg,#22c55e,#4ade80);
+    animation: pulseGreen 2s infinite;
+  }
+
+  .badge-invalid {
+    background: linear-gradient(135deg,#ef4444,#f87171);
+    animation: pulseRed 2s infinite;
+  }
+
+  @keyframes pulseGreen {
+    0% { box-shadow: 0 0 0 0 rgba(34,197,94,0.6);}
+    70% { box-shadow: 0 0 0 15px rgba(34,197,94,0);}
+    100% { box-shadow: 0 0 0 0 rgba(34,197,94,0);}
+  }
+
+  @keyframes pulseRed {
+    0% { box-shadow: 0 0 0 0 rgba(239,68,68,0.6);}
+    70% { box-shadow: 0 0 0 15px rgba(239,68,68,0);}
+    100% { box-shadow: 0 0 0 0 rgba(239,68,68,0);}
+  }
+
+  table {
+    color: #e2e8f0;
+    font-size: .95rem;
+    margin-top: .8rem;
+  }
+
+  td {
+    padding: .5rem .7rem;
+    vertical-align: middle;
+  }
+
+  strong {
+    color: #93c5fd;
+  }
+
+  code {
+    background: rgba(96, 99, 134, 0.4);
+    padding: .25rem .5rem;
+    border-radius: 6px;
+    display: inline-block;
+    word-break: break-word;
+    font-size: .8rem;
+  }
+
+  .text-muted {
+    color: #05eeffff !important;
+  }
+
+  .fade-in {
+    animation: fadeInUp 0.8s ease forwards;
+  }
+
+  @keyframes fadeInUp {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+</style>
+</head>
+<body>
+<div class="container" style="max-width:760px;">
+  <div class="card fade-in">
+    <h3><i class="fa-solid fa-qrcode"></i> QR tasdiqlash natijasi</h3>
+
+    {% if status == 'valid' %}
+      <span class="badge badge-valid"><i class="fa-solid fa-circle-check"></i> Haqiqiy</span>
+      <p>✅ Ushbu QR kod bazadagi PDF eksport yozuvi bilan mos keldi.</p>
+
+      <table class="table table-borderless align-middle">
+        <tr><td><strong>Hash</strong></td><td style="color: #05eeffff;">tastiqlangan</td></tr>
+        <tr><td><strong>Fan</strong></td><td style="color: #05eeffff;">{{ subject }}</td></tr>
+        <tr><td><strong>Qatnashgan Talabalar soni</strong></td><td style="color: #05eeffff;">{{ count }}</td></tr>
+        <tr><td><strong>Yaratilgan</strong></td><td style="color: #05eeffff;">{{ created_at|date:"d.m.Y H:i" }}</td></tr>
+        <tr><td><strong>Payload</strong></td><td style="color: #05eeffff;"><code>{{ payload }}</code></td></tr>
+      </table>
+
+      <p class="text-muted small mt-3">
+        <i class="fa-solid fa-shield-halved"></i> Hash bazaga yozilganda yaratiladi.  
+        QR link shu sahifaga olib keladi va ma'lumot integraligi tekshiriladi.
+      </p>
+
+    {% else %}
+      <span class="badge badge-invalid"><i class="fa-solid fa-triangle-exclamation"></i> Haqiqiy emas</span>
+      <p>❌ Bunday hash topilmadi: <code>{{ hash }}</code></p>
+      <p class="text-muted small"><i class="fa-solid fa-file-circle-xmark"></i> PDF o'zgartirilgan yoki noto'g'ri QR.</p>
+    {% endif %}
+  </div>
+</div>
+</body>
+</html>

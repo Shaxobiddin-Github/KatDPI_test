@@ -1,0 +1,212 @@
+{% extends 'base.html' %}
+{% block head_extra %}
+<style>
+  .login-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: -1.5rem -15px 0 -15px;
+    padding: 0;
+  }
+  .login-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 3rem 2.5rem;
+    width: 100%;
+    max-width: 420px;
+    transform: translateY(-20px);
+    animation: slideUp 0.6s ease-out;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(-20px); }
+  }
+  .login-title {
+    color: #4a5568;
+    font-weight: 700;
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+  .login-subtitle {
+    color: #718096;
+    font-size: 0.95rem;
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+  .form-control-modern {
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 0.8rem 1.2rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.9);
+  }
+  .form-control-modern:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    background: white;
+    outline: none;
+  }
+  .btn-modern {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 12px;
+    padding: 0.9rem 2rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .btn-modern:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+  }
+  .btn-modern:active {
+    transform: translateY(0);
+  }
+  .error-modern {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    padding: 0.8rem 1.2rem;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+  }
+  .help-text {
+    color: #a0aec0;
+    font-size: 0.85rem;
+    text-align: center;
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: rgba(160, 174, 192, 0.1);
+    border-radius: 10px;
+    border-left: 3px solid #667eea;
+  }
+  .student-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 50%;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+  }
+  .group-search-wrapper { position: relative; }
+  .group-search-wrapper .search-icon { position:absolute; left:14px; top:50%; transform:translateY(-50%); color:#a0aec0; pointer-events:none; }
+  .group-search-input { padding-left:2.2rem !important; }
+  .group-no-match { display:none; font-size:0.8rem; color:#e53e3e; margin-top:4px; }
+</style>
+{% endblock %}
+{% block content %}
+<div class="login-container">
+  <div class="login-card">
+    <div class="student-icon">
+      <i class="fas fa-user-graduate"></i>
+    </div>
+    <h1 class="login-title">Talaba Paneli</h1>
+    <p class="login-subtitle">Mavzulashtirilgan testlarga kirish</p>
+    
+    {% if error %}
+      <div class="alert error-modern">
+        <i class="fas fa-exclamation-triangle me-2"></i>{{ error }}
+      </div>
+    {% endif %}
+    
+    <form method="post" class="vstack gap-3" id="studentLoginForm">
+      {% csrf_token %}
+      <div>
+        <input 
+          name="first_name" 
+          class="form-control form-control-modern" 
+          placeholder="Ism" 
+          required
+          value="{{ first_name|default:'' }}"
+          autocomplete="given-name"
+        >
+      </div>
+      <div>
+        <input 
+          name="last_name" 
+          class="form-control form-control-modern" 
+          placeholder="Familiya" 
+          required
+          value="{{ last_name|default:'' }}"
+          autocomplete="family-name"
+        >
+      </div>
+      <div class="group-search-wrapper">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" id="groupSearch" class="form-control form-control-modern group-search-input" placeholder="Guruh qidirish..." autocomplete="off">
+        <div class="group-no-match" id="groupNoMatch">Mos keluvchi guruh topilmadi</div>
+      </div>
+      <div>
+        <select name="group" id="groupSelect" class="form-control form-control-modern" required>
+          <option value="">Guruh tanlang...</option>
+          {% for g in groups %}
+            <option value="{{ g.id }}" {% if group_selected == g.id|stringformat:'s' %}selected{% endif %}>{{ g.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <button type="submit" class="btn btn-modern w-100">
+        <i class="fas fa-sign-in-alt me-2"></i>Kirish
+      </button>
+    </form>
+    <div class="help-text">
+      <i class="fas fa-info-circle me-2"></i>
+      Ism + familiya + guruh orqali kirish. Agar mavjud bo'lmasa avtomatik yaratiladi.
+    </div>
+  </div>
+</div>
+
+<!-- FontAwesome icons -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+<script>
+(function(){
+  const searchInput = document.getElementById('groupSearch');
+  const selectEl = document.getElementById('groupSelect');
+  const noMatchEl = document.getElementById('groupNoMatch');
+  if(!searchInput || !selectEl) return;
+  const originalOptions = Array.from(selectEl.options).map(o=>({value:o.value,text:o.text, selected:o.selected}));
+  function normalize(s){ return s.toLowerCase().replace(/\s+/g,''); }
+  searchInput.addEventListener('input', function(){
+    const q = normalize(this.value);
+    // keep first placeholder option
+    // Clear current (except placeholder)
+    while(selectEl.options.length > 1) selectEl.remove(1);
+    let added = 0;
+    originalOptions.forEach((opt,i)=>{
+      if(i===0) return; // skip placeholder clone
+      if(!q || normalize(opt.text).includes(q)){
+        const o = new Option(opt.text, opt.value, false, false);
+        selectEl.add(o);
+        added++;
+      }
+    });
+    noMatchEl.style.display = added ? 'none':'block';
+    if(added === 1){
+      // auto-select single match
+      selectEl.selectedIndex = 1;
+    } else if(!q) {
+      // restore previously selected if clearing search
+      const prev = originalOptions.find(o=>o.selected);
+      if(prev){
+        for(let i=0;i<selectEl.options.length;i++){
+          if(selectEl.options[i].value === prev.value){ selectEl.selectedIndex = i; break; }
+        }
+      }
+    }
+  });
+})();
+</script>
+{% endblock %}

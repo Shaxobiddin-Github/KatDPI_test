@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcha Test Natijalari</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* --- Simplified, cleaner UI --- */
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background:#101827; color:#f5f7fa; }
+        .container-fluid { padding: 1.5rem 1rem 3rem; }
+
+        .page-header {background:#1f2937; border:1px solid #374151; border-radius:14px; padding:1.4rem 1.6rem; margin-bottom:1.2rem;}
+        .page-title {font-size:1.9rem; font-weight:600; margin:0; color:#fff;}
+        .dashboard-btn {background:#374151; border:1px solid #4b5563; border-radius:8px; padding:.55rem .9rem; font-size:.85rem;}
+        .dashboard-btn:hover {background:#4b5563; color:#fff;}
+
+        /* Subject / Group / Student hierarchy */
+        .accordion-item {background:#1f2937; border:1px solid #374151; border-radius:10px; margin-bottom:.6rem;}
+        .accordion-button {background:#273549; color:#f5f7fa; font-weight:500;}
+        .accordion-button:not(.collapsed){background:#334155; color:#fff;}
+        .level-1{border-left:4px solid #3b82f6;}
+        .btn-toggle{background:#256a3f;}
+        .level-3{background:#334155 !important;}
+
+        .test-result{background:#273549; border:1px solid #39485c;}
+        .answer-item{background:#1f2733; border:1px solid #2d3a49;}
+        .badge-custom{background:#374151; color:#e5e7eb;}
+        .progress{background:#1f2733;}
+        .filter-bar{background:#1f2937; border:1px solid #374151; border-radius:10px; padding:.9rem 1rem; margin-bottom:1rem;}
+        .small-note{font-size:.65rem; color:#9ca3af;}
+        .search-input{background:#111827; border:1px solid #374151; color:#f5f5f5;}
+        .search-input:focus{background:#111827; color:#fff;}
+        .highlight-override{outline:2px solid #fbbf24;}
+
+        @media (max-width: 768px){ .page-title{font-size:1.4rem;} .filter-bar{padding:.7rem .8rem;} }
+
+        .accordion {
+            border: none;
+        }
+
+        .accordion-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .accordion-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1.2rem 1.5rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .accordion-button:not(.collapsed) {
+            background: rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 1);
+            box-shadow: none;
+        }
+
+        .accordion-button:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 1);
+        }
+
+        .accordion-button:focus {
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.1);
+        }
+
+        .accordion-button::after {
+            filter: brightness(0) invert(1);
+            opacity: 0.8;
+        }
+
+        .accordion-body {
+            background: rgba(255, 255, 255, 0.05);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+        }
+
+        .level-1 {
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.3) 0%, rgba(0, 123, 255, 0.2) 100%);
+            border: 1px solid rgba(0, 123, 255, 0.4);
+        }
+
+        .level-2 {
+            background: linear-gradient(135deg, rgba(40, 167, 69, 0.3) 0%, rgba(40, 167, 69, 0.2) 100%);
+            border: 1px solid rgba(40, 167, 69, 0.4);
+            margin-left: 1rem;
+        }
+
+        .level-3 {
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.3) 0%, rgba(255, 193, 7, 0.2) 100%);
+            border: 1px solid rgba(255, 193, 7, 0.4);
+            margin-left: 2rem;
+            color: rgba(255, 255, 255, 0.95) !important;
+        }
+
+        .group-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            gap: 0.5rem;
+        }
+
+        .btn-toggle {
+            flex-grow: 1;
+            text-align: left;
+            border-radius: 12px;
+            background: rgba(40, 167, 69, 0.2);
+            border: 1px solid rgba(40, 167, 69, 0.4);
+            color: rgba(255, 255, 255, 0.95);
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .btn-toggle:hover {
+            background: rgba(40, 167, 69, 0.3);
+            color: rgba(255, 255, 255, 1);
+            transform: translateY(-1px);
+        }
+
+        .btn-excel {
+
+        .test-result {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            margin-left: 3rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .answer-item {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .answer-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .correct {
+            color: #4ade80;
+            font-weight: 600;
+        }
+
+        .incorrect {
+            color: #f87171;
+            font-weight: 600;
+        }
+
+        .question-text {
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+        }
+
+        .badge-custom {
+            background: rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 0.4rem 0.8rem;
+        }
+
+        .progress {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            height: 8px;
+        }
+
+        .progress-bar {
+            border-radius: 6px;
+        }
+
+        .bg-success {
+            background: linear-gradient(90deg, #4ade80, #22c55e) !important;
+        }
+
+        .bg-warning {
+            background: linear-gradient(90deg, #fbbf24, #f59e0b) !important;
+        }
+
+        .bg-danger {
+            background: linear-gradient(90deg, #f87171, #ef4444) !important;
+        }
+
+        .text-muted {
+            color: rgba(255, 255, 255, 0.7) !important;
+        }
+
+        .border-top {
+            border-color: rgba(255, 255, 255, 0.2) !important;
+        }
+
+        h5, h6 {
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        .alert-info {
+            background: rgba(13, 202, 240, 0.15);
+            border: 1px solid rgba(13, 202, 240, 0.3);
+            color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .container-fluid {
+                padding: 1rem 0.5rem;
+            }
+            
+            .page-header {
+                padding: 1.5rem 1rem;
+                border-radius: 16px;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .level-2 {
+                margin-left: 0.5rem;
+            }
+            
+            .level-3 {
+                margin-left: 1rem;
+            }
+            
+            .test-result {
+                margin-left: 1rem;
+                padding: 1rem;
+            }
+            
+            .group-header {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .btn-toggle,
+            .btn-excel {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 1.8rem;
+            }
+            
+            .accordion-button {
+                padding: 1rem;
+                font-size: 1rem;
+            }
+            
+            .test-result {
+                margin-left: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="page-header">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                <h1 class="page-title">📊 Barcha Test Natijalari</h1>
+                <div class="d-flex flex-column gap-2">
+                    <!-- Excelga yuklash, select va tugmalar butunlay olib tashlandi -->
+                    <a href="{% url 'controller_dashboard' %}" class="dashboard-btn mt-2">
+                        <span>🏠</span>
+                        <span>Dashboard</span>
+                    </a>
+                </div>
+            </div>
+            <script>
+            // Excelga yuklash uchun scriptlar butunlay olib tashlandi
+            </script>
+        </div>
+
+        {% if organized_data %}
+        <!-- Filter & Controls -->
+        <div class="filter-bar">
+            <div class="row g-2 align-items-center">
+                <div class="col-md-4 col-sm-6">
+                    <input type="text" id="studentFilter" class="form-control form-control-sm search-input" placeholder="Talaba qidirish (ism yoki @username)">
+                </div>
+                <div class="col-md-3 col-sm-6 form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="toggleAnswers" checked>
+                    <label class="form-check-label" for="toggleAnswers">Javoblarni ko'rsatish</label>
+                </div>
+                <div class="col-md-3 col-sm-6 form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="highlightOverride" checked>
+                    <label class="form-check-label" for="highlightOverride">Override ni ajratish</label>
+                </div>
+                <div class="col-md-2 text-end small-note d-none d-md-block">Natijalar hierarxik ko‘rinishda</div>
+            </div>
+        </div>
+            <div class="accordion" id="resultsAccordion">
+                {% for subject_name, groups in organized_data.items %}
+                    <!-- Fan darajasi -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="subject{{ forloop.counter }}">
+                            <button class="accordion-button collapsed level-1 d-flex align-items-center flex-grow-1" type="button" 
+                                    data-bs-toggle="collapse" data-bs-target="#collapseSubject{{ forloop.counter }}" 
+                                    aria-expanded="false" aria-controls="collapseSubject{{ forloop.counter }}">
+                                <span class="me-3">📚</span>
+                                <span class="flex-grow-1">{{ subject_name }}</span>
+                                <span class="badge-custom ms-2">{{ groups|length }} guruh</span>
+                            </button>
+                            <button type="button"
+                               class="btn btn-danger pdf-filter-btn"
+                               data-subject="{{ subject_name }}"
+                               title="PDFga yuklash (filtr bilan)"
+                               style="position: absolute; right: 24px; top: 50%; transform: translateY(-50%); min-width: 70px; display: flex; align-items: center; justify-content: center; z-index: 2;">
+                                <span style="font-size: 1.1rem;">📄</span> <span class="d-none d-md-inline ms-1">PDF</span>
+                            </button>
+                        </h2>
+                        <div id="collapseSubject{{ forloop.counter }}" class="accordion-collapse collapse" 
+                             aria-labelledby="subject{{ forloop.counter }}" data-bs-parent="#resultsAccordion">
+                            <div class="accordion-body">
+                                
+                                {% for group_name, group_data in groups.items %}
+                                    <!-- Guruh darajasi -->
+                                    <div class="group-header">
+                                        <button class="btn btn-toggle" type="button" 
+                                                data-bs-toggle="collapse" data-bs-target="#collapseGroup{{ forloop.parentloop.counter }}{{ forloop.counter }}" 
+                                                aria-expanded="false" aria-controls="collapseGroup{{ forloop.parentloop.counter }}{{ forloop.counter }}">
+                                            <span class="me-2">👥</span>
+                                            <span class="flex-grow-1">{{ group_name }}</span>
+                                            <span class="badge-custom">{{ group_data.students|length }} talaba</span>
+                                        </button>
+                                        <!-- Excel tugmasi va linklari to'liq olib tashlandi -->
+                                    </div>
+                                    <div id="collapseGroup{{ forloop.parentloop.counter }}{{ forloop.counter }}" class="collapse">
+                                        <div class="ms-2">
+                                            
+                                            {% for student_username, student_data in group_data.students.items %}
+                                                <!-- Talaba darajasi -->
+                                                <div class="accordion mb-3 student-block" id="studentAccordion{{ forloop.parentloop.parentloop.counter }}{{ forloop.parentloop.counter }}{{ forloop.counter }}" data-student="{{ student_data.student.first_name|lower }} {{ student_data.student.last_name|lower }} @{{ student_username|lower }}">
+                                                    <div class="accordion-item">
+                                                        <h2 class="accordion-header" id="student{{ forloop.parentloop.parentloop.counter }}{{ forloop.parentloop.counter }}{{ forloop.counter }}">
+                                                            <button class="accordion-button collapsed level-3" type="button" 
+                                                                    data-bs-toggle="collapse" data-bs-target="#collapseStudent{{ forloop.parentloop.parentloop.counter }}{{ forloop.parentloop.counter }}{{ forloop.counter }}" 
+                                                                    aria-expanded="false" aria-controls="collapseStudent{{ forloop.parentloop.parentloop.counter }}{{ forloop.parentloop.counter }}{{ forloop.counter }}">
+                                                                <span class="me-3">👤</span>
+                                                                <span class="flex-grow-1">{{ student_data.student.first_name }} {{ student_data.student.last_name }} (@{{ student_username }})</span>
+                                                                <span class="badge-custom">{{ student_data.tests|length }} test</span>
+                                                            </button>
+                                                        </h2>
+                                                        <div id="collapseStudent{{ forloop.parentloop.parentloop.counter }}{{ forloop.parentloop.counter }}{{ forloop.counter }}" class="accordion-collapse collapse" 
+                                                             aria-labelledby="student{{ forloop.parentloop.parentloop.counter }}{{ forloop.parentloop.counter }}{{ forloop.counter }}" data-bs-parent="#studentAccordion{{ forloop.parentloop.parentloop.counter }}{{ forloop.parentloop.counter }}{{ forloop.counter }}">
+                                                            <div class="accordion-body">
+                                                                
+                                                                <!-- Test natijalari -->
+                                                                {% for test_result in student_data.tests %}
+                                                                    <div class="test-result {% if test_result.is_overridden %}override-card{% endif %}" data-overridden="{% if test_result.is_overridden %}1{% else %}0{% endif %}">
+                                                                        <div class="row mb-3">
+                                                                            <div class="col-md-8">
+                                                                                <h6 class="mb-1">
+                                                                                    <span class="me-2">📝</span>
+                                                                                    Test: {{ test_result.student_test.test.subject.name }}
+                                                                                </h6>
+                                                                                <small class="text-muted">
+                                                                                    <span class="me-2">📅</span>
+                                                                                    {{ test_result.student_test.start_time|date:"d.m.Y H:i" }}
+                                                                                </small>
+                                                                            </div>
+                                                                            <div class="col-md-4 text-end">
+                                                                                <h5 class="mb-2 d-flex align-items-center gap-2 flex-wrap">
+                                                                                    {% if show_override and test_result.is_overridden %}
+                                                                                        <span style="text-decoration: line-through; opacity:0.6;">{{ test_result.score }}</span>
+                                                                                        <span class="ms-2" style="color:#ffc107; font-weight:600;">{{ test_result.final_score }}/{{ test_result.student_test.test.total_score }} ball *</span>
+                                                                                    {% else %}
+                                                                                        {{ test_result.score }}/{{ test_result.student_test.test.total_score }} ball
+                                                                                    {% endif %}
+                                                                                    {% if show_override %}
+                                                                                        {% if test_result.final_passed %}
+                                                                                            <span class="badge bg-success" style="font-size:0.65rem;">O'tgan</span>
+                                                                                        {% else %}
+                                                                                            <span class="badge bg-danger" style="font-size:0.65rem;">O'tmagan</span>
+                                                                                        {% endif %}
+                                                                                    {% endif %}
+                                                                                </h5>
+                                                                                <div class="progress mb-2">
+                                                                                    <div class="progress-bar bg-{% if test_result.percent >= 60 %}success{% elif test_result.percent >= 40 %}warning{% else %}danger{% endif %}" role="progressbar" style="width: {{ test_result.percent }}%">
+                                                                                        {% if show_override and test_result.is_overridden %}
+                                                                                            {{ test_result.percent }}% → <strong>{{ test_result.final_score|floatformat:0 }}</strong>
+                                                                                        {% else %}
+                                                                                            {{ test_result.percent }}%
+                                                                                        {% endif %}
+                                                                                    </div>
+                                                                                </div>
+                                                                                <small class="text-muted d-block mb-1">
+                                                                                    {{ test_result.correct }}/{{ test_result.total }} to'g'ri
+                                                                                    {% if show_override and test_result.is_overridden %}
+                                                                                        <span class="badge bg-warning text-dark ms-2">Override</span>
+                                                                                    {% endif %}
+                                                                                </small>
+                                                                                {% if show_override %}
+                                            <div class="d-flex justify-content-end gap-2">
+                                            <button class="btn btn-sm btn-outline-warning override-btn" 
+                                                data-stid="{{ test_result.student_test.id }}" 
+                                                data-current-score="{{ test_result.final_score }}" 
+                                                data-original-score="{{ test_result.score }}"
+                                                style="font-size:0.75rem;">Override</button>
+                                            <button class="btn btn-sm btn-outline-info history-btn" 
+                                                data-stid="{{ test_result.student_test.id }}" style="font-size:0.75rem;">History</button>
+                                            {% if test_result.is_overridden %}
+                                                <button class="btn btn-sm btn-outline-light revert-btn" 
+                                                    data-stid="{{ test_result.student_test.id }}" style="font-size:0.75rem;">Revert</button>
+                                            {% endif %}
+                                            </div>
+                                                                                {% endif %}
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="border-top pt-3">
+                                                                            <h6 class="mb-3">
+                                                                                <span class="me-2">📋</span>
+                                                                                Batafsil javoblar:
+                                                                            </h6>
+                                                                            {% for answer in test_result.answer_details %}
+                                                                                <div class="answer-item answer-block">
+                                                                                    <div class="question-text">
+                                                                                        <span class="me-2">❓</span>
+                                                                                        Savol: {{ answer.question.text }}
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-4">
+                                                                                            <strong style="color: rgba(255, 255, 255, 0.9);">Javob:</strong> 
+                                                                                            <span style="color: rgba(255, 255, 255, 0.8);">{{ answer.user_answer|default:"Javob berilmagan" }}</span>
+                                                                                        </div>
+                                                                                        <div class="col-md-4">
+                                                                                            <strong style="color: rgba(255, 255, 255, 0.9);">Status:</strong> 
+                                                                                            <span class="{% if answer.is_correct %}correct{% else %}incorrect{% endif %}">
+                                                                                                {% if answer.is_correct %}✅ To'g'ri{% else %}❌ Xato{% endif %}
+                                                                                            </span>
+                                                                                            <br>
+                                                                                            <strong style="color: rgba(255, 255, 255, 0.9);">Ball:</strong> 
+                                                                                            <span style="color: rgba(255, 255, 255, 0.8);">{{ answer.score }}</span>
+                                                                                        </div>
+                                                                                        <div class="col-md-4">
+                                                                                            {% if not answer.is_correct %}
+                                                                                                <strong style="color: rgba(255, 255, 255, 0.9);">To'g'ri javob:</strong> 
+                                                                                                <span class="correct">{{ answer.correct_answer }}</span>
+                                                                                            {% endif %}
+                                                                                            {% if show_override %}
+                                                                                                <div class="mt-2 text-end">
+                                                                                                    <button class="btn btn-sm btn-outline-secondary adjust-answer-btn" data-answer-id="{{ answer.id }}" data-current-score="{{ answer.score }}" data-is-correct="{{ answer.is_correct }}" data-text="{{ answer.user_answer|default:''|escape }}" style="font-size:0.6rem;">Edit</button>
+                                                                                                </div>
+                                                                                            {% endif %}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            {% endfor %}
+                                                                            {% if show_override and test_result.is_overridden %}
+                                                                                <div class="mt-3 p-2" style="background:rgba(255,193,7,0.15); border:1px solid rgba(255,193,7,0.4); border-radius:8px;">
+                                                                                    <strong style="color:#ffc107;">Override ma'lumotlari:</strong><br>
+                                                                                    Yakuniy ball: <span style="color:#fff; font-weight:600;">{{ test_result.final_score }}</span><br>
+                                                                                    {% if test_result.overridden_score %}O'zgartirilgan ball: {{ test_result.overridden_score }}<br>{% endif %}
+                                                                                    {% if test_result.pass_override %}Majburan o'tkazilgan ✅<br>{% endif %}
+                                                                                    Sabab: {{ test_result.override_reason|default:"—" }}<br>
+                                                                                    Kim: {% if test_result.overridden_by %}{{ test_result.overridden_by.username }}{% else %}-{% endif %}<br>
+                                                                                    Vaqt: {{ test_result.overridden_at|date:"d.m.Y H:i" }}
+                                                                                </div>
+                                                                            {% endif %}
+                                                                        </div>
+                                                                    </div>
+                                                                {% endfor %}
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                            
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-info">
+                <h4 style="color: rgba(255, 255, 255, 0.95);">
+                    <span class="me-2">ℹ️</span>
+                    Ma'lumot yo'q
+                </h4>
+                <p style="color: rgba(255, 255, 255, 0.8); margin: 0;">Hozircha hech qanday test natijalari mavjud emas.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        
+        <!-- PDF Filter Modal -->
+        <div class="modal fade" id="pdfFilterModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content" style="background:#1e1e2f; color:#fff; border:1px solid #444;">
+                    <div class="modal-header">
+                        <h5 class="modal-title">PDF Filtrlash</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="pdfFilterForm">
+                            <input type="hidden" id="pdf-subject-name">
+                            <div class="mb-3">
+                                <label class="form-label mb-1">Guruh (ixtiyoriy)</label>
+                                <select id="pdf-group" class="form-select form-select-sm" style="background:#111827; color:#fff; border:1px solid #333;">
+                                    <option value="">-- Barchasi --</option>
+                                    {% for g in groups_list %}
+                                        <option value="{{ g.name }}">{{ g.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label mb-1">Semestr (ixtiyoriy)</label>
+                                <select id="pdf-semester" class="form-select form-select-sm" style="background:#111827; color:#fff; border:1px solid #333;">
+                                    <option value="">-- Barchasi --</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </div>
+                            <div class="mb-1">
+                                <label class="form-label mb-1">Urinish filtrlari (ixtiyoriy)</label>
+                                <div class="row g-1 mb-1">
+                                    <div class="col-6">
+                                        <input type="number" min="1" id="pdf-attempt-exact" class="form-control form-control-sm" placeholder="Exact n" style="background:#111827; color:#fff; border:1px solid #333;">
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="number" min="1" id="pdf-attempt-gte" class="form-control form-control-sm" placeholder=">= n" style="background:#111827; color:#fff; border:1px solid #333;">
+                                    </div>
+                                </div>
+                                <div class="row g-1 mb-1">
+                                    <div class="col-6">
+                                        <input type="number" min="1" id="pdf-attempt-min" class="form-control form-control-sm" placeholder="Min" style="background:#111827; color:#fff; border:1px solid #333;">
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="number" min="1" id="pdf-attempt-max" class="form-control form-control-sm" placeholder="Max" style="background:#111827; color:#fff; border:1px solid #333;">
+                                    </div>
+                                </div>
+                                <div class="row g-1">
+                                    <div class="col-12">
+                                        <input type="number" min="1" id="pdf-attempt-nth" class="form-control form-control-sm" placeholder="Faqat n-urinish natijasi" style="background:#111827; color:#fff; border:1px solid #333;">
+                                    </div>
+                                </div>
+                                <small class="text-muted" style="font-size:0.6rem;">Ustuvorlik: n-urinish > exact > diapazon / >= . Bir vaqtning o'zida bir nechta kiritilsa yuqoridagi tartib bilan tanlanadi.</small>
+                            </div>
+                        </form>
+                        <div id="pdf-filter-alert" class="alert alert-danger py-2 px-3 d-none" style="font-size:0.7rem;"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Bekor</button>
+                        <button class="btn btn-primary btn-sm" id="pdf-filter-download">Yuklash</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Override Modal -->
+        <div class="modal fade" id="overrideModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content" style="background:#1e1e2f; color:#fff; border:1px solid #444;">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Natijani Override qilish</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="overrideForm">
+                            <input type="hidden" id="ov-stid">
+                            <div class="mb-3">
+                                <label class="form-label">Joriy ball</label>
+                                <input type="text" id="ov-current" class="form-control form-control-sm" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Yangi ball (ixtiyoriy)</label>
+                                <input type="number" step="0.01" min="0" id="ov-new-score" class="form-control form-control-sm" placeholder="Masalan: 70">
+                            </div>
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="ov-pass-override">
+                                <label class="form-check-label" for="ov-pass-override">Majburan o'tgan deb belgilash</label>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Sabab (majburiy)</label>
+                                <textarea id="ov-reason" class="form-control form-control-sm" rows="2" required></textarea>
+                            </div>
+                        </form>
+                        <div id="ov-alert" class="alert alert-danger py-2 px-3 d-none" style="font-size:0.8rem;"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Yopish</button>
+                        <button type="button" id="ov-submit" class="btn btn-warning btn-sm">Saqlash</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- History Modal -->
+        <div class="modal fade" id="historyModal" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content" style="background:#1e1e2f; color:#fff; border:1px solid #444;">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Override Tarixi</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="hist-loading" class="text-muted" style="font-size:0.85rem;">Yuklanmoqda...</div>
+                        <div class="table-responsive d-none" id="hist-table-wrap">
+                            <div class="mb-2" style="font-size:0.65rem;">
+                                <span class="badge bg-warning text-dark me-2">override</span>
+                                <span class="badge bg-secondary me-2">revert</span>
+                            </div>
+                            <table class="table table-sm table-dark align-middle mb-0" style="font-size:0.75rem;">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Old</th>
+                                        <th>Yangi</th>
+                                        <th>Pass O'zgarishi</th>
+                                        <th>Turi</th>
+                                        <th>Sabab</th>
+                                        <th>Kim</th>
+                                        <th>Vaqt</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="hist-tbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Yopish</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- Answer Adjust Modal (soddalashtirilgan) -->
+        <div class="modal fade" id="answerAdjustModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content" style="background:#1e1e2f; color:#fff; border:1px solid #444;">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Javobni tahrirlash</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="adj-answer-id">
+                        <div class="form-check form-switch mb-2">
+                            <input class="form-check-input" type="checkbox" id="adj-correct">
+                            <label class="form-check-label" for="adj-correct">To'g'ri deb belgilash</label>
+                        </div>
+                        <small class="text-muted" style="font-size:0.65rem;">Ball avtomatik: to‘g‘ri bo‘lsa maksimal, noto‘g‘ri bo‘lsa 0.</small>
+                        <div id="adj-alert" class="alert alert-danger py-2 px-3 d-none" style="font-size:0.7rem;"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Yopish</button>
+                        <button class="btn btn-primary btn-sm" id="adj-submit">Saqlash</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <script>
+    (function(){
+                // --- CSRF helper ---
+                function getCookie(name){
+                    const value = `; ${document.cookie}`;
+                    const parts = value.split(`; ${name}=`);
+                    if(parts.length === 2) return parts.pop().split(';').shift();
+                }
+                function apiFetch(url, opts){
+                    opts = opts || {};
+                    opts.headers = Object.assign({}, opts.headers||{}, { 'X-CSRFToken': getCookie('csrftoken') });
+                    return fetch(url, opts);
+                }
+
+                // --- Accordion state persistence ---
+                function collectOpenAccordions(){
+                    const open = Array.from(document.querySelectorAll('.accordion-collapse.show')).map(el=>el.id);
+                    localStorage.setItem('openAccordions', JSON.stringify(open));
+                }
+                function restoreOpenAccordions(){
+                    try {
+                        const raw = localStorage.getItem('openAccordions');
+                        if(!raw) return;
+                        const ids = JSON.parse(raw);
+                        ids.forEach(id => {
+                            const el = document.getElementById(id);
+                            if(el && !el.classList.contains('show')){
+                                // Force show
+                                el.classList.add('show');
+                                // Also set aria-expanded on trigger button if exists
+                                const btn = document.querySelector(`[data-bs-target='#${id}']`);
+                                if(btn) btn.setAttribute('aria-expanded','true');
+                            }
+                        });
+                        // Clear after restore to avoid stale state
+                        localStorage.removeItem('openAccordions');
+                    } catch(e) { /* ignore */ }
+                }
+                // Restore on load
+                document.addEventListener('DOMContentLoaded', restoreOpenAccordions);
+                const modalEl = document.getElementById('overrideModal');
+                let modal = null;
+                if (modalEl) modal = new bootstrap.Modal(modalEl);
+                const histModalEl = document.getElementById('historyModal');
+                let histModal = null; if(histModalEl) histModal = new bootstrap.Modal(histModalEl);
+                const answerAdjustEl = document.getElementById('answerAdjustModal');
+                let answerAdjustModal = null; if(answerAdjustEl) answerAdjustModal = new bootstrap.Modal(answerAdjustEl);
+
+                function showError(msg){
+                        const box = document.getElementById('ov-alert');
+                        box.textContent = msg; box.classList.remove('d-none');
+                        setTimeout(()=>box.classList.add('d-none'), 4000);
+                }
+
+                document.querySelectorAll('.override-btn').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                                document.getElementById('ov-stid').value = btn.dataset.stid;
+                                document.getElementById('ov-current').value = btn.dataset.currentScore;
+                                document.getElementById('ov-new-score').value = '';
+                                document.getElementById('ov-pass-override').checked = false;
+                                document.getElementById('ov-reason').value = '';
+                                modal.show();
+                        });
+                });
+
+                document.querySelectorAll('.revert-btn').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                                if(!confirm('Revert qilishni tasdiqlaysizmi?')) return;
+                                const stid = btn.dataset.stid;
+                apiFetch(`/api/student-tests/${stid}/revert/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                }).then(r=>r.json()).then(_=>{collectOpenAccordions(); window.location.reload();})
+                                    .catch(()=>alert('Xatolik yuz berdi'));
+                        });
+                });
+
+                document.getElementById('ov-submit').addEventListener('click', () => {
+                        const stid = document.getElementById('ov-stid').value;
+                        const newScore = document.getElementById('ov-new-score').value;
+                        const passOverride = document.getElementById('ov-pass-override').checked;
+                        const reason = document.getElementById('ov-reason').value.trim();
+                        if(!reason){ showError('Sabab kiritish majburiy'); return; }
+                        const payload = { reason: reason };
+                        if(newScore) payload.new_score = newScore;
+                        if(passOverride) payload.pass_override = true;
+                        apiFetch(`/api/student-tests/${stid}/override/`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        }).then(r=>{
+                                if(!r.ok) return r.json().then(d=>{throw new Error(d.detail||'Xatolik')});
+                                return r.json();
+                        }).then(_=>{collectOpenAccordions(); window.location.reload();})
+                            .catch(e=>showError(e.message));
+        });
+
+        document.querySelectorAll('.history-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const stid = btn.dataset.stid;
+                document.getElementById('hist-loading').classList.remove('d-none');
+                document.getElementById('hist-table-wrap').classList.add('d-none');
+                document.getElementById('hist-tbody').innerHTML='';
+                histModal.show();
+                                apiFetch(`/api/student-tests/${stid}/history/`).then(r=>r.json()).then(data => {
+                    const tb = document.getElementById('hist-tbody');
+                    data.forEach((row, idx) => {
+                                                const tr = document.createElement('tr');
+                                                const cls = row.change_type === 'override' ? 'table-warning' : 'table-secondary';
+                                                tr.className = cls;
+                                                tr.innerHTML = `
+                            <td>${idx+1}</td>
+                            <td>${row.previous_score ?? ''}</td>
+                            <td>${row.new_score ?? ''}</td>
+                            <td>${row.previous_pass_override}→${row.new_pass_override}</td>
+                                                    <td>${row.change_type === 'override' ? 'override' : 'revert'}</td>
+                            <td>${row.reason || ''}</td>
+                            <td>${row.changed_by || ''}</td>
+                            <td>${row.changed_at ? new Date(row.changed_at).toLocaleString() : ''}</td>`;
+                        tb.appendChild(tr);
+                    });
+                    document.getElementById('hist-loading').classList.add('d-none');
+                    document.getElementById('hist-table-wrap').classList.remove('d-none');
+                }).catch(()=>{
+                    document.getElementById('hist-loading').textContent='Xatolik yuz berdi';
+                });
+            });
+        });
+
+        // --- Answer adjust (moved outside so Edit works without opening History) ---
+        function showAdjError(msg){
+            const box=document.getElementById('adj-alert');
+            if(!box) return;
+            box.textContent=msg; box.classList.remove('d-none');
+            setTimeout(()=>box.classList.add('d-none'),4000);
+        }
+
+        document.querySelectorAll('.adjust-answer-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const idInput = document.getElementById('adj-answer-id');
+                const chk = document.getElementById('adj-correct');
+                if(!idInput || !chk) return;
+                idInput.value = btn.dataset.answerId;
+                const raw = (btn.dataset.isCorrect||'').toLowerCase();
+                chk.checked = (raw === 'true');
+                if(answerAdjustModal) answerAdjustModal.show();
+            });
+        });
+
+        const adjSubmit = document.getElementById('adj-submit');
+        if(adjSubmit){
+            adjSubmit.addEventListener('click', () => {
+                const aid = document.getElementById('adj-answer-id').value;
+                const isCorrect = document.getElementById('adj-correct').checked;
+                                apiFetch(`/api/student-answers/${aid}/adjust/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ is_correct: isCorrect })
+                                }).then(r=>{ if(!r.ok) return r.json().then(d=>{throw new Error(d.detail||'Xatolik')}); return r.json(); })
+                                    .then(_=>{collectOpenAccordions(); window.location.reload();})
+                  .catch(e=>showAdjError(e.message));
+            });
+        }
+
+        // --- New UI interactions ---
+        const studentFilter = document.getElementById('studentFilter');
+        const toggleAnswers = document.getElementById('toggleAnswers');
+        const highlightOverride = document.getElementById('highlightOverride');
+        function applyFilter(){
+            const q = (studentFilter?.value || '').trim().toLowerCase();
+            document.querySelectorAll('.student-block').forEach(block => {
+                const hay = block.getAttribute('data-student') || '';
+                block.style.display = (!q || hay.includes(q)) ? '' : 'none';
+            });
+        }
+        studentFilter?.addEventListener('input', applyFilter);
+        function toggleAnswerVisibility(){
+            const show = toggleAnswers?.checked;
+            document.querySelectorAll('.answer-block').forEach(a=>{a.style.display = show ? '' : 'none';});
+        }
+        toggleAnswers?.addEventListener('change', toggleAnswerVisibility);
+        function applyOverrideHighlight(){
+            const enabled = highlightOverride?.checked;
+            document.querySelectorAll('.override-card').forEach(card=>{
+                if(enabled){card.classList.add('highlight-override');}
+                else {card.classList.remove('highlight-override');}
+            });
+        }
+        highlightOverride?.addEventListener('change', applyOverrideHighlight);
+        // Initial
+        applyFilter(); toggleAnswerVisibility(); applyOverrideHighlight();
+
+    // --- PDF Filter Modal Logic (har doim mavjud) ---
+        const pdfModalEl = document.getElementById('pdfFilterModal');
+        let pdfModal = null; if(pdfModalEl) pdfModal = new bootstrap.Modal(pdfModalEl);
+    document.querySelectorAll('.pdf-filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.getElementById('pdf-subject-name').value = btn.dataset.subject;
+                document.getElementById('pdf-group').value='';
+                document.getElementById('pdf-semester').value='';
+        ['exact','gte','min','max','nth'].forEach(s=>{const el=document.getElementById('pdf-attempt-'+s); if(el) el.value='';});
+                const alertBox = document.getElementById('pdf-filter-alert');
+                if(alertBox) alertBox.classList.add('d-none');
+                pdfModal.show();
+            });
+        });
+        const pdfDownloadBtn = document.getElementById('pdf-filter-download');
+        if(pdfDownloadBtn){
+            pdfDownloadBtn.addEventListener('click', () => {
+                const subject = document.getElementById('pdf-subject-name').value;
+                let url = `/api/test-api/export-subject/${encodeURIComponent(subject)}/pdf/`;
+                const params = new URLSearchParams();
+                const g = document.getElementById('pdf-group').value.trim(); if(g) params.append('group', g);
+                const s = document.getElementById('pdf-semester').value.trim(); if(s) params.append('semester', s);
+                const nth = document.getElementById('pdf-attempt-nth').value.trim();
+                const exact = document.getElementById('pdf-attempt-exact').value.trim();
+                const gte = document.getElementById('pdf-attempt-gte').value.trim();
+                const minv = document.getElementById('pdf-attempt-min').value.trim();
+                const maxv = document.getElementById('pdf-attempt-max').value.trim();
+                if(nth) params.append('attempt_nth', nth);
+                else if(exact) params.append('attempt_count', exact);
+                else {
+                    if(gte) params.append('attempt_gte', gte);
+                    if(minv) params.append('attempt_min', minv);
+                    if(maxv) params.append('attempt_max', maxv);
+                }
+                const qs = params.toString(); if(qs) url += `?${qs}`;
+                // Close modal then navigate
+                pdfModal.hide();
+                // Accordion state saqlash
+                collectOpenAccordions();
+                window.location.href = url;
+            });
+        }
+    })();
+    </script>
+</body>
+</html>

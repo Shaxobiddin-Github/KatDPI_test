@@ -1,0 +1,36 @@
+{# Global formula panel partial #}
+<button type="button" id="global-formula-toggle" title="Formula panel (Ctrl+M)">∑</button>
+<div id="global-formula-panel" class="global-formula-panel" aria-hidden="true">
+    <div class="gfp-header">
+        <strong style="font-size:.95rem;">Formulalar</strong>
+        <input type="text" id="gfp-search" placeholder="Qidirish (pi, frac, sqrt...)" />
+        <button type="button" id="gfp-close" class="gfp-close">×</button>
+    </div>
+    <div class="gfp-category-bar" id="gfp-cats"></div>
+    <div class="gfp-body" id="gfp-body"></div>
+        <div class="gfp-footer">
+                <span style="flex:1;">Ctrl+M • Ctrl+Alt+F,R,L • Wrap • Favorites/Oxirgi • Alias • Snippet</span>
+                <button type="button" id="gfp-add-snippet" class="gfp-add-snippet" title="Yangi snippet qo'shish">＋</button>
+                <a href="https://katex.org/docs/supported.html" target="_blank" rel="noopener" class="gfp-doc">Latex ↗</a>
+        </div>
+</div>
+<div id="gfp-snippet-modal" class="gfp-modal" aria-hidden="true" style="display:none;">
+    <div class="gfp-modal-content">
+        <div class="gfp-modal-head">
+            <strong>Snippet qo'shish</strong>
+            <button type="button" class="gfp-close-modal" id="gfp-close-snippet">×</button>
+        </div>
+        <div class="gfp-modal-body">
+            <label style="font-size:.75rem;font-weight:600;">Nom (alias):</label>
+            <input type="text" id="gfp-snippet-name" placeholder="mas: intab2" />
+            <label style="font-size:.75rem;font-weight:600; margin-top:6px;">LaTeX kod:</label>
+            <textarea id="gfp-snippet-code" rows="2" placeholder="mas: \\int_{a}^{b} f(x)\\,dx"></textarea>
+            <div class="gfp-snippet-actions">
+                <button type="button" id="gfp-save-snippet" class="gfp-save-btn">Saqlash</button>
+                <button type="button" id="gfp-cancel-snippet" class="gfp-cancel-btn">Bekor</button>
+            </div>
+            <small class="gfp-snippet-hint">Nom faqat harf/raqam/underskor. Kod MathJax bilan tekshiriladi.</small>
+            <div id="gfp-snippet-error" class="gfp-snippet-error" style="display:none;"></div>
+        </div>
+    </div>
+</div>

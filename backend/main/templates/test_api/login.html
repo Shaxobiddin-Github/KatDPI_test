@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>Test API Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background: url('/static/main/1.png') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .login-box {
+            background-color: #fff;
+            padding: 42px 32px 30px 32px;
+            border-radius: 16px;
+            box-shadow: 0 10px 32px rgba(44,54,110,0.12);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+            animation: fadeIn 0.7s;
+        }
+        @keyframes fadeIn { from {opacity:0; transform:translateY(10px);} to {opacity:1; transform:translateY(0);} }
+        h2 {
+            margin-bottom: 20px;
+            color: #234178;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 0.7px;
+        }
+        .login-icon {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            color: #3182ce;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            margin-top: 10px;
+        }
+        label {
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #425c88;
+            text-align: left;
+            font-size: 1.08rem;
+        }
+        input[type="text"] {
+            padding: 12px;
+            border: 1.5px solid #bed0ea;
+            border-radius: 8px;
+            font-size: 1.09rem;
+            margin-bottom: 20px;
+            background: #f7fbfe;
+            transition: border 0.16s, box-shadow 0.16s;
+            outline: none;
+        }
+        input[type="text"]:focus {
+            border-color: #3182ce;
+            background: #fff;
+            box-shadow: 0 0 0 2px #e8f0fc;
+        }
+        button {
+            background: linear-gradient(90deg,#3182ce 0%, #5faaff 100%);
+            color: white;
+            padding: 12px 0;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.13rem;
+            font-weight: 600;
+            letter-spacing: 0.7px;
+            cursor: pointer;
+            box-shadow: 0 4px 14px 0 rgba(49,130,206,0.10);
+            transition: background 0.14s, box-shadow 0.14s;
+        }
+        button:hover {
+            background: linear-gradient(90deg,#2365b1 0%, #3182ce 100%);
+            box-shadow: 0 6px 22px 0 rgba(49,130,206,0.15);
+        }
+        .error {
+            color: #d7263d;
+            background: #fdecef;
+            border-radius: 6px;
+            font-size: 1.01rem;
+            margin-bottom: 18px;
+            padding: 7px 0;
+            font-weight: 500;
+        }
+        @media (max-width: 520px) {
+            .login-box { padding: 24px 4vw 18px 4vw; border-radius: 12px; max-width: 99vw;}
+            h2 {font-size: 1.25rem;}
+            .login-icon {font-size: 1.6rem;}
+        }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <div class="login-icon">🔐</div>
+        <h2>Kirish (Access Code orqali)</h2>
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+        <form method="post">
+            {% csrf_token %}
+            <label for="access_code">Access Code:</label>
+            <input type="text" name="access_code" id="access_code" placeholder="Kodingizni kiriting" autocomplete="off" required>
+            <button type="submit">Kirish</button>
+        </form>
+    </div>
+</body>
+</html>

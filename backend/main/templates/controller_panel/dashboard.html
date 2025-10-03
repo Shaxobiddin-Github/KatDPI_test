@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>Controller Panel Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: url('/static/main/1.png') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Animated background particles */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)" opacity="0.6"><animate attributeName="cy" values="20;80;20" dur="4s" repeatCount="indefinite"/></circle><circle cx="80" cy="80" r="3" fill="rgba(255,255,255,0.08)" opacity="0.4"><animate attributeName="cx" values="80;20;80" dur="6s" repeatCount="indefinite"/></circle><circle cx="50" cy="50" r="1.5" fill="rgba(255,255,255,0.12)" opacity="0.8"><animate attributeName="r" values="1.5;3;1.5" dur="3s" repeatCount="indefinite"/></circle><circle cx="10" cy="60" r="2.5" fill="rgba(255,255,255,0.06)" opacity="0.5"><animate attributeName="cy" values="60;10;60" dur="5s" repeatCount="indefinite"/></circle><circle cx="90" cy="30" r="2" fill="rgba(255,255,255,0.1)" opacity="0.7"><animate attributeName="cx" values="90;10;90" dur="7s" repeatCount="indefinite"/></circle></svg>') repeat;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .dashboard-container {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
+        .dashboard-card {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .dashboard-header {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.15) 100%);
+            backdrop-filter: blur(10px);
+            padding: 40px 32px 32px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+        
+        .dashboard-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #667eea 100%);
+            background-size: 200% 100%;
+            animation: shimmer 3s linear infinite;
+        }
+        
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+        
+        .controller-icon {
+            font-size: 3.5rem;
+            margin-bottom: 16px;
+            display: block;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .dashboard-header h2 {
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 800;
+            font-size: 2.8rem;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            letter-spacing: -0.5px;
+        }
+        
+        .dashboard-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+        
+        .dashboard-body {
+            padding: 36px 32px 32px;
+        }
+        
+        .action-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        
+        .btn-create-test {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            border: none;
+            color: white;
+            padding: 14px 28px;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 0.3px;
+            box-shadow: 0 4px 16px rgba(40, 167, 69, 0.3);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-create-test:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(40, 167, 69, 0.4);
+            color: white;
+        }
+        
+        .section-title {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .test-card {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 28px;
+            margin-bottom: 20px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .test-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+        
+        .test-card:hover::before {
+            left: 100%;
+        }
+        
+        .test-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+        
+        .test-subject {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .test-subject:hover {
+            color: rgba(255, 255, 255, 1);
+        }
+        
+        .test-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .info-badge {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+            color: rgba(255, 255, 255, 0.95);
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+        }
+        
+        .status-badge {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4a 100%);
+            color: #8b4513;
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+        }
+        
+        .test-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        .btn-edit {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .btn-edit:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4);
+            color: white;
+        }
+        
+        .btn-delete {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .btn-delete:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+        }
+        
+        .no-tests-message {
+            background: rgba(255, 193, 7, 0.15);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+        }
+        
+        /* Modal Styles */
+        .modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .modal-header {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 24px 28px 20px;
+        }
+        
+        .modal-title {
+            font-weight: 700;
+            color: #2c3e50;
+            font-size: 1.3rem;
+        }
+        
+        .modal-body {
+            padding: 24px 28px;
+        }
+        
+        .question-item {
+            background: rgba(248, 249, 250, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .question-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .question-number {
+            font-weight: 700;
+            color: #667eea;
+            font-size: 1.1rem;
+        }
+        
+        .question-text {
+            color: #2c3e50;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 8px 0;
+        }
+        
+        .question-answer {
+            background: rgba(40, 167, 69, 0.1);
+            border-left: 4px solid #28a745;
+            padding: 12px 16px;
+            margin-top: 12px;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .question-image {
+            max-width: 120px;
+            max-height: 80px;
+            border-radius: 8px;
+            margin-top: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .dashboard-container {
+                padding: 20px 12px;
+            }
+            
+            .dashboard-card {
+                margin: 0 8px;
+            }
+            
+            .dashboard-header {
+                padding: 32px 20px 24px;
+            }
+            
+            .dashboard-header h2 {
+                font-size: 2.2rem;
+            }
+            
+            .controller-icon {
+                font-size: 2.8rem;
+            }
+            
+            .dashboard-body {
+                padding: 24px 20px;
+            }
+            
+            .test-card {
+                padding: 20px;
+            }
+            
+            .test-subject {
+                font-size: 1.3rem;
+            }
+            
+            .action-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .btn-create-test {
+                justify-content: center;
+            }
+            
+            .test-actions {
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .dashboard-header h2 {
+                font-size: 1.8rem;
+            }
+            
+            .controller-icon {
+                font-size: 2.4rem;
+            }
+            
+            .test-info {
+                flex-direction: column;
+            }
+            
+            .info-badge, .status-badge {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-card shadow">
+        <div class="dashboard-header" style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;">
+            <div>
+                <span class="controller-icon">🎛️</span>
+                <h2 style="display:inline-block;vertical-align:middle;">Controller Paneli</h2>
+                <p class="dashboard-subtitle">Testlarni boshqarish va nazorat qilish</p>
+                <div class="user-meta" style="margin-top:4px;font-size:0.9rem;color:#102a43;background:rgba(255,255,255,0.6);padding:6px 10px;border-radius:8px;display:inline-flex;flex-wrap:wrap;gap:8px;align-items:center;">
+                    <span><strong>{{ request.user.get_full_name|default:request.user.username }}</strong></span>
+                    <span style="opacity:.7;">| {{ request.user.get_role_display }}</span>
+                    {% if request.user.group %}<span class="badge bg-primary">Guruh: {{ request.user.group.name }}</span>{% endif %}
+                    {% if request.user.bulim %}<span class="badge bg-info text-dark">Bo'lim: {{ request.user.bulim.name }}</span>{% endif %}
+                    {% if request.user.kafedra %}<span class="badge bg-warning text-dark">Kafedra: {{ request.user.kafedra.name }}</span>{% endif %}
+                </div>
+            </div>
+            <div style="display:flex;gap:0.5rem;align-items:center;">
+                <a href="/api/controller-panel/help/" class="btn btn-info" style="font-weight:600;display:inline-flex;align-items:center;gap:8px;">
+                    <span style="font-size:1.2em;">❓</span> Foydalanish qo‘llanmasi
+                </a>
+                <a href="/api/controller-panel/logout/" class="btn btn-danger" style="font-weight:600;display:inline-flex;align-items:center;gap:8px;">
+                    <span style="font-size:1.2em;">🚪</span> Chiqish
+                </a>
+            </div>
+        </div>
+        <div class="dashboard-body">
+            <!-- Old action rowni yangilaymiz: Natijalar tugmasini ham qo‘shamiz -->
+
+            <div class="mb-3" style="max-width:350px;">
+                            <select class="form-select" id="dashboardActionsSelect">
+                                <option selected disabled>Amal tanlang...</option>
+                                <!-- Har doim controllerlarga ko'rinadi -->
+                                <option value="addtest">➕ Test yaratish</option>
+                                <option value="addinfo">➕ Malumot qushish</option>
+                                {% if request.user.is_superuser or request.user.is_staff %}
+                                    <option value="participated">⏳Qayta topshirish</option>
+                                    <option value="results">📊 Barcha natijalar</option>
+                                    <option value="users">👤 Foydalanuvchilar</option>
+                                {% endif %}
+                            </select>
+            </div>
+            <script>
+            document.getElementById('dashboardActionsSelect').addEventListener('change', function() {
+                var v = this.value;
+                if(v === 'addinfo') window.location.href = "/api/controller-panel/group-subjects/";
+                if(v === 'participated') {
+                    if({{ request.user.is_superuser|yesno:'true,false' }} || {{ request.user.is_staff|yesno:'true,false' }}) {
+                        window.location.href = "{% url 'participated_students_list' %}";
+                    } else { alert('Ruxsat yo\'q'); }
+                }
+                if(v === 'results') {
+                    if({{ request.user.is_superuser|yesno:'true,false' }} || {{ request.user.is_staff|yesno:'true,false' }}) {
+                        window.location.href = "/api/test-api/all-results/";
+                    } else { alert('Ruxsat yo\'q'); }
+                }
+                if(v === 'users') {
+                    if({{ request.user.is_superuser|yesno:'true,false' }} || {{ request.user.is_staff|yesno:'true,false' }}) {
+                        window.location.href = '/api/controller-panel/add-user/';
+                    } else { alert('Ruxsat yo\'q'); }
+                }
+                if(v === 'addtest') {
+                    var modal = new bootstrap.Modal(document.getElementById('addTestModal'));
+                    modal.show();
+                }
+            });
+            </script>
+
+            <div class="test-list-title mb-3">📋 Mavjud testlar:</div>
+<script>
+
+    
+
+document.addEventListener('DOMContentLoaded', function() {
+    var usersBtn = document.getElementById('usersBtn');
+    if (usersBtn) {
+        usersBtn.addEventListener('click', function(e) {
+            var isStaff = {{ request.user.is_staff|yesno:'true,false' }};
+            var isController = "{{ request.user.role|default:'' }}" === "controller";
+            if (isStaff && isController) {
+                window.location.href = '/api/controller-panel/add-user/';
+            } else {
+                e.preventDefault();
+                alert('Siz admin yoki controller emassiz!');
+            }
+        });
+    }
+});
+</script>
+            {% if tests %}
+                <ul class="list-group">
+                    {% for item in tests %}
+                        <li class="list-group-item p-0 border-0" style="background:transparent;">
+                            <div class="test-block d-flex flex-wrap align-items-center justify-content-between mb-2 p-3" style="background:#f7fbff;border-radius:14px;box-shadow:0 2px 12px 0 rgba(49,130,206,0.07);">
+                                <div class="fw-bold fs-5 text-primary mb-2 mb-md-0" style="min-width:120px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                                    <a href="/api/controller-panel/subject-questions/{{ item.test.subject.id }}/" class="subject-link" style="color:#2262a3;text-decoration:underline;">{{ item.subject_name }}</a>
+                                    {% if item.semester_label %}
+                                        <span class="badge" style="background:#eaf2ff;color:#2458a6;border:1px solid #c8dcff;border-radius:10px;padding:6px 10px;font-weight:600;">{{ item.semester_label }}-semestr</span>
+                                    {% endif %}
+                                </div>
+                                <div class="d-flex flex-wrap align-items-center mb-2 mb-md-0" style="gap:8px;">
+                                    <span class="badge px-3 py-2" style="background:linear-gradient(90deg,#3182ce 0%, #5faaff 100%);color:#fff;font-size:1.07rem;">{{ item.test.question_count }} savol | {{ item.test.total_score }} ball</span>
+                                    <span class="badge px-3 py-2" style="background:#ffe066;color:#7c5c00;font-size:1.07rem;">{{ item.status }}</span>
+                                </div>
+                                <div style="width:100%;font-size:0.97rem;color:#2262a3;margin-top:-6px;margin-bottom:2px;">
+                                    {% if item.test.group %}
+                                        Guruh: {{ item.test.group.name }}
+                                    {% endif %}
+                                    {% if item.test.kafedra %}
+                                        {% if item.test.group %} | {% endif %}Kafedra: {{ item.test.kafedra.name }}
+                                    {% endif %}
+                                    {% if item.test.bulim %}
+                                        {% if item.test.group or item.test.kafedra %} | {% endif %}Bo'lim: {{ item.test.bulim.name }}
+                                    {% endif %}
+                                </div>
+                                <div class="d-flex flex-wrap align-items-center gap-2 mt-2 mt-md-0">
+                                    <a href="/api/controller-panel/edit-test/{{ item.test.id }}/" class="btn btn-sm btn-outline-primary">✏️ Tahrirlash</a>
+                                    <form action="/api/controller-panel/delete-test/{{ item.test.id }}/" method="post" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Testni o‘chirishga ishonchingiz komilmi?')">🗑️ O‘chirish</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+        <style>
+        .test-block { transition: box-shadow 0.18s; }
+        .test-block:hover { box-shadow: 0 6px 24px 0 rgba(49,130,206,0.13); }
+        </style>
+                </ul>
+            {% else %}
+                <div class="alert alert-warning" role="alert">
+                    <h4 style="margin-bottom: 16px;">📝 Hech qanday test mavjud emas</h4>
+                    <p style="margin-bottom: 0; opacity: 0.8;">Yangi test yaratish uchun yuqoridagi tugmani bosing</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <!-- Modal and JS moved to end of body for proper Bootstrap behavior -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var btn = document.getElementById('testTargetBtn');
+            if(btn) {
+                btn.addEventListener('click', function() {
+                    var target = document.getElementById('testTargetSelect').value;
+                    if(target) {
+                        window.location.href = '/api/controller-panel/add-test/?target=' + target;
+                    }
+                });
+            }
+        });
+    </script>
+    <style>
+        .modal { z-index: 2000 !important; }
+    </style>
+    <!-- Modal (moved to end of body for z-index and JS correctness) -->
+    <div class="modal fade" id="addTestModal" tabindex="-1" aria-labelledby="addTestModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addTestModalLabel">Kim uchun test yaratmoqchisiz?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="mb-3">
+                        <select class="form-select" id="testTargetSelect" required>
+                            <option value="" selected disabled>Tanlang...</option>
+                            <option value="student">Talaba</option>
+                            <option value="tutor">Tutor</option>
+                            <option value="employee">Xodim</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-success" id="testTargetBtn">Davom etish</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+</body>
+
+
+
+    <!-- Modal oynasi -->
+
+
+    <!-- Modal oynasi (subjectQuestionsModal) - bu yerda block content ishlatilmaydi -->
+                        
+    </script>
+</body>
+</html>
