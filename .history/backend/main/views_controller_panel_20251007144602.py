@@ -897,11 +897,6 @@ def edit_test(request, test_id):
         test.question_count = question_count
         test.total_score = total_score
         test.duration = duration
-        # Yangilovchini belgilash
-        try:
-            test.updated_by = request.user
-        except Exception:
-            pass
         # --- Video yangilash logikasi ---
         # Maqsad: foydalanuvchi video URL yoki faylni o'zgartirmasa – mavjud ma'lumot saqlanib qoladi.
         # Faqat:

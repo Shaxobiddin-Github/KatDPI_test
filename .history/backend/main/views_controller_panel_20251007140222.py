@@ -897,11 +897,6 @@ def edit_test(request, test_id):
         test.question_count = question_count
         test.total_score = total_score
         test.duration = duration
-        # Yangilovchini belgilash
-        try:
-            test.updated_by = request.user
-        except Exception:
-            pass
         # --- Video yangilash logikasi ---
         # Maqsad: foydalanuvchi video URL yoki faylni o'zgartirmasa – mavjud ma'lumot saqlanib qoladi.
         # Faqat:
@@ -1094,7 +1089,6 @@ def add_test(request):
             context['error'] = 'Tanlangan kombinatsiya uchun yetarli savollar yo‘q.'
             return render(request, 'controller_panel/add_test.html', context)
         from main.models import TestQuestion
-        # updated_at may be non-null due to recent migration adding it with auto_now=True; ensure updated_by set
         test = Test.objects.create(
             group=None,
             subject=subject,
@@ -1104,7 +1098,6 @@ def add_test(request):
             duration=duration,
             minutes=minutes,
             created_by=request.user,
-            updated_by=request.user,
             video_url=video_url or None,
             video_file=video_file if video_file else None
         )

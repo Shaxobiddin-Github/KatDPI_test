@@ -662,20 +662,12 @@ def testapi_test(request, test_id):
     from main.models import StudentAnswer as _SA, TestQuestion as _TQ
     # Old chain question__testquestion__test noto'g'ri (Question->TestQuestion or reversed). To'g'ri usul: testga tegishli savollar ID larini olib, ular bo'yicha StudentAnswer bor-yo'qligini tekshirish.
     tq_qs = _TQ.objects.filter(test=test).values_list('question_id', flat=True)
-    # Talabaning ushbu TEST bo'yicha davom etayotgan (yakunlanmagan) javoblari bormi?
-    # Agar avvalgi urinish to'liq yakunlangan bo'lsa (StudentTest.completed=True) va retake ruxsat etilgan bo'lsa, video yana ko'rsatiladi.
-    active_answer_exists = _SA.objects.filter(
-        student_test__student=request.user,
-        student_test__test=test,
-        student_test__completed=False,
-        question_id__in=tq_qs
-    ).exists()
-    has_started = active_answer_exists
-    # Foydalanuvchi doimo avval videoni ko'rsin: har safar test sahifasiga kirganda (start=1 bilan chetlab o'tmasa)
-    if (getattr(test, 'video_url', None) or getattr(test, 'video_file', None)) and request.GET.get('start') != '1':
+    # StudentAnswer modeli student emas, student_test orqali talaba bilan bog'langan.
+    has_started = _SA.objects.filter(student_test__student=request.user, question_id__in=tq_qs).exists()
+    if (getattr(test, 'video_url', None) or getattr(test, 'video_file', None)) and not has_started:
         if request.method == 'POST' and request.POST.get('ack_video') == '1':
-            # Redirect with start=1 so second request testni o'zini ko'rsatadi
-            return redirect(f"{reverse('testapi_test', args=[test.id])}?start=1")
+            # Faqat tasdiqlash POST dan keyin real test sahifasiga o'tamiz
+            return redirect('testapi_test', test_id=test.id)
         return render(request, 'test_api/pretest_video.html', {'test': test})
     test_questions = list(TestQuestion.objects.filter(test=test))
     # Talaba shu testda qatnashganmi?
