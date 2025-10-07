@@ -1,0 +1,468 @@
+<!DOCTYPE>   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">TYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>Testda qatnashganlar ro'yxati</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons (ixtiyoriy, lekin pro ko‘rinish uchun foydali) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 70px;
+            background-color: #f8f9fa;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-card {
+            border: none;
+            border-radius: 15px;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 1.5rem;
+        }
+        .accordion-item {
+            border: none;
+            border-radius: 15px !important;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        
+        .accordion-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            font-weight: 600;
+            padding: 1.2rem 1.5rem;
+        }
+        
+        .accordion-button:not(.collapsed) {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: none;
+        }
+        
+        .accordion-button:focus {
+            box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.25);
+        }
+        
+        .accordion-body {
+            background: white;
+            padding: 1.5rem;
+        }
+        
+        .avatar-40 {
+            width: 45px; 
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+        .table {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .table thead th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            font-weight: 600;
+            padding: 1rem 0.75rem;
+        }
+        
+        .table tbody tr:hover {
+            background-color: rgba(102, 126, 234, 0.05);
+        }
+        
+        .btn {
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            border: none;
+        }
+        
+        .btn-outline-success {
+            border-color: #28a745;
+            color: #28a745;
+        }
+        
+        .btn-outline-primary {
+            border-color: #667eea;
+            color: #667eea;
+        }
+        
+        .badge {
+            border-radius: 20px;
+            padding: 0.4rem 0.8rem;
+            font-weight: 500;
+        }
+        
+        .modal-content {
+            border-radius: 15px;
+            border: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 15px 15px 0 0 !important;
+        }
+        
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        
+        .toast-container {
+            z-index: 1100;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow-sm">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-semibold" href="#">
+            ⚡ Controller Panel
+        </a>
+        <div class="d-flex">
+            <a href="/api/controller-panel/dashboard/" class="btn btn-outline-light">
+                🏠 Dashboard
+            </a>
+        </div>
+    </div>
+</nav>
+
+<!-- Toast (muvaffaqiyat xabari) -->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+                ✅ Qayta topshirishga ruxsat berildi!
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Yopish"></button>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <!-- CSRF token yashirin input (AJAX uchun) -->
+    <input type="hidden" id="csrfToken" value="{{ csrf_token }}">
+
+
+    <div class="d-flex align-items-center mb-4">
+        <span class="fs-1 me-3">🎯</span>
+        <h2 class="mb-0 fw-bold">Testda qatnashganlar ro'yxati</h2>
+    </div>
+
+    <!-- Bulk actions toolbar -->
+    <div class="section-card p-3 mb-3 d-flex align-items-center gap-2">
+        <div class="me-auto">
+            <span class="text-muted">📝 Belgilanganlar:</span>
+            <span id="selCount" class="badge bg-primary ms-1">0</span>
+        </div>
+        <button id="bulkAllowBtn" class="btn btn-success btn-sm" disabled>
+            <i class="bi bi-arrow-repeat me-1"></i> Belgilanganlarga ruxsat
+        </button>
+        <button id="bulkClearBtn" class="btn btn-outline-secondary btn-sm"><i class="bi bi-x-circle me-1"></i> Tozalash</button>
+    </div>
+
+
+
+        <div class="accordion" id="groupsAccordion">
+            {% for group, students in group_data.items %}
+                <div class="accordion-item mb-2">
+                    <h2 class="accordion-header d-flex align-items-center" id="groupHeading{{ forloop.counter }}">
+                        <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse" data-bs-target="#groupCollapse{{ forloop.counter }}" aria-expanded="false" aria-controls="groupCollapse{{ forloop.counter }}">
+                            👥 {{ group.name }} <span class="text-muted fs-6 ms-2">(Guruh)</span>
+                        </button>
+                        <div class="ms-auto pe-3">
+                            <button class="btn btn-outline-primary btn-sm allow-group-btn" data-group-id="{{ group.id }}">
+                                <i class="bi bi-arrow-repeat me-1"></i> Guruhga ruxsat
+                            </button>
+                        </div>
+                    </h2>
+                    <div id="groupCollapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="groupHeading{{ forloop.counter }}" data-bs-parent="#groupsAccordion">
+                        <div class="accordion-body">
+                            <div class="accordion" id="studentsAccordion{{ forloop.counter }}">
+                                {% for student, tests in students.items %}
+                                    <div class="accordion-item mb-2">
+                                        <h2 class="accordion-header" id="studentHeading{{ forloop.parentloop.counter }}_{{ forloop.counter }}">
+                                            <button class="accordion-button collapsed d-flex align-items-center gap-3" type="button" data-bs-toggle="collapse" data-bs-target="#studentCollapse{{ forloop.parentloop.counter }}_{{ forloop.counter }}" aria-expanded="false" aria-controls="studentCollapse{{ forloop.parentloop.counter }}_{{ forloop.counter }}">
+                                                <span class="avatar-40">{{ student.get_full_name|slice:":1" }}</span>
+                                                <span class="fw-semibold fs-6">{{ student.get_full_name }}</span>
+                                                <span class="badge bg-primary text-white ms-2">🎓 Talaba</span>
+                                            </button>
+                                        </h2>
+                                        <div id="studentCollapse{{ forloop.parentloop.counter }}_{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="studentHeading{{ forloop.parentloop.counter }}_{{ forloop.counter }}">
+                                            <div class="accordion-body">
+                                                <div class="table-responsive mt-2">
+                                                    <table class="table table-bordered table-sm align-middle mb-0">
+                                                        <thead class="table-light">
+                                                            <tr>
+                                                                <th style="width:34px;"><input type="checkbox" class="form-check-input select-all"/></th>
+                                                                <th>📚 Fan</th>
+                                                                <th>📅 Semestr</th>
+                                                                <th>🏆 Ball</th>
+                                                                <th>❓ Savollar</th>
+                                                                <th>✅ To'g'ri javoblar</th>
+                                                                <th>📊 Natija (%)</th>
+                                                                <th>🔄 Qayta topshirish</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for st in tests %}
+                                                                <tr>
+                                                                    <td><input type="checkbox" class="form-check-input row-check" data-stest-id="{{ st.id }}" {% if st.can_retake %}disabled{% endif %}/></td>
+                                                                    <td>{{ st.test.subject.name }}</td>
+                                                                    <td>{% if st.semester %}{{ st.semester.number }}{% else %}-{% endif %}</td>
+                                                                    <td>{{ st.total_score|floatformat:2 }}/{{ st.test.total_score }}</td>
+                                                                    <td>{{ st.question_ids|length }}</td>
+                                                                    <td>{{ st.correct_answers_count|default:'?' }}</td>
+                                                                    <td>{% if st.percent_result is not None %}{{ st.percent_result }}{% else %}-{% endif %}</td>
+                                                                    <td>
+                                                                        {% if not st.can_retake %}
+                                                                            <button class="btn btn-sm btn-outline-success allow-retake-btn d-inline-flex align-items-center gap-1" data-stest-id="{{ st.id }}">
+                                                                                <i class="bi bi-arrow-repeat"></i> Ruxsat berish
+                                                                            </button>
+                                                                        {% endif %}
+                                                                    </td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="retakeModal" tabindex="-1" aria-labelledby="retakeModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="retakeModalLabel">🔐 Qayta topshirishga ruxsat berish</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Yopish"></button>
+      </div>
+      <div class="modal-body">
+        <input type="password" id="retakePassword" class="form-control" placeholder="Parolni kiriting">
+        <input type="hidden" id="retakeStestId">
+        <div class="invalid-feedback mt-2" id="retakeError"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light border" data-bs-dismiss="modal">Bekor qilish</button>
+        <button type="button" class="btn btn-primary" id="confirmRetakeBtn">
+            <span class="default-label">Tasdiqlash</span>
+            <span class="spinner-border spinner-border-sm ms-2 d-none" role="status" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+(function() {
+    // Accordion ochilganlarini saqlash uchun
+    function saveAccordionState() {
+        // Ochiq group va student collapse idlarini saqlaymiz
+        const openGroups = Array.from(document.querySelectorAll('.accordion-collapse[id^="groupCollapse"].show')).map(e => e.id);
+        const openStudents = Array.from(document.querySelectorAll('.accordion-collapse[id^="studentCollapse"].show')).map(e => e.id);
+        localStorage.setItem('openGroups', JSON.stringify(openGroups));
+        localStorage.setItem('openStudents', JSON.stringify(openStudents));
+    }
+    function restoreAccordionState() {
+        const openGroups = JSON.parse(localStorage.getItem('openGroups') || '[]');
+        const openStudents = JSON.parse(localStorage.getItem('openStudents') || '[]');
+        openGroups.forEach(id => {
+            const el = document.getElementById(id);
+            if (el && !el.classList.contains('show')) {
+                new bootstrap.Collapse(el, {toggle: true});
+            }
+        });
+        openStudents.forEach(id => {
+            const el = document.getElementById(id);
+            if (el && !el.classList.contains('show')) {
+                new bootstrap.Collapse(el, {toggle: true});
+            }
+        });
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        restoreAccordionState();
+        document.querySelectorAll('.accordion-collapse').forEach(function(el) {
+            el.addEventListener('shown.bs.collapse', saveAccordionState);
+            el.addEventListener('hidden.bs.collapse', saveAccordionState);
+        });
+    });
+
+    // Modalni ochish: qaysi item bosilgani eslab qolamiz
+    let currentTriggerBtn = null;
+
+    function getCSRFToken() {
+        const hidden = document.getElementById('csrfToken')?.value;
+        if (hidden && hidden !== 'NOTPROVIDED') return hidden;
+        // Cookie'dan olish (fallback)
+        const match = document.cookie.split('; ').find(r => r.startsWith('csrftoken='));
+        return match ? match.split('=')[1] : '';
+    }
+
+    document.querySelectorAll('.allow-retake-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            currentTriggerBtn = btn;
+            document.getElementById('retakeStestId').value = btn.getAttribute('data-stest-id');
+            document.getElementById('retakePassword').value = '';
+            document.getElementById('retakeError').textContent = '';
+            document.getElementById('retakePassword').classList.remove('is-invalid');
+
+            const modal = new bootstrap.Modal(document.getElementById('retakeModal'));
+            modal.show();
+        });
+    });
+
+    const confirmBtn = document.getElementById('confirmRetakeBtn');
+    confirmBtn.addEventListener('click', function() {
+        const stestId = document.getElementById('retakeStestId').value;
+        const password = document.getElementById('retakePassword').value;
+        const errorEl = document.getElementById('retakeError');
+        const pwdEl = document.getElementById('retakePassword');
+
+        // UI: loading holat
+        confirmBtn.disabled = true;
+        confirmBtn.querySelector('.spinner-border').classList.remove('d-none');
+        errorEl.textContent = '';
+        pwdEl.classList.remove('is-invalid');
+
+        fetch("{% url 'allow_retake' %}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': getCSRFToken()
+            },
+            body: 'stest_id=' + encodeURIComponent(stestId) + '&password=' + encodeURIComponent(password)
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Loading off
+            confirmBtn.disabled = false;
+            confirmBtn.querySelector('.spinner-border').classList.add('d-none');
+
+            if (data.success) {
+                // Modalni yopish
+                const modalEl = document.getElementById('retakeModal');
+                const modal = bootstrap.Modal.getInstance(modalEl);
+                modal.hide();
+
+                // Toast ko‘rsatish
+                const toastEl = document.getElementById('successToast');
+                const toast = new bootstrap.Toast(toastEl, { delay: 2200 });
+                toast.show();
+
+                // UI yangilash: sahifani to'liq yangilaymiz, shunda can_retake backenddan to'g'ri keladi
+                // Reloaddan oldin accordion holatini saqlash allaqachon ishlaydi
+                window.location.reload();
+            } else {
+                errorEl.textContent = data.error || 'Xatolik yuz berdi';
+                pwdEl.classList.add('is-invalid');
+            }
+        })
+        .catch(() => {
+            confirmBtn.disabled = false;
+            confirmBtn.querySelector('.spinner-border').classList.add('d-none');
+            errorEl.textContent = 'Tarmoq xatosi. Qayta urinib ko‘ring.';
+            pwdEl.classList.add('is-invalid');
+        });
+    });
+
+    // Enter bosilganda tasdiqlash
+    document.getElementById('retakePassword').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            confirmBtn.click();
+        }
+    });
+
+    // --- Bulk selection logic ---
+    const selCount = document.getElementById('selCount');
+    const bulkBtn = document.getElementById('bulkAllowBtn');
+    const bulkClear = document.getElementById('bulkClearBtn');
+    function updateSel(){
+        const ids = Array.from(document.querySelectorAll('.row-check:checked')).map(c=>c.dataset.stestId);
+        selCount.textContent = ids.length;
+        bulkBtn.disabled = ids.length===0;
+        return ids;
+    }
+    document.addEventListener('change', function(e){
+        if(e.target.classList.contains('row-check')) updateSel();
+        if(e.target.classList.contains('select-all')){
+            const tbody = e.target.closest('table').querySelector('tbody');
+            const box = e.target;
+            tbody.querySelectorAll('.row-check:not(:disabled)').forEach(c=>{ c.checked = box.checked; });
+            updateSel();
+        }
+    });
+    bulkClear.addEventListener('click', function(){
+        document.querySelectorAll('.row-check').forEach(c=>c.checked=false); updateSel();
+    });
+    bulkBtn.addEventListener('click', function(){
+        const ids = updateSel(); if(!ids.length) return;
+        const password = prompt('Parolni kiriting:');
+        if(password===null) return;
+        fetch('{% url "allow_retake_bulk" %}', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-CSRFToken': getCSRFToken() },
+            body: 'stest_ids=' + encodeURIComponent(ids.join(',')) + '&password=' + encodeURIComponent(password)
+        }).then(r=>r.json()).then(data=>{
+            if(data.success){ window.location.reload(); } else { alert(data.error||'Xatolik'); }
+        }).catch(()=>alert('Tarmoq xatosi'));
+    });
+
+    // Group-level allow button
+    document.querySelectorAll('.allow-group-btn').forEach(function(btn){
+        btn.addEventListener('click', function(){
+            const gid = btn.dataset.groupId; const password = prompt('Parolni kiriting:'); if(password===null) return;
+            fetch('{% url "allow_retake_group" %}', {
+                method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-CSRFToken': getCSRFToken() },
+                body: 'group_id=' + encodeURIComponent(gid) + '&password=' + encodeURIComponent(password)
+            }).then(r=>r.json()).then(data=>{ if(data.success){ window.location.reload(); } else { alert(data.error||'Xatolik'); } })
+              .catch(()=>alert('Tarmoq xatosi'));
+        });
+    });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+YANGI TZ BUYICHA KUPLAB UZGARISHLAR BULADI 
+
+1.  savol qushishda guruh tanlashni olib tashlash kerak faqat semestr va fan tanlanadi yani guruhga biriktirmaymiz savolni guruh maydonini olib tashlaymiz 
+
+2.  CONTROLLER test yaratishda guruhga biriktirmaydi testni fanni  tanlaydi va semestrni tanlaydi va testga istalgan nom berishi mumkin buladi 
+
+va testga savollarni fanni tanlagach semestrni tanlaydi va aynan shu fan+semestr buyicha filterlab fan+semestr buyicha qaysi ustozlar savol qushgan bulsa shular chiqishi kerak va istalgan teacher ni tanlab 
+
