@@ -1196,14 +1196,7 @@ def assign_test(request, test_id):
             for gid, tests in conflict_map.items():
                 conflict_details.append({
                     'group_name': group_by_id[gid].name if gid in group_by_id else str(gid),
-                    'tests': [
-                        {
-                            'id': t.id,
-                            # Test modelda "title" maydoni yo'q, shuning uchun ko'rsatish uchun sub'ekt va savol sonidan foydalanamiz
-                            'title': f"{t.subject.name} ({t.question_count} savol)"
-                        }
-                        for t in tests
-                    ]
+                    'tests': [{'id': t.id, 'title': t.title} for t in tests]
                 })
             # Sort for stable output
             conflict_details.sort(key=lambda x: x['group_name'])

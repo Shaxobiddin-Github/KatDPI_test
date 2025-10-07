@@ -573,7 +573,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                                 <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Testni o‘chirishga ishonchingiz komilmi?')">🗑️ O‘chirish</button>
                                             </form>
                                         {% else %}
-                                            <a href="/api/controller-panel/assign-test/{{ item.test.id }}/" class="btn btn-sm btn-outline-secondary">🔗 Biriktirish</a>
                                             <a href="/api/controller-panel/extend-test-time/{{ item.test.id }}/" class="btn btn-sm btn-outline-success">⏱ Vaqt qo‘shish</a>
                                         {% endif %}
                                 </div>

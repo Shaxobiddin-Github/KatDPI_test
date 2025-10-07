@@ -1180,39 +1180,22 @@ def assign_test(request, test_id):
         subject_id = test.subject_id
         semester_id = getattr(test, 'semester_id', None)
         from django.db.models import Q
-        conflict_map = {}  # gid -> queryset of conflicting tests
+        conflict_groups = []
         for gid in valid_ids:
             q = Test.objects.filter(subject_id=subject_id)
             if semester_id:
                 q = q.filter(semester_id=semester_id)
             q = q.filter(Q(group_id=gid) | Q(groups__id=gid)).exclude(id=test.id).distinct()
             if q.exists():
-                conflict_map[gid] = list(q)
-        if conflict_map:
+                conflict_groups.append(gid)
+        if conflict_groups:
             assigned_ids = set(test.groups.values_list('id', flat=True))
-            # Build detailed conflict data: list of {group_name, tests:[{id,title}...]}
-            conflict_details = []
-            group_by_id = {g.id: g for g in all_groups}
-            for gid, tests in conflict_map.items():
-                conflict_details.append({
-                    'group_name': group_by_id[gid].name if gid in group_by_id else str(gid),
-                    'tests': [
-                        {
-                            'id': t.id,
-                            # Test modelda "title" maydoni yo'q, shuning uchun ko'rsatish uchun sub'ekt va savol sonidan foydalanamiz
-                            'title': f"{t.subject.name} ({t.question_count} savol)"
-                        }
-                        for t in tests
-                    ]
-                })
-            # Sort for stable output
-            conflict_details.sort(key=lambda x: x['group_name'])
+            conflict_names = ', '.join([g.name for g in all_groups if g.id in conflict_groups])
             return render(request, 'controller_panel/assign_test.html', {
                 'test': test,
                 'groups': all_groups,
                 'assigned_ids': assigned_ids,
-                'conflict_details': conflict_details,
-                'error': "Tanlangan ayrim guruhlar uchun shu fan va semestr bo'yicha allaqachon test mavjud. Iltimos ularni olib tashlang."
+                'error': f'Ushbu guruh(lar) uchun shu fan va semestr bo\'yicha allaqachon test mavjud: {conflict_names}'
             })
         test.groups.set(valid_ids)
         return redirect('controller_dashboard')
