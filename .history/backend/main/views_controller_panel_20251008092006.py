@@ -4,7 +4,6 @@
 from main.models import GroupSubject, Semester, Group, Bulim, Kafedra, Subject, University, Faculty
 # AJAX orqali guruhga tegishli fanlarni qaytaruvchi endpoint
 from django.views.decorators.http import require_GET
-from django.contrib import messages
 @require_GET
 def get_subjects_by_group(request):
     group_id = request.GET.get('group_id')
@@ -819,7 +818,6 @@ def edit_test(request, test_id):
         return redirect('/api/login/')
     # Ruxsat: staff/superuser har doim tahrirlaydi. Oddiy controller faqat testda hali hech kim qatnashmagan bo'lsa.
     test = get_object_or_404(Test, id=test_id, created_by=request.user)
-    from main.models import StudentTest
     if not (request.user.is_superuser or request.user.is_staff):
         from django.db.models import Exists, OuterRef
         has_participation = StudentTest.objects.filter(test_id=test.id).exists()
@@ -979,7 +977,6 @@ def delete_test(request, test_id):
     if not hasattr(request.user, 'role') or request.user.role != 'controller':
         return redirect('/api/login/')
     test = get_object_or_404(Test, id=test_id, created_by=request.user)
-    from main.models import StudentTest
     if request.method == 'POST':
         if request.user.is_superuser or request.user.is_staff:
             Test.objects.filter(id=test.id).delete()
