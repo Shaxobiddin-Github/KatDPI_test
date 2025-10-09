@@ -264,8 +264,8 @@ def export_subject_results_pdf(request, subject_name):
         else:
             container_value = resolve_group_name(stest) or '-'
 
-        group = container_value
-        container_cell = Paragraph(group, wrap_style)
+    group = container_value
+    container_cell = Paragraph(group, wrap_style)
         question_ids = stest.question_ids if stest.question_ids else []
         if question_ids:
             answers = StudentAnswer.objects.filter(student_test=stest, question_id__in=question_ids)

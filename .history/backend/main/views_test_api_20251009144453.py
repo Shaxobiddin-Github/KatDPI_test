@@ -135,8 +135,6 @@ def export_subject_results_pdf(request, subject_name):
     normal_style = ParagraphStyle('normal', parent=styles['Normal'], fontSize=11, spaceAfter=4)
     right_style = ParagraphStyle('right', parent=styles['Normal'], alignment=TA_RIGHT, fontSize=11)
     left_style = ParagraphStyle('left', parent=styles['Normal'], alignment=TA_LEFT, fontSize=11)
-    # For wrapping long container names (kafedra/bo'lim/guruh)
-    wrap_style = ParagraphStyle('tdwrap', parent=styles['Normal'], alignment=TA_LEFT, fontSize=10, leading=11)
 
     # Header (title, date right, subtitle)
     elements.append(Spacer(1, 10))
@@ -161,21 +159,6 @@ def export_subject_results_pdf(request, subject_name):
     filter_bits = []
     if group_name:
         filter_bits.append(f"Guruh: {group_name}")
-    # Human-readable names for selected kafedra/bulim (if provided)
-    kafedra_name = None
-    bulim_name = None
-    if k_id:
-        try:
-            kafedra_name = Kafedra.objects.only('name').get(id=k_id).name
-            filter_bits.append(f"Kafedra: {kafedra_name}")
-        except Exception:
-            pass
-    if b_id:
-        try:
-            bulim_name = Bulim.objects.only('name').get(id=b_id).name
-            filter_bits.append(f"Bo'lim: {bulim_name}")
-        except Exception:
-            pass
     if semester_number:
         filter_bits.append(f"Semestr: {semester_number}")
     if attempt_nth_val:
@@ -191,17 +174,12 @@ def export_subject_results_pdf(request, subject_name):
             filter_bits.append(f"Oraliq: {span_min}–{span_max} marta (oxirgi urinish)")
   
     # Table header and data
-    container_header = "Guruh"
-    if k_id:
-        container_header = "Kafedra"
-    elif b_id:
-        container_header = "Bo'lim"
     is_super = request.user.is_authenticated and request.user.is_superuser
     if is_super:
         data = [[
             Paragraph('<b>№</b>', ParagraphStyle('th', alignment=TA_CENTER, fontSize=10)),
             Paragraph('<b>F.I.O</b>', ParagraphStyle('th', alignment=TA_CENTER, fontSize=10)),
-            Paragraph(f'<b>{container_header}</b>', ParagraphStyle('th', alignment=TA_CENTER, fontSize=10)),
+            Paragraph('<b>Guruh</b>', ParagraphStyle('th', alignment=TA_CENTER, fontSize=10)),
             Paragraph('<b>Savollar soni</b>', ParagraphStyle('th', alignment=TA_CENTER, fontSize=10)),
             Paragraph('<b>To\'g\'ri javoblar</b>', ParagraphStyle('th', alignment=TA_CENTER, fontSize=10)),
             Paragraph('<b>Asl foiz</b>', ParagraphStyle('th', alignment=TA_CENTER, fontSize=10)),
@@ -214,58 +192,31 @@ def export_subject_results_pdf(request, subject_name):
         data = [[
             Paragraph('<b>№</b>', ParagraphStyle('th', alignment=TA_CENTER, fontSize=10)),
             Paragraph('<b>F.I.O</b>', ParagraphStyle('th', alignment=TA_CENTER, fontSize=10)),
-            Paragraph(f'<b>{container_header}</b>', ParagraphStyle('th', alignment=TA_CENTER, fontSize=10)),
+            Paragraph('<b>Guruh</b>', ParagraphStyle('th', alignment=TA_CENTER, fontSize=10)),
             Paragraph('<b>Savollar soni</b>', ParagraphStyle('th', alignment=TA_CENTER, fontSize=10)),
             Paragraph('<b>To\'g\'ri javoblar</b>', ParagraphStyle('th', alignment=TA_CENTER, fontSize=10)),
             Paragraph('<b>Foizi</b>', ParagraphStyle('th', alignment=TA_CENTER, fontSize=10)),
         ]]
     for idx, stest in enumerate(tests, 1):
         fio = f"{stest.student.last_name.upper()} {stest.student.first_name.upper()} {getattr(stest.student, 'middle_name', '')}".strip()
-        # Konteyner nomi: Kafedra/Bulim tanlangan bo'lsa shuni, aks holda guruh.
-        def resolve_group_name(st):
-            gname = None
-            if st.test.group:
-                gname = st.test.group.name
-            elif getattr(st, 'group', None):
-                gname = st.group.name if st.group else None
-            if gname is None:
-                student_group = getattr(st.student, 'group', None)
-                try:
-                    if student_group and st.test.groups.filter(id=student_group.id).exists():
-                        gname = student_group.name
-                except Exception:
-                    pass
-            if gname is None:
-                first_grp = st.test.groups.first()
-                if first_grp:
-                    gname = first_grp.name
-            return gname
-
-        container_value = '-'
-        if k_id:
-            # Kafedra nomini chiqarish
+        # Guruh nomi fallback zanjiri: test.group -> stest.group -> student.group (agar M2M da) -> first test.groups -> '-'
+        gname = None
+        if stest.test.group:
+            gname = stest.test.group.name
+        elif getattr(stest, 'group', None):
+            gname = stest.group.name if stest.group else None
+        if gname is None:
+            student_group = getattr(stest.student, 'group', None)
             try:
-                if getattr(stest.test, 'kafedra', None):
-                    container_value = stest.test.kafedra.name
-                elif hasattr(stest.test, 'kafedralar') and stest.test.kafedralar.exists():
-                    kc = stest.test.kafedralar.count()
-                    container_value = stest.test.kafedralar.first().name if kc == 1 else f"Kafedralar ({kc})"
+                if student_group and stest.test.groups.filter(id=student_group.id).exists():
+                    gname = student_group.name
             except Exception:
-                container_value = '-'
-        elif b_id:
-            try:
-                if getattr(stest.test, 'bulim', None):
-                    container_value = stest.test.bulim.name
-                elif hasattr(stest.test, 'bulimlar') and stest.test.bulimlar.exists():
-                    bc = stest.test.bulimlar.count()
-                    container_value = stest.test.bulimlar.first().name if bc == 1 else f"Bo'limlar ({bc})"
-            except Exception:
-                container_value = '-'
-        else:
-            container_value = resolve_group_name(stest) or '-'
-
-        group = container_value
-        container_cell = Paragraph(group, wrap_style)
+                pass
+        if gname is None:
+            first_grp = stest.test.groups.first()
+            if first_grp:
+                gname = first_grp.name
+        group = gname or '-'
         question_ids = stest.question_ids if stest.question_ids else []
         if question_ids:
             answers = StudentAnswer.objects.filter(student_test=stest, question_id__in=question_ids)
@@ -293,7 +244,7 @@ def export_subject_results_pdf(request, subject_name):
             data.append([
                 idx,
                 Paragraph(fio, ParagraphStyle('td', alignment=TA_LEFT, fontSize=10)),
-                container_cell,
+                group,
                 total,
                 correct,
                 original_percent_str,
@@ -306,7 +257,7 @@ def export_subject_results_pdf(request, subject_name):
             data.append([
                 idx,
                 Paragraph(fio, ParagraphStyle('td', alignment=TA_LEFT, fontSize=10)),
-                container_cell,
+                group,
                 total,
                 correct,
                 final_percent_str
@@ -317,7 +268,7 @@ def export_subject_results_pdf(request, subject_name):
         table = Table(data, colWidths=[8*mm, 45*mm, 20*mm, 18*mm, 18*mm, 18*mm, 18*mm, 18*mm, 15*mm, 18*mm])
     else:
         table = Table(data, colWidths=[13*mm, 55*mm, 28*mm, 28*mm, 38*mm, 22*mm])
-    ts = TableStyle([
+    table.setStyle(TableStyle([
         ('FONTNAME', (0,0), (-1,0), 'Helvetica-Bold'),
         ('FONTSIZE', (0,0), (-1,0), 10),
         ('FONTSIZE', (0,1), (-1,-1), 10),
@@ -336,10 +287,7 @@ def export_subject_results_pdf(request, subject_name):
         ('RIGHTPADDING', (0,0), (-1,-1), 3),
         ('TOPPADDING', (0,0), (-1,-1), 3),
         ('BOTTOMPADDING', (0,0), (-1,-1), 3),
-    ])
-    # Override: make container column text left-aligned for data rows, allow wrapping
-    ts.add('ALIGN', (2,1), (2,-1), 'LEFT')
-    table.setStyle(ts)
+    ]))
     elements.append(table)
     elements.append(Spacer(1, 12))
 

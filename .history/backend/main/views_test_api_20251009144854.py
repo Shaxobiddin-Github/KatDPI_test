@@ -135,8 +135,6 @@ def export_subject_results_pdf(request, subject_name):
     normal_style = ParagraphStyle('normal', parent=styles['Normal'], fontSize=11, spaceAfter=4)
     right_style = ParagraphStyle('right', parent=styles['Normal'], alignment=TA_RIGHT, fontSize=11)
     left_style = ParagraphStyle('left', parent=styles['Normal'], alignment=TA_LEFT, fontSize=11)
-    # For wrapping long container names (kafedra/bo'lim/guruh)
-    wrap_style = ParagraphStyle('tdwrap', parent=styles['Normal'], alignment=TA_LEFT, fontSize=10, leading=11)
 
     # Header (title, date right, subtitle)
     elements.append(Spacer(1, 10))
@@ -265,7 +263,6 @@ def export_subject_results_pdf(request, subject_name):
             container_value = resolve_group_name(stest) or '-'
 
         group = container_value
-        container_cell = Paragraph(group, wrap_style)
         question_ids = stest.question_ids if stest.question_ids else []
         if question_ids:
             answers = StudentAnswer.objects.filter(student_test=stest, question_id__in=question_ids)
@@ -293,7 +290,7 @@ def export_subject_results_pdf(request, subject_name):
             data.append([
                 idx,
                 Paragraph(fio, ParagraphStyle('td', alignment=TA_LEFT, fontSize=10)),
-                container_cell,
+                group,
                 total,
                 correct,
                 original_percent_str,
@@ -306,7 +303,7 @@ def export_subject_results_pdf(request, subject_name):
             data.append([
                 idx,
                 Paragraph(fio, ParagraphStyle('td', alignment=TA_LEFT, fontSize=10)),
-                container_cell,
+                group,
                 total,
                 correct,
                 final_percent_str
@@ -317,7 +314,7 @@ def export_subject_results_pdf(request, subject_name):
         table = Table(data, colWidths=[8*mm, 45*mm, 20*mm, 18*mm, 18*mm, 18*mm, 18*mm, 18*mm, 15*mm, 18*mm])
     else:
         table = Table(data, colWidths=[13*mm, 55*mm, 28*mm, 28*mm, 38*mm, 22*mm])
-    ts = TableStyle([
+    table.setStyle(TableStyle([
         ('FONTNAME', (0,0), (-1,0), 'Helvetica-Bold'),
         ('FONTSIZE', (0,0), (-1,0), 10),
         ('FONTSIZE', (0,1), (-1,-1), 10),
@@ -336,10 +333,7 @@ def export_subject_results_pdf(request, subject_name):
         ('RIGHTPADDING', (0,0), (-1,-1), 3),
         ('TOPPADDING', (0,0), (-1,-1), 3),
         ('BOTTOMPADDING', (0,0), (-1,-1), 3),
-    ])
-    # Override: make container column text left-aligned for data rows, allow wrapping
-    ts.add('ALIGN', (2,1), (2,-1), 'LEFT')
-    table.setStyle(ts)
+    ]))
     elements.append(table)
     elements.append(Spacer(1, 12))
 

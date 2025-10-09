@@ -1475,3 +1475,395 @@ INFO 2025-10-09 11:59:03,098 basehttp "GET /api/test-api/all-results/ HTTP/1.1" 
 INFO 2025-10-09 11:59:03,150 basehttp "GET /favicon.ico HTTP/1.1" 200 68
 INFO 2025-10-09 12:04:36,307 autoreload C:\project\TEST\backend\main\views_controller_panel.py changed, reloading.
 INFO 2025-10-09 12:04:37,025 autoreload Watching for file changes with StatReloader
+INFO 2025-10-09 12:12:56,353 basehttp "GET /api/test-api/all-results/ HTTP/1.1" 200 419119
+INFO 2025-10-09 12:12:56,384 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 12:13:20,086 basehttp "GET /api/test-api/export-subject/matematika/pdf/ HTTP/1.1" 200 9925
+INFO 2025-10-09 14:24:43,222 basehttp "GET /api/test-api/all-results/ HTTP/1.1" 200 419119
+INFO 2025-10-09 14:24:43,266 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 14:24:47,111 basehttp "GET /admin/main/semester/add/ HTTP/1.1" 200 14102
+INFO 2025-10-09 14:24:47,128 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-10-09 14:24:47,163 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 14:25:02,710 basehttp "GET /admin/main/user/ HTTP/1.1" 200 22675
+INFO 2025-10-09 14:25:02,727 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-10-09 14:25:02,755 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 14:25:05,210 basehttp "GET /admin/main/user/2/change/ HTTP/1.1" 200 40646
+INFO 2025-10-09 14:25:05,227 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-10-09 14:25:05,230 basehttp "GET /static/admin/js/calendar.js HTTP/1.1" 200 9141
+INFO 2025-10-09 14:25:05,230 basehttp "GET /static/admin/js/admin/DateTimeShortcuts.js HTTP/1.1" 200 19319
+INFO 2025-10-09 14:25:05,231 basehttp "GET /static/admin/img/icon-no.svg HTTP/1.1" 200 560
+INFO 2025-10-09 14:25:05,265 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 14:25:09,601 basehttp "POST /admin/main/user/2/change/ HTTP/1.1" 302 0
+INFO 2025-10-09 14:25:09,621 basehttp "GET /admin/main/user/ HTTP/1.1" 200 22882
+INFO 2025-10-09 14:25:09,636 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-10-09 14:25:09,659 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 14:25:21,837 basehttp "GET /api/login/ HTTP/1.1" 200 6100
+INFO 2025-10-09 14:25:21,873 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 14:25:36,163 basehttp "POST /api/login/ HTTP/1.1" 302 0
+INFO 2025-10-09 14:25:36,178 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 24309
+INFO 2025-10-09 14:25:36,354 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 14:25:40,646 basehttp "GET /api/test-api/all-results/ HTTP/1.1" 200 357285
+INFO 2025-10-09 14:25:41,000 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 14:25:52,788 basehttp "GET /api/test-api/export-subject/matematika/pdf/ HTTP/1.1" 200 9466
+INFO 2025-10-09 14:26:28,535 basehttp "GET /api/topic-panel/3/manage/ HTTP/1.1" 302 0
+INFO 2025-10-09 14:26:28,547 basehttp "GET /api/login/?next=/api/topic-panel/3/manage/ HTTP/1.1" 200 6100
+INFO 2025-10-09 14:26:28,644 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 14:26:37,799 basehttp "POST /api/login/?next=/api/topic-panel/3/manage/ HTTP/1.1" 200 6302
+INFO 2025-10-09 14:26:37,843 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 14:26:54,338 basehttp "POST /api/login/?next=/api/topic-panel/3/manage/ HTTP/1.1" 302 0
+INFO 2025-10-09 14:26:54,349 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 24309
+INFO 2025-10-09 14:26:54,452 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 14:27:00,095 basehttp "GET /api/test-api/all-results/ HTTP/1.1" 200 357285
+INFO 2025-10-09 14:27:00,149 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 14:31:21,332 autoreload C:\project\TEST\backend\main\views_test_api.py changed, reloading.
+INFO 2025-10-09 14:31:21,903 autoreload Watching for file changes with StatReloader
+INFO 2025-10-09 14:31:35,493 autoreload C:\project\TEST\backend\main\views_test_api.py changed, reloading.
+INFO 2025-10-09 14:31:36,006 autoreload Watching for file changes with StatReloader
+INFO 2025-10-09 14:31:46,920 basehttp "GET /api/test-api/all-results/ HTTP/1.1" 200 357285
+INFO 2025-10-09 14:31:46,969 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 14:32:34,632 basehttp "GET /api/test-api/all-results/ HTTP/1.1" 200 360013
+INFO 2025-10-09 14:32:34,668 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+WARNING 2025-10-09 14:32:35,750 log Not Found: /api/test-api/subject/matematika/groups/
+WARNING 2025-10-09 14:32:35,751 basehttp "GET /api/test-api/subject/matematika/groups/ HTTP/1.1" 404 38277
+INFO 2025-10-09 14:32:36,459 autoreload C:\project\TEST\backend\main\urls_test_api.py changed, reloading.
+INFO 2025-10-09 14:32:37,002 autoreload Watching for file changes with StatReloader
+INFO 2025-10-09 14:32:50,417 basehttp "GET /api/test-api/export-subject/matematika/pdf/?kafedra_id=10 HTTP/1.1" 200 9532
+INFO 2025-10-09 14:33:08,410 basehttp "GET /api/test-api/all-results/ HTTP/1.1" 200 360013
+INFO 2025-10-09 14:33:08,446 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 14:33:09,296 basehttp "GET /api/test-api/subject/matematika/groups/ HTTP/1.1" 200 14
+INFO 2025-10-09 14:33:56,512 autoreload C:\project\TEST\backend\main\urls_test_api.py changed, reloading.
+INFO 2025-10-09 14:33:57,007 autoreload Watching for file changes with StatReloader
+INFO 2025-10-09 14:34:50,651 autoreload C:\project\TEST\backend\main\views_test_api.py changed, reloading.
+INFO 2025-10-09 14:34:51,192 autoreload Watching for file changes with StatReloader
+INFO 2025-10-09 14:34:59,597 basehttp "GET /api/test-api/all-results/ HTTP/1.1" 200 360013
+INFO 2025-10-09 14:34:59,657 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+ERROR 2025-10-09 14:35:00,788 log Internal Server Error: /api/test-api/subject/matematika/groups/
+Traceback (most recent call last):
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\backend\main\views_test_api.py", line 1192, in subject_groups_for_results
+    for st in st_qs:
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\query.py", line 384, in __iter__
+    self._fetch_all()
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\query.py", line 1949, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 1610, in execute_sql
+    sql, params = self.as_sql()
+                  ^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 766, in as_sql
+    extra_select, order_by, group_by = self.pre_sql_setup(
+                                       ^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 85, in pre_sql_setup
+    self.setup_query(with_col_aliases=with_col_aliases)
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 74, in setup_query
+    self.select, self.klass_info, self.annotation_col_map = self.get_select(
+                                                            ^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 299, in get_select
+    related_klass_infos = self.get_related_selections(select, select_mask)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 1241, in get_related_selections
+    if not select_related_descend(f, restricted, requested, select_mask):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\query_utils.py", line 395, in select_related_descend
+    raise FieldError(
+django.core.exceptions.FieldError: Field StudentTest.student cannot be both deferred and traversed using select_related at the same time.
+ERROR 2025-10-09 14:35:00,791 basehttp "GET /api/test-api/subject/matematika/groups/ HTTP/1.1" 500 118532
+INFO 2025-10-09 14:35:02,308 autoreload C:\project\TEST\backend\main\views_test_api.py changed, reloading.
+INFO 2025-10-09 14:35:02,860 autoreload Watching for file changes with StatReloader
+INFO 2025-10-09 14:35:07,556 basehttp "GET /api/test-api/all-results/ HTTP/1.1" 200 360013
+INFO 2025-10-09 14:35:07,595 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+ERROR 2025-10-09 14:35:09,519 log Internal Server Error: /api/test-api/subject/matematika/groups/
+Traceback (most recent call last):
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\backend\main\views_test_api.py", line 1198, in subject_groups_for_results
+    for st in st_qs:
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\query.py", line 384, in __iter__
+    self._fetch_all()
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\query.py", line 1949, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 1610, in execute_sql
+    sql, params = self.as_sql()
+                  ^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 766, in as_sql
+    extra_select, order_by, group_by = self.pre_sql_setup(
+                                       ^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 85, in pre_sql_setup
+    self.setup_query(with_col_aliases=with_col_aliases)
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 74, in setup_query
+    self.select, self.klass_info, self.annotation_col_map = self.get_select(
+                                                            ^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 299, in get_select
+    related_klass_infos = self.get_related_selections(select, select_mask)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 1241, in get_related_selections
+    if not select_related_descend(f, restricted, requested, select_mask):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\query_utils.py", line 395, in select_related_descend
+    raise FieldError(
+django.core.exceptions.FieldError: Field StudentTest.student cannot be both deferred and traversed using select_related at the same time.
+ERROR 2025-10-09 14:35:09,522 basehttp "GET /api/test-api/subject/matematika/groups/ HTTP/1.1" 500 118532
+INFO 2025-10-09 14:35:16,923 basehttp "GET /api/test-api/all-results/ HTTP/1.1" 200 360013
+INFO 2025-10-09 14:35:16,959 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+ERROR 2025-10-09 14:35:17,957 log Internal Server Error: /api/test-api/subject/rus-tili/groups/
+Traceback (most recent call last):
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\backend\main\views_test_api.py", line 1198, in subject_groups_for_results
+    for st in st_qs:
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\query.py", line 384, in __iter__
+    self._fetch_all()
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\query.py", line 1949, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 1610, in execute_sql
+    sql, params = self.as_sql()
+                  ^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 766, in as_sql
+    extra_select, order_by, group_by = self.pre_sql_setup(
+                                       ^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 85, in pre_sql_setup
+    self.setup_query(with_col_aliases=with_col_aliases)
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 74, in setup_query
+    self.select, self.klass_info, self.annotation_col_map = self.get_select(
+                                                            ^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 299, in get_select
+    related_klass_infos = self.get_related_selections(select, select_mask)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 1241, in get_related_selections
+    if not select_related_descend(f, restricted, requested, select_mask):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\query_utils.py", line 395, in select_related_descend
+    raise FieldError(
+django.core.exceptions.FieldError: Field StudentTest.student cannot be both deferred and traversed using select_related at the same time.
+ERROR 2025-10-09 14:35:17,958 basehttp "GET /api/test-api/subject/rus-tili/groups/ HTTP/1.1" 500 118508
+ERROR 2025-10-09 14:35:20,239 log Internal Server Error: /api/test-api/subject/matematika/groups/
+Traceback (most recent call last):
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\backend\main\views_test_api.py", line 1198, in subject_groups_for_results
+    for st in st_qs:
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\query.py", line 384, in __iter__
+    self._fetch_all()
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\query.py", line 1949, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 1610, in execute_sql
+    sql, params = self.as_sql()
+                  ^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 766, in as_sql
+    extra_select, order_by, group_by = self.pre_sql_setup(
+                                       ^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 85, in pre_sql_setup
+    self.setup_query(with_col_aliases=with_col_aliases)
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 74, in setup_query
+    self.select, self.klass_info, self.annotation_col_map = self.get_select(
+                                                            ^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 299, in get_select
+    related_klass_infos = self.get_related_selections(select, select_mask)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 1241, in get_related_selections
+    if not select_related_descend(f, restricted, requested, select_mask):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\query_utils.py", line 395, in select_related_descend
+    raise FieldError(
+django.core.exceptions.FieldError: Field StudentTest.student cannot be both deferred and traversed using select_related at the same time.
+ERROR 2025-10-09 14:35:20,241 basehttp "GET /api/test-api/subject/matematika/groups/ HTTP/1.1" 500 118532
+INFO 2025-10-09 14:35:42,666 basehttp "GET /api/test-api/all-results/ HTTP/1.1" 200 360013
+INFO 2025-10-09 14:35:42,700 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+ERROR 2025-10-09 14:35:43,934 log Internal Server Error: /api/test-api/subject/matematika/groups/
+Traceback (most recent call last):
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\backend\main\views_test_api.py", line 1198, in subject_groups_for_results
+    for st in st_qs:
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\query.py", line 384, in __iter__
+    self._fetch_all()
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\query.py", line 1949, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 1610, in execute_sql
+    sql, params = self.as_sql()
+                  ^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 766, in as_sql
+    extra_select, order_by, group_by = self.pre_sql_setup(
+                                       ^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 85, in pre_sql_setup
+    self.setup_query(with_col_aliases=with_col_aliases)
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 74, in setup_query
+    self.select, self.klass_info, self.annotation_col_map = self.get_select(
+                                                            ^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 299, in get_select
+    related_klass_infos = self.get_related_selections(select, select_mask)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 1241, in get_related_selections
+    if not select_related_descend(f, restricted, requested, select_mask):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\query_utils.py", line 395, in select_related_descend
+    raise FieldError(
+django.core.exceptions.FieldError: Field StudentTest.student cannot be both deferred and traversed using select_related at the same time.
+ERROR 2025-10-09 14:35:43,936 basehttp "GET /api/test-api/subject/matematika/groups/ HTTP/1.1" 500 118532
+WARNING 2025-10-09 14:35:47,878 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-10-09 14:35:47,878 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3492
+ERROR 2025-10-09 14:35:56,016 log Internal Server Error: /api/test-api/subject/matematika/groups/
+Traceback (most recent call last):
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\backend\main\views_test_api.py", line 1198, in subject_groups_for_results
+    for st in st_qs:
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\query.py", line 384, in __iter__
+    self._fetch_all()
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\query.py", line 1949, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 1610, in execute_sql
+    sql, params = self.as_sql()
+                  ^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 766, in as_sql
+    extra_select, order_by, group_by = self.pre_sql_setup(
+                                       ^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 85, in pre_sql_setup
+    self.setup_query(with_col_aliases=with_col_aliases)
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 74, in setup_query
+    self.select, self.klass_info, self.annotation_col_map = self.get_select(
+                                                            ^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 299, in get_select
+    related_klass_infos = self.get_related_selections(select, select_mask)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 1241, in get_related_selections
+    if not select_related_descend(f, restricted, requested, select_mask):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\query_utils.py", line 395, in select_related_descend
+    raise FieldError(
+django.core.exceptions.FieldError: Field StudentTest.student cannot be both deferred and traversed using select_related at the same time.
+ERROR 2025-10-09 14:35:56,016 basehttp "GET /api/test-api/subject/matematika/groups/ HTTP/1.1" 500 118797
+INFO 2025-10-09 14:37:08,481 basehttp "GET /api/test-api/all-results/ HTTP/1.1" 200 360013
+WARNING 2025-10-09 14:37:08,516 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-10-09 14:37:08,516 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3492
+INFO 2025-10-09 14:37:08,958 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+ERROR 2025-10-09 14:37:10,887 log Internal Server Error: /api/test-api/subject/matematika/groups/
+Traceback (most recent call last):
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\backend\main\views_test_api.py", line 1198, in subject_groups_for_results
+    for st in st_qs:
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\query.py", line 384, in __iter__
+    self._fetch_all()
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\query.py", line 1949, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 1610, in execute_sql
+    sql, params = self.as_sql()
+                  ^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 766, in as_sql
+    extra_select, order_by, group_by = self.pre_sql_setup(
+                                       ^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 85, in pre_sql_setup
+    self.setup_query(with_col_aliases=with_col_aliases)
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 74, in setup_query
+    self.select, self.klass_info, self.annotation_col_map = self.get_select(
+                                                            ^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 299, in get_select
+    related_klass_infos = self.get_related_selections(select, select_mask)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\sql\compiler.py", line 1241, in get_related_selections
+    if not select_related_descend(f, restricted, requested, select_mask):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\project\TEST\env\Lib\site-packages\django\db\models\query_utils.py", line 395, in select_related_descend
+    raise FieldError(
+django.core.exceptions.FieldError: Field StudentTest.student cannot be both deferred and traversed using select_related at the same time.
+ERROR 2025-10-09 14:37:10,888 basehttp "GET /api/test-api/subject/matematika/groups/ HTTP/1.1" 500 118797
+INFO 2025-10-09 14:37:19,460 autoreload C:\project\TEST\backend\main\views_test_api.py changed, reloading.
+INFO 2025-10-09 14:37:20,012 autoreload Watching for file changes with StatReloader
+INFO 2025-10-09 14:39:23,724 basehttp "GET /api/test-api/all-results/ HTTP/1.1" 200 360013
+WARNING 2025-10-09 14:39:23,762 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-10-09 14:39:23,763 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3492
+INFO 2025-10-09 14:39:24,161 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 14:39:25,136 basehttp "GET /api/test-api/subject/matematika/groups/ HTTP/1.1" 200 33
+INFO 2025-10-09 14:39:33,302 basehttp "GET /api/test-api/export-subject/matematika/pdf/?group=409 HTTP/1.1" 200 9315
+INFO 2025-10-09 14:42:47,776 autoreload C:\project\TEST\backend\main\views_test_api.py changed, reloading.
+INFO 2025-10-09 14:42:48,339 autoreload Watching for file changes with StatReloader
+INFO 2025-10-09 14:44:04,078 autoreload C:\project\TEST\backend\main\views_test_api.py changed, reloading.
+INFO 2025-10-09 14:44:04,594 autoreload Watching for file changes with StatReloader
+INFO 2025-10-09 14:44:53,008 autoreload C:\project\TEST\backend\main\views_test_api.py changed, reloading.
+INFO 2025-10-09 14:44:53,539 autoreload Watching for file changes with StatReloader
+INFO 2025-10-09 14:46:04,165 basehttp "GET /api/test-api/all-results/ HTTP/1.1" 200 360013
+WARNING 2025-10-09 14:46:04,192 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-10-09 14:46:04,193 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3492
+INFO 2025-10-09 14:46:04,660 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 14:46:05,324 basehttp "GET /api/test-api/subject/matematika/groups/ HTTP/1.1" 200 33
+INFO 2025-10-09 14:46:11,350 basehttp "GET /api/test-api/export-subject/matematika/pdf/?bulim_id=1 HTTP/1.1" 200 9278
+INFO 2025-10-09 14:46:30,220 basehttp "GET /api/test-api/subject/rus-tili/groups/ HTTP/1.1" 200 14
+INFO 2025-10-09 14:46:35,740 basehttp "GET /api/test-api/export-subject/rus-tili/pdf/?bulim_id=1 HTTP/1.1" 200 9297
+INFO 2025-10-09 14:48:54,618 autoreload C:\project\TEST\backend\main\views_test_api.py changed, reloading.
+INFO 2025-10-09 14:48:55,152 autoreload Watching for file changes with StatReloader
+INFO 2025-10-09 14:52:16,209 basehttp "GET /api/test-api/all-results/ HTTP/1.1" 200 360013
+WARNING 2025-10-09 14:52:16,241 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-10-09 14:52:16,241 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3492
+INFO 2025-10-09 14:52:16,662 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 14:52:17,438 basehttp "GET /api/test-api/subject/matematika/groups/ HTTP/1.1" 200 33
+INFO 2025-10-09 14:52:18,893 basehttp "GET /api/test-api/export-subject/matematika/pdf/ HTTP/1.1" 200 9539
+INFO 2025-10-09 14:52:25,490 basehttp "GET /api/test-api/subject/matematika/groups/ HTTP/1.1" 200 33
+INFO 2025-10-09 14:52:28,593 basehttp "GET /api/test-api/export-subject/matematika/pdf/?kafedra_id=10 HTTP/1.1" 200 9385
+INFO 2025-10-09 14:54:06,089 autoreload C:\project\TEST\backend\main\views_test_api.py changed, reloading.
+INFO 2025-10-09 14:54:06,618 autoreload Watching for file changes with StatReloader
+INFO 2025-10-09 14:54:39,480 autoreload C:\project\TEST\backend\main\views_test_api.py changed, reloading.
+INFO 2025-10-09 14:54:40,033 autoreload Watching for file changes with StatReloader
+INFO 2025-10-09 14:57:17,938 basehttp "GET /api/test-api/all-results/ HTTP/1.1" 200 360013
+WARNING 2025-10-09 14:57:17,984 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-10-09 14:57:17,984 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3492
+INFO 2025-10-09 14:57:18,390 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 14:57:19,485 basehttp "GET /api/test-api/subject/matematika/groups/ HTTP/1.1" 200 33
+INFO 2025-10-09 14:57:23,023 basehttp "GET /api/test-api/export-subject/matematika/pdf/?kafedra_id=10 HTTP/1.1" 200 9420
+INFO 2025-10-09 14:57:31,292 autoreload C:\project\TEST\backend\main\views_test_api.py changed, reloading.
+INFO 2025-10-09 14:57:31,811 autoreload Watching for file changes with StatReloader
