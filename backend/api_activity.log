@@ -1294,3 +1294,8 @@ INFO 2025-10-09 10:32:27,553 basehttp "GET /favicon.ico HTTP/1.1" 200 68
 INFO 2025-10-09 10:32:39,411 basehttp "GET /api/teacher-panel/dashboard/ HTTP/1.1" 200 93489
 INFO 2025-10-09 10:32:55,847 autoreload C:\project\TEST\backend\main\views_controller_panel.py changed, reloading.
 INFO 2025-10-09 10:32:57,176 autoreload Watching for file changes with StatReloader
+INFO 2025-10-09 10:38:39,510 autoreload C:\project\TEST\backend\main\views_teacher_panel.py changed, reloading.
+INFO 2025-10-09 10:38:41,045 autoreload Watching for file changes with StatReloader
+INFO 2025-10-09 10:40:37,530 basehttp "GET /api/teacher-panel/dashboard/ HTTP/1.1" 200 94515
+INFO 2025-10-09 10:45:06,168 autoreload C:\project\TEST\backend\main\views_teacher_panel.py changed, reloading.
+INFO 2025-10-09 10:45:07,257 autoreload Watching for file changes with StatReloader

@@ -172,19 +172,22 @@ def teacher_dashboard(request):
     questions = (
         Question.objects
         .filter(created_by=request.user)
-        .select_related('subject', 'semester', 'group')
-        .order_by('group__name', 'subject__name', 'semester__number', 'created_at')
+        .select_related('subject', 'semester', 'group', 'kafedra', 'bulim')
+        .order_by('group__name', 'subject__name', 'semester__number', 'kafedra__name', 'bulim__name', 'created_at')
     )
 
     grouped = {}
     for q in questions:
-        key = (q.group_id, q.subject_id, q.semester_id)
+        # Guruhlash: group + subject + semester + (kafedra yoki bulim)
+        key = (q.group_id, q.subject_id, q.semester_id, q.kafedra_id, q.bulim_id)
         if key not in grouped:
             grouped[key] = {
                 'group': q.group,  # None bo'lsa global eski
                 'subject': q.subject,
                 'semester': q.semester,
-                'accordion_id': f"{q.group_id or 'global'}-{q.subject_id}-{q.semester_id or 'none'}",
+                'kafedra': getattr(q, 'kafedra', None),
+                'bulim': getattr(q, 'bulim', None),
+                'accordion_id': f"{q.group_id or 'global'}-{q.subject_id}-{q.semester_id or 'none'}-{q.kafedra_id or 'nokaf'}-{q.bulim_id or 'nobul'}",
                 'questions': []
             }
         grouped[key]['questions'].append(q)

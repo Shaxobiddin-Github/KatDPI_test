@@ -651,7 +651,17 @@
                                 {% if item.group %}Guruh: {{ item.group.name }}{% else %}Global (eski){% endif %}
                             </span>
                             <span class="badge bg-secondary" style="font-size:0.75rem;">
-                                {% if item.semester %}{{ item.semester.number }}-semestr{% else %}Semestrsiz{% endif %}
+                                {% if item.semester %}
+                                    {{ item.semester.number }}-semestr
+                                {% else %}
+                                    {% if item.kafedra %}
+                                        Kafedra: {{ item.kafedra.name }}
+                                    {% elif item.bulim %}
+                                        Bo'lim: {{ item.bulim.name }}
+                                    {% else %}
+                                        Semestrsiz
+                                    {% endif %}
+                                {% endif %}
                             </span>
                             <span class="ms-auto opacity-75" style="font-size:0.85rem;">Savollar: {{ item.questions|length }}</span>
                         </div>
