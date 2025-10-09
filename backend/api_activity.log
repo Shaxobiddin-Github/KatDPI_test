@@ -1299,3 +1299,179 @@ INFO 2025-10-09 10:38:41,045 autoreload Watching for file changes with StatReloa
 INFO 2025-10-09 10:40:37,530 basehttp "GET /api/teacher-panel/dashboard/ HTTP/1.1" 200 94515
 INFO 2025-10-09 10:45:06,168 autoreload C:\project\TEST\backend\main\views_teacher_panel.py changed, reloading.
 INFO 2025-10-09 10:45:07,257 autoreload Watching for file changes with StatReloader
+INFO 2025-10-09 11:03:18,001 basehttp "GET /api/topic-panel/dashboard/ HTTP/1.1" 200 28327
+INFO 2025-10-09 11:09:32,687 basehttp "GET /api/topic-panel/3/manage/ HTTP/1.1" 200 44711
+INFO 2025-10-09 11:10:55,145 basehttp "GET /api/topic-panel/test/8/results/ HTTP/1.1" 200 10835
+INFO 2025-10-09 11:11:01,724 basehttp "GET /api/topic-panel/3/manage/ HTTP/1.1" 200 44711
+INFO 2025-10-09 11:15:54,782 autoreload C:\project\TEST\backend\main\views_test_api.py changed, reloading.
+INFO 2025-10-09 11:15:55,386 autoreload Watching for file changes with StatReloader
+INFO 2025-10-09 11:16:02,713 autoreload C:\project\TEST\backend\main\views_controller_panel.py changed, reloading.
+INFO 2025-10-09 11:16:03,272 autoreload Watching for file changes with StatReloader
+INFO 2025-10-09 11:21:39,305 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 200 33265
+INFO 2025-10-09 11:21:39,341 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:22:03,943 basehttp "POST /api/controller-panel/allow-retake/ HTTP/1.1" 200 17
+INFO 2025-10-09 11:22:03,973 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 200 32785
+INFO 2025-10-09 11:22:04,025 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:22:06,280 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 35345
+INFO 2025-10-09 11:22:06,297 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:22:08,820 basehttp "GET /api/controller-panel/add-user/ HTTP/1.1" 200 23159
+INFO 2025-10-09 11:22:08,842 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+WARNING 2025-10-09 11:22:27,035 log Not Found: /api/logout/
+WARNING 2025-10-09 11:22:27,036 basehttp "GET /api/logout/ HTTP/1.1" 404 32983
+INFO 2025-10-09 11:22:27,070 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:22:28,673 basehttp "GET /api/login/tutor/dashboard/ HTTP/1.1" 200 2592
+INFO 2025-10-09 11:22:28,695 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:22:29,078 basehttp "GET /api/test-api/result/139/ HTTP/1.1" 200 14973
+INFO 2025-10-09 11:22:29,106 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:22:31,624 basehttp "GET /api/test-api/test/83/ HTTP/1.1" 200 4940
+INFO 2025-10-09 11:22:31,648 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:22:32,911 basehttp "GET /api/login/tutor/dashboard/ HTTP/1.1" 200 2592
+INFO 2025-10-09 11:22:32,944 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:22:33,124 basehttp "GET /api/login/ HTTP/1.1" 200 6100
+INFO 2025-10-09 11:22:33,160 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:22:38,601 basehttp "POST /api/login/ HTTP/1.1" 302 0
+INFO 2025-10-09 11:22:38,609 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 18681
+INFO 2025-10-09 11:22:38,645 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:22:41,704 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 35345
+INFO 2025-10-09 11:22:41,727 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:34:33,941 basehttp "GET /api/controller-panel/assign-test/78/ HTTP/1.1" 200 5516
+INFO 2025-10-09 11:34:33,965 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:34:36,597 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 35345
+INFO 2025-10-09 11:34:36,626 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:34:39,514 basehttp "GET /api/controller-panel/edit-test/78/ HTTP/1.1" 200 7690
+INFO 2025-10-09 11:34:39,530 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:34:40,629 basehttp "POST /api/controller-panel/edit-test/78/ HTTP/1.1" 302 0
+INFO 2025-10-09 11:34:40,650 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 35329
+INFO 2025-10-09 11:34:40,672 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:34:43,035 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 20527
+INFO 2025-10-09 11:34:43,061 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:34:44,811 basehttp "GET /api/test-api/test/78/ HTTP/1.1" 200 1768
+INFO 2025-10-09 11:34:45,727 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:34:46,103 basehttp "POST /api/test-api/test/78/ HTTP/1.1" 302 0
+INFO 2025-10-09 11:34:46,149 basehttp "GET /api/test-api/test/78/?start=1 HTTP/1.1" 200 79691
+INFO 2025-10-09 11:34:46,290 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:34:48,130 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:40:52,088 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:40:52,450 basehttp "POST /api/test-api/test/78/?start=1 HTTP/1.1" 302 0
+INFO 2025-10-09 11:40:52,568 basehttp "GET /api/test-api/result/140/ HTTP/1.1" 200 35778
+INFO 2025-10-09 11:40:52,615 basehttp - Broken pipe from ('127.0.0.1', 10514)
+INFO 2025-10-09 11:40:52,748 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:40:57,607 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 20533
+INFO 2025-10-09 11:40:57,642 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:42:29,056 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 200 34342
+INFO 2025-10-09 11:42:29,093 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:42:34,456 basehttp "POST /api/controller-panel/allow-retake/ HTTP/1.1" 200 17
+INFO 2025-10-09 11:42:34,506 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 200 33862
+INFO 2025-10-09 11:42:34,532 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:42:37,219 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 20527
+INFO 2025-10-09 11:42:37,246 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:42:39,949 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 35329
+INFO 2025-10-09 11:42:39,968 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:42:41,862 basehttp "GET /api/controller-panel/edit-test/78/ HTTP/1.1" 200 7690
+INFO 2025-10-09 11:42:41,872 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:42:46,227 basehttp "POST /api/controller-panel/edit-test/78/ HTTP/1.1" 302 0
+INFO 2025-10-09 11:42:46,249 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 35328
+INFO 2025-10-09 11:42:46,272 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:42:47,766 basehttp "GET /api/test-api/test/78/ HTTP/1.1" 200 1768
+INFO 2025-10-09 11:42:48,618 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:42:50,196 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 20526
+INFO 2025-10-09 11:42:50,230 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:42:51,962 basehttp "GET /api/test-api/test/78/ HTTP/1.1" 200 1768
+INFO 2025-10-09 11:42:52,597 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:42:53,089 basehttp "POST /api/test-api/test/78/ HTTP/1.1" 302 0
+INFO 2025-10-09 11:42:53,118 basehttp "GET /api/test-api/test/78/?start=1 HTTP/1.1" 200 57305
+INFO 2025-10-09 11:42:53,255 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:42:54,845 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:00,667 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:01,710 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:02,135 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:03,255 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:03,346 basehttp "POST /api/test-api/test/78/?start=1 HTTP/1.1" 302 0
+INFO 2025-10-09 11:43:03,361 basehttp "GET /api/test-api/result/141/ HTTP/1.1" 200 16042
+INFO 2025-10-09 11:43:03,395 basehttp - Broken pipe from ('127.0.0.1', 10529)
+INFO 2025-10-09 11:43:03,446 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:43:05,781 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 20532
+INFO 2025-10-09 11:43:05,816 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:43:07,994 basehttp "GET /api/controller-panel/edit-test/78/ HTTP/1.1" 200 7689
+INFO 2025-10-09 11:43:08,015 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:43:13,015 basehttp "POST /api/controller-panel/edit-test/78/ HTTP/1.1" 302 0
+INFO 2025-10-09 11:43:13,038 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 35329
+INFO 2025-10-09 11:43:13,063 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:43:16,368 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 200 35420
+INFO 2025-10-09 11:43:16,394 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:43:21,236 basehttp "POST /api/controller-panel/allow-retake/ HTTP/1.1" 200 17
+INFO 2025-10-09 11:43:21,286 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 200 34940
+INFO 2025-10-09 11:43:21,328 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:43:24,233 basehttp "GET /api/test-api/test/78/ HTTP/1.1" 200 1768
+INFO 2025-10-09 11:43:24,934 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:43:25,519 basehttp "POST /api/test-api/test/78/ HTTP/1.1" 302 0
+INFO 2025-10-09 11:43:25,557 basehttp "GET /api/test-api/test/78/?start=1 HTTP/1.1" 200 74197
+INFO 2025-10-09 11:43:25,663 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:43:26,710 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:32,293 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:33,462 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:34,007 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:34,718 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:36,583 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:37,394 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:38,415 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:38,781 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:39,544 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:40,961 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:41,315 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:42,921 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:44,233 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:44,960 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:45,861 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:46,658 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:49,357 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:49,430 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:49,603 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:49,970 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:50,172 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:50,373 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:50,567 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:52,428 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:53,590 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:53,976 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:54,748 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:56,143 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:56,960 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:57,775 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:58,682 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:43:59,527 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:44:00,083 basehttp "POST /api/log-blur/ HTTP/1.1" 200 16
+INFO 2025-10-09 11:44:00,492 basehttp "POST /api/test-api/test/78/?start=1 HTTP/1.1" 302 0
+INFO 2025-10-09 11:44:00,523 basehttp "GET /api/test-api/result/142/ HTTP/1.1" 200 27541
+INFO 2025-10-09 11:44:00,557 basehttp - Broken pipe from ('127.0.0.1', 10548)
+INFO 2025-10-09 11:44:00,612 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:44:07,108 basehttp "GET /api/test-api/dashboard/ HTTP/1.1" 200 20533
+INFO 2025-10-09 11:44:07,136 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:44:08,629 basehttp "GET /api/controller-panel/participated-students/ HTTP/1.1" 200 36498
+INFO 2025-10-09 11:44:08,653 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:44:10,742 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 35329
+INFO 2025-10-09 11:44:10,764 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:44:13,440 basehttp "GET /api/test-api/all-results/ HTTP/1.1" 200 418135
+INFO 2025-10-09 11:44:13,486 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:48:41,288 autoreload C:\project\TEST\backend\main\views_test_api.py changed, reloading.
+INFO 2025-10-09 11:48:41,995 autoreload Watching for file changes with StatReloader
+INFO 2025-10-09 11:48:58,633 basehttp "GET /api/test-api/all-results/ HTTP/1.1" 200 418154
+INFO 2025-10-09 11:48:58,664 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:50:50,247 autoreload C:\project\TEST\backend\main\views_test_api.py changed, reloading.
+INFO 2025-10-09 11:50:50,919 autoreload Watching for file changes with StatReloader
+INFO 2025-10-09 11:56:58,500 autoreload C:\project\TEST\backend\main\views_test_api.py changed, reloading.
+INFO 2025-10-09 11:56:59,269 autoreload Watching for file changes with StatReloader
+INFO 2025-10-09 11:57:38,735 autoreload C:\project\TEST\backend\main\views_test_api.py changed, reloading.
+INFO 2025-10-09 11:57:39,408 autoreload Watching for file changes with StatReloader
+INFO 2025-10-09 11:57:59,291 basehttp "GET /api/test-api/all-results/ HTTP/1.1" 302 0
+INFO 2025-10-09 11:57:59,301 basehttp "GET /api/login/ HTTP/1.1" 200 6100
+INFO 2025-10-09 11:57:59,425 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:58:07,368 basehttp "POST /api/login/ HTTP/1.1" 302 0
+INFO 2025-10-09 11:58:07,410 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 35329
+INFO 2025-10-09 11:58:07,541 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:58:10,795 basehttp "GET /api/test-api/all-results/ HTTP/1.1" 200 419119
+INFO 2025-10-09 11:58:10,867 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 11:59:03,098 basehttp "GET /api/test-api/all-results/ HTTP/1.1" 200 419119
+INFO 2025-10-09 11:59:03,150 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-09 12:04:36,307 autoreload C:\project\TEST\backend\main\views_controller_panel.py changed, reloading.
+INFO 2025-10-09 12:04:37,025 autoreload Watching for file changes with StatReloader

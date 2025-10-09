@@ -974,12 +974,9 @@ def testapi_all_results(request):
     show_override = request.user.is_superuser
     
     # Barcha tugatilgan testlarni fan va guruh bo'yicha gruppalash
-    student_tests = (
-        StudentTest.objects.filter(completed=True)
-        .select_related('student', 'test', 'test__subject', 'test__group', 'test__kafedra', 'test__bulim')
-        .prefetch_related('test__kafedralar', 'test__bulimlar')
-        .order_by('test__subject__name', 'test__group__name', 'student__username', '-start_time')
-    )
+    student_tests = StudentTest.objects.filter(completed=True).select_related(
+        'student', 'test', 'test__subject', 'test__group'
+    ).order_by('test__subject__name', 'test__group__name', 'student__username', '-start_time')
     
     # Ma'lumotlarni ierarxik tuzish: Fan -> Guruh -> Talaba -> Testlar
     organized_data = {}
@@ -1008,42 +1005,9 @@ def testapi_all_results(request):
                 first_group = stest.test.groups.first()
                 if first_group:
                     group_obj = first_group
-
-        # Konteyner turini aniqlash (guruh/kafedra/bo'lim)
-        container_type = 'group'
         if group_obj is None:
-            # Kafedra/Bulim konteynerlariga tekshiramiz
-            test_obj = stest.test
-            container_name = None
-            try:
-                if getattr(test_obj, 'kafedra', None):
-                    container_name = f"Kafedra: {test_obj.kafedra.name}"
-                    container_type = 'kafedra'
-                elif hasattr(test_obj, 'kafedralar') and test_obj.kafedralar.exists():
-                    kc = test_obj.kafedralar.count()
-                    if kc == 1:
-                        container_name = f"Kafedra: {test_obj.kafedralar.first().name}"
-                    else:
-                        container_name = f"Kafedralar ({kc})"
-                    container_type = 'kafedra'
-                elif getattr(test_obj, 'bulim', None):
-                    container_name = f"Bo'lim: {test_obj.bulim.name}"
-                    container_type = 'bulim'
-                elif hasattr(test_obj, 'bulimlar') and test_obj.bulimlar.exists():
-                    bc = test_obj.bulimlar.count()
-                    if bc == 1:
-                        container_name = f"Bo'lim: {test_obj.bulimlar.first().name}"
-                    else:
-                        container_name = f"Bo'limlar ({bc})"
-                    container_type = 'bulim'
-            except Exception:
-                container_name = None
-            if container_name:
-                group_name = container_name
-                group_id = 0
-            else:
-                group_name = "NOMA'LUM GURUH"
-                group_id = 0
+            group_name = "NOMA'LUM GURUH"
+            group_id = 0
         else:
             group_name = group_obj.name
             group_id = group_obj.id
@@ -1057,8 +1021,7 @@ def testapi_all_results(request):
         if group_name not in organized_data[subject_name]:
             organized_data[subject_name][group_name] = {
                 'group_id': group_id,
-                'students': {},
-                'container_type': container_type
+                'students': {}
             }
 
         # Talaba bo'yicha guruhlashtirish

@@ -1008,9 +1008,6 @@ def testapi_all_results(request):
                 first_group = stest.test.groups.first()
                 if first_group:
                     group_obj = first_group
-
-        # Konteyner turini aniqlash (guruh/kafedra/bo'lim)
-        container_type = 'group'
         if group_obj is None:
             # Kafedra/Bulim konteynerlariga tekshiramiz
             test_obj = stest.test
@@ -1018,24 +1015,20 @@ def testapi_all_results(request):
             try:
                 if getattr(test_obj, 'kafedra', None):
                     container_name = f"Kafedra: {test_obj.kafedra.name}"
-                    container_type = 'kafedra'
                 elif hasattr(test_obj, 'kafedralar') and test_obj.kafedralar.exists():
                     kc = test_obj.kafedralar.count()
                     if kc == 1:
                         container_name = f"Kafedra: {test_obj.kafedralar.first().name}"
                     else:
                         container_name = f"Kafedralar ({kc})"
-                    container_type = 'kafedra'
                 elif getattr(test_obj, 'bulim', None):
                     container_name = f"Bo'lim: {test_obj.bulim.name}"
-                    container_type = 'bulim'
                 elif hasattr(test_obj, 'bulimlar') and test_obj.bulimlar.exists():
                     bc = test_obj.bulimlar.count()
                     if bc == 1:
                         container_name = f"Bo'lim: {test_obj.bulimlar.first().name}"
                     else:
                         container_name = f"Bo'limlar ({bc})"
-                    container_type = 'bulim'
             except Exception:
                 container_name = None
             if container_name:
@@ -1057,8 +1050,7 @@ def testapi_all_results(request):
         if group_name not in organized_data[subject_name]:
             organized_data[subject_name][group_name] = {
                 'group_id': group_id,
-                'students': {},
-                'container_type': container_type
+                'students': {}
             }
 
         # Talaba bo'yicha guruhlashtirish

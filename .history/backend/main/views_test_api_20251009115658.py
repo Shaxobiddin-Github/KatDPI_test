@@ -1054,11 +1054,11 @@ def testapi_all_results(request):
             organized_data[subject_name] = {}
 
         # Guruh bo'yicha guruhlashtirish
-        if group_name not in organized_data[subject_name]:
+    if group_name not in organized_data[subject_name]:
             organized_data[subject_name][group_name] = {
                 'group_id': group_id,
-                'students': {},
-                'container_type': container_type
+        'students': {},
+        'container_type': container_type
             }
 
         # Talaba bo'yicha guruhlashtirish
