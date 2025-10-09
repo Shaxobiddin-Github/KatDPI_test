@@ -535,19 +535,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <li class="list-group-item p-0 border-0" style="background:transparent;">
                             <div class="test-block d-flex flex-wrap align-items-center justify-content-between mb-2 p-3" style="background:#f7fbff;border-radius:14px;box-shadow:0 2px 12px 0 rgba(49,130,206,0.07);">
                                 <div class="fw-bold fs-5 text-primary mb-2 mb-md-0" style="min-width:120px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-                                    {% with kfirst=item.test.kafedralar.all|first bfirst=item.test.bulimlar.all|first %}
-                                        {% if item.test.kafedra %}
-                                            <a href="/api/controller-panel/subject-questions/{{ item.test.subject.id }}/?kafedra_id={{ item.test.kafedra.id }}" class="subject-link" style="color:#2262a3;text-decoration:underline;">{{ item.subject_name }}</a>
-                                        {% elif kfirst %}
-                                            <a href="/api/controller-panel/subject-questions/{{ item.test.subject.id }}/?kafedra_id={{ kfirst.id }}" class="subject-link" style="color:#2262a3;text-decoration:underline;">{{ item.subject_name }}</a>
-                                        {% elif item.test.bulim %}
-                                            <a href="/api/controller-panel/subject-questions/{{ item.test.subject.id }}/?bulim_id={{ item.test.bulim.id }}" class="subject-link" style="color:#2262a3;text-decoration:underline;">{{ item.subject_name }}</a>
-                                        {% elif bfirst %}
-                                            <a href="/api/controller-panel/subject-questions/{{ item.test.subject.id }}/?bulim_id={{ bfirst.id }}" class="subject-link" style="color:#2262a3;text-decoration:underline;">{{ item.subject_name }}</a>
-                                        {% else %}
-                                            <a href="/api/controller-panel/subject-questions/{{ item.test.subject.id }}/" class="subject-link" style="color:#2262a3;text-decoration:underline;">{{ item.subject_name }}</a>
-                                        {% endif %}
-                                    {% endwith %}
+                                    <a href="/api/controller-panel/subject-questions/{{ item.test.subject.id }}/" class="subject-link" style="color:#2262a3;text-decoration:underline;">{{ item.subject_name }}</a>
                                     {% if item.semester_label %}
                                         <span class="badge" style="background:#eaf2ff;color:#2458a6;border:1px solid #c8dcff;border-radius:10px;padding:6px 10px;font-weight:600;">{{ item.semester_label }}-semestr</span>
                                     {% endif %}
@@ -598,29 +586,13 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <div class="d-flex flex-wrap align-items-center gap-2 mt-2 mt-md-0">
                                     {% if can_manage_full %}
                                         <a href="/api/controller-panel/edit-test/{{ item.test.id }}/" class="btn btn-sm btn-outline-primary">✏️ Tahrirlash</a>
-                                        <a href="
-                                            {% if item.test.kafedra or item.test.kafedralar.all|length %}
-                                                /api/controller-panel/assign-test-kafedra/{{ item.test.id }}/
-                                            {% elif item.test.bulim or item.test.bulimlar.all|length %}
-                                                /api/controller-panel/assign-test-bulim/{{ item.test.id }}/
-                                            {% else %}
-                                                /api/controller-panel/assign-test/{{ item.test.id }}/
-                                            {% endif %}
-                                        " class="btn btn-sm btn-outline-secondary">🔗 Biriktirish</a>
+                                        <a href="{% if item.test.kafedra or item.test.kafedralar.all|length %}/api/controller-panel/assign-test-kafedra/{{ item.test.id }}/{% else %}/api/controller-panel/assign-test/{{ item.test.id }}/{% endif %}" class="btn btn-sm btn-outline-secondary">🔗 Biriktirish</a>
                                         <form action="/api/controller-panel/delete-test/{{ item.test.id }}/" method="post" style="display:inline;">
                                             {% csrf_token %}
                                             <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Testni o‘chirishga ishonchingiz komilmi?')">🗑️ O‘chirish</button>
                                         </form>
                                     {% else %}
-                                        <a href="
-                                            {% if item.test.kafedra or item.test.kafedralar.all|length %}
-                                                /api/controller-panel/assign-test-kafedra/{{ item.test.id }}/
-                                            {% elif item.test.bulim or item.test.bulimlar.all|length %}
-                                                /api/controller-panel/assign-test-bulim/{{ item.test.id }}/
-                                            {% else %}
-                                                /api/controller-panel/assign-test/{{ item.test.id }}/
-                                            {% endif %}
-                                        " class="btn btn-sm btn-outline-secondary">🔗 Biriktirish</a>
+                                        <a href="{% if item.test.kafedra or item.test.kafedralar.all|length %}/api/controller-panel/assign-test-kafedra/{{ item.test.id }}/{% else %}/api/controller-panel/assign-test/{{ item.test.id }}/{% endif %}" class="btn btn-sm btn-outline-secondary">🔗 Biriktirish</a>
                                         <a href="/api/controller-panel/extend-test-time/{{ item.test.id }}/" class="btn btn-sm btn-outline-success">⏱ Vaqt qo‘shish</a>
                                         {% if participation_count == 0 %}
                                             <a href="/api/controller-panel/edit-test/{{ item.test.id }}/" class="btn btn-sm btn-outline-primary">✏️ Tahrirlash</a>

@@ -803,13 +803,7 @@ def subject_questions(request, subject_id):
         return render(request, 'controller_panel/questions_by_subject.html', {'questions': [], 'subject': {'name': 'Noma’lum'}})
     from main.models import Subject
     subject = Subject.objects.filter(id=subject_id).first()
-    kafedra_id = request.GET.get('kafedra_id')
-    bulim_id = request.GET.get('bulim_id')
     questions = Question.objects.filter(subject_id=subject_id)
-    if kafedra_id:
-        questions = questions.filter(kafedra_id=kafedra_id)
-    if bulim_id:
-        questions = questions.filter(bulim_id=bulim_id)
     return render(request, 'controller_panel/questions_by_subject.html', {
         'questions': questions,
         'subject': subject
@@ -1158,14 +1152,10 @@ def add_test(request):
             context['error'] = 'Test muddati noto‘g‘ri formatda! (soat:daqiq:soniya)'
             return render(request, 'controller_panel/add_test.html', context)
         subject = Subject.objects.get(id=subject_id)
-        # Filter questions by subject and container (semester/kafedra/bulim)
+        # Filter questions by subject (+ semester only for student target)
         qfilter = Question.objects.filter(subject_id=subject_id)
         if target == 'student' and semester_id_for_test:
             qfilter = qfilter.filter(semester_id=semester_id_for_test)
-        if target == 'tutor' and kafedra_id_for_test:
-            qfilter = qfilter.filter(kafedra_id=kafedra_id_for_test)
-        if target == 'employee' and bulim_id_for_test:
-            qfilter = qfilter.filter(bulim_id=bulim_id_for_test)
         if teacher_ids:
             qfilter = qfilter.filter(created_by_id__in=teacher_ids)
         # Distinct to be safe
@@ -1323,29 +1313,5 @@ def assign_test_kafedra(request, test_id):
     return render(request, 'controller_panel/assign_test_kafedra.html', {
         'test': test,
         'kafedralar': all_kaf,
-        'assigned_ids': assigned_ids,
-    })
-
-@login_required
-def assign_test_bulim(request, test_id):
-    login_redirect = login_check(request)
-    if login_redirect:
-        return login_redirect
-    if not hasattr(request.user, 'role') or request.user.role != 'controller':
-        return redirect('/api/login/')
-    test = get_object_or_404(Test, id=test_id)
-    from main.models import Bulim
-    all_b = Bulim.objects.all().order_by('name')
-    if request.method == 'POST':
-        test.active = bool(request.POST.get('active'))
-        test.save(update_fields=['active'])
-        ids = request.POST.getlist('bulim_ids')
-        valid_ids = [b.id for b in all_b if str(b.id) in ids]
-        test.bulimlar.set(valid_ids)
-        return redirect('controller_dashboard')
-    assigned_ids = set(test.bulimlar.values_list('id', flat=True))
-    return render(request, 'controller_panel/assign_test_bulim.html', {
-        'test': test,
-        'bulimlar': all_b,
         'assigned_ids': assigned_ids,
     })

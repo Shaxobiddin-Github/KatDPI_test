@@ -598,29 +598,13 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <div class="d-flex flex-wrap align-items-center gap-2 mt-2 mt-md-0">
                                     {% if can_manage_full %}
                                         <a href="/api/controller-panel/edit-test/{{ item.test.id }}/" class="btn btn-sm btn-outline-primary">✏️ Tahrirlash</a>
-                                        <a href="
-                                            {% if item.test.kafedra or item.test.kafedralar.all|length %}
-                                                /api/controller-panel/assign-test-kafedra/{{ item.test.id }}/
-                                            {% elif item.test.bulim or item.test.bulimlar.all|length %}
-                                                /api/controller-panel/assign-test-bulim/{{ item.test.id }}/
-                                            {% else %}
-                                                /api/controller-panel/assign-test/{{ item.test.id }}/
-                                            {% endif %}
-                                        " class="btn btn-sm btn-outline-secondary">🔗 Biriktirish</a>
+                                        <a href="{% if item.test.kafedra or item.test.kafedralar.all|length %}/api/controller-panel/assign-test-kafedra/{{ item.test.id }}/{% else %}/api/controller-panel/assign-test/{{ item.test.id }}/{% endif %}" class="btn btn-sm btn-outline-secondary">🔗 Biriktirish</a>
                                         <form action="/api/controller-panel/delete-test/{{ item.test.id }}/" method="post" style="display:inline;">
                                             {% csrf_token %}
                                             <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Testni o‘chirishga ishonchingiz komilmi?')">🗑️ O‘chirish</button>
                                         </form>
                                     {% else %}
-                                        <a href="
-                                            {% if item.test.kafedra or item.test.kafedralar.all|length %}
-                                                /api/controller-panel/assign-test-kafedra/{{ item.test.id }}/
-                                            {% elif item.test.bulim or item.test.bulimlar.all|length %}
-                                                /api/controller-panel/assign-test-bulim/{{ item.test.id }}/
-                                            {% else %}
-                                                /api/controller-panel/assign-test/{{ item.test.id }}/
-                                            {% endif %}
-                                        " class="btn btn-sm btn-outline-secondary">🔗 Biriktirish</a>
+                                        <a href="{% if item.test.kafedra or item.test.kafedralar.all|length %}/api/controller-panel/assign-test-kafedra/{{ item.test.id }}/{% else %}/api/controller-panel/assign-test/{{ item.test.id }}/{% endif %}" class="btn btn-sm btn-outline-secondary">🔗 Biriktirish</a>
                                         <a href="/api/controller-panel/extend-test-time/{{ item.test.id }}/" class="btn btn-sm btn-outline-success">⏱ Vaqt qo‘shish</a>
                                         {% if participation_count == 0 %}
                                             <a href="/api/controller-panel/edit-test/{{ item.test.id }}/" class="btn btn-sm btn-outline-primary">✏️ Tahrirlash</a>

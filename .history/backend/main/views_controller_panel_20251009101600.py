@@ -1325,27 +1325,3 @@ def assign_test_kafedra(request, test_id):
         'kafedralar': all_kaf,
         'assigned_ids': assigned_ids,
     })
-
-@login_required
-def assign_test_bulim(request, test_id):
-    login_redirect = login_check(request)
-    if login_redirect:
-        return login_redirect
-    if not hasattr(request.user, 'role') or request.user.role != 'controller':
-        return redirect('/api/login/')
-    test = get_object_or_404(Test, id=test_id)
-    from main.models import Bulim
-    all_b = Bulim.objects.all().order_by('name')
-    if request.method == 'POST':
-        test.active = bool(request.POST.get('active'))
-        test.save(update_fields=['active'])
-        ids = request.POST.getlist('bulim_ids')
-        valid_ids = [b.id for b in all_b if str(b.id) in ids]
-        test.bulimlar.set(valid_ids)
-        return redirect('controller_dashboard')
-    assigned_ids = set(test.bulimlar.values_list('id', flat=True))
-    return render(request, 'controller_panel/assign_test_bulim.html', {
-        'test': test,
-        'bulimlar': all_b,
-        'assigned_ids': assigned_ids,
-    })

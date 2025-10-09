@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Testni bo'limlarga biriktirish</title>
+<style>
+body{font-family:Inter,Arial,sans-serif;background:url('/static/main/1.png') center/cover fixed;margin:0;padding:0;}
+.container{max-width:880px;margin:40px auto;padding:34px 34px 42px;background:rgba(255,255,255,.14);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.25);border-radius:26px;box-shadow:0 10px 40px -8px rgba(0,0,0,.45);color:#fff;}
+h1{margin:0 0 20px;font-size:2.05rem;font-weight:700;letter-spacing:.6px;}
+.info{display:flex;flex-wrap:wrap;gap:16px;margin:6px 0 22px;font-size:.85rem;}
+.badge{background:linear-gradient(135deg,#5fa8ff,#2b6bff);padding:6px 14px;border-radius:999px;font-weight:600;letter-spacing:.4px;}
+.flex{display:flex;gap:30px;flex-wrap:wrap;}
+.col{flex:1 1 320px;min-width:280px;}
+.search-box{margin-bottom:10px;}
+.search-box input{width:100%;padding:11px 14px;border:1px solid rgba(255,255,255,.28);border-radius:14px;background:rgba(0,0,0,.35);color:#fff;outline:none;}
+.list{max-height:380px;overflow:auto;border:1px solid rgba(255,255,255,.25);border-radius:16px;background:rgba(0,0,0,.35);padding:6px;display:flex;flex-direction:column;gap:4px;}
+.item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:11px;background:rgba(255,255,255,.08);cursor:pointer;font-size:.82rem;font-weight:500;transition:.25s;}
+.item:hover{background:rgba(255,255,255,.16);} .item input{margin:0;}
+.actions{display:flex;gap:10px;margin:10px 0 14px;flex-wrap:wrap;}
+.actions button{padding:8px 14px;border:none;border-radius:10px;background:linear-gradient(135deg,#4d92ff,#1c62e8);color:#fff;font-weight:600;cursor:pointer;font-size:.75rem;letter-spacing:.4px;}
+.actions button.secondary{background:rgba(255,255,255,.18);}
+.submit-btn{margin-top:26px;width:100%;padding:15px 18px;border:none;border-radius:16px;background:linear-gradient(135deg,#5fa8ff,#2b6bff);color:#fff;font-size:1.05rem;font-weight:700;cursor:pointer;letter-spacing:.6px;box-shadow:0 8px 25px -6px rgba(0,0,0,.45);}
+.submit-btn:hover{transform:translateY(-2px);} a.back{display:inline-block;margin-top:16px;color:#fff;text-decoration:none;font-weight:500;}
+.count{font-size:.7rem;opacity:.8;margin-left:auto;}
+.toggle{display:flex;align-items:center;gap:10px;margin:10px 0 18px;}
+.toggle input{width:42px;height:22px;}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Testni Bo'limlarga Biriktirish</h1>
+<div class="info">
+<span class="badge">Fan: {{ test.subject.name }}</span>
+<span class="badge">Savollar: {{ test.question_count }}</span>
+<span class="badge">Ball: {{ test.total_score }}</span>
+</div>
+<form method="post">{% csrf_token %}
+<div class="toggle"><label for="active">Faol holat</label><input type="checkbox" name="active" id="active" {% if test.active %}checked{% endif %}></div>
+<div class="flex">
+<div class="col">
+<h3 style="margin-top:0;margin-bottom:10px;">Bo'limlar</h3>
+<div class="search-box"><input type="text" id="b-search" placeholder="Qidirish..." autocomplete="off"></div>
+<div class="actions">
+<button type="button" id="b-select-all">Hammasi</button>
+<button type="button" id="b-clear-all" class="secondary">Tozalash</button>
+</div>
+<div class="list" id="b-list">
+{% for b in bulimlar %}
+<label class="item" data-name="{{ b.name|lower }}">
+    <input type="checkbox" name="bulim_ids" value="{{ b.id }}" {% if b.id in assigned_ids %}checked{% endif %}>
+    <span>{{ b.name }}</span>
+</label>
+{% endfor %}
+</div>
+</div>
+<div class="col">
+<h3 style="margin-top:0;margin-bottom:10px;">Tanlangan</h3>
+<div class="list" id="b-selected"></div>
+<p style="font-size:.72rem;opacity:.8;margin-top:8px;">Testni bo'limga biriktirish: shu bo'limga tegishli xodimlar ko‘radi.</p>
+</div>
+</div>
+<button type="submit" class="submit-btn">Saqlash</button>
+</form>
+<a href="/api/controller-panel/dashboard/" class="back">⬅️ Orqaga</a>
+</div>
+<script>
+(function(){
+ const search=document.getElementById('b-search');
+ const list=document.getElementById('b-list');
+ const selected=document.getElementById('b-selected');
+ const allBtn=document.getElementById('b-select-all');
+ const clrBtn=document.getElementById('b-clear-all');
+ function render(){
+   selected.innerHTML='';
+   const checked=[...list.querySelectorAll('input[type=checkbox]:checked')];
+   if(!checked.length){selected.innerHTML='<div style="opacity:.6;font-size:.75rem;padding:8px;">Tanlanmagan</div>';return;}
+   checked.forEach(ch=>{const d=document.createElement('div');d.className='item';d.style.background='rgba(0,0,0,.4)';d.innerHTML=`<span>${ch.parentElement.textContent.trim()}</span><button type='button' style='margin-left:auto;background:none;border:none;color:#ff9b9b;font-weight:700;font-size:16px;cursor:pointer;'>&times;</button>`;d.querySelector('button').onclick=()=>{ch.checked=false;render();};selected.appendChild(d);});
+ }
+ list.addEventListener('change',render);render();
+ search.addEventListener('input',()=>{const q=search.value.toLowerCase();[...list.children].forEach(l=>{l.style.display=l.dataset.name.includes(q)?'flex':'none';});});
+ allBtn.addEventListener('click',()=>{[...list.querySelectorAll('input[type=checkbox]')].forEach(c=>c.checked=true);render();});
+ clrBtn.addEventListener('click',()=>{[...list.querySelectorAll('input[type=checkbox]')].forEach(c=>c.checked=false);render();});
+})();
+</script>
+</body>
+</html>
