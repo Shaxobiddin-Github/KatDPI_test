@@ -32,7 +32,18 @@ small.helper{color:#ddd;margin-top:4px;display:block;font-size:.72rem;letter-spa
 <input type="hidden" name="target" value="{{ target }}" />
 <label for="title">Test nomi</label>
 <input type="text" name="title" id="title" placeholder="Masalan: 1-oraliq nazorat" />
-{% if target == 'tutor' %}
+<label for="subject">Fan</label>
+<select name="subject" id="subject" required>
+    <option value="">Fan tanlang...</option>
+    {% for s in subjects %}<option value="{{ s.id }}">{{ s.name }}</option>{% endfor %}
+</select>
+{% if target == 'student' %}
+<label for="semester">Semestr</label>
+<select name="semester" id="semester">
+    <option value="">(Ixtiyoriy) Semestr tanlang...</option>
+    {% for sem in semesters %}<option value="{{ sem.id }}">{{ sem.number }}</option>{% endfor %}
+</select>
+{% elif target == 'tutor' %}
 <label for="kafedra">Kafedra</label>
 <select name="kafedra" id="kafedra" required>
     <option value="">Kafedra tanlang...</option>
@@ -43,18 +54,6 @@ small.helper{color:#ddd;margin-top:4px;display:block;font-size:.72rem;letter-spa
 <select name="bulim" id="bulim" required>
     <option value="">Bo'lim tanlang...</option>
     {% for b in bulimlar %}<option value="{{ b.id }}">{{ b.name }}</option>{% endfor %}
-</select>
-{% endif %}
-<label for="subject">Fan</label>
-<select name="subject" id="subject" required {% if target == 'tutor' or target == 'employee' %}disabled{% endif %}>
-    <option value="">{% if target == 'tutor' %}Avval kafedra tanlang{% elif target == 'employee' %}Avval bo'lim tanlang{% else %}Fan tanlang...{% endif %}</option>
-    {% if target == 'student' %}{% for s in subjects %}<option value="{{ s.id }}">{{ s.name }}</option>{% endfor %}{% endif %}
-</select>
-{% if target == 'student' %}
-<label for="semester">Semestr</label>
-<select name="semester" id="semester" required>
-    <option value="">Semestr tanlang...</option>
-    {% for sm in semesters %}<option value="{{ sm.id }}">{{ sm.name }}</option>{% endfor %}
 </select>
 {% endif %}
 <label>O‘qituvchilar (filtr – tanlanmagan bo‘lsa hammasi)</label>
@@ -99,10 +98,8 @@ small.helper{color:#ddd;margin-top:4px;display:block;font-size:.72rem;letter-spa
 </div></div>
 <script>
 (function(){
- const target=('{{ target }}'||'').trim();
+ const target='{{ target }}';
  const subjectSel=document.getElementById('subject');
- const kafSel=document.getElementById('kafedra');
- const bulSel=document.getElementById('bulim');
  const semesterSel=document.getElementById('semester');
  const teacherList=document.getElementById('teacher-list');
  const teacherInfo=document.getElementById('teacher-info');
@@ -112,51 +109,13 @@ small.helper{color:#ddd;margin-top:4px;display:block;font-size:.72rem;letter-spa
  function updateDuration(){function pad(v){return String((+v||0)).padStart(2,'0');}const h=pad(dur_h.value),m=pad(dur_m.value),s=pad(dur_s.value);duration.value=`${h}:${m}:${s}`;}
  const dur_h=document.getElementById('dur_h'),dur_m=document.getElementById('dur_m'),dur_s=document.getElementById('dur_s'),duration=document.getElementById('duration');
  [dur_h,dur_m,dur_s].forEach(e=>e.addEventListener('input',updateDuration));document.querySelectorAll('.preset').forEach(b=>b.addEventListener('click',()=>{const p=b.dataset.set.split(':');dur_h.value=+p[0];dur_m.value=+p[1];dur_s.value=+p[2];updateDuration();}));updateDuration();
- document.getElementById('video-toggle').addEventListener('click',(e)=>{const box=document.getElementById('video-fields');const open=box.style.display!=='none';box.style.display=open?'none':'block';e.target.textContent=open?'▶️ Video qo‘shish':'⬇️ Video maydonlarini yashirish';});
- function loadSubjectsByContainer(){
-   if(!(target==='tutor'||target==='employee')) return;
-   let url='/api/controller-panel/get-subjects-by-kafedra-or-bulim/?';
-   if(target==='tutor'){
-     const kid=kafSel.value; if(!kid){subjectSel.innerHTML='<option value="">Avval kafedra</option>';subjectSel.disabled=true;return;} url+=`kafedra_id=${kid}`;
-   } else if(target==='employee'){
-     const bid=bulSel.value; if(!bid){subjectSel.innerHTML='<option value="">Avval bo\'lim</option>';subjectSel.disabled=true;return;} url+=`bulim_id=${bid}`;
-   }
-   // Enable immediately to allow user interaction even if fetch is slow
-   subjectSel.disabled=false;
-   subjectSel.innerHTML='<option value="">Yuklanmoqda...</option>';
-   fetch(url)
-     .then(r=>{if(!r.ok) throw new Error('HTTP '+r.status); return r.json();})
-     .then(d=>{
-       const arr=d.subjects||[];
-       subjectSel.innerHTML='<option value="">Fan tanlang...</option>' + arr.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
-       teacherList.innerHTML=''; teacherInfo.textContent='Fan tanlang';
-     })
-     .catch(err=>{
-       console.error('Subjects load error:',err);
-       subjectSel.innerHTML='<option value="">Fanlarni yuklab bo\'lmadi (yana urinib ko\'ring)</option>';
-       // keep it enabled so user can try again via reselecting container
-       subjectSel.disabled=false;
-     });
- }
- if(kafSel){ kafSel.addEventListener('change',()=>{loadSubjectsByContainer();}); }
- if(bulSel){ bulSel.addEventListener('change',()=>{loadSubjectsByContainer();}); }
- function fetchTeachers(){
-   teacherList.innerHTML=''; const sid=subjectSel.value; if(!sid){teacherInfo.textContent='Fan tanlang';return;}
-   let url=`/api/controller-panel/get-teachers-by-subject-semester/?subject_id=${sid}`;
-   if(target==='student'){const sem=semesterSel?semesterSel.value:''; if(sem) url+=`&semester_id=${sem}`;}
-   if(target==='tutor' && kafSel && kafSel.value) url+=`&kafedra_id=${kafSel.value}`;
-   if(target==='employee' && bulSel && bulSel.value) url+=`&bulim_id=${bulSel.value}`;
-   fetch(url).then(r=>r.json()).then(d=>{const arr=d.teachers||[];teacherInfo.textContent=arr.length?`Topildi: ${arr.length} o‘qituvchi`:'O‘qituvchi topilmadi';arr.forEach(t=>{const div=document.createElement('label');div.className='t-item';div.dataset.name=(t.full_name||'').toLowerCase();div.innerHTML=`<input type='checkbox' name='teacher_ids' value='${t.id}'> <span>${t.full_name}</span><span style='margin-left:auto;font-size:.65rem;opacity:.7;'>${t.qcount} savol</span>`;teacherList.appendChild(div);});});
- }
+ document.getElementById('video-toggle').addEventListener('click',()=>{const box=document.getElementById('video-fields');const open=box.style.display!=='none';box.style.display=open?'none':'block';event.target.textContent=open?'▶️ Video qo‘shish':'⬇️ Video maydonlarini yashirish';});
+ function fetchTeachers(){teacherList.innerHTML='';const sid=subjectSel.value;if(!sid){teacherInfo.textContent='Fan tanlang';return;}let url=`/api/controller-panel/get-teachers-by-subject-semester/?subject_id=${sid}`;if(target==='student'){const sem=semesterSel?semesterSel.value:'';if(sem) url+=`&semester_id=${sem}`;}fetch(url).then(r=>r.json()).then(d=>{const arr=d.teachers||[];teacherInfo.textContent=arr.length?`Topildi: ${arr.length} o‘qituvchi`:'O‘qituvchi topilmadi';arr.forEach(t=>{const div=document.createElement('label');div.className='t-item';div.dataset.name=(t.full_name||'').toLowerCase();div.innerHTML=`<input type='checkbox' name='teacher_ids' value='${t.id}'> <span>${t.full_name}</span><span style='margin-left:auto;font-size:.65rem;opacity:.7;'>${t.qcount} savol</span>`;teacherList.appendChild(div);});});}
  function filterTeachers(){const q=(search.value||'').toLowerCase();Array.from(teacherList.children).forEach(ch=>{ch.style.display= ch.dataset.name.includes(q)?'flex':'none';});}
  search.addEventListener('input',filterTeachers);
  subjectSel.addEventListener('change',()=>{fetchTeachers();});
  if(semesterSel){semesterSel.addEventListener('change',()=>{fetchTeachers();});}
- // Initial teacher load only for student target (others depend on subject chosen after container)
- if(target==='student') fetchTeachers();
- // Agar target tutor/employee va konteyner tanlangan bo'lsa (back nav) subject ni qayta yuklash
- if(target==='tutor' && kafSel && kafSel.value){ loadSubjectsByContainer(); }
- if(target==='employee' && bulSel && bulSel.value){ loadSubjectsByContainer(); }
+ fetchTeachers();
 })();
 </script>
 </body>

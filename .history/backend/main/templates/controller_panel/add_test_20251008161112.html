@@ -46,7 +46,7 @@ small.helper{color:#ddd;margin-top:4px;display:block;font-size:.72rem;letter-spa
 </select>
 {% endif %}
 <label for="subject">Fan</label>
-<select name="subject" id="subject" required {% if target == 'tutor' or target == 'employee' %}disabled{% endif %}>
+<select name="subject" id="subject" required {% if target in 'tutor employee' %}disabled{% endif %}>
     <option value="">{% if target == 'tutor' %}Avval kafedra tanlang{% elif target == 'employee' %}Avval bo'lim tanlang{% else %}Fan tanlang...{% endif %}</option>
     {% if target == 'student' %}{% for s in subjects %}<option value="{{ s.id }}">{{ s.name }}</option>{% endfor %}{% endif %}
 </select>
@@ -99,7 +99,7 @@ small.helper{color:#ddd;margin-top:4px;display:block;font-size:.72rem;letter-spa
 </div></div>
 <script>
 (function(){
- const target=('{{ target }}'||'').trim();
+ const target='{{ target }}';
  const subjectSel=document.getElementById('subject');
  const kafSel=document.getElementById('kafedra');
  const bulSel=document.getElementById('bulim');
@@ -112,7 +112,7 @@ small.helper{color:#ddd;margin-top:4px;display:block;font-size:.72rem;letter-spa
  function updateDuration(){function pad(v){return String((+v||0)).padStart(2,'0');}const h=pad(dur_h.value),m=pad(dur_m.value),s=pad(dur_s.value);duration.value=`${h}:${m}:${s}`;}
  const dur_h=document.getElementById('dur_h'),dur_m=document.getElementById('dur_m'),dur_s=document.getElementById('dur_s'),duration=document.getElementById('duration');
  [dur_h,dur_m,dur_s].forEach(e=>e.addEventListener('input',updateDuration));document.querySelectorAll('.preset').forEach(b=>b.addEventListener('click',()=>{const p=b.dataset.set.split(':');dur_h.value=+p[0];dur_m.value=+p[1];dur_s.value=+p[2];updateDuration();}));updateDuration();
- document.getElementById('video-toggle').addEventListener('click',(e)=>{const box=document.getElementById('video-fields');const open=box.style.display!=='none';box.style.display=open?'none':'block';e.target.textContent=open?'▶️ Video qo‘shish':'⬇️ Video maydonlarini yashirish';});
+ document.getElementById('video-toggle').addEventListener('click',()=>{const box=document.getElementById('video-fields');const open=box.style.display!=='none';box.style.display=open?'none':'block';event.target.textContent=open?'▶️ Video qo‘shish':'⬇️ Video maydonlarini yashirish';});
  function loadSubjectsByContainer(){
    if(!(target==='tutor'||target==='employee')) return;
    let url='/api/controller-panel/get-subjects-by-kafedra-or-bulim/?';
@@ -121,22 +121,9 @@ small.helper{color:#ddd;margin-top:4px;display:block;font-size:.72rem;letter-spa
    } else if(target==='employee'){
      const bid=bulSel.value; if(!bid){subjectSel.innerHTML='<option value="">Avval bo\'lim</option>';subjectSel.disabled=true;return;} url+=`bulim_id=${bid}`;
    }
-   // Enable immediately to allow user interaction even if fetch is slow
-   subjectSel.disabled=false;
-   subjectSel.innerHTML='<option value="">Yuklanmoqda...</option>';
-   fetch(url)
-     .then(r=>{if(!r.ok) throw new Error('HTTP '+r.status); return r.json();})
-     .then(d=>{
-       const arr=d.subjects||[];
-       subjectSel.innerHTML='<option value="">Fan tanlang...</option>' + arr.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
-       teacherList.innerHTML=''; teacherInfo.textContent='Fan tanlang';
-     })
-     .catch(err=>{
-       console.error('Subjects load error:',err);
-       subjectSel.innerHTML='<option value="">Fanlarni yuklab bo\'lmadi (yana urinib ko\'ring)</option>';
-       // keep it enabled so user can try again via reselecting container
-       subjectSel.disabled=false;
-     });
+   fetch(url).then(r=>r.json()).then(d=>{
+     const arr=d.subjects||[]; subjectSel.innerHTML='<option value="">Fan tanlang...</option>' + arr.map(s=>`<option value="${s.id}">${s.name}</option>`).join(''); subjectSel.disabled=false; teacherList.innerHTML=''; teacherInfo.textContent='Fan tanlang';
+   });
  }
  if(kafSel){ kafSel.addEventListener('change',()=>{loadSubjectsByContainer();}); }
  if(bulSel){ bulSel.addEventListener('change',()=>{loadSubjectsByContainer();}); }
@@ -152,11 +139,7 @@ small.helper{color:#ddd;margin-top:4px;display:block;font-size:.72rem;letter-spa
  search.addEventListener('input',filterTeachers);
  subjectSel.addEventListener('change',()=>{fetchTeachers();});
  if(semesterSel){semesterSel.addEventListener('change',()=>{fetchTeachers();});}
- // Initial teacher load only for student target (others depend on subject chosen after container)
- if(target==='student') fetchTeachers();
- // Agar target tutor/employee va konteyner tanlangan bo'lsa (back nav) subject ni qayta yuklash
- if(target==='tutor' && kafSel && kafSel.value){ loadSubjectsByContainer(); }
- if(target==='employee' && bulSel && bulSel.value){ loadSubjectsByContainer(); }
+ fetchTeachers();
 })();
 </script>
 </body>

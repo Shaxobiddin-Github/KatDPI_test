@@ -99,7 +99,7 @@ small.helper{color:#ddd;margin-top:4px;display:block;font-size:.72rem;letter-spa
 </div></div>
 <script>
 (function(){
- const target=('{{ target }}'||'').trim();
+ const target='{{ target|trim }}';
  const subjectSel=document.getElementById('subject');
  const kafSel=document.getElementById('kafedra');
  const bulSel=document.getElementById('bulim');

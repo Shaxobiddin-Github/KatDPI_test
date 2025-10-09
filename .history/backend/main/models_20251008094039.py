@@ -200,12 +200,13 @@ class Question(models.Model):
     semester = models.ForeignKey('Semester', on_delete=models.SET_NULL, null=True, blank=True, related_name='questions', verbose_name='Semestr')
     # Yangi: savolni aniq guruhga bog'lash (avval yo'q edi). Null bo'lsa – eskidan qolgan/global savol.
     group = models.ForeignKey('Group', on_delete=models.CASCADE, null=True, blank=True, related_name='questions', verbose_name='Guruh')
+    # Tutor va xodim (employee) yo'nalishidagi savollarni bog'lash uchun
+    kafedra = models.ForeignKey('Kafedra', on_delete=models.CASCADE, null=True, blank=True, related_name='questions', verbose_name='Kafedra')
+    bulim = models.ForeignKey('Bulim', on_delete=models.CASCADE, null=True, blank=True, related_name='questions', verbose_name="Bo'lim")
     text = models.TextField(verbose_name="Savol matni")
     question_type = models.CharField(max_length=20, choices=QUESTION_TYPE_CHOICES, verbose_name="Savol turi")
     image = models.ImageField(upload_to='questions/', blank=True, null=True, verbose_name="Rasm")
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, verbose_name="Yaratuvchi")
-    kafedra = models.ForeignKey('Kafedra', on_delete=models.SET_NULL, null=True, blank=True, related_name='questions', verbose_name='Kafedra')
-    bulim = models.ForeignKey('Bulim', on_delete=models.SET_NULL, null=True, blank=True, related_name='questions', verbose_name="Bo'lim")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Yaratilgan sana")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Yangilangan sana")
 

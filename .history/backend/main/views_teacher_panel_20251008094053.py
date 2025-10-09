@@ -202,23 +202,24 @@ def add_question(request):
         return login_redirect
     if not hasattr(request.user, 'role') or request.user.role != 'teacher':
         return redirect('/api/login/')
-    target = request.GET.get('target') or request.POST.get('target') or 'student'
+    target = request.GET.get('target', 'student')
     context = {'question_types': [qt for qt in Question.QUESTION_TYPE_CHOICES if qt[0] != 'sentence_ordering'], 'selected': {}, 'target': target}
+    # Only subject + semester (for student path) – groups removed per new TZ
     if target == 'student':
         context['semesters'] = Semester.objects.all()
+        # Dynamic subjects filtered by semester if possible (through GroupSubject indirectly) – fallback all
         semester_id = request.GET.get('semester') or request.POST.get('semester')
         if semester_id:
+            # Collect subjects that appear in any GroupSubject for this semester (teacher can add generic question not tied to group)
             subject_ids = GroupSubject.objects.filter(semester_id=semester_id).values_list('subject_id', flat=True).distinct()
             context['subjects'] = Subject.objects.filter(id__in=subject_ids) if subject_ids else Subject.objects.all()
         else:
             context['subjects'] = Subject.objects.all()
     elif target == 'tutor':
         from main.models import Kafedra
-        context['kafedralar'] = Kafedra.objects.all()
         context['subjects'] = Subject.objects.all()
     elif target == 'employee':
         from main.models import Bulim
-        context['bulimlar'] = Bulim.objects.all()
         context['subjects'] = Subject.objects.all()
     else:
         context['semesters'] = Semester.objects.all()
@@ -231,7 +232,13 @@ def add_question(request):
         semester_id_val = request.POST.get('semester') if target == 'student' else None
         kafedra_id_val = request.POST.get('kafedra') if target == 'tutor' else None
         bulim_id_val = request.POST.get('bulim') if target == 'employee' else None
-        context['selected'] = {'subject': subject_id, 'question_type': question_type, 'semester': semester_id_val, 'kafedra': kafedra_id_val, 'bulim': bulim_id_val}
+        context['selected'] = {
+            'subject': subject_id,
+            'question_type': question_type,
+            'semester': semester_id_val,
+            'kafedra': kafedra_id_val,
+            'bulim': bulim_id_val,
+        }
         error = None
         if not text or not subject_id or not question_type:
             error = "Barcha maydonlarni to‘ldiring!"
@@ -246,7 +253,6 @@ def add_question(request):
             return render(request, 'teacher_panel/add_question.html', context)
         subject = Subject.objects.get(id=subject_id)
         question_image = request.FILES.get('question_image')
-        # Create a single question (no per-group duplication now)
         try:
             q_local = Question.objects.create(
                 text=text,
@@ -255,9 +261,9 @@ def add_question(request):
                 created_by=request.user,
                 image=question_image if question_image else None,
                 semester_id=int(semester_id_val) if semester_id_val else None,
-                group_id=None,
                 kafedra_id=int(kafedra_id_val) if kafedra_id_val else None,
-                bulim_id=int(bulim_id_val) if bulim_id_val else None
+                bulim_id=int(bulim_id_val) if bulim_id_val else None,
+                group_id=None
             )
         except Exception as e:
             context['error'] = f"Saqlashda xatolik: {e}"

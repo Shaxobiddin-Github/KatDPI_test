@@ -204,8 +204,6 @@ class Question(models.Model):
     question_type = models.CharField(max_length=20, choices=QUESTION_TYPE_CHOICES, verbose_name="Savol turi")
     image = models.ImageField(upload_to='questions/', blank=True, null=True, verbose_name="Rasm")
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, verbose_name="Yaratuvchi")
-    kafedra = models.ForeignKey('Kafedra', on_delete=models.SET_NULL, null=True, blank=True, related_name='questions', verbose_name='Kafedra')
-    bulim = models.ForeignKey('Bulim', on_delete=models.SET_NULL, null=True, blank=True, related_name='questions', verbose_name="Bo'lim")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Yaratilgan sana")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Yangilangan sana")
 

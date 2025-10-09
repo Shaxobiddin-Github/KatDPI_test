@@ -1221,7 +1221,8 @@ def get_subjects_by_kafedra_or_bulim(request):
         return JsonResponse({'subjects': []})
     kafedra_id = request.GET.get('kafedra_id')
     bulim_id = request.GET.get('bulim_id')
-    qs = Question.objects.all()
+    from main.models import GroupSubject  # local import to avoid circular issues
+    qs = GroupSubject.objects.all()
     if kafedra_id:
         qs = qs.filter(kafedra_id=kafedra_id)
     if bulim_id:

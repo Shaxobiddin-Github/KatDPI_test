@@ -1202,11 +1202,10 @@ def get_teachers_by_subject_semester(request):
     qs = Question.objects.filter(subject_id=subject_id, created_by__role='teacher')
     if semester_id:
         qs = qs.filter(semester_id=semester_id)
-    # Filter through teacher's profile (User.kafedra / User.bulim) since Question has no direct kafedra/bulim fields
     if kafedra_id:
-        qs = qs.filter(created_by__kafedra_id=kafedra_id)
+        qs = qs.filter(kafedra_id=kafedra_id)
     if bulim_id:
-        qs = qs.filter(created_by__bulim_id=bulim_id)
+        qs = qs.filter(bulim_id=bulim_id)
     # Distinct teachers with count of questions for quick UI info
     teacher_ids = qs.values('created_by').annotate(qcount=Count('id')).order_by('-qcount')
     teacher_map = {t['created_by']: t['qcount'] for t in teacher_ids}
@@ -1221,12 +1220,12 @@ def get_subjects_by_kafedra_or_bulim(request):
         return JsonResponse({'subjects': []})
     kafedra_id = request.GET.get('kafedra_id')
     bulim_id = request.GET.get('bulim_id')
-    qs = Question.objects.all()
+    q = Question.objects.all()
     if kafedra_id:
-        qs = qs.filter(kafedra_id=kafedra_id)
+        q = q.filter(kafedra_id=kafedra_id)
     if bulim_id:
-        qs = qs.filter(bulim_id=bulim_id)
-    subject_ids = qs.values_list('subject_id', flat=True).distinct()
+        q = q.filter(bulim_id=bulim_id)
+    subject_ids = q.values_list('subject_id', flat=True).distinct()
     subs = Subject.objects.filter(id__in=subject_ids) if subject_ids else Subject.objects.none()
     data = [{'id': s.id, 'name': s.name} for s in subs]
     return JsonResponse({'subjects': data})
