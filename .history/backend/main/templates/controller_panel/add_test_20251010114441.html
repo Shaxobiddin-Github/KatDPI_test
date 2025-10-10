@@ -7,16 +7,12 @@
 .card{width:100%;max-width:640px;background:rgba(255,255,255,.15);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.25);border-radius:26px;padding:42px 40px 34px;box-shadow:0 10px 40px -8px rgba(0,0,0,.4);position:relative;overflow:hidden;}
 .card h1{margin:0 0 28px;font-size:2.1rem;letter-spacing:.5px;color:#fff;font-weight:700;text-align:center;}
 label{display:block;margin:18px 0 6px;font-weight:600;color:#fff;font-size:.95rem;letter-spacing:.4px;}
-input[type=text],input[type=number],select{width:100%;padding:14px 15px;border:1px solid rgba(255,255,255,.3);border-radius:14px;background:rgba(0,0,0,.35);color:#fff;font-size:.95rem;outline:none;transition:.25s;color-scheme: dark;}
+input[type=text],input[type=number],select{width:100%;padding:14px 15px;border:1px solid rgba(255,255,255,.3);border-radius:14px;background:rgba(0,0,0,.35);color:#fff;font-size:.95rem;outline:none;transition:.25s;}
 input:focus,select:focus{border-color:#6bb6ff;box-shadow:0 0 0 3px #6bb6ff44;}
-/* Ensure dropdown options are visible in dark theme across Windows/Edge/Chrome */
-select option, select optgroup {background:#0f172a !important; color:#ffffff !important;}
-/* Also hint the UA to prefer dark popups */
-body{color-scheme: dark;}
+/* Ensure dropdown options are visible in dark theme */
+select option, select optgroup {background:#0f172a; color:#ffffff;}
 /* Disabled placeholder option style */
-select option[disabled] {color:#9ca3af !important;}
-/* Extra safety for engines that use the field background when open */
-select.open-select{background:#0b1220 !important; color:#fff !important;}
+select option[disabled] {color:#9ca3af;}
 small.helper{color:#ddd;margin-top:4px;display:block;font-size:.72rem;letter-spacing:.5px;}
 .error{background:#ffe0e0;color:#8b0000;padding:12px 16px;border-radius:12px;margin-bottom:12px;font-weight:600;font-size:.9rem;}
 .teacher-box{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.25);border-radius:18px;padding:14px 14px 18px;margin-top:4px;}
@@ -62,7 +58,7 @@ small.helper{color:#ddd;margin-top:4px;display:block;font-size:.72rem;letter-spa
 <label for="semester">Semestr</label>
 <select name="semester" id="semester" required>
     <option value="">Semestr tanlang...</option>
-  {% for sm in semesters %}<option value="{{ sm.id }}">{{ sm.number }}</option>{% endfor %}
+    {% for sm in semesters %}<option value="{{ sm.id }}">{{ sm.name }}</option>{% endfor %}
 </select>
 {% endif %}
 <label>O‘qituvchilar (filtr – tanlanmagan bo‘lsa hammasi)</label>
@@ -165,12 +161,6 @@ small.helper{color:#ddd;margin-top:4px;display:block;font-size:.72rem;letter-spa
  // Agar target tutor/employee va konteyner tanlangan bo'lsa (back nav) subject ni qayta yuklash
  if(target==='tutor' && kafSel && kafSel.value){ loadSubjectsByContainer(); }
  if(target==='employee' && bulSel && bulSel.value){ loadSubjectsByContainer(); }
- // Force visible option colors in some Windows browsers by toggling a helper class
- const selects=[...document.querySelectorAll('select')];
- selects.forEach(s=>{
-   s.addEventListener('focus',()=>s.classList.add('open-select'));
-   s.addEventListener('blur',()=>s.classList.remove('open-select'));
- });
 })();
 </script>
 </body>

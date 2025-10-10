@@ -62,7 +62,7 @@ small.helper{color:#ddd;margin-top:4px;display:block;font-size:.72rem;letter-spa
 <label for="semester">Semestr</label>
 <select name="semester" id="semester" required>
     <option value="">Semestr tanlang...</option>
-  {% for sm in semesters %}<option value="{{ sm.id }}">{{ sm.number }}</option>{% endfor %}
+    {% for sm in semesters %}<option value="{{ sm.id }}">{{ sm.name }}</option>{% endfor %}
 </select>
 {% endif %}
 <label>O‘qituvchilar (filtr – tanlanmagan bo‘lsa hammasi)</label>
