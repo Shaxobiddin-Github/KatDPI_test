@@ -4,6 +4,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_GET
 from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
+from django.core.files.uploadedfile import UploadedFile
+from io import BytesIO
 
 @login_required
 def teacher_help(request):
@@ -306,3 +309,148 @@ def add_question(request):
         context['success'] = "Savol muvaffaqiyatli qo'shildi (guruhsiz)."
         return render(request, 'teacher_panel/add_question.html', context)
     return render(request, 'teacher_panel/add_question.html', context)
+
+
+@login_required
+@require_http_methods(["GET", "POST"])
+def upload_questions_word(request):
+    """
+    Teacher uploads a .docx file containing a table:
+    Col1: tartib raqami, Col2: savol matni, Col3: to'g'ri javob, Col4-6: boshqa variantlar.
+    Only creates 'single_choice' questions.
+    Before upload user selects semester (student target) and subject.
+    """
+    login_redirect = login_check(request)
+    if login_redirect:
+        return login_redirect
+    if not hasattr(request.user, 'role') or request.user.role != 'teacher':
+        return redirect('/api/login/')
+
+    semesters = Semester.objects.all()
+    subjects = Subject.objects.all()
+
+    context = {
+        'semesters': semesters,
+        'subjects': subjects,
+        'selected': {
+            'semester': request.POST.get('semester', ''),
+            'subject': request.POST.get('subject', ''),
+        }
+    }
+
+    if request.method == 'GET':
+        return render(request, 'teacher_panel/upload_questions_word.html', context)
+
+    # POST
+    semester_id = request.POST.get('semester')
+    subject_id = request.POST.get('subject')
+    file: UploadedFile | None = request.FILES.get('docx_file')
+
+    if not semester_id or not subject_id or not file:
+        context['error'] = "Semestr, fan va fayl majburiy."
+        return render(request, 'teacher_panel/upload_questions_word.html', context)
+
+    # Validate subject and semester
+    try:
+        subject = Subject.objects.get(id=int(subject_id))
+    except (Subject.DoesNotExist, ValueError):
+        context['error'] = "Fan topilmadi."
+        return render(request, 'teacher_panel/upload_questions_word.html', context)
+    try:
+        semester = Semester.objects.get(id=int(semester_id))
+    except (Semester.DoesNotExist, ValueError):
+        context['error'] = "Semestr topilmadi."
+        return render(request, 'teacher_panel/upload_questions_word.html', context)
+
+    # Parse DOCX
+    try:
+        from docx import Document  # python-docx
+    except Exception:
+        context['error'] = "python-docx kutubxonasi o'rnatilmagan. Iltimos, 'python-docx' ni o'rnating."
+        return render(request, 'teacher_panel/upload_questions_word.html', context)
+
+    if not file.name.lower().endswith('.docx'):
+        context['error'] = "Faqat .docx faylini yuklang."
+        return render(request, 'teacher_panel/upload_questions_word.html', context)
+
+    created = 0
+    skipped: list[str] = []
+    def normalize_cell(txt: str) -> str:
+        if not txt:
+            return ''
+        t = txt.replace('\u201c','"').replace('\u201d','"').replace('\u2018','\'').replace('\u2019','\'')
+        t = t.replace('\n', ' ').replace('\r', ' ')
+        t = ' '.join(t.split())  # collapse spaces
+        # strip common trailing punctuation like ; , . :
+        t = t.rstrip(' ;,.:')
+        return t.strip()
+    try:
+        memory = BytesIO(file.read())
+        doc = Document(memory)
+        tables = doc.tables
+        if not tables:
+            context['error'] = "Word faylda jadval topilmadi. 6 ustunli jadval kerak."
+            return render(request, 'teacher_panel/upload_questions_word.html', context)
+        # Iterate all tables to support multi-section files
+        for t_index, table in enumerate(tables, start=1):
+            for r_idx, row in enumerate(table.rows, start=1):
+                cells = row.cells
+                # Normalize first 6 columns
+                raw_cols = [cells[i].text if i < len(cells) else '' for i in range(6)]
+                n_str = normalize_cell(raw_cols[0])
+                q_text = normalize_cell(raw_cols[1])
+                correct = normalize_cell(raw_cols[2])
+                v4 = normalize_cell(raw_cols[3])
+                v5 = normalize_cell(raw_cols[4])
+                v6 = normalize_cell(raw_cols[5])
+
+                # Header/empty row handling
+                try:
+                    _ = int(n_str.rstrip('.')) if n_str else None
+                except (ValueError, TypeError):
+                    # First row in each table could be header
+                    if r_idx == 1:
+                        continue
+                if not q_text:
+                    # skip fully empty or malformed rows
+                    if any([n_str, correct, v4, v5, v6]):
+                        skipped.append(f"{t_index}:{r_idx}-qator: savol matni bo'sh.")
+                    continue
+                if not correct:
+                    skipped.append(f"{t_index}:{r_idx}-qator: to'g'ri javob (3-ustun) bo'sh.")
+                    continue
+
+                # Build option list with dedupe preserving order
+                seen = set()
+                opts = []
+                for tag, val in [('correct', correct), ('opt', v4), ('opt', v5), ('opt', v6)]:
+                    if val and val.lower() not in seen:
+                        seen.add(val.lower())
+                        opts.append((val, tag == 'correct'))
+                if not opts:
+                    skipped.append(f"{t_index}:{r_idx}-qator: variantlar topilmadi.")
+                    continue
+
+                # Create question and options
+                q = Question.objects.create(
+                    text=q_text,
+                    subject=subject,
+                    semester=semester,
+                    question_type='single_choice',
+                    created_by=request.user,
+                    group_id=None,
+                    kafedra_id=None,
+                    bulim_id=None,
+                )
+                for val, is_corr in opts:
+                    AnswerOption.objects.create(question=q, text=val, is_correct=is_corr)
+                created += 1
+
+        context['success'] = f"Yuklash yakunlandi: {created} ta savol qo'shildi."
+        if skipped:
+            context['skipped'] = skipped
+        return render(request, 'teacher_panel/upload_questions_word.html', context)
+
+    except Exception as e:
+        context['error'] = f"Faylni o'qishda xatolik: {e}"
+        return render(request, 'teacher_panel/upload_questions_word.html', context)

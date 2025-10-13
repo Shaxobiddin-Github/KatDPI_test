@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>Worddan savollar yuklash</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
+    <style>
+        body{font-family:'Segoe UI','Roboto',Arial,sans-serif;background:#f7fbff;margin:0;padding:0}
+        .container{max-width:760px;margin:32px auto;background:#fff;border:1px solid #e2e8f0;border-radius:14px;box-shadow:0 6px 18px rgba(0,0,0,.05);padding:22px}
+        h2{margin:0 0 14px;color:#1b3552}
+        label{display:block;margin:12px 0 6px;font-weight:600;color:#213049}
+        select,input[type=file]{width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:8px;background:#f8fafc}
+        .hint{color:#475569;font-size:.92rem;margin:10px 0 16px}
+        .note{background:#e0f2fe;border:1px solid #bae6fd;color:#0c4a6e;padding:10px 12px;border-radius:8px;margin-bottom:12px}
+        .error{background:#fee2e2;border:1px solid #fecaca;color:#991b1b;padding:10px 12px;border-radius:8px;margin-bottom:12px}
+        .success{background:#dcfce7;border:1px solid #bbf7d0;color:#14532d;padding:10px 12px;border-radius:8px;margin-bottom:12px}
+        button{margin-top:12px;width:100%;padding:12px 14px;background:#1976d2;color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer}
+        button:hover{background:#125ea8}
+        .back{margin-top:16px;text-align:center}
+        .back a{color:#1976d2;text-decoration:none}
+        .list{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:10px}
+        ul{margin:6px 0 0 22px}
+        code{background:#f1f5f9;padding:2px 4px;border-radius:4px}
+        table{width:100%;border-collapse:collapse;margin-top:8px}
+        th,td{border:1px solid #e2e8f0;padding:6px}
+        th{background:#f1f5f9}
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Word (.docx) fayldan savollarni import qilish</h2>
+    {% if error %}<div class="error">{{ error }}</div>{% endif %}
+    {% if success %}<div class="success">{{ success }}</div>{% endif %}
+    {% if skipped %}
+    <div class="note">
+        Quyidagi qatorlar tashlab ketildi:
+        <div class="list"><ul>{% for s in skipped %}<li>{{ s }}</li>{% endfor %}</ul></div>
+    </div>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="semester">Semestr</label>
+        <select id="semester" name="semester" required>
+            <option value="">Semestrni tanlang...</option>
+            {% for sem in semesters %}
+            <option value="{{ sem.id }}" {% if selected.semester == sem.id|stringformat:'s' %}selected{% endif %}>{{ sem.number }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="subject">Fan</label>
+        <select id="subject" name="subject" required>
+            <option value="">Fanni tanlang...</option>
+            {% for subj in subjects %}
+            <option value="{{ subj.id }}" {% if selected.subject == subj.id|stringformat:'s' %}selected{% endif %}>{{ subj.name }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="docx_file">Word fayl (.docx)</label>
+        <input id="docx_file" name="docx_file" type="file" accept=".docx" required />
+
+        <div class="hint">
+            Fayldagi birinchi jadval 6 ustundan iborat bo‘lishi kerak:
+            <table>
+                <thead><tr><th>1-ustun</th><th>2-ustun</th><th>3-ustun</th><th>4-ustun</th><th>5-ustun</th><th>6-ustun</th></tr></thead>
+                <tbody><tr><td>Tartib raqami</td><td>Savol matni</td><td>To‘g‘ri javob</td><td>Variant 2</td><td>Variant 3</td><td>Variant 4</td></tr></tbody>
+            </table>
+            Eslatma: faqat "Bitta to‘g‘ri javob" (single_choice) turida savollar yaratiladi.
+        </div>
+        <button type="submit">Yuklash</button>
+    </form>
+    <div class="back"><a href="/api/teacher-panel/dashboard/">⬅️ Panelga qaytish</a></div>
+</div>
+</body>
+</html>
