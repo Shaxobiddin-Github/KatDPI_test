@@ -377,10 +377,12 @@ button[type="submit"]:hover {
                     <option value="{{ code }}" {% if selected.question_type == code %}selected{% endif %}>{{ label }}</option>
                 {% endfor %}
             </select>
-            <label for="text">Savol matni</label>
+            <label for="question-text">Savol matni</label>
             <div class="textarea-wrapper">
-                <textarea name="text" id="text" required>{{ selected.text }}</textarea>
+                <textarea name="text" id="question-text" class="math-enabled" required>{{ selected.text }}</textarea>
             </div>
+            <div class="preview-label">Tez ko‘rish (MathJax):</div>
+            <div id="question-preview" class="preview-box"></div>
             <label for="question_image">Rasm (ixtiyoriy)</label>
             <input type="file" name="question_image" id="question_image" accept="image/*" />
             <!-- Answer type dynamic blocks (reuse existing JS below) -->
@@ -442,15 +444,30 @@ button[type="submit"]:hover {
     function makeSingleRow(idx){
         const div = document.createElement('div');
         div.className='single-choice-row';
-        div.innerHTML = `<input type='radio' name='single_correct' value='${idx}'><input type='text' name='single_option_${idx}' placeholder='Variant ${idx}'><input type='file' name='single_image_${idx}' accept='image/*'><button type='button' class='remove-variant-btn'>&times;</button>`;
+        div.innerHTML = `<input type='radio' name='single_correct' value='${idx}'>
+            <input type='text' class='variant-input math-enabled' name='single_option_${idx}' placeholder='Variant ${idx}'>
+            <span class='variant-preview'></span>
+            <input type='file' name='single_image_${idx}' accept='image/*'>
+            <button type='button' class='remove-variant-btn'>&times;</button>`;
         div.querySelector('.remove-variant-btn').onclick=()=>div.remove();
+        const input = div.querySelector("input[type='text']");
+        input && input.addEventListener('input',()=>{ window.updateVariantPreview && window.updateVariantPreview(input); });
+        // initial preview
+        window.updateVariantPreview && window.updateVariantPreview(input);
         return div;
     }
     function makeMultiRow(idx){
         const div = document.createElement('div');
         div.className='multiple-choice-row';
-        div.innerHTML = `<input type='checkbox' name='multi_correct_${idx}'><input type='text' name='multi_option_${idx}' placeholder='Variant ${idx}'><input type='file' name='multi_image_${idx}' accept='image/*'><button type='button' class='remove-variant-btn'>&times;</button>`;
+        div.innerHTML = `<input type='checkbox' name='multi_correct_${idx}'>
+            <input type='text' class='variant-input math-enabled' name='multi_option_${idx}' placeholder='Variant ${idx}'>
+            <span class='variant-preview'></span>
+            <input type='file' name='multi_image_${idx}' accept='image/*'>
+            <button type='button' class='remove-variant-btn'>&times;</button>`;
         div.querySelector('.remove-variant-btn').onclick=()=>div.remove();
+        const input = div.querySelector("input[type='text']");
+        input && input.addEventListener('input',()=>{ window.updateVariantPreview && window.updateVariantPreview(input); });
+        window.updateVariantPreview && window.updateVariantPreview(input);
         return div;
     }
     document.getElementById('add_single_option')?.addEventListener('click',()=>{
@@ -466,18 +483,96 @@ button[type="submit"]:hover {
     const matchWrap = document.getElementById('matching_rows');
     function makeMatchRow(i){
         const d=document.createElement('div');d.className='matching-row';
-        d.innerHTML = `<input type='text' name='matching_left_${i}' placeholder='Chap ${i}'><input type='text' name='matching_right_${i}' placeholder='O‘ng ${i}'><input type='file' name='matching_image_${i}' accept='image/*'><button type='button' class='remove-variant-btn'>&times;</button>`;
+        d.innerHTML = `<input type='text' class='variant-input math-enabled' name='matching_left_${i}' placeholder='Chap ${i}'>
+            <span class='variant-preview'></span>
+            <input type='text' class='variant-input math-enabled' name='matching_right_${i}' placeholder='O‘ng ${i}'>
+            <span class='variant-preview'></span>
+            <input type='file' name='matching_image_${i}' accept='image/*'>
+            <button type='button' class='remove-variant-btn'>&times;</button>`;
         d.querySelector('.remove-variant-btn').onclick=()=>d.remove();
+        d.querySelectorAll("input[type='text']").forEach(inp=>{
+            inp.addEventListener('input',()=>{ window.updateVariantPreview && window.updateVariantPreview(inp); });
+            window.updateVariantPreview && window.updateVariantPreview(inp);
+        });
         return d;
     }
     document.getElementById('add_matching_row')?.addEventListener('click',()=>{ const c=matchWrap.children.length+1; matchWrap.appendChild(makeMatchRow(c)); });
     if(matchWrap && matchWrap.children.length===0){ matchWrap.appendChild(makeMatchRow(1)); }
     // Ordering
     const ordWrap = document.getElementById('ordering_rows');
-    function makeOrdRow(i){ const d=document.createElement('div'); d.className='ordering-row'; d.innerHTML=`<input type='text' name='ordering_${i}' placeholder='Element ${i}'><button type='button' class='remove-variant-btn'>&times;</button>`; d.querySelector('.remove-variant-btn').onclick=()=>d.remove(); return d; }
+    function makeOrdRow(i){ const d=document.createElement('div'); d.className='ordering-row'; d.innerHTML=`<input type='text' class='variant-input math-enabled' name='ordering_${i}' placeholder='Element ${i}'>
+            <span class='variant-preview'></span>
+            <button type='button' class='remove-variant-btn'>&times;</button>`; d.querySelector('.remove-variant-btn').onclick=()=>d.remove(); const input=d.querySelector("input[type='text']"); input && input.addEventListener('input',()=>{ window.updateVariantPreview && window.updateVariantPreview(input); }); window.updateVariantPreview && window.updateVariantPreview(input); return d; }
     document.getElementById('add_ordering_row')?.addEventListener('click',()=>{ const c=ordWrap.children.length+1; ordWrap.appendChild(makeOrdRow(c)); });
     if(ordWrap && ordWrap.children.length===0){ for(let i=1;i<=2;i++) ordWrap.appendChild(makeOrdRow(i)); }
 })();
 </script>
+    <!-- Global Formula Panel Markup -->
+    <button id="global-formula-toggle" title="Matematik formula paneli">∑</button>
+    <div id="global-formula-panel" class="global-formula-panel" aria-hidden="true">
+        <div class="gfp-header">
+            <button id="gfp-close" class="gfp-close" aria-label="Yopish">×</button>
+            <input id="gfp-search" type="text" placeholder="Formulalarni qidirish yoki alias..." />
+            <button id="gfp-add-snippet" class="gfp-add-snippet" type="button">Snippet qo‘shish</button>
+            <a class="gfp-doc" href="https://docs.mathjax.org/en/latest/input/tex/index.html" target="_blank" rel="noopener">MathJax qo‘llanma</a>
+        </div>
+        <div id="gfp-cats" class="gfp-category-bar"></div>
+        <div id="gfp-body" class="gfp-body"></div>
+        <div class="gfp-footer"><span>Qisqa tugmalar: Ctrl+M panel, Ctrl+Alt+F/R/L — tez kiritish</span><span>LaTeX yozing: \frac{a}{b}, \sqrt{x}, ...</span></div>
+    </div>
+    <!-- Snippet modal -->
+    <div id="gfp-snippet-modal" class="gfp-modal" style="display:none" aria-hidden="true">
+        <div class="gfp-modal-content">
+            <div class="gfp-modal-head"><strong>Yangi snippet</strong><button id="gfp-close-snippet" aria-label="Yopish">×</button></div>
+            <div class="gfp-modal-body">
+                <label>Alias nomi</label>
+                <input id="gfp-snippet-name" placeholder="masalan: quadform" />
+                <label style="margin-top:6px;display:block;">LaTeX kodi</label>
+                <textarea id="gfp-snippet-code" rows="4" placeholder="masalan: x_{1,2}=\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}"></textarea>
+                <div id="gfp-snippet-error" class="gfp-snippet-error" style="display:none"></div>
+                <div class="gfp-snippet-actions">
+                    <button id="gfp-save-snippet" class="gfp-save-btn" type="button">Saqlash</button>
+                    <button id="gfp-cancel-snippet" class="gfp-cancel-btn" type="button">Bekor qilish</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% load static %}
+    <script src="{% static 'teacher_panel/js/formula_panel.js' %}"></script>
+    <script>
+    // Live preview helpers for question and variants
+    (function(){
+        const mjReady = () => !!(window.MathJax && MathJax.typesetPromise);
+        function typesetEls(els){ if(!mjReady()) return; try { MathJax.typesetPromise(els).catch(()=>{}); } catch(e){} }
+        window.updatePreview = function(){
+            const ta = document.getElementById('question-text');
+            const box = document.getElementById('question-preview');
+            if(!ta || !box) return;
+            const txt = ta.value || '';
+            box.textContent = txt ? `\\(${txt}\\)` : '';
+            typesetEls([box]);
+        }
+        window.debouncedPreview = (function(){ let t=null; return function(){ if(t) clearTimeout(t); t=setTimeout(()=>window.updatePreview(), 300); }; })();
+        // Init once
+        const qta = document.getElementById('question-text');
+        if(qta){ qta.addEventListener('input', window.debouncedPreview); window.updatePreview(); }
+        // Mark all text inputs as math-enabled for shortcuts
+        document.querySelectorAll('input[type="text"]').forEach(i=> i.classList.add('math-enabled'));
+        // Variant preview updater
+        window.updateVariantPreview = function(input){
+            if(!input) return;
+            const preview = input.parentElement && input.parentElement.querySelector('.variant-preview');
+            if(!preview) return;
+            const val = input.value || '';
+            preview.textContent = val ? `\\(${val}\\)` : '';
+            typesetEls([preview]);
+        }
+        // Attach to existing variant inputs (initial render)
+        document.querySelectorAll('.variant-input').forEach(inp=>{
+            inp.addEventListener('input', ()=> window.updateVariantPreview(inp));
+            window.updateVariantPreview(inp);
+        });
+    })();
+    </script>
 </body>
 </html>

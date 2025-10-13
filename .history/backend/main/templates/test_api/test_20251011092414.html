@@ -1,0 +1,1258 @@
+    <!-- Modal for image enlarge -->
+    <div id="imgModal" style="display:none;position:fixed;z-index:99999;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.7);align-items:center;justify-content:center;">
+        <span id="imgModalClose" style="position:absolute;top:30px;right:50px;font-size:2.5rem;color:#fff;cursor:pointer;font-weight:bold;z-index:1001;">&times;</span>
+        <img id="imgModalImg" class="modal-enlarge-img" src="">
+    </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.body.addEventListener('click', function(e) {
+            if (e.target.closest('.img-zoom-icon')) {
+                var icon = e.target.closest('.img-zoom-icon');
+                var img = icon.parentNode.querySelector('img');
+                var modal = document.getElementById('imgModal');
+                var modalImg = document.getElementById('imgModalImg');
+                modalImg.src = img.src;
+                modal.style.display = 'flex';
+            }
+            if (e.target.id === 'imgModalClose' || e.target.id === 'imgModal') {
+                document.getElementById('imgModal').style.display = 'none';
+            }
+        });
+    });
+    </script>
+<!DOCTYPE html>
+{% load latex_filters %}
+{% load dict_extras %}
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Savollari - Test Tizimi</title>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background: url('/static/main/1.png') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Animated background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)" opacity="0.6"><animate attributeName="cy" values="20;80;20" dur="4s" repeatCount="indefinite"/></circle><circle cx="80" cy="80" r="3" fill="rgba(255,255,255,0.08)" opacity="0.4"><animate attributeName="cx" values="80;20;80" dur="6s" repeatCount="indefinite"/></circle><circle cx="50" cy="50" r="1.5" fill="rgba(255,255,255,0.12)" opacity="0.8"><animate attributeName="r" values="1.5;3;1.5" dur="3s" repeatCount="indefinite"/></circle></svg>') repeat;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .test-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.1),
+                0 0 0 1px rgba(255, 255, 255, 0.2);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: slideDown 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .test-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.05) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        h2 {
+            font-size: 2.2rem;
+                                        <script>
+                                        // Event delegation: modal enlarge for lupa icon
+                                        document.addEventListener('click', function(e) {
+                                            if (e.target.closest('.img-zoom-icon')) {
+                                                var icon = e.target.closest('.img-zoom-icon');
+                                                var img = icon.parentNode.querySelector('img');
+                                                var modal = document.getElementById('imgModal');
+                                                var modalImg = document.getElementById('imgModalImg');
+                                                modalImg.src = img.src;
+                                                modal.style.display = 'flex';
+                                            }
+                                            if (e.target.id === 'imgModalClose') {
+                                                document.getElementById('imgModal').style.display = 'none';
+                                            }
+                                            if (e.target.id === 'imgModal') {
+                                                document.getElementById('imgModal').style.display = 'none';
+                                            }
+                                        });
+                                        </script>
+                                        <div id="imgModal" style="display:none;position:fixed;z-index:99999;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.7);align-items:center;justify-content:center;">
+                                            <span id="imgModalClose" style="position:absolute;top:30px;right:50px;font-size:2.5rem;color:#fff;cursor:pointer;font-weight:bold;z-index:1001;">&times;</span>
+                                            <img id="imgModalImg" class="modal-enlarge-img" src="">
+                                        </div>
+        }
+        
+        #timer {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #e53e3e;
+            margin-bottom: 20px;
+            padding: 12px 25px;
+            background: rgba(245, 101, 101, 0.1);
+            border-radius: 15px;
+            border: 2px solid rgba(245, 101, 101, 0.2);
+            display: inline-block;
+            position: relative;
+            z-index: 2;
+            animation: pulse 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes pulse {
+            from { box-shadow: 0 0 0 0 rgba(245, 101, 101, 0.3); }
+            to { box-shadow: 0 0 0 15px rgba(245, 101, 101, 0); }
+        }
+        
+        .main-flex {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+        
+        .left-part {
+            flex: 1;
+        }
+        
+        .question-block {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.1),
+                0 0 0 1px rgba(255, 255, 255, 0.2);
+            border: none;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: all 0.3s ease;
+        }
+        
+        .question-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 20px 20px 0 0;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .question-block b {
+            display: block;
+            margin-bottom: 20px;
+            color: #1a202c;
+            font-size: 1.2rem;
+            font-weight: 600;
+            line-height: 1.6;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .question-image {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .question-image img {
+            max-width: 350px;
+            max-height: 200px;
+            border-radius: 15px;
+            border: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .question-image img:hover {
+            transform: scale(1.05);
+        }
+        
+        label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 12px 15px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            background: rgba(248, 250, 252, 0.8);
+            border: 2px solid transparent;
+            position: relative;
+            z-index: 2;
+        }
+        
+        label:hover {
+            background: rgba(102, 126, 234, 0.1);
+            border-color: rgba(102, 126, 234, 0.3);
+            transform: translateX(5px);
+        }
+        
+        input[type="radio"], input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            accent-color: #667eea;
+            cursor: pointer;
+        }
+        
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid rgba(102, 126, 234, 0.2);
+            border-radius: 12px;
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.9);
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            resize: vertical;
+        }
+        
+        input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .test-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .test-actions button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+            font-family: inherit;
+            min-width: 140px;
+        }
+        
+        .test-actions button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s;
+        }
+        
+        .test-actions button:hover::before {
+            left: 100%;
+        }
+        
+        .test-actions button:hover {
+            transform: translateY(-3px);
+        }
+        
+        #nextBtn, #finishBtn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+        
+        #nextBtn:hover, #finishBtn:hover {
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+        
+        #prevBtn {
+            background: linear-gradient(135deg, #718096 0%, #4a5568 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(113, 128, 150, 0.3);
+        }
+        
+        #prevBtn:hover {
+            box-shadow: 0 15px 40px rgba(113, 128, 150, 0.4);
+        }
+        
+        .nav-panel {
+            width: 280px;
+            min-width: 250px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.1),
+                0 0 0 1px rgba(255, 255, 255, 0.2);
+            position: sticky;
+            top: 30px;
+            height: fit-content;
+        }
+        
+        .nav-panel h4 {
+            text-align: center;
+            font-size: 1.3rem;
+            color: #1a202c;
+            font-weight: 700;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .nav-panel h4::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+        
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+        
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.8);
+            color: #667eea;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            user-select: none;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 13px;
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+            border-color: #667eea;
+        }
+        
+        .nav-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+            transform: scale(1.1);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        .nav-btn.answered {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            border-color: #48bb78;
+            box-shadow: 0 5px 15px rgba(72, 187, 120, 0.3);
+        }
+        
+        .nav-btn.answered:hover {
+            box-shadow: 0 10px 25px rgba(72, 187, 120, 0.4);
+        }
+        
+        /* Matching section styles */
+        .matching-dnd-table {
+            display: flex;
+            flex-direction: row;
+            gap: 30px;
+            align-items: flex-start;
+            margin-top: 20px;
+        }
+        
+        .matching-left {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            flex: 1;
+        }
+        
+        .matching-right {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            flex: 1;
+        }
+        
+        .matching-dropzone {
+            min-width: 200px;
+            min-height: 50px;
+            border: 2px dashed rgba(102, 126, 234, 0.4);
+            border-radius: 12px;
+            padding: 12px 16px;
+            background: rgba(102, 126, 234, 0.05);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .matching-dropzone:hover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+        
+        .matching-draggable {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            border-radius: 12px;
+            border: 2px solid rgba(102, 126, 234, 0.2);
+            font-weight: 500;
+            cursor: grab;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .matching-draggable:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+        }
+        
+        .matching-draggable:active {
+            cursor: grabbing;
+            transform: scale(1.05);
+        }
+        
+        .matching-draggable img {
+            max-width: 60px;
+            max-height: 40px;
+            border-radius: 6px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        @media (max-width: 1024px) {
+            .test-container { 
+                padding: 20px 15px;
+            }
+            
+            .test-header { 
+                padding: 25px 20px;
+            }
+            
+            .main-flex { 
+                flex-direction: column;
+                gap: 25px;
+            }
+            
+            .nav-panel { 
+                width: 100%;
+                min-width: 0;
+                position: static;
+            }
+            
+            .nav-grid { 
+                grid-template-columns: repeat(6, 1fr);
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .question-block { 
+                padding: 25px 20px;
+            }
+            
+            .test-actions {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .test-actions button { 
+                font-size: 1rem;
+                min-width: auto;
+                padding: 12px 20px;
+            }
+            
+            .nav-btn { 
+                width: 45px;
+                height: 45px;
+                font-size: 1rem;
+            }
+            
+            .nav-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+            
+            .matching-dnd-table {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            #timer {
+                font-size: 1.2rem;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <script>
+
+        
+
+
+        // Yangi cheklovlar va ishonchli monitoring
+        let violationCount = 0;
+        let isDragging = false;
+        let blockModal = null;
+        var USER_ID = {{ request.user.id|default:'null' }};
+
+        function logAction(action) {
+            fetch('/api/log-blur/', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    action: action,
+                    user_id: USER_ID
+                })
+            });
+        }
+
+        function showBlockModal(msg, canContinue) {
+            if (!blockModal) {
+                blockModal = document.createElement('div');
+                blockModal.style.position = 'fixed';
+                blockModal.style.zIndex = '999999';
+                blockModal.style.top = '0';
+                blockModal.style.left = '0';
+                blockModal.style.width = '100vw';
+                blockModal.style.height = '100vh';
+                blockModal.style.background = 'rgba(0,0,0,0.7)';
+                blockModal.style.display = 'flex';
+                blockModal.style.alignItems = 'center';
+                blockModal.style.justifyContent = 'center';
+                blockModal.innerHTML = '<div style="background:#fff;padding:32px 28px 24px 28px;border-radius:18px;box-shadow:0 8px 32px rgba(0,0,0,0.18);max-width:90vw;text-align:center;">' +
+                    '<div id="blockModalMsg" style="font-size:1.15rem;font-weight:600;color:#e53e3e;margin-bottom:18px;"></div>' +
+                    '<button id="blockModalBtn" style="background:#2262a3;color:#fff;font-weight:600;font-size:1.1rem;padding:10px 32px;border:none;border-radius:8px;cursor:pointer;">Davom etish</button>' +
+                '</div>';
+                document.body.appendChild(blockModal);
+            }
+            document.getElementById('blockModalMsg').textContent = msg;
+            var btn = document.getElementById('blockModalBtn');
+            btn.textContent = canContinue ? 'Davom etish' : 'Testni yakunlash';
+            btn.onclick = function() {
+                if (canContinue) {
+                    blockModal.style.display = 'none';
+                    if (document.fullscreenEnabled && !document.fullscreenElement) {
+                        document.documentElement.requestFullscreen().catch(function(err){});
+                    }
+                } else {
+                    document.getElementById('testForm').submit();
+                }
+            };
+            blockModal.style.display = 'flex';
+        }
+
+        // Drag&drop paytida blur hisobga olinmaydi
+        window.addEventListener('dragstart', function() { isDragging = true; });
+        window.addEventListener('dragend', function() { setTimeout(() => { isDragging = false; }, 100); });
+
+
+        // Debounce: bir eventdan keyin 500ms ichida boshqa event kelsa, faqat bir marta violation hisoblanadi
+        let lastViolationTime = 0;
+        let lastViolationType = '';
+        function handleViolation(reason) {
+            const now = Date.now();
+            // Agar oxirgi violation 500ms ichida bo‘lsa va turi boshqacha bo‘lsa, hisobga olma
+            if (now - lastViolationTime < 500 && lastViolationType !== reason) {
+                lastViolationType = reason;
+                return;
+            }
+            lastViolationTime = now;
+            lastViolationType = reason;
+            violationCount++;
+            logAction(reason + ' (violation #' + violationCount + ')');
+            if (violationCount === 1) {
+                showBlockModal('Diqqat! Test oynasini tark etdingiz yoki boshqa tabga o‘tdingiz. Yana bir marta chiqib ketsangiz, test yakunlanadi.', true);
+            } else if (violationCount >= 2) {
+                showBlockModal('Siz test oynasini ikki marta tark etdingiz yoki cheklovni buzdingiz. Test avtomatik yakunlanadi.', false);
+            }
+        }
+
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'hidden') {
+                handleViolation('visibilitychange');
+            }
+        });
+
+        window.addEventListener('blur', function() {
+            if (isDragging) return;
+            handleViolation('blur');
+        });
+
+        // Fullscreen'dan chiqqanda ham cheklov
+        document.addEventListener('fullscreenchange', function() {
+            if (!document.fullscreenElement) {
+                handleViolation('Fullscreen rejimidan chiqdi');
+            }
+        });
+
+        // Sahifaga qaytsa
+        window.addEventListener('focus', function() {
+            logAction('Sahifaga qaytdi');
+        });
+
+        // Har bir tugma bosilganda
+        document.addEventListener('click', function(e) {
+            if (e.target && e.target.tagName === 'BUTTON') {
+                logAction('Tugma bosildi: ' + e.target.innerText);
+            }
+        });
+
+        // Har bir input o‘zgarganda
+        document.addEventListener('input', function(e) {
+            if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) {
+                logAction('Input o‘zgardi: ' + (e.target.name || e.target.id));
+            }
+        });
+    </script>
+    <!-- Fullscreen modal -->
+    <div id="fullscreenModal" style="position:fixed;z-index:9999;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.55);display:flex;align-items:center;justify-content:center;">
+        <div id="fullscreenModalContent" style="background:#fff;padding:32px 28px 24px 28px;border-radius:18px;box-shadow:0 8px 32px rgba(0,0,0,0.18);max-width:90vw;text-align:center;">
+            <div id="fullscreenModalTitle" style="font-size:1.25rem;font-weight:600;color:#2262a3;margin-bottom:18px;">Test fullscreen rejimida ochiladi</div>
+            <div id="fullscreenModalDesc" style="color:#444;margin-bottom:22px;">Testni boshlash uchun \"OK\" tugmasini bosing. Test oynasi to‘liq ekranda ochiladi va test davomida uni tark etish mumkin emas.</div>
+            <button id="fullscreenOkBtn" style="background:#2262a3;color:#fff;font-weight:600;font-size:1.1rem;padding:10px 32px;border:none;border-radius:8px;cursor:pointer;">OK</button>
+        </div>
+    </div>
+    <script>
+        function goFullscreen() {
+            if (document.fullscreenEnabled && !document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(function(err) {});
+            }
+        }
+        function showFullscreenModal(title, desc, btnText) {
+            var modal = document.getElementById('fullscreenModal');
+            document.getElementById('fullscreenModalTitle').textContent = title;
+            document.getElementById('fullscreenModalDesc').textContent = desc;
+            var okBtn = document.getElementById('fullscreenOkBtn');
+            okBtn.textContent = btnText;
+            modal.style.display = 'flex';
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            var modal = document.getElementById('fullscreenModal');
+            var okBtn = document.getElementById('fullscreenOkBtn');
+            okBtn.onclick = function() {
+                goFullscreen();
+                modal.style.display = 'none';
+            };
+        });
+        // Fullscreen'dan chiqqanda yana modal chiqsin
+        document.addEventListener('fullscreenchange', function() {
+            if (!document.fullscreenElement) {
+                showFullscreenModal(
+                    'Fullscreen oynaga qayting',
+                    'Test davomida oynani tark etish mumkin emas. Davom etish uchun "Fullscreen oynaga qaytish" tugmasini bosing.',
+                    'Fullscreen oynaga qaytish'
+                );
+            }
+        });
+    </script>
+    <div class="test-container">
+        <div class="test-header">
+            <h2>{{ test.subject.name }} ({{ test.group.name }})</h2>
+            <div id="timer"></div>
+        </div>
+        
+        <form method="post" id="testForm">
+            {% csrf_token %}
+            <!-- Savollar yo'q bo'lsa ogohlantirish ko'rsatamiz; aks holda yuqorida chiziq ko'rsatmaymiz -->
+            {% if questions|length == 0 %}
+            <div style="background: #ffe0e0; color: #b30000; padding: 10px; border-radius: 8px; margin-bottom: 15px;">
+                Savollar soni: 0<br>
+                <b>Diqqat! Ushbu test uchun savollar topilmadi. Iltimos, administratorga murojaat qiling.</b>
+            </div>
+            {% endif %}
+            <div class="main-flex">
+                <div class="left-part">
+                                        <style>
+                        .option-with-image { display:flex; align-items:center; gap:10px; padding:8px 10px; border:1px solid #e3e8ef; border-radius:10px; margin-bottom:8px; background:#f8faff; cursor:pointer; }
+                        .option-with-image:hover { background:#f1f6ff; }
+                        .option-with-image input { margin-right:4px; }
+                        .option-image-wrapper { display:inline-flex; align-items:center; }
+                        .option-img-thumb { width:60px; height:60px; object-fit:cover; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.15); transition:transform .25s; }
+                        .option-img-thumb:hover { transform:scale(1.05); }
+                        .total-pill{display:inline-block;background:#fee2e2;color:#7f1d1d;border:1px solid #fecaca;padding:.2rem .55rem;border-radius:999px;font-weight:700;font-size:.72rem;box-shadow:0 1px 4px rgba(0,0,0,.05);} 
+                                                .qtype-badge{display:inline-block;margin-left:.5rem;background:linear-gradient(135deg,#f59e0b,#f97316);color:#fff;font-weight:700;font-size:.72rem;padding:.2rem .5rem;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.1);vertical-align:middle;}
+                    </style>
+                    {% for question in questions %}
+                        <div class="question-block" id="question{{ forloop.counter }}" style="display: none;">
+                                                        <b><span class="math-formula">{{ forloop.counter }}. {{ question.text|render_latex_inline|safe }}</span></b>
+                                                        {% with qt=question.question_type %}
+                                                            <span class="qtype-badge">
+                                                                {% if qt == 'single_choice' %}Bitta to‘g‘ri javob
+                                                                {% elif qt == 'multiple_choice' %}Ko‘p to‘g‘ri javob
+                                                                {% elif qt == 'matching' %}Moslashtirish
+                                                                {% elif qt == 'fill_in_blank' %}Bo‘sh joyni to‘ldirish
+                                                                {% elif qt == 'true_false' %}To‘g‘ri/Yolg‘on
+                                                                {% elif qt == 'sentence_ordering' %}Jumlalarni tartiblash
+                                                                {% else %}{{ qt }}{% endif %}
+                                                            </span>
+                                                        {% endwith %}
+                            {% if question.image %}
+                                <div class="question-image">
+                                    <img src="{{ question.image.url }}" alt="Rasm">
+                                </div>
+                            {% endif %}
+                            {% if question.question_type == 'single_choice' %}
+                                {% for option in question.answer_options.all %}
+                                    <label class="option-with-image">
+                                        <input type="radio" name="question_{{ question.id }}" value="{{ option.id }}">
+                                        {% if option.image %}
+                                            <span class="option-image-wrapper">
+                                                <img src="{{ option.image.url }}" alt="Variant rasm" class="option-img-thumb" data-full="{{ option.image.url }}">
+                                            </span>
+                                        {% endif %}
+                                        <span class="math-formula">{{ option.text|render_latex_inline|safe }}</span>
+                                    </label>
+                                {% endfor %}
+                            {% elif question.question_type == 'multiple_choice' %}
+                                {% for option in question.answer_options.all %}
+                                    <label class="option-with-image">
+                                        <input type="checkbox" name="question_{{ question.id }}_{{ option.id }}" value="{{ option.id }}">
+                                        {% if option.image %}
+                                            <span class="option-image-wrapper">
+                                                <img src="{{ option.image.url }}" alt="Variant rasm" class="option-img-thumb" data-full="{{ option.image.url }}">
+                                            </span>
+                                        {% endif %}
+                                        <span class="math-formula">{{ option.text|render_latex_inline|safe }}</span>
+                                    </label>
+                                {% endfor %}
+                            {% elif question.question_type == 'fill_in_blank' %}
+                                <input type="text" name="question_{{ question.id }}" placeholder="Javobni kiriting">
+                            {% elif question.question_type == 'true_false' %}
+                                <label><input type="radio" name="question_{{ question.id }}" value="true"> To‘g‘ri</label>
+                                <label><input type="radio" name="question_{{ question.id }}" value="false"> Noto‘g‘ri</label>
+                            {% elif question.question_type == 'matching' %}
+                                <div class="matching-dnd-table">
+                                    <div class="matching-left">
+                                        {% with lefts=question.answer_options.all|dictsort:"id" %}
+                                        {% for option in lefts %}
+                                            {% if option.left %}
+                                            <div class="matching-dropzone" data-input-name="matching_{{ question.id }}_{{ forloop.counter }}" ondragover="event.preventDefault()" ondrop="handleDrop(event, this)">
+                                                <span>{{ option.left }}</span>
+                                                <input type="hidden" name="matching_{{ question.id }}_{{ forloop.counter }}" value="">
+                                            </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% endwith %}
+                                    </div>
+                                    <div class="matching-right">
+                                        {% for r in matching_rights_dict|get_item:question.id %}
+                                            {% if r.right or r.image %}
+                                            <div class="matching-draggable" draggable="true" data-id="{{ r.id }}">
+                                                {% if r.right %}<span>{{ r.right }}</span>{% endif %}
+                                                {% if r.image %}
+                                                    <span style="position:relative;display:inline-block;">
+                                                        <img src="{{ r.image.url }}" alt="Javob rasm" class="matching-img matching-img-zoomable">
+                                                        <span class="img-zoom-icon" style="position:absolute;bottom:4px;right:4px;background:rgba(0,0,0,0.55);border-radius:50%;padding:4px;cursor:pointer;z-index:2;">
+                                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="7" stroke="white" stroke-width="2"/><path d="M15 15L18 18" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+                                                        </span>
+                                                    </span>
+                                                {% endif %}
+    <!-- Modal for image enlarge -->
+    <div id="imgModal" style="display:none;position:fixed;z-index:99999;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.7);align-items:center;justify-content:center;">
+        <span id="imgModalClose" style="position:absolute;top:30px;right:50px;font-size:2.5rem;color:#fff;cursor:pointer;font-weight:bold;z-index:1001;">&times;</span>
+        <img id="imgModalImg" class="modal-enlarge-img" src="">
+    </div>
+    <script>
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.img-zoom-icon')) {
+            var icon = e.target.closest('.img-zoom-icon');
+            var img = icon.parentNode.querySelector('img');
+            var modal = document.getElementById('imgModal');
+            var modalImg = document.getElementById('imgModalImg');
+            modalImg.src = img.src;
+            modal.style.display = 'flex';
+        }
+        if (e.target.id === 'imgModalClose' || e.target.id === 'imgModal') {
+            document.getElementById('imgModal').style.display = 'none';
+        }
+    });
+    </script>
+                                            </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <script>
+                                function handleDrop(event, dropzone) {
+                                    event.preventDefault();
+                                    var dragged = event.dataTransfer.getData('text/plain');
+                                    // Agar dropzone'da eski javob bo‘lsa, uni original joyiga qaytar
+                                    var old = dropzone.querySelector('.matching-draggable');
+                                    if (old) {
+                                        var oldId = old.getAttribute('data-id');
+                                        // Faqat klon (dropzone ichidagi) elementni olib tashla
+                                        old.parentNode.removeChild(old);
+                                        // Original variantni ko‘rsat
+                                        var origOld = document.querySelector('.matching-right .matching-draggable[data-id="'+oldId+'"]');
+                                        if (origOld) {
+                                            origOld.style.visibility = '';
+                                            origOld.style.display = '';
+                                        }
+                                    }
+                                    // Boshqa dropzone'larda ham shu javob bo‘lsa, uni ham qaytar
+                                    document.querySelectorAll('.matching-dropzone').forEach(function(zone){
+                                        if(zone !== dropzone) {
+                                            var prev = zone.querySelector('.matching-draggable[data-id="'+dragged+'"]');
+                                            if(prev) {
+                                                prev.parentNode.removeChild(prev);
+                                                var orig = document.querySelector('.matching-right .matching-draggable[data-id="'+dragged+'"]');
+                                                if(orig) {
+                                                    orig.style.visibility = '';
+                                                    orig.style.display = '';
+                                                }
+                                                zone.querySelector('input[type="hidden"]').value = '';
+                                            }
+                                        }
+                                    });
+                                    // Endi yangi javobni dropzone'ga joylash
+                                    var el = document.querySelector('.matching-right .matching-draggable[data-id="'+dragged+'"]');
+                                    if (el) {
+                                        var clone = el.cloneNode(true);
+                                        clone.setAttribute('draggable', 'false');
+                                        clone.style.opacity = '0.7';
+                                        dropzone.appendChild(clone);
+                                        dropzone.querySelector('input[type="hidden"]').value = dragged;
+                                        el.style.visibility = 'hidden';
+                                    }
+                                }
+                                document.querySelectorAll('.matching-right .matching-draggable').forEach(function(el){
+                                    el.addEventListener('dragstart', function(e){
+                                        e.dataTransfer.setData('text/plain', el.getAttribute('data-id'));
+                                    });
+                                });
+                                // Dropzone ichidagi javob ustiga bossangiz, u original joyiga qaytadi
+                                document.querySelectorAll('.matching-dropzone').forEach(function(zone){
+                                    zone.addEventListener('click', function(e){
+                                        if(e.target.classList.contains('matching-draggable')){
+                                            var id = e.target.getAttribute('data-id');
+                                            // Faqat klonni olib tashla
+                                            e.target.parentNode.removeChild(e.target);
+                                            // Original variantni ko‘rsat
+                                            var orig = document.querySelector('.matching-right .matching-draggable[data-id="'+id+'"]');
+                                            if(orig) {
+                                                orig.style.visibility = '';
+                                                orig.style.display = '';
+                                            }
+                                            zone.querySelector('input[type="hidden"]').value = '';
+                                        }
+                                    });
+                                });
+                                </script>
+
+
+</body>
+<!-- Modal enlarge script sahifa oxirida -->
+<div id="imgModal" style="display:none;position:fixed;z-index:2147483647;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.7);padding:0.5rem 0.5rem 0.7rem 0.5rem;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.25);">
+    <span id="imgModalClose" style="position:absolute;top:8px;right:16px;font-size:2rem;color:#fff;cursor:pointer;font-weight:bold;z-index:1001;">&times;</span>
+    <img id="imgModalImg" class="modal-enlarge-img" src="" 
+         style="max-width:400px;max-height:300px;display:block;margin:auto;
+                border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,0.25);
+                background:#fff;padding:8px;z-index:1000;">
+</div>
+
+<style>
+.modal-enlarge-img {
+    max-width: 500px;
+    max-height: 350px;
+    display: block;
+    margin: auto;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    background: #fff;
+    padding: 10px;
+    z-index: 1000;
+}
+</style>
+<script>
+// Modal enlarge for lupa icon (always works, no DOMContentLoaded)
+document.addEventListener('click', function(e) {
+    var icon = e.target.closest('.img-zoom-icon');
+    if (icon) {
+        var img = icon.parentNode.querySelector('.matching-img-zoomable');
+        if (!img) return;
+        var modal = document.getElementById('imgModal');
+        var modalImg = document.getElementById('imgModalImg');
+        modalImg.src = img.src;
+        modal.style.display = 'flex';
+        return;
+    }
+    if (e.target.id === 'imgModalClose') {
+        document.getElementById('imgModal').style.display = 'none';
+        return;
+    }
+    if (e.target.id === 'imgModal') {
+        document.getElementById('imgModal').style.display = 'none';
+        return;
+    }
+});
+</script>
+{% load dict_extras %}
+                            {% elif question.question_type == 'sentence_ordering' %}
+                                <textarea name="question_{{ question.id }}" rows="2" placeholder="Tartibni kiriting"></textarea>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <div class="test-actions">
+                        <button type="button" id="prevBtn">Oldingisi</button>
+                        <button type="button" id="nextBtn">Keyingisi</button>
+                        <button type="submit" id="finishBtn" style="display:none;">Testni yakunlash</button>
+                    </div>
+                </div>
+                <div class="nav-panel">
+                    <div class="nav-header" style="display:flex;align-items:center;justify-content:space-between;gap:.5rem;">
+                        <h4 style="margin:0;">📋 Savollar navbati</h4>
+                        <span class="total-pill">Savollar soni: {{ questions|length }}</span>
+                    </div>
+                    <div class="nav-grid">
+                        {% for q in questions %}
+                            <a href="javascript:void(0);" class="nav-btn" data-idx="{{ forloop.counter0 }}">{{ forloop.counter }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+        // MathJax birinchi yuklash
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.MathJax && MathJax.typeset) MathJax.typeset();
+            
+            // Add entrance animations to elements
+            setTimeout(() => {
+                const questionBlocks = document.querySelectorAll('.question-block');
+                questionBlocks.forEach((block, index) => {
+                    block.style.animationDelay = `${index * 0.1}s`;
+                });
+            }, 100);
+        });
+
+        const questions = document.querySelectorAll('.question-block');
+        const navBtns = document.querySelectorAll('.nav-btn');
+        const nextBtn = document.getElementById('nextBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const finishBtn = document.getElementById('finishBtn');
+        let current = 0;
+
+        function showQuestion(idx) {
+            // Hide all questions
+            questions.forEach((q, i) => {
+                if (i === idx) {
+                    q.style.display = 'block';
+                    q.style.opacity = '0';
+                    q.style.transform = 'translateY(20px)';
+                    
+                    // Animate in
+                    setTimeout(() => {
+                        q.style.transition = 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                        q.style.opacity = '1';
+                        q.style.transform = 'translateY(0)';
+                    }, 50);
+                } else {
+                    q.style.display = 'none';
+                }
+            });
+            
+            // Update navigation buttons
+            navBtns.forEach((btn, i) => {
+                btn.classList.toggle('active', i === idx);
+                if (i === idx) {
+                    btn.style.transform = 'scale(1.1)';
+                } else {
+                    btn.style.transform = 'scale(1)';
+                }
+            });
+            
+            // Update action buttons with smooth transitions
+            prevBtn.style.opacity = (idx === 0) ? '0.5' : '1';
+            prevBtn.style.pointerEvents = (idx === 0) ? 'none' : 'auto';
+            prevBtn.style.transform = (idx === 0) ? 'scale(0.95)' : 'scale(1)';
+            
+            nextBtn.style.display = (idx === questions.length-1) ? 'none' : 'inline-block';
+            finishBtn.style.display = (idx === questions.length-1) ? 'inline-block' : 'none';
+            
+            if (window.MathJax && MathJax.typeset) MathJax.typeset();
+            updateAnsweredButtons();
+        }
+
+        
+        function updateAnsweredButtons() {
+            questions.forEach((q, i) => {
+                const btn = navBtns[i];
+                let answered = false;
+
+                // Radio (single_choice, true_false)
+                const radios = q.querySelectorAll('input[type="radio"]');
+                if (radios.length > 0) {
+                    radios.forEach(r => { if(r.checked) answered = true; });
+                }
+
+                // Checkbox (multiple_choice)
+                const checks = q.querySelectorAll('input[type="checkbox"]');
+                if (checks.length > 0) {
+                    checks.forEach(c => { if(c.checked) answered = true; });
+                }
+
+                // Text, textarea
+                const textInputs = q.querySelectorAll('input[type="text"], textarea');
+                textInputs.forEach(t => { if (t.value.trim() !== "") answered = true; });
+
+                // Matching (hidden input)
+                const hiddenInputs = q.querySelectorAll('input[type="hidden"]');
+                hiddenInputs.forEach(h => { if (h.value.trim() !== "") answered = true; });
+
+                // Add smooth transition for answered state
+                if (answered && !btn.classList.contains('answered')) {
+                    btn.style.transform = 'scale(1.1)';
+                    setTimeout(() => {
+                        btn.style.transform = 'scale(1)';
+                    }, 150);
+                }
+
+                btn.classList.toggle('answered', answered);
+            });
+        }
+
+        // Add ripple effect to navigation buttons
+        navBtns.forEach((btn, i) => {
+            btn.addEventListener('click', (e) => {
+                // Create ripple effect
+                const ripple = document.createElement('div');
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(255, 255, 255, 0.6)';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'ripple 0.6s linear';
+                ripple.style.left = (e.clientX - btn.offsetLeft - 10) + 'px';
+                ripple.style.top = (e.clientY - btn.offsetTop - 10) + 'px';
+                ripple.style.width = ripple.style.height = '20px';
+                
+                btn.style.position = 'relative';
+                btn.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+                
+                // Navigate to question
+                current = i;
+                showQuestion(current);
+            });
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            if(current < questions.length-1) {
+                current++;
+                showQuestion(current);
+            }
+        });
+        
+        prevBtn.addEventListener('click', () => {
+            if(current > 0) {
+                current--;
+                showQuestion(current);
+            }
+        });
+
+        // Enhanced input monitoring with animations
+        document.getElementById('testForm').addEventListener('input', function(e) {
+            updateAnsweredButtons();
+            
+            // Add subtle animation to changed inputs
+            if (e.target.type === 'radio' || e.target.type === 'checkbox') {
+                e.target.parentElement.style.transform = 'scale(1.02)';
+                setTimeout(() => {
+                    e.target.parentElement.style.transform = 'scale(1)';
+                }, 150);
+            }
+        });
+
+        // Add animation styles
+        const animationStyles = document.createElement('style');
+        animationStyles.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+            
+            @keyframes glow {
+                0%, 100% {
+                    box-shadow: 0 0 5px rgba(102, 126, 234, 0.5);
+                }
+                50% {
+                    box-shadow: 0 0 20px rgba(102, 126, 234, 0.8);
+                }
+            }
+        `;
+        document.head.appendChild(animationStyles);
+
+        showQuestion(0);
+
+        
+        // Timer with localStorage persistence
+        const testMinutes = {{ test_minutes|default:30 }};
+        const timerDiv = document.getElementById('timer');
+        // Unique key for this test (can be improved if test.id is available)
+        const testKey = 'test_timer_{{ test.id|default:'default' }}';
+
+        // Try to get remaining seconds from localStorage
+        let secondsLeft = null;
+        const now = Date.now();
+        let deadline = null;
+        if (localStorage.getItem(testKey + '_deadline')) {
+            deadline = parseInt(localStorage.getItem(testKey + '_deadline'));
+            secondsLeft = Math.floor((deadline - now) / 1000);
+        } else {
+            secondsLeft = testMinutes * 60;
+            deadline = now + secondsLeft * 1000;
+            localStorage.setItem(testKey + '_deadline', deadline);
+        }
+        if (secondsLeft < 0) secondsLeft = 0;
+
+        function updateTimer() {
+            const min = Math.floor(secondsLeft / 60);
+            const sec = secondsLeft % 60;
+            const timeString = `⏱️ Test vaqti: ${min.toString().padStart(2,'0')}:${sec.toString().padStart(2,'0')}`;
+            timerDiv.textContent = timeString;
+            // Add warning colors as time runs out
+            if (secondsLeft <= 300) { // Last 5 minutes
+                timerDiv.style.background = 'rgba(245, 101, 101, 0.2)';
+                timerDiv.style.borderColor = 'rgba(245, 101, 101, 0.4)';
+                if (secondsLeft <= 60) { // Last minute
+                    timerDiv.style.animation = 'glow 1s ease-in-out infinite';
+                }
+            }
+        }
+
+        updateTimer();
+        const timerInterval = setInterval(() => {
+            secondsLeft--;
+            updateTimer();
+            if (secondsLeft <= 0) {
+                clearInterval(timerInterval);
+                timerDiv.textContent = '⏰ Test vaqti tugadi!';
+                timerDiv.style.background = 'rgba(245, 101, 101, 0.3)';
+                timerDiv.style.color = '#fff';
+                // Add completion animation
+                document.body.style.transition = 'all 1s ease';
+                document.body.style.filter = 'blur(2px)';
+                // Remove timer from localStorage
+                localStorage.removeItem(testKey + '_deadline');
+                setTimeout(() => {
+                    document.getElementById('testForm').submit();
+                }, 1000);
+            }
+        }, 1000);
+
+        // Remove timer from localStorage if test is submitted manually
+        document.getElementById('testForm').addEventListener('submit', function() {
+            localStorage.removeItem(testKey + '_deadline');
+        });
+    </script>
+</body>
+</html>
