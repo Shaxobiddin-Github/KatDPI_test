@@ -131,3 +131,55 @@ INFO 2025-10-14 04:49:18,445 basehttp "GET /admin/main/user/ HTTP/1.1" 200 22675
 INFO 2025-10-14 04:49:18,501 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
 INFO 2025-10-14 04:49:44,120 autoreload /home/snayder/project/TEST/backend/main/views_teacher_panel.py changed, reloading.
 INFO 2025-10-14 04:49:45,667 autoreload Watching for file changes with StatReloader
+INFO 2025-10-14 05:05:09,088 autoreload Watching for file changes with StatReloader
+INFO 2025-10-14 05:05:15,267 basehttp "GET /api/teacher-panel/dashboard/ HTTP/1.1" 302 0
+INFO 2025-10-14 05:05:15,286 basehttp "GET /api/login/?next=/api/teacher-panel/dashboard/ HTTP/1.1" 200 6100
+INFO 2025-10-14 05:05:15,537 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-14 05:05:25,554 basehttp "POST /api/login/?next=/api/teacher-panel/dashboard/ HTTP/1.1" 200 6302
+INFO 2025-10-14 05:05:25,632 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-14 05:05:40,001 basehttp "POST /api/login/?next=/api/teacher-panel/dashboard/ HTTP/1.1" 200 6302
+INFO 2025-10-14 05:05:40,081 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-14 05:05:47,273 basehttp "GET /admin/main/user/ HTTP/1.1" 302 0
+INFO 2025-10-14 05:05:47,318 basehttp "GET /admin/login/?next=/admin/main/user/ HTTP/1.1" 200 4193
+INFO 2025-10-14 05:05:50,451 basehttp "POST /admin/login/?next=/admin/main/user/ HTTP/1.1" 200 4367
+INFO 2025-10-14 05:06:56,342 autoreload Watching for file changes with StatReloader
+INFO 2025-10-14 05:07:00,700 basehttp "POST /admin/login/?next=/admin/main/user/ HTTP/1.1" 302 0
+INFO 2025-10-14 05:07:00,875 basehttp "GET /admin/main/user/ HTTP/1.1" 200 16827
+INFO 2025-10-14 05:07:00,958 basehttp "GET /static/admin/css/base.css HTTP/1.1" 200 22120
+INFO 2025-10-14 05:07:00,968 basehttp "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2808
+INFO 2025-10-14 05:07:00,980 basehttp "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2810
+INFO 2025-10-14 05:07:00,982 basehttp "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+INFO 2025-10-14 05:07:00,987 basehttp "GET /static/admin/js/theme.js HTTP/1.1" 200 1653
+INFO 2025-10-14 05:07:00,997 basehttp "GET /static/admin/js/core.js HTTP/1.1" 200 6208
+INFO 2025-10-14 05:07:01,001 basehttp "GET /static/admin/css/changelists.css HTTP/1.1" 200 6878
+INFO 2025-10-14 05:07:01,006 basehttp "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 285314
+INFO 2025-10-14 05:07:01,008 basehttp "GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+INFO 2025-10-14 05:07:01,009 basehttp "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 9777
+INFO 2025-10-14 05:07:01,013 basehttp "GET /static/admin/js/actions.js HTTP/1.1" 200 8076
+INFO 2025-10-14 05:07:01,023 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-10-14 05:07:01,027 basehttp "GET /static/admin/js/urlify.js HTTP/1.1" 200 7887
+INFO 2025-10-14 05:07:01,045 basehttp "GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1531
+INFO 2025-10-14 05:07:01,051 basehttp "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 325171
+INFO 2025-10-14 05:07:01,060 basehttp "GET /static/admin/js/filters.js HTTP/1.1" 200 978
+INFO 2025-10-14 05:07:01,063 basehttp "GET /static/admin/css/responsive.css HTTP/1.1" 200 16565
+INFO 2025-10-14 05:07:01,110 basehttp "GET /static/admin/img/icon-yes.svg HTTP/1.1" 200 436
+INFO 2025-10-14 05:07:01,111 basehttp "GET /static/admin/img/search.svg HTTP/1.1" 200 458
+INFO 2025-10-14 05:07:01,147 basehttp "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+INFO 2025-10-14 05:07:01,150 basehttp "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+INFO 2025-10-14 05:07:01,153 basehttp "GET /static/admin/img/sorting-icons.svg HTTP/1.1" 200 1097
+INFO 2025-10-14 05:07:01,156 basehttp "GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 200 581
+INFO 2025-10-14 05:07:01,208 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-14 05:07:05,482 basehttp "GET /admin/main/groupsubject/ HTTP/1.1" 200 13332
+INFO 2025-10-14 05:07:05,603 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-10-14 05:07:07,815 basehttp "GET /admin/main/group/ HTTP/1.1" 200 14401
+INFO 2025-10-14 05:07:07,915 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-10-14 05:07:13,376 basehttp "GET /admin/main/university/add/ HTTP/1.1" 200 13718
+INFO 2025-10-14 05:07:13,476 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-10-14 05:07:17,217 basehttp "POST /admin/main/university/add/ HTTP/1.1" 302 0
+INFO 2025-10-14 05:07:17,271 basehttp "GET /admin/main/university/ HTTP/1.1" 200 16396
+INFO 2025-10-14 05:07:17,406 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-10-14 05:07:23,259 basehttp "POST /admin/main/university/ HTTP/1.1" 200 13016
+INFO 2025-10-14 05:07:23,315 basehttp "GET /static/admin/js/cancel.js HTTP/1.1" 200 884
+INFO 2025-10-14 05:07:24,473 basehttp "POST /admin/main/university/ HTTP/1.1" 302 0
+INFO 2025-10-14 05:07:24,521 basehttp "GET /admin/main/university/ HTTP/1.1" 200 14582
+INFO 2025-10-14 05:07:24,649 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
