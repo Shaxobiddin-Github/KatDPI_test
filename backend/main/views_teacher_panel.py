@@ -3,7 +3,7 @@ from main.models import Subject, Group, Faculty, University, Question, AnswerOpt
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_GET
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseForbidden
 from django.views.decorators.http import require_http_methods
 from django.core.files.uploadedfile import UploadedFile
 from io import BytesIO
@@ -160,6 +160,9 @@ def delete_question(request, question_id):
     login_redirect = login_check(request)
     if login_redirect:
         return login_redirect
+    # Only staff teachers can delete
+    if not (hasattr(request.user, 'role') and request.user.role == 'teacher' and request.user.is_staff):
+        return HttpResponseForbidden("Ushbu amal uchun ruxsat yo'q (faqat staff).")
     question = get_object_or_404(Question, id=question_id, created_by=request.user)
     question.delete()
     return redirect('teacher_dashboard')
@@ -325,6 +328,9 @@ def upload_questions_word(request):
         return login_redirect
     if not hasattr(request.user, 'role') or request.user.role != 'teacher':
         return redirect('/api/login/')
+    # Only staff teachers can import from Word
+    if not request.user.is_staff:
+        return HttpResponseForbidden("Worddan import qilish uchun staff holati talab etiladi.")
 
     semesters = Semester.objects.all()
     subjects = Subject.objects.all()

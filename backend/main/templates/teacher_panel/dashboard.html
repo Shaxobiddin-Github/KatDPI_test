@@ -637,9 +637,11 @@
                 <button type="button" class="btn btn-primary ripple" data-bs-toggle="modal" data-bs-target="#addQuestionModal">
                     ✨ Yangi savol qo'shish
                 </button>
+                {% if request.user.is_staff %}
                 <a href="/api/teacher-panel/upload-questions-word/" class="btn btn-secondary ripple" style="margin-left:8px;">
                     📄 Worddan import
                 </a>
+                {% endif %}
             </div>
         </div>
 
@@ -699,12 +701,12 @@
                                                 <span class="badge bg-secondary">Tartib: {{ question.correct_order }}</span>
                                             {% endif %}
                                             <div class="question-actions">
-                                                <a href="/api/teacher-panel/edit-question/{{ question.id }}/" class="btn btn-sm btn-edit ripple" title="Savolni tahrirlash">
-                                                    ✏️ Tahrirlash
-                                                </a>
+                                                {# Tahrirlash funksiyasi o'chirildi #}
+                                                {% if request.user.is_staff %}
                                                 <a href="/api/teacher-panel/delete-question/{{ question.id }}/" class="btn btn-sm btn-delete ripple" title="Savolni o'chirish" onclick="return confirm('❗ Ushbu savolni o\'chirishni xohlaysizmi?')">
                                                     🗑️ O'chirish
                                                 </a>
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>

@@ -10,3 +10,4 @@ openpyxl
 python-docx
 reportlab
 requests
+qrcode
