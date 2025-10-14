@@ -94,6 +94,12 @@
             filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
             animation: bounce 2s infinite;
         }
+        .login-icon svg{
+            width: 3.2rem;
+            height: 3.2rem;
+            display: inline-block;
+            vertical-align: middle;
+        }
         
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
@@ -318,6 +324,7 @@
             .login-form { padding: 30px 25px; }
             .login-title { font-size: 1.8rem; }
             .login-icon { font-size: 2.8rem; }
+            .login-icon svg{ width: 2.6rem; height: 2.6rem; }
             .role-cards { grid-template-columns: 1fr; gap: 10px; }
             .role-card { padding: 15px 10px; }
             .role-icon { font-size: 1.5rem; }
