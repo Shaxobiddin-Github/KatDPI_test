@@ -3,6 +3,17 @@
         <span id="imgModalClose" style="position:absolute;top:30px;right:50px;font-size:2.5rem;color:#fff;cursor:pointer;font-weight:bold;z-index:1001;">&times;</span>
         <img id="imgModalImg" class="modal-enlarge-img" src="">
     </div>
+    <!-- Finish confirmation modal -->
+    <div id="finishConfirmOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:2000; align-items:center; justify-content:center;">
+        <div id="finishConfirmModal" style="background:#fff; border-radius:16px; width:min(520px, 92vw); padding:22px; box-shadow:0 20px 60px rgba(0,0,0,.25); transition:transform .18s ease;">
+            <h5 style="margin:0 0 10px 0; font-weight:800; color:#0f172a;">Testni yakunlashni tasdiqlaysizmi?</h5>
+            <p id="finishConfirmMessage" style="margin:0 0 16px 0; color:#334155;">Eslatma: ayrim savollar javobsiz qolgan bo'lishi mumkin.</p>
+            <div style="display:flex; gap:10px; justify-content:flex-end;">
+                <button type="button" id="finishConfirmNo" class="btn btn-light" style="padding:10px 14px; border-radius:10px; font-weight:600;">Bekor qilish</button>
+                <button type="button" id="finishConfirmYes" class="btn btn-danger" style="padding:10px 14px; border-radius:10px; font-weight:700;">Ha, yakunlayman</button>
+            </div>
+        </div>
+    </div>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         document.body.addEventListener('click', function(e) {
@@ -334,6 +345,12 @@
         
         #nextBtn:hover, #finishBtn:hover {
             box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+        #nextBtn.disabled, #nextBtn:disabled {
+            opacity: .6;
+            cursor: not-allowed;
+            transform: none !important;
+            filter: grayscale(10%);
         }
         
         #prevBtn {
@@ -1036,7 +1053,7 @@ document.addEventListener('click', function(e) {
                     <div class="test-actions">
                         <button type="button" id="prevBtn">Oldingisi</button>
                         <button type="button" id="nextBtn">Keyingisi</button>
-                        <button type="submit" id="finishBtn" style="display:none;">Testni yakunlash</button>
+                        <button type="button" id="finishBtn" style="display:none;">Testni yakunlash</button>
                     </div>
                 </div>
                 <div class="nav-panel">
@@ -1115,8 +1132,18 @@ document.addEventListener('click', function(e) {
             prevBtn.style.pointerEvents = (idx === 0) ? 'none' : 'auto';
             prevBtn.style.transform = (idx === 0) ? 'scale(0.95)' : 'scale(1)';
             
-            nextBtn.style.display = (idx === questions.length-1) ? 'none' : 'inline-block';
-            finishBtn.style.display = (idx === questions.length-1) ? 'inline-block' : 'none';
+            // Always show Next button; disable it on the last question to avoid swapping with Finish
+            nextBtn.style.display = 'inline-block';
+            const atLast = (idx === questions.length - 1);
+            nextBtn.disabled = atLast;
+            nextBtn.setAttribute('aria-disabled', atLast ? 'true' : 'false');
+            if(atLast){
+                nextBtn.classList.add('disabled');
+            } else {
+                nextBtn.classList.remove('disabled');
+            }
+            // Show Finish only at the last question
+            finishBtn.style.display = atLast ? 'inline-block' : 'none';
             
             if (window.MathJax && MathJax.typeset) MathJax.typeset();
             updateAnsweredButtons();
@@ -1213,6 +1240,58 @@ document.addEventListener('click', function(e) {
                 }, 150);
             }
         });
+
+        // Finish confirmation modal logic
+        (function(){
+            const modal = document.getElementById('finishConfirmModal');
+            const overlay = document.getElementById('finishConfirmOverlay');
+            const confirmBtn = document.getElementById('finishConfirmYes');
+            const cancelBtn = document.getElementById('finishConfirmNo');
+            function countUnanswered(){
+                let unanswered = 0;
+                questions.forEach((q) => {
+                    let answered = false;
+                    const radios = q.querySelectorAll('input[type="radio"]');
+                    radios.forEach(r => { if(r.checked) answered = true; });
+                    const checks = q.querySelectorAll('input[type="checkbox"]');
+                    checks.forEach(c => { if(c.checked) answered = true; });
+                    const textInputs = q.querySelectorAll('input[type="text"], textarea');
+                    textInputs.forEach(t => { if(t.value.trim() !== "") answered = true; });
+                    const hiddenInputs = q.querySelectorAll('input[type="hidden"]');
+                    hiddenInputs.forEach(h => { if(h.value && h.value.trim() !== "") answered = true; });
+                    if(!answered) unanswered++;
+                });
+                return unanswered;
+            }
+            function openModal(){
+                const cnt = countUnanswered();
+                const msg = document.getElementById('finishConfirmMessage');
+                if(msg){
+                    msg.textContent = cnt > 0 
+                        ? `Eslatma: ${cnt} ta savol javobsiz. Baribir yakunlaysizmi?`
+                        : `Barcha savollarga javob berdingiz. Yakunlashni tasdiqlaysizmi?`;
+                }
+                overlay.style.display = 'flex';
+                modal.style.transform = 'scale(0.95)';
+                setTimeout(() => { modal.style.transform = 'scale(1)'; }, 10);
+            }
+            function closeModal(){
+                overlay.style.display = 'none';
+            }
+            if(finishBtn){
+                finishBtn.addEventListener('click', function(e){
+                    e.preventDefault();
+                    openModal();
+                });
+            }
+            if(cancelBtn){ cancelBtn.addEventListener('click', closeModal); }
+            if(overlay){ overlay.addEventListener('click', function(e){ if(e.target === overlay) closeModal(); }); }
+            if(confirmBtn){
+                confirmBtn.addEventListener('click', function(){
+                    document.getElementById('testForm').submit();
+                });
+            }
+        })();
 
         // Add animation styles
         const animationStyles = document.createElement('style');
