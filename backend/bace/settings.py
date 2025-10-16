@@ -68,7 +68,8 @@ SECRET_KEY = 'django-insecure-jiagojx^7+m*&u1s=mdj#o**t(09ehj@x0z3k4gw+%k2qtziqb
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['172.16.0.6', 'localhost', '127.0.0.1', 'test.katdpi.uz']
+
 
 
 # Application definition
@@ -129,23 +130,23 @@ WSGI_APPLICATION = 'bace.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'KatDPI_TEST',
-        'USER': 'testuser',
-        'PASSWORD': '96970204',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'KatDPI_TEST',
+#         'USER': 'testuser',
+#         'PASSWORD': '96970204',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
 
 
 

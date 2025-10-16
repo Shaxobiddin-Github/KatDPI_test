@@ -25,6 +25,15 @@
     </div>
 </nav>
 <div class="container py-5" style="margin-top:70px;">
+    {% if messages %}
+    <div class="mb-3">
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %} mb-2" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
     
     <div class="user-card mb-4">
         <div class="form-section-title mb-3">Yangi foydalanuvchi qo'shish</div>

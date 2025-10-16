@@ -9,6 +9,7 @@ import qrcode
 from qrcode.constants import ERROR_CORRECT_H
 import io
 from PIL import Image, ImageDraw, ImageFont
+from django.db import transaction, IntegrityError
 from django.shortcuts import render
 from django.db.models import Q
 from .models import StudentTest, StudentAnswer, PdfVerification
@@ -32,29 +33,26 @@ def export_subject_results_pdf(request, subject_name):
     bulim_id_param = request.GET.get('bulim_id') or ''             # bulim filter (id)
 
     if group_name:
-        # Legacy: direct test.group
-        tests_qs = tests_qs.filter(
-            Q(test__group__name=group_name)
-            | Q(group__name=group_name)
-            | Q(student__group__name=group_name, test__groups__isnull=False)
-            | Q(test__groups__name=group_name)
-        )
+        # Guruhni qat'iy filtrlash: faqat shu guruh talabalarining natijalari (test tayinlash usulidan qat'i nazar)
+        try:
+            grp_obj = Group.objects.get(name=group_name)
+            tests_qs = tests_qs.filter(
+                Q(group=grp_obj)               # StudentTest.group shu guruh
+                | Q(student__group=grp_obj)     # yoki talabaning guruhi shu
+            )
+        except Group.DoesNotExist:
+            # Fallback: nom bo'yicha ham xuddi shu qat'iy mantiq
+            tests_qs = tests_qs.filter(
+                Q(group__name=group_name)
+                | Q(student__group__name=group_name)
+            )
+        tests_qs = tests_qs.distinct()
     if semester_number:
-        # Aniqroq semestr filtri: GroupSubject orqali group id larini topamiz
-        from main.models import GroupSubject
-        if group_name:
-            group_subject_ids = GroupSubject.objects.filter(
-                group__name=group_name,
-                subject__name=subject_name,
-                semester__number=semester_number
-            ).values_list('group_id', flat=True)
-            tests_qs = tests_qs.filter(test__group_id__in=group_subject_ids)
-        else:
-            group_ids = GroupSubject.objects.filter(
-                subject__name=subject_name,
-                semester__number=semester_number
-            ).values_list('group_id', flat=True)
-            tests_qs = tests_qs.filter(test__group_id__in=group_ids)
+        # Oddiy va aniq: StudentTest.semester yoki Test.semester bo'yicha
+        tests_qs = tests_qs.filter(
+            Q(semester__number=semester_number)
+            | Q(test__semester__number=semester_number)
+        )
     tests_qs = tests_qs.distinct()
 
     # Kafedra/Bulim filter
@@ -119,11 +117,31 @@ def export_subject_results_pdf(request, subject_name):
                 ok = False
             if ok:
                 tests.append(arr[-1])  # oxirgi urinish
+    # Alfavit bo'yicha tartiblash: familiya, so'ng ism (case-insensitive)
+    try:
+        tests.sort(key=lambda st: (
+            (st.student.last_name or '').lower(),
+            (st.student.first_name or '').lower(),
+            (getattr(st.student, 'middle_name', '') or '').lower(),
+            (st.student.username or '')
+        ))
+    except Exception:
+        # Fail-safe: tartiblashda kutilmagan muammo bo'lsa, mavjud tartibni qoldiramiz
+        pass
+
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="{smart_str(subject_name)}_test_natijalari.pdf"'
 
     buffer = io.BytesIO()
-    doc = SimpleDocTemplate(buffer, pagesize=A4, rightMargin=30, leftMargin=30, topMargin=30, bottomMargin=20)
+    # Pastki marginni kattaroq qildik (QR uchun joy ajratiladi)
+    doc = SimpleDocTemplate(
+        buffer,
+        pagesize=A4,
+        rightMargin=30,
+        leftMargin=30,
+        topMargin=30,
+        bottomMargin=35*mm  # ~35mm joy: jadval pastiga QR sig‘ishi uchun
+    )
     elements = []
     styles = getSampleStyleSheet()
     from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_RIGHT
@@ -451,11 +469,24 @@ def export_subject_results_pdf(request, subject_name):
     img.save(qr_buffer, format='PNG')
 
     def footer(c, doc):
-        # Faqat QR kodni pastki o'ng burchakka joylashtirish
+        # QR kodni pastki margin ichida joylashtiramiz (jadval bilan ustma-ust kelmasligi uchun)
         from reportlab.lib.pagesizes import A4 as _A4
-        size = 25*mm
+        size = 25*mm  # QR o‘lchami
+        x = _A4[0] - doc.rightMargin - size
+        # QR yuqori cheti content zonasiga chiqib ketmasligi uchun margin ichida saqlaymiz
+        # doc.bottomMargin mm/pt birligida, shuning uchun y = doc.bottomMargin - size - padding
+        padding = 3*mm
+        y = max(padding, doc.bottomMargin - size - padding)
         qr_buffer.seek(0)
-        c.drawImage(ImageReader(qr_buffer), _A4[0]-doc.rightMargin-size, doc.bottomMargin, size, size, preserveAspectRatio=True, mask='auto')
+        c.drawImage(
+            ImageReader(qr_buffer),
+            x,
+            y,
+            size,
+            size,
+            preserveAspectRatio=True,
+            mask='auto'
+        )
 
     doc.build(elements, onFirstPage=footer, onLaterPages=footer)
     pdf = buffer.getvalue()
@@ -870,14 +901,39 @@ def testapi_test(request, test_id):
                     effective_group = student_group
             except Exception:
                 pass
-        stest = StudentTest.objects.create(
-            student=request.user,
-            test=test,
-            group=effective_group,
-            subject=subject,
-            semester=semester,
-            question_ids=question_ids
-        )
+        # Yaratish/ishlatish: mavjud yakunlanmagan StudentTest bo'lsa, uni qayta ishlatamiz, aks holda yangisini yaratamiz.
+        with transaction.atomic():
+            stest, created_st = StudentTest.objects.get_or_create(
+                student=request.user,
+                test=test,
+                completed=False,
+                defaults={
+                    'group': effective_group,
+                    'subject': subject,
+                    'semester': semester,
+                    'question_ids': question_ids
+                }
+            )
+            # Agar mavjud bo'lsa, savollarni va group/subject/semester ni sinxronlab qo'yamiz
+            if not created_st:
+                changed = False
+                if stest.group_id != getattr(effective_group, 'id', None):
+                    stest.group = effective_group
+                    changed = True
+                if stest.subject_id != getattr(subject, 'id', None):
+                    stest.subject = subject
+                    changed = True
+                if stest.semester_id != getattr(semester, 'id', None):
+                    stest.semester = semester
+                    changed = True
+                if stest.question_ids != question_ids:
+                    stest.question_ids = question_ids
+                    changed = True
+                if changed:
+                    stest.save(update_fields=['group', 'subject', 'semester', 'question_ids'])
+                # Oldingi javoblar bo'lsa, dublikat bo'lmasligi uchun tozalaymiz
+                StudentAnswer.objects.filter(student_test=stest).delete()
+
         for q in questions:
             is_correct = False
             score = 0
@@ -984,10 +1040,26 @@ def testapi_test(request, test_id):
                 )
                 answered_questions.append(q.id)
         
-        # Testni tugallangan deb belgilash
-        stest.completed = True
-        stest.total_score = sum([a.score for a in StudentAnswer.objects.filter(student_test=stest)])
-        stest.save()
+        # Testni tugallangan deb belgilashdan oldin 'legacy unique' kombinatsiyasini tekshiramiz
+        with transaction.atomic():
+            if StudentTest.objects.filter(
+                student=request.user,
+                group=effective_group,
+                subject=subject,
+                semester=semester,
+                completed=True,
+                can_retake=False
+            ).exclude(id=stest.id).exists():
+                # Allaqachon shu kombinatsiyada tugallangan natija bor – dublikatga yo'l qo'ymaymiz
+                return render(request, 'test_api/already_participated.html', {'test': test})
+
+            stest.completed = True
+            stest.total_score = sum([a.score for a in StudentAnswer.objects.filter(student_test=stest)])
+            try:
+                stest.save()
+            except IntegrityError:
+                # Poyga (race) holatida unikallik cheklovi urildi – xotirjam sahifaga yo'naltiramiz
+                return render(request, 'test_api/already_participated.html', {'test': test})
         # Retake yoki keyingi kirishda yangidan aralashsin: sessiyadagi shuffle orderlarini tozalaymiz
         try:
             del request.session[f"test_{test.id}_opt_order"]

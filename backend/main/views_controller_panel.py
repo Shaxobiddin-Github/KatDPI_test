@@ -1,6 +1,26 @@
 # Foydalanish qo‘llanmasi sahifasi (controller uchun)
 
 # Importlarni yuqoriga ko'chirish
+from collections import defaultdict
+from docx import Document
+from docx.shared import Pt
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfgen import canvas
+import io
+import openpyxl
+from django.http import HttpResponse, HttpResponseForbidden
+from main.models import User, Kafedra, Bulim
+from django.views.decorators.http import require_POST
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404
+from main.models import Test, Subject, Question, Group
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.core.paginator import Paginator
+from django.db.models import Count
+from django.db import IntegrityError
 from main.models import GroupSubject, Semester, Group, Bulim, Kafedra, Subject, University, Faculty
 # AJAX orqali guruhga tegishli fanlarni qaytaruvchi endpoint
 from django.views.decorators.http import require_GET
@@ -47,25 +67,7 @@ def get_subjects_by_group(request):
                 'semester_id': None,
             })
     return JsonResponse({'subjects': subjects})
-from collections import defaultdict
-from docx import Document
-from docx.shared import Pt
-from reportlab.lib.pagesizes import A4
-from reportlab.pdfgen import canvas
-import io
-import openpyxl
-from django.http import HttpResponse, HttpResponseForbidden
-from main.models import User, Kafedra, Bulim
-from django.views.decorators.http import require_POST
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render, redirect
-from django.shortcuts import get_object_or_404
-from main.models import Test, Subject, Question, Group
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required, user_passes_test
-from django.core.paginator import Paginator
-from django.db.models import Count
+
 # Faqat controller uchun dekorator
 def controller_required(view_func):
     return user_passes_test(lambda u: u.is_authenticated and u.role == 'controller')(view_func)
@@ -741,24 +743,61 @@ def add_user(request):
             }
             return redirect('add_user')
 
-        # Branch 2: Single user create (existing behavior)
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        role = request.POST.get('role')
-        group_id = request.POST.get('group')
-        kafedra_id = request.POST.get('kafedra')
-        bulim_id = request.POST.get('bulim')
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        user = User(username=username, role=role, first_name=first_name, last_name=last_name)
-        if group_id:
-            user.group_id = group_id
-        if kafedra_id:
-            user.kafedra_id = kafedra_id
-        if bulim_id:
-            user.bulim_id = bulim_id
-        user.set_password(password)
-        user.save()
+        # Branch 2: Single user create with validation
+        username = (request.POST.get('username') or '').strip()
+        password = (request.POST.get('password') or '').strip()
+        role = (request.POST.get('role') or '').strip()
+        group_id = (request.POST.get('group') or '').strip()
+        kafedra_id = (request.POST.get('kafedra') or '').strip()
+        bulim_id = (request.POST.get('bulim') or '').strip()
+        first_name = (request.POST.get('first_name') or '').strip()
+        last_name = (request.POST.get('last_name') or '').strip()
+
+        # Basic required fields
+        if not first_name or not last_name or not username or not password or not role:
+            messages.error(request, "Barcha maydonlar to'ldirilishi shart (ism, familiya, username, parol, rol).")
+            return redirect('add_user')
+
+        # Role-specific validation
+        if role == 'student' and not group_id:
+            messages.error(request, "Talaba uchun guruh tanlash majburiy.")
+            return redirect('add_user')
+        if role == 'tutor' and not kafedra_id:
+            messages.error(request, "Tutor uchun kafedra tanlash majburiy.")
+            return redirect('add_user')
+        if role == 'employee' and not bulim_id:
+            messages.error(request, "Xodim uchun bo'lim tanlash majburiy.")
+            return redirect('add_user')
+
+        # Username uniqueness check
+        if User.objects.filter(username=username).exists():
+            # Suggest an available username
+            base = username
+            i = 1
+            suggestion = base
+            while User.objects.filter(username=suggestion).exists():
+                i += 1
+                suggestion = f"{base}{i}"
+            messages.error(request, f"Ushbu username band: {username}. Taklif: {suggestion}")
+            return redirect('add_user')
+
+        # Create user safely
+        try:
+            user = User(username=username, role=role, first_name=first_name, last_name=last_name)
+            if group_id:
+                user.group_id = group_id
+            if kafedra_id:
+                user.kafedra_id = kafedra_id
+            if bulim_id:
+                user.bulim_id = bulim_id
+            user.set_password(password)
+            user.save()
+        except IntegrityError as e:
+            # Handle rare race conditions or other unique constraints (e.g., access_code)
+            messages.error(request, f"Saqlashda xatolik: {str(e)}")
+            return redirect('add_user')
+
+        messages.success(request, "Foydalanuvchi muvaffaqiyatli qo'shildi.")
         return redirect('add_user')
     return render(request, 'controller_panel/add_user.html', {
         'users': users,
