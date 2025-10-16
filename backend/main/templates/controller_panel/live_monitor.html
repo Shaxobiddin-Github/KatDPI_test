@@ -1,0 +1,295 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <title>Live Monitor (Controller)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background: #f5f7fb; }
+    .page { max-width: 1200px; margin: 24px auto; padding: 0 16px; }
+    .glass { background: #fff; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,.06); padding: 18px; }
+    .summary { display:flex; gap:12px; flex-wrap:wrap; }
+    .summary .card { flex:1; min-width: 210px; background: #0ea5e9; color:#fff; border:none; }
+    .summary .card:nth-child(2){ background:#22c55e; }
+    .summary .card:nth-child(3){ background:#f59e0b; }
+    .summary .card .card-body { display:flex; align-items:center; justify-content:space-between; }
+    .mini { font-size:.95rem; color:#475569; }
+    .table thead th { background:#f1f5f9; }
+    .badge-dot { width:10px; height:10px; border-radius:50%; display:inline-block; margin-right:6px; }
+    .status-active { background:#22c55e; }
+    .status-completed { background:#ef4444; }
+    .progress { height: 10px; }
+    .sticky { position: sticky; top: 10px; z-index: 10; }
+    .urgent { background: #fff7ed !important; } /* <=2 min */
+    .critical { background: #fee2e2 !important; } /* <=30s */
+    .controls-gap { gap: 8px; flex-wrap: wrap; }
+    .btn-toggle.active { background:#0ea5e9; color:#fff; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="glass mb-3">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div class="d-flex align-items-center gap-2">
+          <a href="/api/controller-panel/dashboard/" class="btn btn-outline-secondary">⬅️ Ortga qaytish</a>
+          <h3 class="m-0">📡 Live Monitor</h3>
+        </div>
+        <div class="d-flex align-items-center gap-2 controls-gap">
+          <select id="testSelect" class="form-select" style="min-width:280px;">
+            <option value="">Testni tanlang...</option>
+            {% for t in tests %}
+              <option value="{{ t.id }}" {% if selected_test_id == t.id %}selected{% endif %}>
+                {{ t.subject.name }} {% if t.group %}— {{ t.group.name }}{% endif %} ({{ t.minutes }} daqiqa)
+              </option>
+            {% endfor %}
+          </select>
+          <div class="input-group">
+            <span class="input-group-text">⏱️</span>
+            <select id="pollInterval" class="form-select">
+              <option value="1500">1.5s</option>
+              <option value="3000" selected>3s</option>
+              <option value="5000">5s</option>
+              <option value="10000">10s</option>
+            </select>
+          </div>
+          <div class="input-group" style="min-width:240px;">
+            <span class="input-group-text">🔎</span>
+            <input id="searchBox" class="form-control" placeholder="Talaba yoki guruh..."/>
+          </div>
+          <button id="pauseBtn" class="btn btn-outline-secondary btn-toggle" type="button">⏸️ Pause</button>
+          <button id="refreshBtn" class="btn btn-outline-primary" type="button">🔄 Refresh</button>
+          <button id="exportBtn" class="btn btn-outline-success" type="button">⬇️ Export CSV</button>
+        </div>
+      </div>
+      <div class="mini mt-2">Faol testlarni tanlab, talabalar jarayonini jonli kuzating.</div>
+    </div>
+
+    <div class="summary mb-3">
+      <div class="card"><div class="card-body"><div><div>Ishtirokchilar</div><h4 id="sumParticipants" class="m-0">0</h4></div><div>👥</div></div></div>
+      <div class="card"><div class="card-body"><div><div>Faol</div><h4 id="sumActive" class="m-0">0</h4></div><div>🟢</div></div></div>
+      <div class="card"><div class="card-body"><div><div>Tugallagan</div><h4 id="sumCompleted" class="m-0">0</h4></div><div>🏁</div></div></div>
+      <div class="card" style="background:#6366f1;"><div class="card-body"><div><div>O'rtacha progress</div><h4 id="sumAvg" class="m-0">0%</h4></div><div>📈</div></div></div>
+    </div>
+
+    <div class="glass">
+      <div class="d-flex align-items-center justify-content-between sticky bg-white p-2 rounded mb-2" style="box-shadow:0 10px 20px rgba(0,0,0,.04)">
+        <div id="testMeta" class="mini">—</div>
+        <div id="serverTime" class="mini">—</div>
+      </div>
+      <!-- Active students -->
+      <div class="mb-3">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <h5 class="m-0">Faol talabalar</h5>
+          <span class="mini" id="activeCount">0 ta</span>
+        </div>
+        <div class="table-responsive">
+          <table class="table align-middle">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Talaba</th>
+                <th>Guruh</th>
+                <th>Boshlagan</th>
+                <th>Qolgan vaqt</th>
+                <th>Javoblar</th>
+                <th>Progress</th>
+              </tr>
+            </thead>
+            <tbody id="rowsActive"></tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Completed students (latest first) -->
+      <div>
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <h5 class="m-0">Yakunlaganlar (oxirgilari tepada)</h5>
+          <span class="mini" id="completedCount">0 ta</span>
+        </div>
+        <div class="table-responsive">
+          <table class="table align-middle">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Talaba</th>
+                <th>Guruh</th>
+                <th>Boshlagan</th>
+                <th>Tugagan</th>
+                <th>Natija</th>
+                <th>Progress</th>
+              </tr>
+            </thead>
+            <tbody id="rowsCompleted"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const testSelect = document.getElementById('testSelect');
+    const pollSelect = document.getElementById('pollInterval');
+    const rowsActive = document.getElementById('rowsActive');
+    const rowsCompleted = document.getElementById('rowsCompleted');
+    const sPart = document.getElementById('sumParticipants');
+    const sAct = document.getElementById('sumActive');
+    const sComp = document.getElementById('sumCompleted');
+    const sAvg = document.getElementById('sumAvg');
+  const testMeta = document.getElementById('testMeta');
+    const serverTime = document.getElementById('serverTime');
+    const activeCount = document.getElementById('activeCount');
+    const completedCount = document.getElementById('completedCount');
+  const pauseBtn = document.getElementById('pauseBtn');
+  const refreshBtn = document.getElementById('refreshBtn');
+  const exportBtn = document.getElementById('exportBtn');
+  const searchBox = document.getElementById('searchBox');
+
+    function fmtTime(s){
+      if(s == null) return '-';
+      const m = Math.floor(s/60), sec = s%60;
+      return `${m}m ${sec.toString().padStart(2,'0')}s`;
+    }
+    function fmtDate(iso){
+      if(!iso) return '-';
+      try { const d = new Date(iso); return d.toLocaleTimeString(); } catch(e){ return '-'; }
+    }
+    let lastSnapshot = null;
+    function applyFilter(list){
+      const q = (searchBox.value||'').trim().toLowerCase();
+      if(!q) return list;
+      return list.filter(s => (s.student||'').toLowerCase().includes(q) || (s.group||'').toLowerCase().includes(q));
+    }
+    function render(data){
+      lastSnapshot = data;
+      let act = data.active_students || (data.students||[]).filter(s=>s.status==='active');
+      let comp = data.completed_students || (data.students||[]).filter(s=>s.status!=='active');
+      act = applyFilter(act);
+      comp = applyFilter(comp);
+      rowsActive.innerHTML = '';
+      rowsCompleted.innerHTML = '';
+      // Active rows
+      act.forEach((st, idx) => {
+        const tr = document.createElement('tr');
+        const answerCell = `${st.answers_count}/${st.total_questions}`;
+        if(st.remaining_seconds != null){
+          if(st.remaining_seconds <= 30) tr.classList.add('critical');
+          else if(st.remaining_seconds <= 120) tr.classList.add('urgent');
+        }
+        tr.innerHTML = `
+          <td>${idx+1}</td>
+          <td>${st.student}</td>
+          <td>${st.group||'-'}</td>
+          <td>${fmtDate(st.start_time)}</td>
+          <td>${fmtTime(st.remaining_seconds)}</td>
+          <td>${answerCell}</td>
+          <td style="min-width:160px">
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" style="width:${st.percent}%;;" aria-valuenow="${st.percent}" aria-valuemin="0" aria-valuemax="100">${st.percent}%</div>
+            </div>
+          </td>
+        `;
+        rowsActive.appendChild(tr);
+      });
+      // Completed rows (latest first provided by API)
+      comp.forEach((st, idx) => {
+        const tr = document.createElement('tr');
+        const finalPercent = (st.correct_count != null && st.total_questions) ? Math.round((st.correct_count / st.total_questions) * 100) : null;
+        const answerCell = (st.correct_count != null) 
+          ? `${st.correct_count}/${st.total_questions} (to'g'ri)${finalPercent!=null?` • ${finalPercent}%`:''}`
+          : `${st.answers_count}/${st.total_questions}`;
+        tr.innerHTML = `
+          <td>${idx+1}</td>
+          <td>${st.student}</td>
+          <td>${st.group||'-'}</td>
+          <td>${fmtDate(st.start_time)}</td>
+          <td>${fmtDate(st.end_time)}</td>
+          <td>${answerCell}</td>
+          <td style="min-width:160px">
+            <div class="progress">
+              <div class="progress-bar bg-success" role="progressbar" style="width:${finalPercent??st.percent}%;;" aria-valuenow="${finalPercent??st.percent}" aria-valuemin="0" aria-valuemax="100">${finalPercent??st.percent}%</div>
+            </div>
+          </td>
+        `;
+        rowsCompleted.appendChild(tr);
+      });
+      if(data.summary){
+        sPart.textContent = data.summary.participants || 0;
+        sAct.textContent = data.summary.active || 0;
+        sComp.textContent = data.summary.completed || 0;
+        sAvg.textContent = (data.summary.avg_progress||0) + '%';
+      }
+      activeCount.textContent = `${act.length} ta`;
+      completedCount.textContent = `${comp.length} ta`;
+      if(data.test){
+        testMeta.textContent = `Fan: ${data.test.subject} ${data.test.group?('— '+data.test.group):''} • Vaqt: ${data.test.minutes} daqiqa`;
+      }
+      serverTime.textContent = `Server vaqti: ${fmtDate(data.server_time)}`;
+    }
+
+    let timer = null;
+    let paused = false;
+    async function tick(){
+      try{
+        const id = testSelect.value;
+        if(!id) return;
+        const resp = await fetch(`/api/controller-panel/live-monitor/data/?test_id=${id}`, { headers: { 'Cache-Control': 'no-cache' } });
+        if(!resp.ok) return;
+        const data = await resp.json();
+        render(data);
+      }catch(e){ /* ignore transient errors */ }
+    }
+    function start(){
+      if(timer) clearInterval(timer);
+      const id = testSelect.value;
+      if(!id){ rowsActive.innerHTML=''; rowsCompleted.innerHTML=''; activeCount.textContent='0 ta'; completedCount.textContent='0 ta'; sPart.textContent=sAct.textContent=sComp.textContent='0'; sAvg.textContent='0%'; testMeta.textContent='—'; lastSnapshot=null; return; }
+      const pollMs = parseInt(pollSelect.value || '3000');
+      tick();
+      timer = setInterval(()=>{ if(!paused) tick(); }, pollMs);
+    }
+
+    testSelect.addEventListener('change', start);
+    pollSelect.addEventListener('change', start);
+    pauseBtn.addEventListener('click', () => {
+      paused = !paused;
+      pauseBtn.classList.toggle('active', paused);
+      pauseBtn.textContent = paused ? '▶️ Resume' : '⏸️ Pause';
+    });
+    refreshBtn.addEventListener('click', () => { tick(); });
+    exportBtn.addEventListener('click', () => {
+      if(!lastSnapshot){ return; }
+      const rows = [];
+      const push = (type, list) => list.forEach((s, i)=>{
+        const finalPercent = (s.correct_count!=null && s.total_questions)? Math.round((s.correct_count/s.total_questions)*100):'';
+        rows.push([
+          type,
+          i+1,
+          s.student||'',
+          s.group||'',
+          s.start_time||'',
+          s.end_time||'',
+          s.answers_count!=null? s.answers_count: '',
+          s.correct_count!=null? s.correct_count: '',
+          s.total_questions!=null? s.total_questions: '',
+          finalPercent
+        ]);
+      });
+      push('active', lastSnapshot.active_students||[]);
+      push('completed', lastSnapshot.completed_students||[]);
+      const header = ['type','row','student','group','start_time','end_time','answers_count','correct_count','total_questions','final_percent'];
+      const csv = [header, ...rows].map(r=>r.map(v=>`"${String(v).replaceAll('"','""')}"`).join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = `live-monitor-${new Date().toISOString().slice(0,19)}.csv`;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+    searchBox.addEventListener('input', () => { if(lastSnapshot) render(lastSnapshot); });
+    // Auto-start if test was preselected via query string
+    {% if selected_test_id %}
+      start();
+    {% endif %}
+  </script>
+</body>
+</html>

@@ -889,6 +889,34 @@ def testapi_test(request, test_id):
                     pass
             tf_order_dict[q.id] = order
 
+    # Ensure a StudentTest row exists for live monitoring (before submit)
+    try:
+        st_incomplete = StudentTest.objects.filter(student=request.user, test=test, completed=False).first()
+    except Exception:
+        st_incomplete = None
+    if not st_incomplete:
+        # Effective group: agar test.group yo'q bo'lsa va talabaning guruhi test.groups ichida bo'lsa shu qo'yamiz
+        effective_group_for_create = group
+        if effective_group_for_create is None:
+            student_group = getattr(request.user, 'group', None)
+            try:
+                if student_group and test.groups.filter(id=student_group.id).exists():
+                    effective_group_for_create = student_group
+            except Exception:
+                pass
+        try:
+            StudentTest.objects.create(
+                student=request.user,
+                test=test,
+                group=effective_group_for_create,
+                subject=subject,
+                semester=semester,
+                question_ids=request.session.get(f'test_{test.id}_question_ids', []) or [tq.question.id for tq in selected_tqs]
+            )
+        except Exception:
+            # Ignore duplicate races or any errors; not critical for flow
+            pass
+
     if request.method == 'POST':
         question_ids = request.session.get(f'test_{test.id}_question_ids', [])
         selected_tqs = [tq for tq in test_questions if tq.question.id in question_ids]

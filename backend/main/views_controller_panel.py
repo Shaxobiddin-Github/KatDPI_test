@@ -15,15 +15,18 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
-from main.models import Test, Subject, Question, Group
+from main.models import Test, Subject, Question, Group, StudentTest
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.paginator import Paginator
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.db import IntegrityError
 from main.models import GroupSubject, Semester, Group, Bulim, Kafedra, Subject, University, Faculty
 # AJAX orqali guruhga tegishli fanlarni qaytaruvchi endpoint
 from django.views.decorators.http import require_GET
+from django.utils.timezone import now as tz_now
+from django.db.models.functions import Coalesce
+from django.db.models import Count
 from django.contrib import messages
 @require_GET
 def get_subjects_by_group(request):
@@ -70,12 +73,129 @@ def get_subjects_by_group(request):
 
 # Faqat controller uchun dekorator
 def controller_required(view_func):
-    return user_passes_test(lambda u: u.is_authenticated and u.role == 'controller')(view_func)
+    # Allow access to users with role 'controller' OR any superuser
+    return user_passes_test(lambda u: u.is_authenticated and (u.role == 'controller' or u.is_superuser))(view_func)
 
 
 @controller_required
 def controller_help(request):
     return render(request, 'controller_panel/help.html')
+
+# =============================
+# LIVE MONITOR (Controller) 👀
+# =============================
+
+@controller_required
+def live_monitor(request):
+    """Render live monitoring page for a selected test.
+    Allows controller to pick an active test and watch students' progress in near real-time.
+    """
+    # Default: show only active tests, newest first
+    tests = Test.objects.filter(active=True).select_related('subject', 'group').order_by('-created_at')[:100]
+    sel_test_id = request.GET.get('test_id')
+    context = {
+        'tests': tests,
+        'selected_test_id': int(sel_test_id) if sel_test_id and sel_test_id.isdigit() else None,
+    }
+    return render(request, 'controller_panel/live_monitor.html', context)
+
+
+@controller_required
+@require_GET
+def live_monitor_data(request):
+    """Return JSON snapshot of current test run status for polling on the live monitor page."""
+    test_id = request.GET.get('test_id')
+    if not test_id:
+        return JsonResponse({'error': 'test_id is required'}, status=400)
+    try:
+        test = Test.objects.select_related('subject', 'group').get(id=test_id)
+    except Test.DoesNotExist:
+        return JsonResponse({'error': 'Test not found'}, status=404)
+
+    # Collect StudentTest rows for the given test
+    st_qs = (StudentTest.objects
+             .filter(test=test)
+             .select_related('student', 'group')
+             .annotate(
+                 answers_count=Count('answers'),
+                 correct_count=Count('answers', filter=Q(answers__is_correct=True))
+             )
+             .order_by('start_time'))
+
+    active_rows = []
+    completed_rows = []  # will store tuples (end_ts, row)
+    total = st_qs.count()
+    active = 0
+    completed = 0
+    avg_progress_acc = 0.0
+    for st in st_qs:
+        total_q = len(st.question_ids or [])
+        ans = getattr(st, 'answers_count', 0) or 0
+        corr = getattr(st, 'correct_count', 0) or 0
+        percent = int(round((ans / total_q) * 100)) if total_q else 0
+        # Remaining time (sec)
+        minutes = getattr(test, 'minutes', 30) or 30
+        elapsed = 0
+        remaining = None
+        if st.start_time:
+            elapsed = max(0, int((tz_now() - st.start_time).total_seconds()))
+            remaining = max(0, minutes * 60 - elapsed)
+        status = 'completed' if st.completed or (remaining is not None and remaining <= 0) else 'active'
+        if status == 'active':
+            active += 1
+        else:
+            completed += 1
+        avg_progress_acc += percent
+        row = {
+            'student_id': st.student_id,
+            'student': st.student.get_full_name() or st.student.username,
+            'group': st.group.name if st.group else (getattr(st.student.group, 'name', None) or '-'),
+            'start_time': st.start_time.isoformat() if st.start_time else None,
+            'end_time': st.end_time.isoformat() if st.end_time else None,
+            'answers_count': ans,
+            'correct_count': corr,
+            'total_questions': total_q,
+            'percent': percent,
+            'remaining_seconds': remaining,
+            'completed': bool(st.completed),
+            'status': status,
+        }
+        if status == 'active':
+            active_rows.append(row)
+        else:
+            # Sort completed by latest finished first (fallback to start_time if end_time missing)
+            try:
+                end_ts = st.end_time.timestamp() if st.end_time else (st.start_time.timestamp() if st.start_time else 0)
+            except Exception:
+                end_ts = 0
+            completed_rows.append((end_ts, row))
+
+    # Order completed by end_ts DESC
+    completed_rows.sort(key=lambda t: t[0], reverse=True)
+    completed_only = [r for _, r in completed_rows]
+    # Active first, then completed
+    data = active_rows + completed_only
+    avg_progress = int(round(avg_progress_acc / total)) if total else 0
+    payload = {
+        'test': {
+            'id': test.id,
+            'subject': test.subject.name,
+            'group': test.group.name if test.group else None,
+            'minutes': getattr(test, 'minutes', 30),
+            'active': test.active,
+        },
+        'summary': {
+            'participants': total,
+            'active': active,
+            'completed': completed,
+            'avg_progress': avg_progress,
+        },
+        'students': data,
+        'active_students': active_rows,
+        'completed_students': completed_only,
+        'server_time': tz_now().isoformat(),
+    }
+    return JsonResponse(payload)
 # --- WORD EXPORT ---
 
 # GroupSubject ro'yxati (faqat controller)
