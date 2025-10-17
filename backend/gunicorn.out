@@ -1,0 +1,13 @@
+nohup: ignoring input
+[2025-10-17 11:00:24 +0500] [238009] [INFO] Starting gunicorn 23.0.0
+[2025-10-17 11:00:24 +0500] [238009] [INFO] Listening at: http://0.0.0.0:8009 (238009)
+[2025-10-17 11:00:24 +0500] [238009] [INFO] Using worker: sync
+[2025-10-17 11:00:24 +0500] [238011] [INFO] Booting worker with pid: 238011
+[2025-10-17 11:00:24 +0500] [238012] [INFO] Booting worker with pid: 238012
+[2025-10-17 11:00:24 +0500] [238013] [INFO] Booting worker with pid: 238013
+[2025-10-17 11:03:36 +0500] [238011] [INFO] Parent changed, shutting down: <Worker 238011>
+[2025-10-17 11:03:36 +0500] [238013] [INFO] Parent changed, shutting down: <Worker 238013>
+[2025-10-17 11:03:36 +0500] [238011] [INFO] Worker exiting (pid: 238011)
+[2025-10-17 11:03:36 +0500] [238013] [INFO] Worker exiting (pid: 238013)
+[2025-10-17 11:03:36 +0500] [238012] [INFO] Parent changed, shutting down: <Worker 238012>
+[2025-10-17 11:03:36 +0500] [238012] [INFO] Worker exiting (pid: 238012)
