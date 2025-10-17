@@ -23,6 +23,7 @@ urlpatterns = [
     path('delete-question/<int:question_id>/', views_controller_panel.delete_question, name='delete_question'),
     path('logout/', views_controller_panel.controller_logout, name='controller_logout'),
     path('help/', views_controller_panel.controller_help, name='controller_help'),
+    path('regenerate-access-codes/', views_controller_panel.regenerate_access_codes, name='regenerate_access_codes'),
     # Live monitor (controller)
     path('live-monitor/', views_controller_panel.live_monitor, name='live_monitor'),
     path('live-monitor/data/', views_controller_panel.live_monitor_data, name='live_monitor_data'),

@@ -2,6 +2,7 @@
 
 # Importlarni yuqoriga ko'chirish
 from collections import defaultdict
+import random
 from docx import Document
 from docx.shared import Pt
 from reportlab.lib.pagesizes import A4
@@ -1192,6 +1193,54 @@ def controller_dashboard(request):
             'unassigned': gcount == 0,
         })
     return render(request, 'controller_panel/dashboard.html', {'tests': test_list, 'can_manage_full': request.user.is_superuser or request.user.is_staff})
+
+
+# =============================
+# ACCESS CODE ROTATION (Controller)
+# =============================
+@controller_required
+@require_POST
+def regenerate_access_codes(request):
+    """Regenerate unique 5-digit access codes for all students.
+    Only accessible to controller (or superuser via decorator). POST-only with CSRF.
+    """
+    from django.db import transaction
+    # Limit to students only per request
+    students_qs = User.objects.filter(role='student')
+    total = students_qs.count()
+    if total == 0:
+        messages.info(request, 'Talabalar topilmadi. Hech narsa o\'zgartirilmadi.')
+        return redirect('controller_dashboard')
+
+    # Build a set of currently taken codes to avoid collisions
+    used = set(User.objects.exclude(access_code__isnull=True).values_list('access_code', flat=True))
+    pool = '0123456789'
+    updated = 0
+    with transaction.atomic():
+        # Lock rows to avoid concurrent rotations
+        for u in students_qs.select_for_update().only('id', 'access_code'):
+            # Generate a fresh, unique 5-digit code
+            for _ in range(20):
+                code = ''.join(random.choices(pool, k=5))
+                if code not in used:
+                    used.add(code)
+                    u.access_code = code
+                    u.save(update_fields=['access_code'])
+                    updated += 1
+                    break
+            else:
+                # If we somehow cannot find a free code in 20 tries, fallback to longer (6-digit) once
+                for _ in range(20):
+                    code = ''.join(random.choices(pool, k=6))
+                    if code not in used:
+                        used.add(code)
+                        u.access_code = code
+                        u.save(update_fields=['access_code'])
+                        updated += 1
+                        break
+
+    messages.success(request, f"{updated} ta talabaning access code yangilandi. Eski kodlar endi ishlamaydi.")
+    return redirect('controller_dashboard')
 
 @login_required
 def extend_test_time(request, test_id):

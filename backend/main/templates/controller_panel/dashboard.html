@@ -463,6 +463,21 @@
                     <span style="font-size:1.2em;">📡</span> Live Monitor
                 </a>
                 {% endif %}
+                {% if request.user.is_superuser %}
+                <form id="rotateCodesForm" method="post" action="{% url 'regenerate_access_codes' %}" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger" style="font-weight:700;display:inline-flex;align-items:center;gap:8px;">
+                        <span style="font-size:1.2em;">🔁</span> Access code’larni yangilash
+                    </button>
+                </form>
+                <script>
+                document.getElementById('rotateCodesForm').addEventListener('submit', function(e){
+                    if(!confirm("Barcha talabalar uchun access code yangilanadi. Eski kodlar ishlamaydi. Davom etamizmi?")){
+                        e.preventDefault();
+                    }
+                });
+                </script>
+                {% endif %}
                 <a href="/api/controller-panel/logout/" class="btn btn-danger" style="font-weight:600;display:inline-flex;align-items:center;gap:8px;">
                     <span style="font-size:1.2em;">🚪</span> Chiqish
                 </a>
