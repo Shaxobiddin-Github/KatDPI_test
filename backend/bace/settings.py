@@ -68,7 +68,14 @@ SECRET_KEY = 'django-insecure-jiagojx^7+m*&u1s=mdj#o**t(09ehj@x0z3k4gw+%k2qtziqb
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+    'test.katdpi.uz',
+    '.katdpi.uz',  # barcha subdomenlar
+    '172.16.0.1',
+    '172.16.0.6',  # serverning real IP manzili
+]
 
 
 

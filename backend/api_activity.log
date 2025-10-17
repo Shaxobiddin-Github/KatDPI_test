@@ -2847,3 +2847,666 @@ INFO 2025-10-17 09:57:28,631 basehttp "GET /api/controller-panel/live-monitor/da
 INFO 2025-10-17 09:57:31,645 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 36165
 INFO 2025-10-17 09:57:34,839 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 36165
 INFO 2025-10-17 09:57:37,815 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 36165
+WARNING 2025-10-17 11:00:27,366 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:00:27,620 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:00:29,354 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:00:29,354 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:02:20,079 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:02:20,079 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:02:20,687 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:02:20,687 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:02:21,206 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:02:21,206 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:02:22,671 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:02:22,672 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:02:28,273 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:02:28,273 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:02:43,305 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:02:43,306 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:03:10,629 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:03:10,629 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:03:12,200 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:03:12,200 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:03:12,602 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:03:12,603 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:03:12,814 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:03:12,814 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:03:13,703 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:03:13,703 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:03:13,860 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:03:13,860 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:03:14,014 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:03:14,014 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:03:14,171 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:03:14,172 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:03:14,327 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:03:14,327 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:03:14,477 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:03:14,478 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:03:14,613 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:03:14,613 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:03:14,756 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:03:14,757 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:03:14,918 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:03:14,918 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:03:15,086 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:03:15,087 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:03:15,269 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:03:15,270 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:03:15,469 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:03:15,469 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:03:15,636 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:03:15,636 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:03:15,820 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:03:15,821 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:03:16,019 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:03:16,020 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:03:16,213 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:03:16,213 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:03:16,422 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:03:16,422 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:03:16,603 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:03:16,629 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:03:16,787 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:03:16,787 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:03:16,959 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:03:16,960 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:03:17,263 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:03:17,264 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:03:17,447 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:03:17,447 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:03:17,645 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:03:17,646 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:03:17,829 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:03:17,830 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:03:18,013 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:03:18,013 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:03:18,181 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:03:18,181 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:03:18,359 log Not Found: /static/login/login.js
+WARNING 2025-10-17 11:03:18,360 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:03:18,500 log Not Found: /static/login/login.css
+WARNING 2025-10-17 11:03:18,501 log Not Found: /static/login/login.js
+INFO 2025-10-17 11:03:58,412 autoreload Watching for file changes with StatReloader
+INFO 2025-10-17 11:04:00,324 basehttp "GET /api/login/?next=/api/teacher-panel/dashboard/ HTTP/1.1" 200 7794
+INFO 2025-10-17 11:04:00,347 basehttp "GET /static/login/login.css HTTP/1.1" 200 10204
+INFO 2025-10-17 11:04:00,352 basehttp "GET /static/login/login.js HTTP/1.1" 200 6311
+INFO 2025-10-17 11:04:00,358 basehttp "GET /static/main/1.png HTTP/1.1" 200 48202
+INFO 2025-10-17 11:06:05,313 autoreload Watching for file changes with StatReloader
+INFO 2025-10-17 11:06:07,751 basehttp "GET /api/login/?next=/api/teacher-panel/dashboard/ HTTP/1.1" 200 7794
+INFO 2025-10-17 11:06:12,177 basehttp "GET /api/login/?next=/api/teacher-panel/dashboard/ HTTP/1.1" 200 7794
+INFO 2025-10-17 11:06:43,496 basehttp "GET / HTTP/1.1" 200 7794
+INFO 2025-10-17 11:06:43,780 basehttp "GET /static/login/login.css HTTP/1.1" 200 10204
+INFO 2025-10-17 11:06:43,785 basehttp "GET /static/login/login.js HTTP/1.1" 200 6311
+INFO 2025-10-17 11:06:45,258 basehttp "GET /favicon.ico HTTP/1.1" 200 68
+INFO 2025-10-17 11:06:45,286 basehttp "GET /static/main/1.png HTTP/1.1" 200 48202
+INFO 2025-10-17 11:06:59,710 basehttp "POST / HTTP/1.1" 302 0
+INFO 2025-10-17 11:06:59,731 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 25345
+INFO 2025-10-17 11:08:09,240 basehttp "GET /api/controller-panel/live-monitor/ HTTP/1.1" 200 13352
+INFO 2025-10-17 11:08:31,883 autoreload /home/javodev/Shaxobiddin/KatDPI_TEST/KatDPI_test/backend/bace/settings.py changed, reloading.
+INFO 2025-10-17 11:08:32,260 autoreload Watching for file changes with StatReloader
+INFO 2025-10-17 11:13:15,673 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:13:18,465 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:13:21,610 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:13:24,611 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:13:27,610 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:13:30,614 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:13:33,612 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:13:36,611 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:13:39,611 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:13:42,612 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:13:45,612 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:13:48,927 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:13:51,929 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:13:54,928 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:13:57,929 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:14:00,929 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:14:04,247 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:14:07,246 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:14:10,247 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:14:13,247 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:14:16,248 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:14:19,568 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:14:22,565 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:14:25,566 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:14:28,566 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:14:31,567 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:14:34,884 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:14:37,882 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:14:40,883 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:14:43,883 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:14:46,883 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:14:50,200 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:14:53,200 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:14:56,201 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:14:59,201 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:15:02,202 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:15:05,274 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:15:08,274 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:15:11,275 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:15:14,275 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:15:17,275 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:15:20,439 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:15:23,439 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:15:26,440 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:15:29,442 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:15:32,439 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:15:35,755 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:15:38,754 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:15:41,755 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:15:44,762 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:15:47,756 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:15:51,074 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:15:54,075 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:15:57,076 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:16:00,075 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:16:03,076 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:16:06,392 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:16:09,392 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:16:12,396 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:16:15,442 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:16:18,438 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:16:21,754 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:16:24,754 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:16:27,754 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:16:30,754 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:16:33,756 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:16:37,069 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:16:40,070 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:16:43,070 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:16:46,070 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:16:49,071 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:16:52,383 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:16:55,382 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:16:58,383 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:17:01,384 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:17:04,384 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:17:07,699 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:17:10,699 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:17:13,698 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:17:16,699 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:17:19,699 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:17:22,723 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:17:25,723 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:17:28,724 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:17:31,724 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:17:34,724 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:17:38,049 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:17:41,050 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:17:44,053 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:17:47,053 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:17:50,053 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:17:53,367 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:17:56,367 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:17:59,368 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:18:02,368 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:18:05,368 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:18:08,450 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:18:11,450 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:18:14,450 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:18:17,452 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:18:17,587 basehttp "GET /admin HTTP/1.1" 301 0
+INFO 2025-10-17 11:18:17,626 basehttp "GET /admin/ HTTP/1.1" 302 0
+INFO 2025-10-17 11:18:17,644 basehttp "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4171
+INFO 2025-10-17 11:18:17,672 basehttp "GET /static/admin/js/theme.js HTTP/1.1" 200 1653
+INFO 2025-10-17 11:18:17,672 basehttp "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2808
+INFO 2025-10-17 11:18:17,672 basehttp "GET /static/admin/css/base.css HTTP/1.1" 200 22120
+INFO 2025-10-17 11:18:17,673 basehttp "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2810
+INFO 2025-10-17 11:18:17,675 basehttp "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+INFO 2025-10-17 11:18:17,677 basehttp "GET /static/admin/css/responsive.css HTTP/1.1" 200 16565
+INFO 2025-10-17 11:18:17,683 basehttp "GET /static/admin/css/login.css HTTP/1.1" 200 951
+INFO 2025-10-17 11:18:20,452 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:18:23,766 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:18:26,765 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:18:27,374 basehttp "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+INFO 2025-10-17 11:18:27,392 basehttp "GET /admin/ HTTP/1.1" 200 17107
+INFO 2025-10-17 11:18:27,421 basehttp "GET /static/admin/css/dashboard.css HTTP/1.1" 200 441
+INFO 2025-10-17 11:18:27,427 basehttp "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+INFO 2025-10-17 11:18:27,428 basehttp "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380
+INFO 2025-10-17 11:18:27,428 basehttp "GET /static/admin/img/icon-deletelink.svg HTTP/1.1" 200 392
+INFO 2025-10-17 11:18:29,599 basehttp "GET /admin/main/user/ HTTP/1.1" 200 48391
+INFO 2025-10-17 11:18:29,620 basehttp "GET /static/admin/css/changelists.css HTTP/1.1" 200 6878
+INFO 2025-10-17 11:18:29,625 basehttp "GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+INFO 2025-10-17 11:18:29,628 basehttp "GET /static/admin/js/actions.js HTTP/1.1" 200 8076
+INFO 2025-10-17 11:18:29,628 basehttp "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 9777
+INFO 2025-10-17 11:18:29,628 basehttp "GET /static/admin/js/core.js HTTP/1.1" 200 6208
+INFO 2025-10-17 11:18:29,629 basehttp "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 285314
+INFO 2025-10-17 11:18:29,631 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 6253
+INFO 2025-10-17 11:18:29,632 basehttp "GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1531
+INFO 2025-10-17 11:18:29,634 basehttp "GET /static/admin/js/filters.js HTTP/1.1" 200 978
+INFO 2025-10-17 11:18:29,634 basehttp "GET /static/admin/js/urlify.js HTTP/1.1" 200 7887
+INFO 2025-10-17 11:18:29,636 basehttp "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 325171
+INFO 2025-10-17 11:18:29,668 basehttp "GET /static/admin/img/search.svg HTTP/1.1" 200 458
+INFO 2025-10-17 11:18:29,668 basehttp "GET /static/admin/img/icon-yes.svg HTTP/1.1" 200 436
+INFO 2025-10-17 11:18:29,682 basehttp "GET /static/admin/img/sorting-icons.svg HTTP/1.1" 200 1097
+INFO 2025-10-17 11:18:29,682 basehttp "GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 200 581
+INFO 2025-10-17 11:18:29,682 basehttp "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+INFO 2025-10-17 11:18:29,766 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:18:32,767 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:18:35,766 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:18:38,769 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:18:41,768 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:18:43,872 basehttp "GET /admin/main/user/?q=c HTTP/1.1" 200 20857
+INFO 2025-10-17 11:18:43,898 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 6253
+INFO 2025-10-17 11:18:44,768 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:18:47,769 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:18:50,769 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:18:53,771 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:18:56,769 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:18:59,769 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:19:02,770 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:19:05,770 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:19:08,770 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:19:11,771 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:19:14,772 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:19:17,772 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:19:20,772 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:19:23,772 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:19:26,773 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:19:29,773 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:19:32,774 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:19:35,775 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:19:38,775 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:19:41,775 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:19:44,775 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:19:47,777 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:19:50,777 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:19:53,777 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:19:56,780 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:19:59,779 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:20:02,781 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:20:05,781 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:20:08,780 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:20:11,780 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:20:14,780 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:20:17,782 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:20:20,782 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:20:23,783 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:20:26,784 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:20:29,784 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:20:32,784 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:20:35,786 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:20:38,784 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:20:41,786 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:20:44,785 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:20:47,786 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:20:50,785 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:20:53,786 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:20:56,787 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:20:59,788 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:21:02,788 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:21:05,789 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:21:08,789 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:21:11,790 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:21:14,790 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:21:17,791 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:21:20,791 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:21:23,791 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:21:26,791 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:21:29,791 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:21:32,793 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:21:35,794 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:21:38,797 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:21:41,794 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:21:44,796 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:21:47,795 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:21:50,796 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:21:53,796 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:21:56,796 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:21:59,796 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:22:02,797 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:22:05,797 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:22:08,797 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:22:11,798 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:22:14,799 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:22:17,799 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:22:20,800 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:22:23,801 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:22:26,799 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:22:29,800 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:22:32,802 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:22:35,801 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:22:38,801 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:22:41,801 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:22:44,810 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:22:47,804 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:22:50,809 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:22:53,806 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:22:56,806 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:22:59,805 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:23:02,806 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:23:05,806 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:23:08,808 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:23:11,807 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:23:14,808 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:23:17,809 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:23:20,808 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:23:23,807 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:23:26,833 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:23:29,835 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:23:32,834 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:23:35,835 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:23:38,835 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:23:41,836 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:23:44,835 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:23:47,836 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:23:50,837 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:23:53,838 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:23:56,838 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:23:59,838 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:24:02,838 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:24:05,849 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:24:08,841 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:24:11,839 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:24:14,841 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:24:17,841 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:24:20,841 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:24:23,841 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:24:26,842 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:24:29,970 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:24:32,972 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:24:35,971 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:24:38,973 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:24:41,972 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:24:44,971 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:24:47,973 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:24:50,972 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:24:53,972 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:24:56,973 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:24:59,975 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:25:02,976 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:25:05,974 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:25:08,975 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:25:11,976 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:25:14,975 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:25:17,976 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:25:20,975 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:25:23,976 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:25:26,978 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:25:29,978 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:25:32,979 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:25:35,979 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:25:38,979 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:25:41,979 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:25:44,980 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:25:47,979 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:25:50,979 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:25:53,980 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:25:56,980 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:25:59,981 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:26:02,982 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:26:05,981 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:26:08,982 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:26:11,981 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:26:14,983 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:26:17,982 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:26:20,983 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:26:23,983 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:26:26,983 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:26:29,986 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:26:32,984 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:26:35,984 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:26:38,987 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:26:41,985 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:26:44,985 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:26:47,986 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:26:50,985 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:26:53,985 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:26:56,986 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:26:59,987 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:27:02,988 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:27:05,988 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:27:08,988 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:27:11,987 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:27:14,988 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:27:17,988 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:27:20,988 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:27:23,988 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:27:26,989 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:27:29,988 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:27:32,990 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:27:35,990 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:27:38,990 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:27:41,992 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:27:44,991 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:27:47,992 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:27:50,996 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:27:53,994 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:27:56,993 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:27:59,994 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:28:02,995 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:28:05,996 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:28:08,995 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:28:11,996 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:28:14,996 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:28:17,996 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:28:20,997 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:28:23,997 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:28:26,997 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:28:29,998 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:28:32,998 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:28:36,000 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:28:38,997 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:28:42,001 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:28:44,999 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:28:48,000 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:28:51,001 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:28:54,000 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:28:57,001 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:29:00,002 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:29:03,007 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:29:06,004 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:29:09,003 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:29:09,626 basehttp "GET /admin/main/user/?q=c HTTP/1.1" 200 20857
+INFO 2025-10-17 11:29:09,650 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 6253
+INFO 2025-10-17 11:29:12,003 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:29:15,004 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:29:16,912 basehttp "GET /admin/main/user/?q=ilxom HTTP/1.1" 200 15410
+INFO 2025-10-17 11:29:16,936 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 6253
+INFO 2025-10-17 11:29:18,005 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:29:21,006 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:29:21,990 basehttp "GET /admin/main/user/?q=madatov HTTP/1.1" 200 15436
+INFO 2025-10-17 11:29:22,012 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 6253
+INFO 2025-10-17 11:29:24,007 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:29:25,346 basehttp "GET /admin/main/user/?q=madatov HTTP/1.1" 200 15436
+INFO 2025-10-17 11:29:25,363 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 6253
+INFO 2025-10-17 11:29:27,007 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:29:28,954 basehttp "GET /admin/main/user/?q=madatov HTTP/1.1" 200 15436
+INFO 2025-10-17 11:29:28,975 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 6253
+INFO 2025-10-17 11:29:30,007 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:29:33,008 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:29:33,620 basehttp "GET /admin/main/user/?q=ilxom HTTP/1.1" 200 15410
+INFO 2025-10-17 11:29:33,642 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 6253
+INFO 2025-10-17 11:29:36,007 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:29:39,007 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:29:39,630 basehttp "GET /admin/main/user/?q= HTTP/1.1" 200 50163
+INFO 2025-10-17 11:29:39,653 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 6253
+INFO 2025-10-17 11:29:42,009 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:29:45,009 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:29:48,008 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:29:51,009 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:29:54,010 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:29:55,524 basehttp "GET /admin/main/user/?q=ilxom HTTP/1.1" 200 15410
+INFO 2025-10-17 11:29:55,545 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 6253
+INFO 2025-10-17 11:29:57,010 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:30:00,011 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:30:03,011 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:30:06,011 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:30:09,011 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:30:12,011 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:30:15,014 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:30:18,012 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:30:21,014 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:30:24,014 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:30:27,013 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:30:30,014 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:30:33,015 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:30:33,771 basehttp "GET /admin/main/user/?q=Ilxom HTTP/1.1" 200 15410
+INFO 2025-10-17 11:30:33,794 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 6253
+INFO 2025-10-17 11:30:36,015 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:30:38,802 basehttp "GET /admin/main/user/?q= HTTP/1.1" 200 50163
+INFO 2025-10-17 11:30:38,827 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 6253
+INFO 2025-10-17 11:30:39,015 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:30:42,019 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:30:45,017 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:30:48,019 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:30:51,019 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:30:51,785 basehttp "GET /admin/main/user/?q= HTTP/1.1" 200 50163
+INFO 2025-10-17 11:30:51,803 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 6253
+INFO 2025-10-17 11:30:52,664 basehttp "GET /admin/main/user/?q= HTTP/1.1" 200 50163
+INFO 2025-10-17 11:30:52,681 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 6253
+INFO 2025-10-17 11:30:53,136 basehttp "GET /admin/main/user/?q= HTTP/1.1" 200 50163
+INFO 2025-10-17 11:30:53,155 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 6253
+INFO 2025-10-17 11:30:54,020 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:30:57,020 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:31:00,021 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:31:03,021 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:31:06,020 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:31:09,021 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:31:12,021 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:31:15,023 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:31:18,022 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:31:20,582 basehttp "GET //?q= HTTP/1.1" 200 7794
+INFO 2025-10-17 11:31:21,022 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:31:24,022 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:31:27,023 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:31:30,023 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:31:32,371 basehttp "POST //?q= HTTP/1.1" 302 0
+INFO 2025-10-17 11:31:32,390 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 25345
+INFO 2025-10-17 11:31:33,024 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:31:36,024 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:31:38,067 basehttp "GET /api/controller-panel/add-user/ HTTP/1.1" 200 58290
+INFO 2025-10-17 11:31:39,025 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:31:42,025 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:31:45,025 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:31:48,024 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:31:51,026 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:31:54,026 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:31:57,027 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:32:00,027 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:32:03,027 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:32:06,027 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:32:09,028 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:32:12,028 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:32:15,029 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:32:18,029 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:32:21,030 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:32:24,029 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:32:27,030 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:32:30,030 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:32:33,031 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:32:36,031 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:32:36,242 basehttp "POST /api/controller-panel/add-user/ HTTP/1.1" 302 0
+INFO 2025-10-17 11:32:36,316 basehttp "GET /api/controller-panel/add-user/ HTTP/1.1" 200 59168
+INFO 2025-10-17 11:32:39,031 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:32:42,034 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:32:45,059 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:32:48,059 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:32:48,305 basehttp "GET /api/controller-panel/add-user/ HTTP/1.1" 200 58967
+INFO 2025-10-17 11:32:51,059 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:32:53,015 basehttp "GET /admin HTTP/1.1" 301 0
+INFO 2025-10-17 11:32:53,030 basehttp "GET /admin/ HTTP/1.1" 200 17107
+INFO 2025-10-17 11:32:54,064 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:32:55,543 basehttp "GET /admin/main/user/ HTTP/1.1" 200 48878
+INFO 2025-10-17 11:32:55,566 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 6253
+INFO 2025-10-17 11:32:57,061 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:32:59,442 basehttp "GET /admin/main/user/?q=ilxiom HTTP/1.1" 200 15423
+INFO 2025-10-17 11:32:59,464 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 6253
+INFO 2025-10-17 11:33:00,061 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:33:03,061 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:33:06,061 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:33:09,061 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:33:09,761 basehttp "GET /admin/main/user/?q=ilxom HTTP/1.1" 200 17314
+INFO 2025-10-17 11:33:09,783 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 6253
+INFO 2025-10-17 11:33:11,228 basehttp "GET /admin/main/user/189/change/?_changelist_filters=q%3Dilxom HTTP/1.1" 200 42928
+INFO 2025-10-17 11:33:11,246 basehttp "GET /static/admin/css/forms.css HTTP/1.1" 200 8525
+INFO 2025-10-17 11:33:11,249 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 6253
+INFO 2025-10-17 11:33:11,251 basehttp "GET /static/admin/js/calendar.js HTTP/1.1" 200 9141
+INFO 2025-10-17 11:33:11,252 basehttp "GET /static/admin/js/admin/DateTimeShortcuts.js HTTP/1.1" 200 19319
+INFO 2025-10-17 11:33:11,252 basehttp "GET /static/admin/js/inlines.js HTTP/1.1" 200 15628
+INFO 2025-10-17 11:33:11,255 basehttp "GET /static/admin/img/icon-no.svg HTTP/1.1" 200 560
+INFO 2025-10-17 11:33:11,256 basehttp "GET /static/admin/js/change_form.js HTTP/1.1" 200 606
+INFO 2025-10-17 11:33:11,256 basehttp "GET /static/admin/js/prepopulate_init.js HTTP/1.1" 200 586
+INFO 2025-10-17 11:33:11,257 basehttp "GET /static/admin/css/widgets.css HTTP/1.1" 200 11991
+INFO 2025-10-17 11:33:12,060 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:33:15,063 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:33:15,942 basehttp "POST /admin/main/user/189/change/?_changelist_filters=q%3Dilxom HTTP/1.1" 302 0
+INFO 2025-10-17 11:33:15,957 basehttp "GET /admin/main/user/?q=ilxom HTTP/1.1" 200 17514
+INFO 2025-10-17 11:33:15,980 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 6253
+INFO 2025-10-17 11:33:18,064 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 200 32865
+INFO 2025-10-17 11:33:19,632 basehttp "GET /api/controller-panel/add-user/ HTTP/1.1" 200 58967
+INFO 2025-10-17 11:33:44,572 basehttp "GET /admin/main/user/?q= HTTP/1.1" 200 50675
+INFO 2025-10-17 11:33:44,596 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 6253
+INFO 2025-10-17 11:34:08,128 basehttp "GET /api/controller-panel/add-user/ HTTP/1.1" 200 58967
+INFO 2025-10-17 14:27:01,609 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:27:01,725 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:27:04,158 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:27:04,177 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:27:10,095 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:27:10,101 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:27:13,069 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:27:13,075 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:27:16,069 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:27:16,077 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:27:19,087 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:27:19,095 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:27:22,069 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:27:22,075 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:27:25,068 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:27:25,075 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:27:28,069 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:27:28,076 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:27:31,070 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:27:31,077 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:27:34,070 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:27:34,078 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:27:37,071 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:27:37,079 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:27:40,070 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:27:40,077 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:27:43,070 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:27:43,077 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:27:46,071 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:27:46,077 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:27:49,070 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:27:49,076 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:27:52,070 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:27:52,077 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:27:55,072 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:27:55,078 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:27:58,073 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:27:58,080 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:28:01,073 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:28:01,080 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:28:04,073 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:28:04,080 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:28:07,073 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:28:07,080 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:28:10,073 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:28:10,080 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:28:13,074 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:28:13,081 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:28:16,074 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:28:16,081 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:28:19,083 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:28:19,088 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:28:22,074 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:28:22,080 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:28:25,074 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:28:25,084 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:28:28,075 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:28:28,082 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:28:31,076 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:28:31,083 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:28:34,076 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:28:34,086 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:28:37,075 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:28:37,082 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:28:40,077 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:28:40,083 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:28:43,077 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:28:43,084 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:28:46,078 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:28:46,086 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
+INFO 2025-10-17 14:28:49,078 basehttp "GET /api/controller-panel/live-monitor/data/?test_id=2 HTTP/1.1" 302 0
+INFO 2025-10-17 14:28:49,085 basehttp "GET /api/login/?next=/api/controller-panel/live-monitor/data/%3Ftest_id%3D2 HTTP/1.1" 200 7794
