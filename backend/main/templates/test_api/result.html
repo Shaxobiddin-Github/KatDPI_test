@@ -470,56 +470,7 @@
             {% endif %}
         </div>
         
-        <div class="details-section">
-            <h3 class="section-title">📋 Barcha savollar va javoblar</h3>
-            <ul class="questions-list">
-                {% for answer in answers %}
-                <li class="question-item {% if answer.is_correct %}correct{% else %}incorrect{% endif %}">
-                    <div class="question-text">
-                        <strong>Savol:</strong> {{ answer.question.text }}
-                    </div>
-                    
-                    <div class="answer-row">
-                        <span class="answer-label">Javob:</span>
-                        <div class="answer-content">
-                            {% if answer.text_answer %}
-                                {{ answer.text_answer }}
-                            {% else %}
-                                {% for opt in answer.answer_option.all %}
-                                    {{ opt.text }}{% if not forloop.last %}, {% endif %}
-                                {% endfor %}
-                            {% endif %}
-                        </div>
-                    </div>
-                    
-                    <div class="answer-row">
-                        <span class="answer-label">Status:</span>
-                        <span class="status-badge {% if answer.is_correct %}status-correct{% else %}status-incorrect{% endif %}">
-                            {% if answer.is_correct %}To'g'ri{% else %}Xato{% endif %}
-                        </span>
-                        <span class="score-badge">{{ answer.score }} ball</span>
-                    </div>
-                    
-                    {% if not answer.is_correct %}
-                    <div class="answer-row">
-                        <span class="answer-label">To'g'ri javob:</span>
-                        <div class="answer-content correct-answer">
-                            {% if answer.question.question_type in 'fill_in_blank,sentence_ordering,matching,true_false' %}
-                                {% for opt in answer.question.answer_options.all %}
-                                    {% if opt.is_correct %}{{ opt.text }}{% endif %}
-                                {% endfor %}
-                            {% else %}
-                                {% for opt in answer.question.answer_options.all %}
-                                    {% if opt.is_correct %}{{ opt.text }}{% if not forloop.last %}, {% endif %}{% endif %}
-                                {% endfor %}
-                            {% endif %}
-                        </div>
-                    </div>
-                    {% endif %}
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
+  
     </div>
 </body>
 </html>
