@@ -5,6 +5,7 @@ urlpatterns = [
     path('login/', views_test_api.testapi_login, name='testapi_login'),
     path('dashboard/', views_test_api.testapi_dashboard, name='testapi_dashboard'),
     path('test/<int:test_id>/', views_test_api.testapi_test, name='testapi_test'),
+    path('test/<int:test_id>/dalolatnoma/', views_test_api.create_dalolatnoma, name='create_dalolatnoma'),
     path('result/<int:stest_id>/', views_test_api.testapi_result, name='testapi_result'),
     path('stats/', views_test_api.testapi_stats, name='testapi_stats'),
     path('all-results/', views_test_api.testapi_all_results, name='testapi_all_results'),

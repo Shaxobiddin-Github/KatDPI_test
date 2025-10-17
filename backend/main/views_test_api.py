@@ -14,8 +14,12 @@ from django.shortcuts import render
 from django.db.models import Q
 from .models import StudentTest, StudentAnswer, PdfVerification
 from .models import StudentTest, StudentAnswer, PdfVerification, Group, Kafedra, Bulim
+from .models import Dalolatnoma, User
 # Fan bo'yicha PDF natija yuklash
 from django.utils.encoding import smart_str
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
+from django.core.files.base import ContentFile
 def export_subject_results_pdf(request, subject_name):
     from datetime import datetime
     # Asosiy queryset
@@ -198,6 +202,90 @@ def export_subject_results_pdf(request, subject_name):
         filter_bits.append(f"Semestr: {semester_number}")
     if attempt_nth_val:
         filter_bits.append(f"{attempt_nth_val}-urinish natijalari")
+
+
+# === DALOLATNOMA CREATE ===
+@login_required
+@require_POST
+def create_dalolatnoma(request, test_id):
+    try:
+        # Only controller or superuser can create
+        if not (getattr(request.user, 'role', None) == 'controller' or request.user.is_superuser):
+            return JsonResponse({'error': 'forbidden'}, status=403)
+
+        student_id = request.POST.get('student_id')
+        student_test_id = request.POST.get('student_test_id')
+        place = (request.POST.get('place') or '').strip()
+        reason = (request.POST.get('reason') or '').strip()
+        observers = (request.POST.get('observers') or '').strip()
+
+        if not student_id or not place or not reason:
+            return JsonResponse({'error': 'required fields missing'}, status=400)
+
+        student = User.objects.get(id=student_id)
+        stest = None
+        if student_test_id:
+            try:
+                stest = StudentTest.objects.get(id=student_test_id)
+            except StudentTest.DoesNotExist:
+                stest = None
+
+        # Build a very simple PDF document
+        buf = io.BytesIO()
+        c = canvas.Canvas(buf, pagesize=A4)
+        width, height = A4
+        y = height - 40
+        c.setFont("Helvetica-Bold", 14)
+        c.drawString(40, y, "Dalolatnoma")
+        y -= 30
+        c.setFont("Helvetica", 11)
+        c.drawString(40, y, f"Talaba: {student.get_full_name() or student.username}")
+        y -= 16
+        c.drawString(40, y, f"Test ID: {test_id}")
+        y -= 16
+        if stest:
+            c.drawString(40, y, f"StudentTest ID: {stest.id}")
+            y -= 16
+        c.drawString(40, y, f"Joy: {place}")
+        y -= 16
+        c.drawString(40, y, "Qoida buzilishi sababi:")
+        y -= 16
+        # Wrap reason text roughly
+        import textwrap
+        for line in textwrap.wrap(reason, width=90):
+            c.drawString(60, y, line)
+            y -= 14
+        if observers:
+            y -= 8
+            c.drawString(40, y, "Nazoratchilar:")
+            y -= 16
+            for line in textwrap.wrap(observers, width=90):
+                c.drawString(60, y, line)
+                y -= 14
+        c.showPage()
+        c.save()
+        pdf_bytes = buf.getvalue()
+        buf.close()
+
+        # Save model instance with the generated PDF
+        dal = Dalolatnoma(
+            student=student,
+            test_id=test_id,
+            student_test=stest,
+            place=place,
+            reason=reason,
+            observers=observers or None,
+            created_by=request.user,
+        )
+        filename = f"dalolatnoma_{student.id}_{test_id}.pdf"
+        dal.file.save(filename, ContentFile(pdf_bytes), save=False)
+        dal.save()
+
+        return JsonResponse({'ok': True, 'id': dal.id})
+    except User.DoesNotExist:
+        return JsonResponse({'error': 'student not found'}, status=404)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
     else:
         if attempt_count_val:
             filter_bits.append(f"Aynan {attempt_count_val} marta (oxirgi urinish)")

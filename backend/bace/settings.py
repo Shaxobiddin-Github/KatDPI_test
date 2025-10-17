@@ -75,6 +75,7 @@ ALLOWED_HOSTS = [
     '.katdpi.uz',  # barcha subdomenlar
     '172.16.0.1',
     '172.16.0.6',  # serverning real IP manzili
+    '172.16.0.134',
 ]
 
 

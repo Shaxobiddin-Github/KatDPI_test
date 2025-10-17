@@ -724,11 +724,11 @@ def download_student_import_template(request):
     wb = openpyxl.Workbook()
     ws = wb.active
     ws.title = 'Talaba Import'
-    # Moslashuvchanlik uchun asosiy sarlavhalarni beramiz (role kerak emas, hammasi student)
-    ws.append(['firstname', 'lastname', 'group'])
+    # Sarlavhalar: A: firstname, B: lastname, C: middle_name (otasining ismi), D: group
+    ws.append(['firstname', 'lastname', 'middle_name', 'group'])
     # Namuna qatorlar
-    ws.append(['Ali', 'Valiyev', 'CS-101'])
-    ws.append(['Laylo', 'Karimova', 'CS-102'])
+    ws.append(['Ali', 'Valiyev', 'Karimovich', 'CS-101'])
+    ws.append(['Laylo', 'Karimova', 'Shavkatovna', 'CS-102'])
     output = io.BytesIO()
     wb.save(output)
     output.seek(0)
@@ -779,11 +779,8 @@ def add_user(request):
             for row in ws.iter_rows(min_row=1, max_row=1, values_only=True):
                 header_row = [str(c).strip().lower() if c is not None else '' for c in row]
                 break
-            if not header_row:
-                request.session['import_result'] = {
-                    'errors': ['Excel fayl bo\'sh yoki sarlavha (Header) yo\'q'],
-                }
-                return redirect('add_user')
+            # Default start row assumes there is a header
+            start_row = 2
 
             # Map possible header names
             def find_idx(names):
@@ -792,13 +789,19 @@ def add_user(request):
                         return header_row.index(name)
                 return None
 
-            idx_first = find_idx(['firstname', 'first_name', 'ism', 'first name'])
-            idx_last = find_idx(['lastname', 'last_name', 'familiya', 'last name'])
-            idx_group = find_idx(['group', 'guruh', 'group_name'])
+            idx_first = find_idx(['firstname', 'first_name', 'ism', 'first name']) if header_row else None
+            idx_last = find_idx(['lastname', 'last_name', 'familiya', 'last name']) if header_row else None
+            idx_middle = find_idx(['middle_name', 'middlename', 'patronymic', 'otchestvo', 'otasining ismi', 'ota ismi']) if header_row else None
+            idx_group = find_idx(['group', 'guruh', 'group_name']) if header_row else None
+
+            # Fallback: if header mapping failed, assume positional A,B,C,D => first,last,middle,group and treat first row as data
+            if idx_first is None or idx_last is None:
+                idx_first, idx_last, idx_middle, idx_group = 0, 1, 2, 3
+                start_row = 1
 
             if idx_first is None or idx_last is None:
                 request.session['import_result'] = {
-                    'errors': ["Sarlavha topilmadi. Kerakli ustunlar: firstname, lastname (ixtiyoriy: group)"],
+                    'errors': ["Sarlavha topilmadi. Kerakli ustunlar: firstname, lastname (ixtiyoriy: middle_name, group)"],
                 }
                 return redirect('add_user')
 
@@ -824,11 +827,12 @@ def add_user(request):
 
             created_count = 0
             with transaction.atomic():
-                for row in ws.iter_rows(min_row=2, values_only=True):
+                for row in ws.iter_rows(min_row=start_row, values_only=True):
                     if not row:
                         continue
                     first = str(row[idx_first]).strip() if idx_first is not None and row[idx_first] is not None else ''
                     last = str(row[idx_last]).strip() if idx_last is not None and row[idx_last] is not None else ''
+                    middle = str(row[idx_middle]).strip() if idx_middle is not None and row[idx_middle] is not None else ''
                     if not first and not last:
                         # skip empty
                         continue
@@ -837,7 +841,7 @@ def add_user(request):
 
                     username = make_unique_username(first)
                     password = gen_password()
-                    user = User(username=username, role='student', first_name=first, last_name=last)
+                    user = User(username=username, role='student', first_name=first, last_name=last, middle_name=middle or None)
                     # Assign group by name
                     if group_name:
                         gid = group_by_name.get(group_name.strip().lower())

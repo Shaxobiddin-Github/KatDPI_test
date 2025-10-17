@@ -17,6 +17,8 @@ class User(AbstractUser):
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='student')
     access_code = models.CharField(max_length=5, unique=True, blank=True, null=True)  # Talaba, tutor, xodim uchun
     group = models.ForeignKey('Group', on_delete=models.SET_NULL, null=True, blank=True, related_name='students', verbose_name='Guruh')  # Talabani guruhga bog‘lash
+    # Otasining ismi (patronymic)
+    middle_name = models.CharField(max_length=150, null=True, blank=True, verbose_name='Otasining ismi')
     # Tutor uchun faqat kafedra
     kafedra = models.ForeignKey('Kafedra', on_delete=models.SET_NULL, null=True, blank=True, related_name='tutors', verbose_name='Kafedra')
     # Employee uchun bo'lim
@@ -442,6 +444,28 @@ class PdfVerification(models.Model):
 
     def __str__(self):
         return f"{self.subject_name} | {self.hash_code}"
+
+
+# --- Dalolatnoma (violation protocol) ---
+class Dalolatnoma(models.Model):
+    student = models.ForeignKey(User, on_delete=models.CASCADE, related_name='dalolatnomalar', verbose_name='Talaba')
+    test = models.ForeignKey('Test', on_delete=models.CASCADE, related_name='dalolatnomalar', verbose_name='Test')
+    student_test = models.ForeignKey('StudentTest', on_delete=models.SET_NULL, null=True, blank=True, related_name='dalolatnomalar', verbose_name='Talaba testi')
+    place = models.CharField(max_length=255, verbose_name="O'tkazish joyi")
+    reason = models.TextField(verbose_name='Qoida buzilishi sababi')
+    observers = models.TextField(blank=True, null=True, verbose_name='Nazoratchilar (FIO, vergul bilan)')
+    file = models.FileField(upload_to='dalolatnomalar/', verbose_name='PDF fayl')
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='created_dalolatnomalar', verbose_name='Kim yaratdi')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Yaratilgan vaqt')
+
+    class Meta:
+        verbose_name = 'Dalolatnoma'
+        verbose_name_plural = 'Dalolatnomalar'
+        ordering = ['-created_at']
+
+    def __str__(self):
+        fio = self.student.get_full_name() or self.student.username
+        return f"Dalolatnoma: {fio} / {self.test.subject.name if self.test and self.test.subject else 'Test'} / {self.created_at:%Y-%m-%d %H:%M}"
 
 
 # =============================
