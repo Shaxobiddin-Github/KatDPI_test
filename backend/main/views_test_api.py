@@ -21,50 +21,44 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.core.files.base import ContentFile
 def export_subject_results_pdf(request, subject_name):
+    """Export selected subject results into a PDF and always return HttpResponse."""
     from datetime import datetime
-    # Asosiy queryset
-    tests_qs = StudentTest.objects.filter(test__subject__name=subject_name, completed=True).select_related('student', 'test', 'test__group')
+    # 1) Base queryset
+    tests_qs = StudentTest.objects.filter(
+        test__subject__name=subject_name,
+        completed=True
+    ).select_related('student', 'test', 'test__group')
 
-    # --- Query parametrlardan filtrlar ---
+    # 2) Filters from query params
     group_name = request.GET.get('group') or ''
     semester_number = request.GET.get('semester') or ''
-    attempt_count_param = request.GET.get('attempt_count') or ''  # exact
-    attempt_gte_param = request.GET.get('attempt_gte') or ''       # >=
-    attempt_min_param = request.GET.get('attempt_min') or ''       # range min
-    attempt_max_param = request.GET.get('attempt_max') or ''       # range max
-    attempt_nth_param = request.GET.get('attempt_nth') or ''       # specific nth attempt
-    kafedra_id_param = request.GET.get('kafedra_id') or ''         # kafedra filter (id)
-    bulim_id_param = request.GET.get('bulim_id') or ''             # bulim filter (id)
+    attempt_count_param = request.GET.get('attempt_count') or ''
+    attempt_gte_param = request.GET.get('attempt_gte') or ''
+    attempt_min_param = request.GET.get('attempt_min') or ''
+    attempt_max_param = request.GET.get('attempt_max') or ''
+    attempt_nth_param = request.GET.get('attempt_nth') or ''
+    kafedra_id_param = request.GET.get('kafedra_id') or ''
+    bulim_id_param = request.GET.get('bulim_id') or ''
 
     if group_name:
-        # Guruhni qat'iy filtrlash: faqat shu guruh talabalarining natijalari (test tayinlash usulidan qat'i nazar)
         try:
             grp_obj = Group.objects.get(name=group_name)
-            tests_qs = tests_qs.filter(
-                Q(group=grp_obj)               # StudentTest.group shu guruh
-                | Q(student__group=grp_obj)     # yoki talabaning guruhi shu
-            )
+            tests_qs = tests_qs.filter(Q(group=grp_obj) | Q(student__group=grp_obj))
         except Group.DoesNotExist:
-            # Fallback: nom bo'yicha ham xuddi shu qat'iy mantiq
-            tests_qs = tests_qs.filter(
-                Q(group__name=group_name)
-                | Q(student__group__name=group_name)
-            )
+            tests_qs = tests_qs.filter(Q(group__name=group_name) | Q(student__group__name=group_name))
         tests_qs = tests_qs.distinct()
+
     if semester_number:
-        # Oddiy va aniq: StudentTest.semester yoki Test.semester bo'yicha
-        tests_qs = tests_qs.filter(
-            Q(semester__number=semester_number)
-            | Q(test__semester__number=semester_number)
-        )
+        tests_qs = tests_qs.filter(Q(semester__number=semester_number) | Q(test__semester__number=semester_number))
+
     tests_qs = tests_qs.distinct()
 
-    # Kafedra/Bulim filter
     def to_int_safe(v):
         try:
             return int(v)
         except (TypeError, ValueError):
             return None
+
     k_id = to_int_safe(kafedra_id_param)
     b_id = to_int_safe(bulim_id_param)
     if k_id:
@@ -72,37 +66,24 @@ def export_subject_results_pdf(request, subject_name):
     if b_id:
         tests_qs = tests_qs.filter(Q(test__bulim_id=b_id) | Q(test__bulimlar__id=b_id)).distinct()
 
-    # Attempt (urinish) filtrlash rejimlari:
-    # 1) attempt_nth_param: har bir talabadan faqat n-chi urinish (agar mavjud bo'lsa)
-    # 2) attempt_count_param: aynan n marta topshirgan talabalar (oxirgi urinish)
-    # 3) attempt_gte_param: kamida n marta topshirganlar (oxirgi urinish)
-    # 4) attempt_min_param / attempt_max_param: oraliq (oxirgi urinish)
+    # 3) Attempt filtering buckets
     from collections import defaultdict
     bucket = defaultdict(list)
-    ordered_qs = tests_qs.order_by('student_id', 'start_time')
-    for st in ordered_qs:
+    for st in tests_qs.order_by('student_id', 'start_time'):
         bucket[st.student_id].append(st)
 
     tests = []
-    attempt_count_val = None  # exact
-    attempt_gte_val = None
-    attempt_min_val = None
-    attempt_max_val = None
-    attempt_nth_val = None
-
-    # Parse ints safely
-    def to_int(val):
+    def to_int(v):
         try:
-            return int(val)
+            return int(v)
         except (TypeError, ValueError):
             return None
 
     attempt_nth_val = to_int(attempt_nth_param)
     if attempt_nth_val and attempt_nth_val > 0:
-        # Faqat n-chi urinish
         for arr in bucket.values():
             if len(arr) >= attempt_nth_val:
-                tests.append(arr[attempt_nth_val-1])
+                tests.append(arr[attempt_nth_val - 1])
     else:
         attempt_count_val = to_int(attempt_count_param)
         attempt_gte_val = to_int(attempt_gte_param)
@@ -120,8 +101,8 @@ def export_subject_results_pdf(request, subject_name):
             if ok and attempt_max_val and total_attempts > attempt_max_val:
                 ok = False
             if ok:
-                tests.append(arr[-1])  # oxirgi urinish
-    # Alfavit bo'yicha tartiblash: familiya, so'ng ism (case-insensitive)
+                tests.append(arr[-1])
+
     try:
         tests.sort(key=lambda st: (
             (st.student.last_name or '').lower(),
@@ -130,78 +111,315 @@ def export_subject_results_pdf(request, subject_name):
             (st.student.username or '')
         ))
     except Exception:
-        # Fail-safe: tartiblashda kutilmagan muammo bo'lsa, mavjud tartibni qoldiramiz
         pass
 
+    # 4) Build PDF
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="{smart_str(subject_name)}_test_natijalari.pdf"'
 
     buffer = io.BytesIO()
-    # Pastki marginni kattaroq qildik (QR uchun joy ajratiladi)
     doc = SimpleDocTemplate(
         buffer,
         pagesize=A4,
         rightMargin=30,
         leftMargin=30,
         topMargin=30,
-        bottomMargin=35*mm  # ~35mm joy: jadval pastiga QR sig‘ishi uchun
+        bottomMargin=40 * mm,  # QR uchun har bir sahifada bo'sh joy
     )
+
     elements = []
     styles = getSampleStyleSheet()
     from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_RIGHT
     from reportlab.lib.styles import ParagraphStyle
 
-    # Custom styles
     title_style = ParagraphStyle('title', parent=styles['Title'], alignment=TA_CENTER, fontSize=16, spaceAfter=8)
     subtitle_style = ParagraphStyle('subtitle', parent=styles['Normal'], alignment=TA_CENTER, fontSize=13, spaceAfter=8)
     normal_style = ParagraphStyle('normal', parent=styles['Normal'], fontSize=11, spaceAfter=4)
     right_style = ParagraphStyle('right', parent=styles['Normal'], alignment=TA_RIGHT, fontSize=11)
     left_style = ParagraphStyle('left', parent=styles['Normal'], alignment=TA_LEFT, fontSize=11)
-    # For wrapping long container names (kafedra/bo'lim/guruh)
     wrap_style = ParagraphStyle('tdwrap', parent=styles['Normal'], alignment=TA_LEFT, fontSize=10, leading=11)
 
-    # Header (title, date right, subtitle)
     elements.append(Spacer(1, 10))
     elements.append(Paragraph("Kattaqurg'on Davlat Pedagogika instituti", ParagraphStyle('header', parent=styles['Normal'], alignment=TA_CENTER, fontSize=14, spaceAfter=0, leading=16)))
-    # Eng erta real boshlanish vaqtini aniqlash (filtrlangan ro'yxat ichida)
     from django.utils.timezone import localtime
+    earliest = None
     if tests:
-        earliest = min([t.start_time for t in tests if t.start_time]) if any(t.start_time for t in tests) else None
-    else:
-        earliest = None
-    if earliest:
-        test_date_display = localtime(earliest).strftime('%d.%m.%Y')
-    else:
-        test_date_display = datetime.now().strftime('%d.%m.%Y')
-    elements.append(Paragraph("Yakuniy nazorat test sinovlari natijalari", ParagraphStyle('subtitle', parent=styles['Normal'], alignment=TA_CENTER, fontSize=12, spaceAfter=2, leading=14)))
+        try:
+            times = [t.start_time for t in tests if t.start_time]
+            earliest = min(times) if times else None
+        except Exception:
+            earliest = None
+    test_date_display = localtime(earliest).strftime('%d.%m.%Y') if earliest else datetime.now().strftime('%d.%m.%Y')
+    elements.append(Paragraph("Yakuniy nazorat test sinovlari natijalari", subtitle_style))
     elements.append(Spacer(1, 32))
     elements.append(Paragraph(f"Fanning nomi: {subject_name}", ParagraphStyle('subj', parent=styles['Normal'], fontSize=11, alignment=TA_LEFT, spaceAfter=2)))
     elements.append(Paragraph(f"Test o'tkazilgan sana: {test_date_display}", ParagraphStyle('dateHead', parent=styles['Normal'], fontSize=9, alignment=TA_LEFT, textColor=colors.black)))
     elements.append(Spacer(1, 12))
 
-    # Filter summary (foydalanuvchi tanlagan parametrlar)
-    filter_bits = []
-    if group_name:
-        filter_bits.append(f"Guruh: {group_name}")
-    # Human-readable names for selected kafedra/bulim (if provided)
-    kafedra_name = None
-    bulim_name = None
+    # Render table
+    container_header = "Guruh"
     if k_id:
-        try:
-            kafedra_name = Kafedra.objects.only('name').get(id=k_id).name
-            filter_bits.append(f"Kafedra: {kafedra_name}")
-        except Exception:
-            pass
-    if b_id:
-        try:
-            bulim_name = Bulim.objects.only('name').get(id=b_id).name
-            filter_bits.append(f"Bo'lim: {bulim_name}")
-        except Exception:
-            pass
-    if semester_number:
-        filter_bits.append(f"Semestr: {semester_number}")
-    if attempt_nth_val:
-        filter_bits.append(f"{attempt_nth_val}-urinish natijalari")
+        container_header = "Kafedra"
+    elif b_id:
+        container_header = "Bo'lim"
+
+    is_super = request.user.is_authenticated and request.user.is_superuser
+    if is_super:
+        data = [[
+            Paragraph('<b>№</b>', ParagraphStyle('th', alignment=TA_CENTER, fontSize=10)),
+            Paragraph('<b>F.I.O</b>', ParagraphStyle('th', alignment=TA_CENTER, fontSize=10)),
+            Paragraph(f'<b>{container_header}</b>', ParagraphStyle('th', alignment=TA_CENTER, fontSize=10)),
+            Paragraph('<b>Savollar soni</b>', ParagraphStyle('th', alignment=TA_CENTER, fontSize=10)),
+            Paragraph('<b>To\'g\'ri javoblar</b>', ParagraphStyle('th', alignment=TA_CENTER, fontSize=10)),
+            Paragraph('<b>Asl foiz</b>', ParagraphStyle('th', alignment=TA_CENTER, fontSize=10)),
+            Paragraph('<b>Yakuniy foiz</b>', ParagraphStyle('th', alignment=TA_CENTER, fontSize=10)),
+            Paragraph('<b>Final ball</b>', ParagraphStyle('th', alignment=TA_CENTER, fontSize=10)),
+            Paragraph('<b>O\'tgan?</b>', ParagraphStyle('th', alignment=TA_CENTER, fontSize=10)),
+            Paragraph('<b>Status</b>', ParagraphStyle('th', alignment=TA_CENTER, fontSize=10)),
+        ]]
+    else:
+        data = [[
+            Paragraph('<b>№</b>', ParagraphStyle('th', alignment=TA_CENTER, fontSize=10)),
+            Paragraph('<b>F.I.O</b>', ParagraphStyle('th', alignment=TA_CENTER, fontSize=10)),
+            Paragraph(f'<b>{container_header}</b>', ParagraphStyle('th', alignment=TA_CENTER, fontSize=10)),
+            Paragraph('<b>Savollar soni</b>', ParagraphStyle('th', alignment=TA_CENTER, fontSize=10)),
+            Paragraph('<b>To\'g\'ri javoblar</b>', ParagraphStyle('th', alignment=TA_CENTER, fontSize=10)),
+            Paragraph('<b>Foizi</b>', ParagraphStyle('th', alignment=TA_CENTER, fontSize=10)),
+        ]]
+
+    for idx, stest in enumerate(tests, 1):
+        # F.I.O: otasining ismi (middle_name) bo'sh yoki None bo'lsa qo'shmaymiz
+        ln = (stest.student.last_name or '').upper()
+        fn = (stest.student.first_name or '').upper()
+        mn = getattr(stest.student, 'middle_name', None) or ''
+        fio = ' '.join([p for p in [ln, fn, mn.upper() if mn else ''] if p]).strip()
+
+        def resolve_group_name(st):
+            gname = None
+            if st.test.group:
+                gname = st.test.group.name
+            elif getattr(st, 'group', None):
+                gname = st.group.name if st.group else None
+            if gname is None:
+                student_group = getattr(st.student, 'group', None)
+                try:
+                    if student_group and st.test.groups.filter(id=student_group.id).exists():
+                        gname = student_group.name
+                except Exception:
+                    pass
+            if gname is None:
+                first_grp = st.test.groups.first()
+                if first_grp:
+                    gname = first_grp.name
+            return gname
+
+        if k_id:
+            try:
+                if getattr(stest.test, 'kafedra', None):
+                    container_value = stest.test.kafedra.name
+                elif hasattr(stest.test, 'kafedralar') and stest.test.kafedralar.exists():
+                    kc = stest.test.kafedralar.count()
+                    container_value = stest.test.kafedralar.first().name if kc == 1 else f"Kafedralar ({kc})"
+                else:
+                    container_value = '-'
+            except Exception:
+                container_value = '-'
+        elif b_id:
+            try:
+                if getattr(stest.test, 'bulim', None):
+                    container_value = stest.test.bulim.name
+                elif hasattr(stest.test, 'bulimlar') and stest.test.bulimlar.exists():
+                    bc = stest.test.bulimlar.count()
+                    container_value = stest.test.bulimlar.first().name if bc == 1 else f"Bo'limlar ({bc})"
+                else:
+                    container_value = '-'
+            except Exception:
+                container_value = '-'
+        else:
+            container_value = resolve_group_name(stest) or '-'
+
+        container_cell = Paragraph(container_value, wrap_style)
+        question_ids = stest.question_ids if stest.question_ids else []
+        if question_ids:
+            answers = StudentAnswer.objects.filter(student_test=stest, question_id__in=question_ids)
+        else:
+            answers = StudentAnswer.objects.filter(student_test=stest)
+        total = answers.count()
+        correct = answers.filter(is_correct=True).count()
+        original_percent = (correct / total) * 100 if total else 0
+        if hasattr(stest, 'final_score'):
+            try:
+                final_percent = (stest.final_score / stest.test.total_score) * 100 if stest.test.total_score else original_percent
+            except Exception:
+                final_percent = original_percent
+        else:
+            final_percent = original_percent
+        original_percent_str = f"{original_percent:.1f}".replace('.', ',') + "%"
+        final_percent_str = f"{final_percent:.1f}".replace('.', ',') + "%"
+
+        if is_super:
+            status_text = "Override" if (getattr(stest, 'overridden_score', None) is not None or getattr(stest, 'pass_override', False)) else "Normal"
+            final_ball_str = f"{getattr(stest,'final_score', stest.total_score):.1f}".replace('.', ',')
+            final_passed = getattr(stest, 'final_passed', False)
+            passed_label = "Ha" if final_passed else "Yo'q"
+            data.append([
+                idx,
+                Paragraph(fio, ParagraphStyle('td', alignment=TA_LEFT, fontSize=10)),
+                container_cell,
+                total,
+                correct,
+                original_percent_str,
+                final_percent_str,
+                final_ball_str,
+                passed_label,
+                status_text
+            ])
+        else:
+            data.append([
+                idx,
+                Paragraph(fio, ParagraphStyle('td', alignment=TA_LEFT, fontSize=10)),
+                container_cell,
+                total,
+                correct,
+                final_percent_str
+            ])
+
+    if is_super:
+        table = Table(data, colWidths=[8 * mm, 45 * mm, 20 * mm, 18 * mm, 18 * mm, 18 * mm, 18 * mm, 18 * mm, 15 * mm, 18 * mm])
+    else:
+        table = Table(data, colWidths=[13 * mm, 55 * mm, 28 * mm, 28 * mm, 38 * mm, 22 * mm])
+    ts = TableStyle([
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, 0), 10),
+        ('FONTSIZE', (0, 1), (-1, -1), 10),
+        ('ALIGN', (0, 0), (0, -1), 'CENTER'),
+        ('ALIGN', (1, 0), (1, -1), 'LEFT'),
+        ('ALIGN', (2, 0), (-1, -1), 'CENTER'),
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+        ('LINEBELOW', (0, 0), (-1, 0), 1, colors.black),
+        ('LINEABOVE', (0, 0), (-1, 0), 1, colors.black),
+        ('LINEBEFORE', (0, 0), (0, -1), 1, colors.black),
+        ('LINEAFTER', (-1, 0), (-1, -1), 1, colors.black),
+        ('LINEBELOW', (0, -1), (-1, -1), 1, colors.black),
+        ('LINEABOVE', (0, 1), (-1, 1), 0.5, colors.black),
+        ('INNERGRID', (0, 0), (-1, -1), 0.5, colors.black),
+        ('LEFTPADDING', (0, 0), (-1, -1), 3),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 3),
+        ('TOPPADDING', (0, 0), (-1, -1), 3),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 3),
+    ])
+    ts.add('ALIGN', (2, 1), (2, -1), 'LEFT')
+    table.setStyle(ts)
+    elements.append(table)
+    elements.append(Spacer(1, 16))
+
+    # Signature block
+    sig_mid_style = ParagraphStyle('sigmid', parent=left_style, alignment=TA_CENTER, fontSize=10, spaceAfter=0)
+    sig_left_style = ParagraphStyle('sigleft', parent=left_style, fontSize=10, spaceAfter=0)
+    sig_name_style = ParagraphStyle('signame', parent=left_style, fontSize=10, spaceAfter=0)
+    signature_data = [[
+        Paragraph("O'UBB:", sig_left_style),
+        Paragraph("____________", sig_mid_style),
+        Paragraph("I.Madatov", sig_name_style)
+    ]]
+    signature_table = Table(signature_data, colWidths=[25 * mm, 70 * mm, 35 * mm])
+    signature_table.setStyle(TableStyle([
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+        ('ALIGN', (0, 0), (0, 0), 'LEFT'),
+        ('ALIGN', (1, 0), (1, 0), 'CENTER'),
+        ('ALIGN', (2, 0), (2, 0), 'LEFT'),
+        ('LEFTPADDING', (0, 0), (-1, -1), 0),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 4),
+        ('TOPPADDING', (0, 0), (-1, -1), 2),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 2),
+        ('BOX', (0, 0), (-1, -1), 0, colors.white),
+        ('INNERGRID', (0, 0), (-1, -1), 0, colors.white),
+    ]))
+    elements.append(signature_table)
+    elements.append(Spacer(1, 12))
+
+    # QR in footer
+    import hashlib, time
+    record_count = len(tests)
+    payload_raw = f"SUBJECT={subject_name};COUNT={record_count};TS={int(time.time())}"
+    sig_hash = hashlib.sha256(payload_raw.encode()).hexdigest()[:32]
+    verification_obj, _ = PdfVerification.objects.get_or_create(
+        hash_code=sig_hash,
+        defaults={
+            'subject_name': subject_name,
+            'record_count': record_count,
+            'payload': payload_raw,
+            'generated_by': request.user if request.user.is_authenticated else None
+        }
+    )
+    qr_text = request.build_absolute_uri(f"/api/test-api/verify-qr/{verification_obj.hash_code}/")
+    qr = qrcode.QRCode(version=None, error_correction=ERROR_CORRECT_H, box_size=4, border=2)
+    qr.add_data(qr_text)
+    qr.make(fit=True)
+    img = qr.make_image(fill_color=(19, 46, 120), back_color=(255, 255, 255)).convert('RGBA')
+
+    # Center overlay label
+    draw = ImageDraw.Draw(img)
+    W, H = img.size
+    overlay_ratio = 0.18
+    base_size = int(W * overlay_ratio)
+    try:
+        font = ImageFont.truetype("arial.ttf", base_size)
+    except Exception:
+        font = ImageFont.load_default()
+    text = "RTTM"
+    tb = draw.textbbox((0, 0), text, font=font)
+    tw, th = tb[2] - tb[0], tb[3] - tb[1]
+    pad_x, pad_y = 8, 6
+    box_x0 = (W - tw) // 2 - pad_x
+    box_y0 = (H - th) // 2 - pad_y
+    box_x1 = box_x0 + tw + pad_x * 2
+    box_y1 = box_y0 + th + pad_y * 2
+    grad_w, grad_h = int(box_x1 - box_x0), int(box_y1 - box_y0)
+    gradient = Image.new('RGBA', (grad_w, grad_h))
+    gdraw = ImageDraw.Draw(gradient)
+    start_col = (37, 99, 235)
+    end_col = (147, 51, 234)
+    for x in range(grad_w):
+        t = x / max(1, grad_w - 1)
+        r = int(start_col[0] + (end_col[0] - start_col[0]) * t)
+        g = int(start_col[1] + (end_col[1] - start_col[1]) * t)
+        b = int(start_col[2] + (end_col[2] - start_col[2]) * t)
+        gdraw.line([(x, 0), (x, grad_h)], fill=(r, g, b, 235))
+    mask = Image.new('L', (grad_w, grad_h), 0)
+    mask_draw = ImageDraw.Draw(mask)
+    try:
+        mask_draw.rounded_rectangle([0, 0, grad_w, grad_h], radius=10, fill=255)
+    except Exception:
+        mask_draw.rectangle([0, 0, grad_w, grad_h], fill=255)
+    shadow = Image.new('RGBA', (grad_w + 6, grad_h + 6), (0, 0, 0, 0))
+    sdraw = ImageDraw.Draw(shadow)
+    sdraw.ellipse([3, 3, grad_w + 3, grad_h + 3], fill=(0, 0, 0, 60))
+    img.alpha_composite(shadow, (int(box_x0 - 3), int(box_y0 - 3)))
+    img.paste(gradient, (int(box_x0), int(box_y0)), mask)
+    text_x = (W - tw) // 2
+    text_y = (H - th) // 2
+    draw.text((text_x + 1, text_y + 1), text, font=font, fill=(0, 0, 0, 90))
+    draw.text((text_x, text_y), text, font=font, fill=(255, 255, 255, 240))
+    qr_buffer = io.BytesIO()
+    img.save(qr_buffer, format='PNG')
+
+    def footer(c, doc):
+        from reportlab.lib.pagesizes import A4 as _A4
+        size = 25 * mm
+        x = _A4[0] - doc.rightMargin - size
+        padding = 3 * mm
+        y = max(padding, doc.bottomMargin - size - padding)
+        qr_buffer.seek(0)
+        c.drawImage(ImageReader(qr_buffer), x, y, size, size, preserveAspectRatio=True, mask='auto')
+
+    doc.build(elements, onFirstPage=footer, onLaterPages=footer)
+    pdf = buffer.getvalue()
+    buffer.close()
+    response.write(pdf)
+    return response
+        
+
 
 
 # === DALOLATNOMA CREATE ===
@@ -420,13 +638,13 @@ def create_dalolatnoma(request, test_id):
 
     # Table column widths (ixcham va bir xil)
     if is_super:
-        table = Table(data, colWidths=[8*mm, 45*mm, 20*mm, 18*mm, 18*mm, 18*mm, 18*mm, 18*mm, 15*mm, 18*mm])
+        table = Table(data, colWidths=[8*mm, 42*mm, 20*mm, 17*mm, 17*mm, 17*mm, 17*mm, 17*mm, 14*mm, 16*mm])
     else:
-        table = Table(data, colWidths=[13*mm, 55*mm, 28*mm, 28*mm, 38*mm, 22*mm])
+        table = Table(data, colWidths=[12*mm, 52*mm, 26*mm, 26*mm, 34*mm, 20*mm])
     ts = TableStyle([
         ('FONTNAME', (0,0), (-1,0), 'Helvetica-Bold'),
-        ('FONTSIZE', (0,0), (-1,0), 10),
-        ('FONTSIZE', (0,1), (-1,-1), 10),
+    ('FONTSIZE', (0,0), (-1,0), 9),
+    ('FONTSIZE', (0,1), (-1,-1), 9),
         ('ALIGN', (0,0), (0,-1), 'CENTER'),  # №
         ('ALIGN', (1,0), (1,-1), 'LEFT'),    # F.I.O
         ('ALIGN', (2,0), (-1,-1), 'CENTER'),
@@ -437,11 +655,11 @@ def create_dalolatnoma(request, test_id):
         ('LINEAFTER', (-1,0), (-1,-1), 1, colors.black),
         ('LINEBELOW', (0,-1), (-1,-1), 1, colors.black),
         ('LINEABOVE', (0,1), (-1,1), 0.5, colors.black),
-        ('INNERGRID', (0,0), (-1,-1), 0.5, colors.black),
-        ('LEFTPADDING', (0,0), (-1,-1), 3),
-        ('RIGHTPADDING', (0,0), (-1,-1), 3),
-        ('TOPPADDING', (0,0), (-1,-1), 3),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 3),
+    ('INNERGRID', (0,0), (-1,-1), 0.4, colors.black),
+    ('LEFTPADDING', (0,0), (-1,-1), 2),
+    ('RIGHTPADDING', (0,0), (-1,-1), 2),
+    ('TOPPADDING', (0,0), (-1,-1), 2),
+    ('BOTTOMPADDING', (0,0), (-1,-1), 2),
     ])
     # Override: make container column text left-aligned for data rows, allow wrapping
     ts.add('ALIGN', (2,1), (2,-1), 'LEFT')
@@ -474,8 +692,7 @@ def create_dalolatnoma(request, test_id):
         ('BOX', (0,0), (-1,-1), 0, colors.white),
         ('INNERGRID', (0,0), (-1,-1), 0, colors.white),
     ]))
-    elements.append(signature_table)
-    elements.append(Spacer(1, 16))
+    # QR va imzo blokini yonma-yon joylashtirish uchun signature_table ni hozircha qo'shmaymiz
 
     # QR kod va imzo footerga (past) joylashtiriladi
     import hashlib, time
@@ -556,25 +773,19 @@ def create_dalolatnoma(request, test_id):
     qr_buffer = io.BytesIO()
     img.save(qr_buffer, format='PNG')
 
+    # Imzo blokini chiqaramiz (QR esa footerda chiziladi)
+    elements.append(signature_table)
+    elements.append(Spacer(1, 12))
+
     def footer(c, doc):
-        # QR kodni pastki margin ichida joylashtiramiz (jadval bilan ustma-ust kelmasligi uchun)
+        # QR kodni har bir sahifa pastki marginida joylashtirish
         from reportlab.lib.pagesizes import A4 as _A4
-        size = 25*mm  # QR o‘lchami
+        size = 25 * mm
         x = _A4[0] - doc.rightMargin - size
-        # QR yuqori cheti content zonasiga chiqib ketmasligi uchun margin ichida saqlaymiz
-        # doc.bottomMargin mm/pt birligida, shuning uchun y = doc.bottomMargin - size - padding
-        padding = 3*mm
+        padding = 4 * mm
         y = max(padding, doc.bottomMargin - size - padding)
         qr_buffer.seek(0)
-        c.drawImage(
-            ImageReader(qr_buffer),
-            x,
-            y,
-            size,
-            size,
-            preserveAspectRatio=True,
-            mask='auto'
-        )
+        c.drawImage(ImageReader(qr_buffer), x, y, size, size, preserveAspectRatio=True, mask='auto')
 
     doc.build(elements, onFirstPage=footer, onLaterPages=footer)
     pdf = buffer.getvalue()
