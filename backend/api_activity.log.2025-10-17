@@ -1,0 +1,50 @@
+INFO 2025-10-17 14:43:59,065 autoreload Watching for file changes with StatReloader
+INFO 2025-10-17 14:44:11,038 autoreload Watching for file changes with StatReloader
+ERROR 2025-10-17 14:44:29,687 log Invalid HTTP_HOST header: '172.16.0.134:8003'. You may need to add '172.16.0.134' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/snayder/project/TEST/venv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/snayder/project/TEST/venv/lib/python3.11/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/snayder/project/TEST/venv/lib/python3.11/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/snayder/project/TEST/venv/lib/python3.11/site-packages/django/http/request.py", line 202, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '172.16.0.134:8003'. You may need to add '172.16.0.134' to ALLOWED_HOSTS.
+WARNING 2025-10-17 14:44:29,688 basehttp "GET /api/login/ HTTP/1.1" 400 73456
+INFO 2025-10-17 14:45:10,387 autoreload /home/snayder/project/TEST/backend/bace/settings.py changed, reloading.
+INFO 2025-10-17 14:45:11,204 autoreload Watching for file changes with StatReloader
+INFO 2025-10-17 14:45:15,092 autoreload /home/snayder/project/TEST/backend/bace/settings.py changed, reloading.
+INFO 2025-10-17 14:45:15,666 autoreload Watching for file changes with StatReloader
+INFO 2025-10-17 14:45:21,990 basehttp "GET /api/login/ HTTP/1.1" 200 7794
+INFO 2025-10-17 14:57:15,201 basehttp "POST /api/login/ HTTP/1.1" 302 0
+INFO 2025-10-17 14:57:15,284 basehttp "GET /api/controller-panel/dashboard/ HTTP/1.1" 200 25345
+INFO 2025-10-17 14:57:23,416 basehttp "GET /api/controller-panel/add-user/ HTTP/1.1" 200 59643
+INFO 2025-10-17 14:57:24,534 basehttp "GET /api/controller-panel/download-student-import-template/ HTTP/1.1" 200 4918
+INFO 2025-10-17 15:02:31,120 autoreload /home/snayder/project/TEST/backend/main/models.py changed, reloading.
+INFO 2025-10-17 15:02:32,428 autoreload Watching for file changes with StatReloader
+INFO 2025-10-17 15:02:49,909 autoreload /home/snayder/project/TEST/backend/main/views_test_api.py changed, reloading.
+INFO 2025-10-17 15:02:50,737 autoreload Watching for file changes with StatReloader
+INFO 2025-10-17 15:02:55,694 autoreload /home/snayder/project/TEST/backend/main/urls_test_api.py changed, reloading.
+INFO 2025-10-17 15:02:56,292 autoreload Watching for file changes with StatReloader
+INFO 2025-10-17 15:03:04,161 autoreload /home/snayder/project/TEST/backend/main/views_controller_panel.py changed, reloading.
+INFO 2025-10-17 15:03:04,803 autoreload Watching for file changes with StatReloader
+INFO 2025-10-17 15:03:09,604 autoreload /home/snayder/project/TEST/backend/main/urls_controller_panel.py changed, reloading.
+INFO 2025-10-17 15:03:10,321 autoreload Watching for file changes with StatReloader
+INFO 2025-10-17 15:22:13,396 autoreload Watching for file changes with StatReloader
+INFO 2025-10-17 15:24:29,316 autoreload /home/snayder/project/TEST/backend/main/views_test_api.py changed, reloading.
+INFO 2025-10-17 15:24:30,031 autoreload Watching for file changes with StatReloader
+INFO 2025-10-17 15:24:55,309 autoreload /home/snayder/project/TEST/backend/main/views_test_api.py changed, reloading.
+INFO 2025-10-17 15:24:55,894 autoreload Watching for file changes with StatReloader
+INFO 2025-10-17 15:26:04,720 autoreload Watching for file changes with StatReloader
+INFO 2025-10-17 15:26:24,336 basehttp "GET /api/controller-panel/add-user/ HTTP/1.1" 200 59753
+INFO 2025-10-17 15:26:43,225 basehttp "GET /api/controller-panel/download-student-import-template/ HTTP/1.1" 200 4948
+INFO 2025-10-17 15:27:46,380 basehttp "GET /api/controller-panel/download-student-import-template/ HTTP/1.1" 200 4948
+INFO 2025-10-17 15:28:24,826 basehttp "POST /api/controller-panel/add-user/ HTTP/1.1" 302 0
+INFO 2025-10-17 15:28:24,929 basehttp "GET /api/controller-panel/add-user/ HTTP/1.1" 200 62483
+INFO 2025-10-17 15:28:30,332 basehttp "GET /api/controller-panel/add-user/?filter_role=&filter_group=1&filter_kafedra=&filter_bulim= HTTP/1.1" 200 16995
+INFO 2025-10-17 15:28:57,706 autoreload /home/snayder/project/TEST/backend/main/views_controller_panel.py changed, reloading.
+INFO 2025-10-17 15:28:58,328 autoreload Watching for file changes with StatReloader

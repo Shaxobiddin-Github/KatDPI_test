@@ -178,7 +178,7 @@
 
     <div class="d-flex align-items-center mb-4">
         <span class="fs-1 me-3">🎯</span>
-        <h2 class="mb-0 fw-bold">Testda qatnashganlar ro'yxati</h2>
+        <h2 class="mb-0 fw-bold">Testda qatnashganlar — Fan → Guruh → Talaba</h2>
     </div>
 
     <!-- Bulk actions toolbar -->
@@ -193,79 +193,118 @@
         <button id="bulkClearBtn" class="btn btn-outline-secondary btn-sm"><i class="bi bi-x-circle me-1"></i> Tozalash</button>
     </div>
 
-
-
-        <div class="accordion" id="groupsAccordion">
-            {% for group, students in group_data.items %}
-                <div class="accordion-item mb-2">
-                    <h2 class="accordion-header d-flex align-items-center" id="groupHeading{{ forloop.counter }}">
-                        <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse" data-bs-target="#groupCollapse{{ forloop.counter }}" aria-expanded="false" aria-controls="groupCollapse{{ forloop.counter }}">
-                            👥 {{ group.name }} <span class="text-muted fs-6 ms-2">(Guruh)</span>
-                        </button>
-                        <div class="ms-auto pe-3">
-                            <button class="btn btn-outline-primary btn-sm allow-group-btn" data-group-id="{{ group.id }}">
-                                <i class="bi bi-arrow-repeat me-1"></i> Guruhga ruxsat
-                            </button>
-                        </div>
-                    </h2>
-                    <div id="groupCollapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="groupHeading{{ forloop.counter }}" data-bs-parent="#groupsAccordion">
-                        <div class="accordion-body">
-                            <div class="accordion" id="studentsAccordion{{ forloop.counter }}">
-                                {% for student, tests in students.items %}
-                                    <div class="accordion-item mb-2">
-                                        <h2 class="accordion-header" id="studentHeading{{ forloop.parentloop.counter }}_{{ forloop.counter }}">
-                                            <button class="accordion-button collapsed d-flex align-items-center gap-3" type="button" data-bs-toggle="collapse" data-bs-target="#studentCollapse{{ forloop.parentloop.counter }}_{{ forloop.counter }}" aria-expanded="false" aria-controls="studentCollapse{{ forloop.parentloop.counter }}_{{ forloop.counter }}">
-                                                <span class="avatar-40">{{ student.get_full_name|slice:":1" }}</span>
-                                                <span class="fw-semibold fs-6">{{ student.get_full_name }}</span>
-                                                <span class="badge bg-primary text-white ms-2">🎓 Talaba</span>
-                                            </button>
-                                        </h2>
-                                        <div id="studentCollapse{{ forloop.parentloop.counter }}_{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="studentHeading{{ forloop.parentloop.counter }}_{{ forloop.counter }}">
-                                            <div class="accordion-body">
-                                                <div class="table-responsive mt-2">
-                                                    <table class="table table-bordered table-sm align-middle mb-0">
-                                                        <thead class="table-light">
-                                                            <tr>
-                                                                <th style="width:34px;"><input type="checkbox" class="form-check-input select-all"/></th>
-                                                                <th>📚 Fan</th>
-                                                                <th>📅 Semestr</th>
-                                                                <th>🏆 Ball</th>
-                                                                <th>❓ Savollar</th>
-                                                                <th>✅ To'g'ri javoblar</th>
-                                                                <th>📊 Natija (%)</th>
-                                                                <th>🔄 Qayta topshirish</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            {% for st in tests %}
+        <div class="accordion" id="subjectsAccordion">
+            {% for subject, groups in subject_data.items %}
+            <div class="accordion-item mb-3">
+                <h2 class="accordion-header" id="subjectHead{{ forloop.counter }}">
+                    <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse" data-bs-target="#subjectCol{{ forloop.counter }}" aria-expanded="false" aria-controls="subjectCol{{ forloop.counter }}">
+                        � {{ subject.name }} <span class="text-muted fs-6 ms-2">(Fan)</span>
+                    </button>
+                </h2>
+                <div id="subjectCol{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="subjectHead{{ forloop.counter }}" data-bs-parent="#subjectsAccordion">
+                    <div class="accordion-body">
+                        <div class="accordion" id="groupsAcc{{ forloop.counter }}">
+                            {% for group, buckets in groups.items %}
+                            <div class="accordion-item mb-2">
+                                <h2 class="accordion-header d-flex align-items-center" id="groupHead{{ forloop.parentloop.counter }}_{{ forloop.counter }}">
+                                    <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#groupCol{{ forloop.parentloop.counter }}_{{ forloop.counter }}" aria-expanded="false" aria-controls="groupCol{{ forloop.parentloop.counter }}_{{ forloop.counter }}">
+                                        👥 {{ group.name }} <span class="text-muted fs-6 ms-2">(Guruh)</span>
+                                    </button>
+                                    <div class="ms-auto pe-3 d-flex gap-2">
+                                        <button class="btn btn-outline-primary btn-sm allow-group-subject" data-group-id="{{ group.id }}" data-subject-id="{{ subject.id }}">
+                                            <i class="bi bi-arrow-repeat me-1"></i> Guruhga (fan) ruxsat
+                                        </button>
+                                        <button class="btn btn-outline-warning btn-sm allow-group-subject-failed" data-group-id="{{ group.id }}" data-subject-id="{{ subject.id }}">
+                                            ⚠️ Faqat yiqilganlarga
+                                        </button>
+                                    </div>
+                                </h2>
+                                <div id="groupCol{{ forloop.parentloop.counter }}_{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="groupHead{{ forloop.parentloop.counter }}_{{ forloop.counter }}">
+                                    <div class="accordion-body">
+                                        <div class="row g-3">
+                                            <div class="col-12 col-lg-6">
+                                                <div class="section-card p-3">
+                                                    <h6 class="fw-bold mb-2 text-success">✅ O‘tganlar</h6>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-bordered table-sm align-middle mb-0">
+                                                            <thead class="table-light">
+                                                                <tr>
+                                                                    <th style="width:34px;"><input type="checkbox" class="form-check-input select-all"/></th>
+                                                                    <th>Talaba</th>
+                                                                    <th>Semestr</th>
+                                                                    <th>Ball</th>
+                                                                    <th>%</th>
+                                                                    <th>Ruxsat</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                {% for st in buckets.passed %}
                                                                 <tr>
                                                                     <td><input type="checkbox" class="form-check-input row-check" data-stest-id="{{ st.id }}" {% if st.can_retake %}disabled{% endif %}/></td>
-                                                                    <td>{{ st.test.subject.name }}</td>
+                                                                    <td>{{ st.student.get_full_name }}</td>
                                                                     <td>{% if st.semester %}{{ st.semester.number }}{% else %}-{% endif %}</td>
-                                                                    <td>{{ st.total_score|floatformat:2 }}/{{ st.test.total_score }}</td>
-                                                                    <td>{{ st.question_ids|length }}</td>
-                                                                    <td>{{ st.correct_answers_count|default:'?' }}</td>
+                                                                    <td>{{ st.final_score|floatformat:2 }}/{{ st.test.total_score }}</td>
                                                                     <td>{% if st.percent_result is not None %}{{ st.percent_result }}{% else %}-{% endif %}</td>
                                                                     <td>
                                                                         {% if not st.can_retake %}
-                                                                            <button class="btn btn-sm btn-outline-success allow-retake-btn d-inline-flex align-items-center gap-1" data-stest-id="{{ st.id }}">
-                                                                                <i class="bi bi-arrow-repeat"></i> Ruxsat berish
-                                                                            </button>
+                                                                        <button class="btn btn-sm btn-outline-success allow-retake-btn" data-stest-id="{{ st.id }}">Ruxsat</button>
                                                                         {% endif %}
                                                                     </td>
                                                                 </tr>
-                                                            {% endfor %}
-                                                        </tbody>
-                                                    </table>
+                                                                {% empty %}
+                                                                <tr><td colspan="6" class="text-muted">Ma’lumot yo‘q</td></tr>
+                                                                {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-6">
+                                                <div class="section-card p-3">
+                                                    <h6 class="fw-bold mb-2 text-danger">❌ Yiqilganlar</h6>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-bordered table-sm align-middle mb-0">
+                                                            <thead class="table-light">
+                                                                <tr>
+                                                                    <th style="width:34px;"><input type="checkbox" class="form-check-input select-all"/></th>
+                                                                    <th>Talaba</th>
+                                                                    <th>Semestr</th>
+                                                                    <th>Ball</th>
+                                                                    <th>%</th>
+                                                                    <th>Ruxsat</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                {% for st in buckets.failed %}
+                                                                <tr>
+                                                                    <td><input type="checkbox" class="form-check-input row-check" data-stest-id="{{ st.id }}" {% if st.can_retake %}disabled{% endif %}/></td>
+                                                                    <td>{{ st.student.get_full_name }}</td>
+                                                                    <td>{% if st.semester %}{{ st.semester.number }}{% else %}-{% endif %}</td>
+                                                                    <td>{{ st.final_score|floatformat:2 }}/{{ st.test.total_score }}</td>
+                                                                    <td>{% if st.percent_result is not None %}{{ st.percent_result }}{% else %}-{% endif %}</td>
+                                                                    <td>
+                                                                        {% if not st.can_retake %}
+                                                                        <button class="btn btn-sm btn-outline-success allow-retake-btn" data-stest-id="{{ st.id }}">Ruxsat</button>
+                                                                        {% endif %}
+                                                                    </td>
+                                                                </tr>
+                                                                {% empty %}
+                                                                <tr><td colspan="6" class="text-muted">Ma’lumot yo‘q</td></tr>
+                                                                {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                {% endfor %}
+                                </div>
                             </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
+            </div>
             {% endfor %}
         </div>
 
@@ -452,13 +491,27 @@
         }).catch(()=>alert('Tarmoq xatosi'));
     });
 
-    // Group-level allow button
-    document.querySelectorAll('.allow-group-btn').forEach(function(btn){
+    // Group+Subject allow (all)
+    document.querySelectorAll('.allow-group-subject').forEach(function(btn){
         btn.addEventListener('click', function(){
-            const gid = btn.dataset.groupId; const password = prompt('Parolni kiriting:'); if(password===null) return;
-            fetch('{% url "allow_retake_group" %}', {
+            const gid = btn.dataset.groupId; const sid = btn.dataset.subjectId;
+            const password = prompt('Parolni kiriting:'); if(password===null) return;
+            fetch('{% url "allow_retake_group_subject" %}', {
                 method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-CSRFToken': getCSRFToken() },
-                body: 'group_id=' + encodeURIComponent(gid) + '&password=' + encodeURIComponent(password)
+                body: 'group_id=' + encodeURIComponent(gid) + '&subject_id=' + encodeURIComponent(sid) + '&password=' + encodeURIComponent(password)
+            }).then(r=>r.json()).then(data=>{ if(data.success){ window.location.reload(); } else { alert(data.error||'Xatolik'); } })
+              .catch(()=>alert('Tarmoq xatosi'));
+        });
+    });
+
+    // Group+Subject allow (failed only)
+    document.querySelectorAll('.allow-group-subject-failed').forEach(function(btn){
+        btn.addEventListener('click', function(){
+            const gid = btn.dataset.groupId; const sid = btn.dataset.subjectId;
+            const password = prompt('Parolni kiriting:'); if(password===null) return;
+            fetch('{% url "allow_retake_group_subject_failed" %}', {
+                method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-CSRFToken': getCSRFToken() },
+                body: 'group_id=' + encodeURIComponent(gid) + '&subject_id=' + encodeURIComponent(sid) + '&password=' + encodeURIComponent(password)
             }).then(r=>r.json()).then(data=>{ if(data.success){ window.location.reload(); } else { alert(data.error||'Xatolik'); } })
               .catch(()=>alert('Tarmoq xatosi'));
         });

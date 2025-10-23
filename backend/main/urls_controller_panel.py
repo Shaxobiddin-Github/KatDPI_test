@@ -38,4 +38,6 @@ urlpatterns = [
     path('allow-retake/', views_participated.allow_retake, name='allow_retake'),
     path('allow-retake-bulk/', views_participated.allow_retake_bulk, name='allow_retake_bulk'),
     path('allow-retake-group/', views_participated.allow_retake_group, name='allow_retake_group'),
+    path('allow-retake-group-subject/', views_participated.allow_retake_group_subject, name='allow_retake_group_subject'),
+    path('allow-retake-group-subject-failed/', views_participated.allow_retake_group_subject_failed, name='allow_retake_group_subject_failed'),
 ]

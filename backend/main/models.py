@@ -266,7 +266,7 @@ class Test(models.Model):
     # Ixtiyoriy videoni qo'llab-quvvatlash (testdan avval ko'rsatiladi)
     video_url = models.URLField(max_length=500, blank=True, null=True, verbose_name="Video URL (ixtiyoriy)")
     video_file = models.FileField(upload_to='test_videos/', blank=True, null=True, verbose_name="Video fayl (ixtiyoriy)")
-    pass_percent = models.PositiveIntegerField(verbose_name="O'tish foizi", default=56, help_text="Talabaning foiz natijasi shu qiymatdan >= bo'lsa o'tgan hisoblanadi")
+    pass_percent = models.PositiveIntegerField(verbose_name="O'tish foizi", default=60, help_text="Talabaning foiz natijasi shu qiymatdan >= bo'lsa o'tgan hisoblanadi")
     active = models.BooleanField(default=True, verbose_name="Faol testmi")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Yaratilgan sana")
     start_time = models.DateTimeField(auto_now_add=True, verbose_name="Boshlanish vaqti", blank=True, null=True)
@@ -360,7 +360,7 @@ class StudentTest(models.Model):
         # 2) Testdagi pass_percent bo'yicha foiz hisoblash
         if self.test and self.test.total_score:
             percent = (self.final_score / self.test.total_score) * 100 if self.final_score is not None else 0
-            return percent >= getattr(self.test, 'pass_percent', 56)
+            return percent >= getattr(self.test, 'pass_percent', 60)
         # 3) Zaxira holat
         return self.final_score > 0
 

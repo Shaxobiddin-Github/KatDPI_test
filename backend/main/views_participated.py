@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
-from main.models import StudentTest, Group, Bulim, Kafedra, User, Test
+from main.models import StudentTest, Group, Bulim, Kafedra, User, Test, Subject
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
+from django.db.models import Q, F, FloatField, ExpressionWrapper
+from django.db.models.functions import Coalesce
 
 @login_required
 def participated_students_list(request):
@@ -11,17 +13,13 @@ def participated_students_list(request):
     from django.db.models.functions import Cast
     from django.db.models import Count, Case, When, F, FloatField
 
-    # Guruhlar, bo'limlar va kafedralarni aniqlash
-    groups = Group.objects.all()
-    bulims = Bulim.objects.all()
-    kafedras = Kafedra.objects.all()
-
-    # Test natijalarini olish
+    # Completed student tests with required relations
     student_tests = StudentTest.objects.filter(completed=True).select_related(
-        'student', 'test', 'group', 'subject', 'semester'
+        'student', 'test', 'group', 'subject', 'semester', 'test__subject'
     ).prefetch_related('answers')
 
-    # Har bir test uchun natijalarni hisoblash va test obyektiga qo'shish
+    # Compute per-stats for display (correct count and percent)
+    from main.models import StudentAnswer
     for st in student_tests:
         answers = StudentAnswer.objects.filter(student_test=st)
         if st.question_ids:
@@ -32,69 +30,37 @@ def participated_students_list(request):
         st.correct_answers_count = correct
         st.percent_result = round((correct / total * 100), 1) if total > 0 else 0
 
+    # Build subject -> group -> {passed: [st], failed: [st]}
+    subject_data = {}
+    for st in student_tests:
+        # Subject resolution
+        subj = st.subject or getattr(st.test, 'subject', None)
+        if not subj:
+            continue
+        # Group resolution: prefer StudentTest.group, else if student's real group matches one of Test.groups
+        grp = st.group
+        if not grp:
+            try:
+                real_grp = getattr(st.student, 'group', None)
+                if real_grp and st.test.groups.filter(id=real_grp.id).exists():
+                    grp = real_grp
+            except Exception:
+                grp = st.group  # leave None
+        if not grp:
+            continue
 
-    # Guruhlar uchun (legacy StudentTest.group va yangi Test.groups M2M ni qo'llab-quvvatlaymiz)
-    group_data = {}
-    group_tests_list = list(student_tests.select_related('test'))
-    for group in groups:
-        group_students = {}
-        for st in group_tests_list:
-            # 1) Legacy: StudentTest.group orqali moslik
-            direct_match = (st.group_id == group.id)
-            # 2) Fallback (faqat studentning haqiqiy joriy guruhi shu bo'lsa):
-            m2m_match = False
-            if not direct_match and getattr(st, 'group_id', None) is None:
-                # Student real group check
-                student_real_gid = getattr(getattr(st.student, 'group', None), 'id', None)
-                if student_real_gid == group.id:
-                    try:
-                        if st.test.groups.filter(id=group.id).exists():
-                            m2m_match = True
-                    except Exception:
-                        m2m_match = False
-            if direct_match or m2m_match:
-                student = st.student
-                if student.role != 'student':
-                    continue
-                if student not in group_students:
-                    group_students[student] = []
-                group_students[student].append(st)
-        if group_students:
-            group_data[group] = group_students
+        if subj not in subject_data:
+            subject_data[subj] = {}
+        if grp not in subject_data[subj]:
+            subject_data[subj][grp] = {'passed': [], 'failed': []}
 
-    # Bo'limlar uchun
-    bulim_data = {}
-    for bulim in bulims:
-        bulim_users = {}
-        for st in group_tests_list:
-            if hasattr(st.test, 'bulim') and st.test.bulim == bulim:
-                user = st.student
-                if user.role != 'student':
-                    continue
-                if user not in bulim_users:
-                    bulim_users[user] = []
-                bulim_users[user].append(st)
-        if bulim_users:
-            bulim_data[bulim] = bulim_users
+        if getattr(st, 'final_passed', False):
+            subject_data[subj][grp]['passed'].append(st)
+        else:
+            subject_data[subj][grp]['failed'].append(st)
 
-    # Kafedralar uchun
-    kafedra_data = {}
-    for kafedra in kafedras:
-        kafedra_users = {}
-        for st in group_tests_list:
-            if hasattr(st.test, 'kafedra') and st.test.kafedra == kafedra:
-                user = st.student
-                if user.role != 'student':
-                    continue
-                if user not in kafedra_users:
-                    kafedra_users[user] = []
-                kafedra_users[user].append(st)
-        if kafedra_users:
-            kafedra_data[kafedra] = kafedra_users
     return render(request, 'controller_panel/participated_students_list.html', {
-        'group_data': group_data,
-        'bulim_data': bulim_data,
-        'kafedra_data': kafedra_data,
+        'subject_data': subject_data,
     })
 
 @require_POST
@@ -135,4 +101,48 @@ def allow_retake_group(request):
     if not group_id:
         return JsonResponse({'success': False, 'error': 'Guruh ID berilmadi'}, status=400)
     updated = StudentTest.objects.filter(group_id=group_id, completed=True).update(can_retake=True)
+    return JsonResponse({'success': True, 'updated': updated})
+
+
+@require_POST
+@login_required
+def allow_retake_group_subject(request):
+    """Allow retake for all completed attempts within a specific group and subject."""
+    group_id = request.POST.get('group_id')
+    subject_id = request.POST.get('subject_id')
+    password = request.POST.get('password')
+    if password != '96970204':
+        return JsonResponse({'success': False, 'error': 'Parol noto‘g‘ri!'}, status=403)
+    if not group_id or not subject_id:
+        return JsonResponse({'success': False, 'error': 'Guruh yoki fan ko\'rsatilmagan'}, status=400)
+    # Include legacy and M2M-matched cases
+    base_qs = StudentTest.objects.filter(completed=True).filter(
+        Q(group_id=group_id, subject_id=subject_id)
+        | Q(group_id=group_id, test__subject_id=subject_id)
+        | (Q(group__isnull=True) & Q(student__group_id=group_id) & Q(test__groups__id=group_id) & Q(test__subject_id=subject_id))
+    ).distinct()
+    updated = base_qs.update(can_retake=True)
+    return JsonResponse({'success': True, 'updated': updated})
+
+
+@require_POST
+@login_required
+def allow_retake_group_subject_failed(request):
+    """Allow retake for only failed attempts within a specific group and subject."""
+    group_id = request.POST.get('group_id')
+    subject_id = request.POST.get('subject_id')
+    password = request.POST.get('password')
+    if password != '96970204':
+        return JsonResponse({'success': False, 'error': 'Parol noto‘g‘ri!'}, status=403)
+    if not group_id or not subject_id:
+        return JsonResponse({'success': False, 'error': 'Guruh yoki fan ko\'rsatilmagan'}, status=400)
+    # Compute percent using overridden_score if present
+    final_score = Coalesce(F('overridden_score'), F('total_score'))
+    percent = ExpressionWrapper(final_score * 100.0 / F('test__total_score'), output_field=FloatField())
+    qs = StudentTest.objects.filter(completed=True).filter(
+        Q(group_id=group_id, subject_id=subject_id)
+        | Q(group_id=group_id, test__subject_id=subject_id)
+        | (Q(group__isnull=True) & Q(student__group_id=group_id) & Q(test__groups__id=group_id) & Q(test__subject_id=subject_id))
+    ).annotate(percent=percent).filter(pass_override=False, test__total_score__gt=0, percent__lt=F('test__pass_percent')).distinct()
+    updated = qs.update(can_retake=True)
     return JsonResponse({'success': True, 'updated': updated})
