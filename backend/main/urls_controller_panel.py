@@ -35,6 +35,7 @@ urlpatterns = [
 
     # Qatnashganlar ro'yxati va qayta topshirish
     path('participated-students/', views_participated.participated_students_list, name='participated_students_list'),
+    path('participated-students/export-failed-pdf/', views_participated.export_failed_pdf, name='export_failed_pdf'),
     path('allow-retake/', views_participated.allow_retake, name='allow_retake'),
     path('allow-retake-bulk/', views_participated.allow_retake_bulk, name='allow_retake_bulk'),
     path('allow-retake-group/', views_participated.allow_retake_group, name='allow_retake_group'),
